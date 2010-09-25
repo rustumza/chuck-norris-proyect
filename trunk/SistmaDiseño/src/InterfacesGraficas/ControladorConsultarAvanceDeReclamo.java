@@ -4,11 +4,9 @@
  */
 package InterfacesGraficas;
 
-import DTO.DTOEstadoDenuncia;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaConsultarAvanceReclamo;
-import java.util.List;
 
 /**
  *
@@ -32,21 +30,23 @@ public void iniciar(){
 }
 
 
-    public void ConsultarEstadoCaso(String numcaso) {
+    public void ConsultarEstadoCaso(String numcaso, int seleccion) {
 
      experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         
         
-        modelo.addAllRow(experto.ConsultarEstadoCaso(numcaso));
+        modelo.addAllRow(experto.ConsultarEstadoCaso(numcaso,seleccion));
         pantalla.getTablaConsultarAvanceReclamo().setModel(modelo);
     }
 
 
-/*
  public static void main(String[] args){
     (new ControladorConsultarAvanceDeReclamo()).iniciar();
 }
-*/
+
+    void salir() {
+        pantalla.dispose();
+    }
 
 
 }

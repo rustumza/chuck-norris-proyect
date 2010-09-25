@@ -95,6 +95,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
                 nuevaDenuncia.setOid(rs.getString("OIDCaso"));
                 nuevaDenuncia.setcodigoDenuncia(Integer.valueOf(rs.getString("CodigoDenuncia")));
                 nuevaDenuncia.setprioridad(Float.valueOf(rs.getString("Prioridad")));
+                nuevaDenuncia.setDenunciaEstadoBuscado(false);
 
 
                 nuevosObjetos.add(nuevaDenuncia);

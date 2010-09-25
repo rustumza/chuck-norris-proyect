@@ -171,7 +171,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             den.setprioridad(calcularPrioridad(den.getReclamo(), den.getSemaforo().get(0)));
             den.setDenunciaEstado(new ArrayList<DenunciaEstado>());
             DenunciaEstado denEstado = (DenunciaEstado) FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
-            denEstado.setfechacambioestado(1);
+            denEstado.setfechacambioestado(new Date());
             denEstado.setindicadorestadoactual(true);
             List<Criterio> listCriterioEstDen = new ArrayList<Criterio>();
             listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "Pendiente de atención"));

@@ -93,7 +93,6 @@ public class IntermediarioPersistenciaTrabajo extends IntermediarioRelacional {
 
     @Override
     public void guardarObjetoCompuesto(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -121,16 +120,13 @@ public class IntermediarioPersistenciaTrabajo extends IntermediarioRelacional {
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

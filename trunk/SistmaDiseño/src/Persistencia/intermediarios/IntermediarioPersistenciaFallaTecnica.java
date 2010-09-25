@@ -4,48 +4,84 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.FallaTecnicaAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.TrabajoAgente;
+import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaCriterios;
+import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaFallaTecnica extends IntermediarioRelacional{
-
- private String oid;
+public class IntermediarioPersistenciaFallaTecnica extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
+
+        FallaTecnicaAgente falla = (FallaTecnicaAgente) obj;
         String insert;
 
-        return insert = "insert into fallatecnica (OIDTrabajo, CodigoFallaTecnica, DescripcionFalla) values (OIDTrabajo, CodigoFallaTecnica, DescripcionFalla)";
+        insert = "INSERT INTO fallatecnica (OIDTrabajo, CodigoFallaTecnica, DescripcionFalla) "
+                + "VALUES ('" + falla.getOid() + "', " + String.valueOf(falla.getcodigoFallaTecnica()) + ", '" + falla.getdescripcionfalla() + "')";
+
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
-        List<Criterio> listaCriterios;
         String select;
-        listaCriterios = criterios;
 
-        return select = "select * from fallatecnica where " ;//criterios
+        select = "SELECT * FROM fallatecnica";
+
+        if (!criterios.isEmpty()) {
+            
+            if (criterios.get(0).getAtributo().equals("Denuncia")) {
+                String join = " JOIN fallatecnicadenuncia ON fallatecnica.OIDTrabajo = fallatecnicadenuncia.OIDFallaTecnica";
+                String condicion = " WHERE fallatecnicadenuncia.OIDDenuncia = '"+criterios.get(0).getValor()+"'";
+                select = select + join + condicion;
+
+            } else {
+                
+                select = select + " WHERE ";
+                for (int i = 0; i < criterios.size(); i++) {
+                    if (i > 0) {
+                        select = select + " AND ";
+                    }
+
+                    select = select + "fallatecnica." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }
+            }
+        }
+
+        return select;
 
     }
 
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        this.oid =oid;
 
-        return selectOid = "select * from fallatecnica where OIDTrabajo = " + oid;
+        selectOid = "SELECT * FROM fallatecnica WHERE OIDTrabajo = '" + oid + "'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
 
+        FallaTecnicaAgente falla = (FallaTecnicaAgente) obj;
         String update;
 
-        return update = "update fallatecnica set OIDTrabajo =" + ",CodigoFallaTecnica = " + "DescripcionFalla = " ;
+        update = "UPDATE fallatecnica SET OIDTrabajo = '" + falla.getOid() + "', "
+                + "CodigoFallaTecnica = " + String.valueOf(falla.getcodigoFallaTecnica()) + ", "
+                + "DescripcionFalla = '" + falla.getdescripcionfalla() + "'";
+
+        return update;
 
     }
 
@@ -54,23 +90,44 @@ public class IntermediarioPersistenciaFallaTecnica extends IntermediarioRelacion
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
 
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
 
-        return null;
+        try {
+            while (rs.next()) {
+                FallaTecnicaAgente nuevaFalla = (FallaTecnicaAgente) FabricaEntidades.getInstancia().crearEntidad("FallaTecnica");
+
+                nuevaFalla.setOid(rs.getString("OIDTrabajo"));
+                nuevaFalla.setIsNuevo(false);
+                nuevaFalla.setcodigoFallaTecnica(Integer.valueOf(rs.getString("CodigoFallaTecnica")));
+                nuevaFalla.setdescripcionfalla(rs.getString("DescripcionFalla"));
+
+                nuevosObjetos.add(nuevaFalla);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return nuevosObjetos;
+
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //busca el padre
+        TrabajoAgente padre = (TrabajoAgente) FachadaInterna.getInstancia().buscar("Trabajo", objPer.getOid());
+
+        ((TrabajoAgente) objPer).setNombreTrabajo(padre.getNombreTrabajo());
+        ((TrabajoAgente) objPer).settiempoEstimadoTrabajo(padre.gettiempoEstimadoTrabajo());
+        ((TrabajoAgente) objPer).settipotrabajo(padre.gettipotrabajo());
+
     }
 }
-
