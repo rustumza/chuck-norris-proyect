@@ -36,24 +36,24 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        botonAtenderReclamo = new javax.swing.JButton();
-        botonConsultarAvanceReclamo = new javax.swing.JButton();
-        botonConsultarOrdenesPendientes = new javax.swing.JButton();
+        panelBotonera = new javax.swing.JPanel();
         botonEjecutarOrdenesTrabajo = new javax.swing.JButton();
+        botonConsultarOrdenesPendientes = new javax.swing.JButton();
+        botonConsultarAvanceReclamo = new javax.swing.JButton();
+        botonAtenderReclamo = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(392, 194));
 
-        botonAtenderReclamo.setText("CU Atender Reclamo por desperfecto");
-        botonAtenderReclamo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAtenderReclamoActionPerformed(evt);
-            }
-        });
+        panelBotonera.setMaximumSize(new java.awt.Dimension(400, 200));
+        panelBotonera.setMinimumSize(new java.awt.Dimension(400, 200));
+        panelBotonera.setPreferredSize(new java.awt.Dimension(400, 200));
 
-        botonConsultarAvanceReclamo.setText("CU Consultar avance de reclamo");
-        botonConsultarAvanceReclamo.addActionListener(new java.awt.event.ActionListener() {
+        botonEjecutarOrdenesTrabajo.setText("CU Ejecutar ordenes de trabajo");
+        botonEjecutarOrdenesTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonConsultarAvanceReclamoActionPerformed(evt);
+                botonEjecutarOrdenesTrabajoActionPerformed(evt);
             }
         });
 
@@ -64,38 +64,66 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        botonEjecutarOrdenesTrabajo.setText("CU Ejecutar ordenes de trabajo");
-        botonEjecutarOrdenesTrabajo.addActionListener(new java.awt.event.ActionListener() {
+        botonConsultarAvanceReclamo.setText("CU Consultar avance de reclamo");
+        botonConsultarAvanceReclamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonEjecutarOrdenesTrabajoActionPerformed(evt);
+                botonConsultarAvanceReclamoActionPerformed(evt);
             }
         });
+
+        botonAtenderReclamo.setText("CU Atender Reclamo por desperfecto");
+        botonAtenderReclamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAtenderReclamoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBotoneraLayout = new javax.swing.GroupLayout(panelBotonera);
+        panelBotonera.setLayout(panelBotoneraLayout);
+        panelBotoneraLayout.setHorizontalGroup(
+            panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotoneraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonConsultarAvanceReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(botonAtenderReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(botonConsultarOrdenesPendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(botonEjecutarOrdenesTrabajo, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelBotoneraLayout.setVerticalGroup(
+            panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotoneraLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(botonAtenderReclamo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonConsultarAvanceReclamo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonConsultarOrdenesPendientes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonEjecutarOrdenesTrabajo)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/logo-sys.png"))); // NOI18N
+        logo.setMaximumSize(new java.awt.Dimension(400, 200));
+        logo.setMinimumSize(new java.awt.Dimension(400, 200));
+        logo.setPreferredSize(new java.awt.Dimension(400, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonConsultarAvanceReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                    .addComponent(botonAtenderReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                    .addComponent(botonConsultarOrdenesPendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                    .addComponent(botonEjecutarOrdenesTrabajo, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelBotonera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(botonAtenderReclamo)
-                .addGap(18, 18, 18)
-                .addComponent(botonConsultarAvanceReclamo)
-                .addGap(18, 18, 18)
-                .addComponent(botonConsultarOrdenesPendientes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonEjecutarOrdenesTrabajo)
-                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBotonera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -134,6 +162,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonConsultarAvanceReclamo;
     private javax.swing.JButton botonConsultarOrdenesPendientes;
     private javax.swing.JButton botonEjecutarOrdenesTrabajo;
+    private javax.swing.JLabel logo;
+    private javax.swing.JPanel panelBotonera;
     // End of variables declaration//GEN-END:variables
 
 }
