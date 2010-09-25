@@ -5,18 +5,13 @@
 
 package InterfacesGraficas;
 
-import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
 import Persistencia.Entidades.Denunciante;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
-import Persistencia.Decoradores.DecoradorExpertoAntenderReclamoPorDesperfecto;
 import Persistencia.Entidades.Calle;
-import Persistencia.Entidades.Interseccion;
 import Persistencia.Entidades.Problema;
-import Persistencia.Entidades.Semaforo;
-import Persistencia.ExpertosPersistencia.Cache;
 import java.util.List;
 import javax.swing.SpinnerListModel;
 /**
@@ -34,6 +29,7 @@ public class ControladorAtenderReclamoPorDesperfecto {
     }
 
     public void iniciar(){
+        pantallaARPD.setLocationRelativeTo(null);
         pantallaARPD.setVisible(true);
     }
 

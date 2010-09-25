@@ -28,6 +28,7 @@ public class ControladorEjecutarOrdenesTrabajo {
     }
 
     public void iniciar() {
+        pantalla.setLocationRelativeTo(null);
         pantalla.setVisible(true);
     }
 
