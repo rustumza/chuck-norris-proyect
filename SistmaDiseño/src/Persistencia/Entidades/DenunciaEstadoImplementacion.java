@@ -1,5 +1,7 @@
 package Persistencia.Entidades;
 
+import java.util.Date;
+
 /**
  * @author Bicentenario
  * @version 1.0
@@ -7,11 +9,10 @@ package Persistencia.Entidades;
  */
 public class DenunciaEstadoImplementacion {
 
-	private int fechacambioestado;
+	private Date fechacambioestado;
 	private boolean indicadorestadoactual;
 	private EstadoDenuncia estadoDenuncia;
-        private String OidDenuncia;
-        private String OidEstadoDenuncia;
+        
 
 
         
@@ -20,7 +21,7 @@ public class DenunciaEstadoImplementacion {
 
 	}
 
-	public int getfechacambioestado(){
+	public Date getfechacambioestado(){
 		return fechacambioestado;
 	}
 
@@ -32,7 +33,7 @@ public class DenunciaEstadoImplementacion {
 	 * 
 	 * @param newVal
 	 */
-	public void setfechacambioestado(int newVal){
+	public void setfechacambioestado(Date newVal){
 		fechacambioestado = newVal;
 	}
 
@@ -58,24 +59,9 @@ public class DenunciaEstadoImplementacion {
         this.estadoDenuncia = estadoDenuncia;
     }
 
-    String getOidDenuncia() {
-        return OidDenuncia;
-    }
-
-    String getOidEstadoDenuncia() {
-        return OidEstadoDenuncia;
-    }
 
     Boolean getIndicadoresEstadoActual() {
         return indicadorestadoactual;
-    }
-
-    void setOidDenuncia(String oidDenuncia) {
-        OidDenuncia = oidDenuncia;
-    }
-
-    void setOidEstadoDenuncia(String oidEstadoDenuncia) {
-        OidEstadoDenuncia = oidEstadoDenuncia;
     }
 
 }

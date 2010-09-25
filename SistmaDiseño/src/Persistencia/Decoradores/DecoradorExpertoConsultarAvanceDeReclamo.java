@@ -16,10 +16,10 @@ import java.util.List;
 public class DecoradorExpertoConsultarAvanceDeReclamo extends ExpertoConsultarAvanceDeReclamo {
 
     @Override
-    public List<DTOEstadoDenuncia> ConsultarEstadoCaso(String numcaso) {
+    public List<DTOEstadoDenuncia> ConsultarEstadoCaso(String numcaso, int seleccion) {
 
         IniciarTx();
-        List<DTOEstadoDenuncia> aux = super.ConsultarEstadoCaso(numcaso);
+        List<DTOEstadoDenuncia> aux = super.ConsultarEstadoCaso(numcaso,seleccion);
         confirmarTx();
         return aux;
     }

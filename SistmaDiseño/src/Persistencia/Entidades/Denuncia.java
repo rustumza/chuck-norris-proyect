@@ -30,7 +30,7 @@ public interface Denuncia extends Caso {
 
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado);
 
-    public FallaTecnica getFallaTecnica();
+    public List<FallaTecnica> getFallasTecnica();
 
-    public void setFallaTecnica(FallaTecnica fallaTecnica);
+    public void setFallasTecnica(List<FallaTecnica> fallaTecnica);
 }

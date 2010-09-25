@@ -9,7 +9,7 @@ package Persistencia.Entidades;
  *
  * @author diego
  */
-public class EstadoDenunciaAgente implements EstadoDenuncia{
+public class EstadoDenunciaAgente extends ObjetoPersistente implements EstadoDenuncia{
 
     private EstadoDenunciaImplementacion implementacion;
 

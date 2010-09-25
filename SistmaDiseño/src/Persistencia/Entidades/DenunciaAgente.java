@@ -18,16 +18,11 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     private DenunciaImplementacion implementacion;
     private String oidReclamo;
     private String oidDenunciaEstado;
-    private String oidFallaTecnica;
-
+    private List<String> listaOidFallaTecnica;
     //variables para saber si se han buscado los atributos en la BD
     private boolean reclamoBuscado;
     private boolean denunciaEstadoBuscado;
     private boolean fallaTecnicaBuscado;
-    private List<String> listaOidFallaTecnica;
-
-
-
 
     public int getcodigoDenuncia() {
         return implementacion.getcodigoDenuncia();
@@ -46,13 +41,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     }
 
     public List<Reclamo> getReclamo() {
-          if (isReclamoBuscado() == false) {
+        if (isReclamoBuscado() == false) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
-            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=",super.getOid()));
+            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Reclamo", listaDeCriterio);
             List<Reclamo> listaReclamo = new ArrayList<Reclamo>();
-            for(SuperDruperInterfaz aux : listaDeInterfaces)
+            for (SuperDruperInterfaz aux : listaDeInterfaces) {
                 listaReclamo.add((Reclamo) aux);
+            }
 
             implementacion.setReclamo(listaReclamo);
         }
@@ -66,13 +62,11 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     public List<DenunciaEstado> getDenunciaEstado() {
         if (isDenunciaEstadoBuscado() == false) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
-            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=",super.getOid()));
-            List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("DenunciaEstado", listaDeCriterio);
-            List<DenunciaEstado> listaDeDenunciaEstado = new ArrayList<DenunciaEstado>();
-            for(SuperDruperInterfaz aux : listaDeInterfaces)
-                listaDeDenunciaEstado.add((DenunciaEstado) aux);
-
-            implementacion.setDenunciaEstado(listaDeDenunciaEstado);
+            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=", super.getOid()));
+            List<SuperDruperInterfaz> listaDencunaEstados = FachadaInterna.getInstancia().buscar("DenunciaEstado", listaDeCriterio);
+            for (SuperDruperInterfaz denunciaEstado : listaDencunaEstados) {
+                implementacion.addDenunciaEstado((DenunciaEstado) denunciaEstado);
+            }
         }
         return implementacion.getDenunciaEstado();
     }
@@ -81,15 +75,17 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
         implementacion.setDenunciaEstado(denunciaEstado);
     }
 
-    public FallaTecnica getFallaTecnica() {
+    public List<FallaTecnica> getFallasTecnica() {
         if (isFallaTecnicaBuscado() == false) {
-            implementacion.setFallaTecnica((FallaTecnica) FachadaInterna.getInstancia().buscar("FallaTecnica", oidFallaTecnica));
+            for (String oid : listaOidFallaTecnica) {
+                implementacion.addFallaTecnica((FallaTecnica) FachadaInterna.getInstancia().buscar("FallaTecnica", oid));
+            }
         }
-        return implementacion.getFallaTecnica();
+        return implementacion.getFallasTecnica();
     }
 
-    public void setFallaTecnica(FallaTecnica fallaTecnica) {
-        implementacion.setFallaTecnica(fallaTecnica);
+    public void setFallasTecnica(List<FallaTecnica> fallaTecnica) {
+        implementacion.setFallasTecnica(fallaTecnica);
     }
 
     /**
@@ -136,33 +132,20 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     }
 
     /**
-     * @return the oidFallaTecnica
-     */
-    public String getOidFallaTecnica() {
-        return oidFallaTecnica;
-    }
-
-    /**
-     * @param oidFallaTecnica the oidFallaTecnica to set
-     */
-    public void setOidFallaTecnica(String oidFallaTecnica) {
-        this.oidFallaTecnica = oidFallaTecnica;
-    }
-
-    /**
      * @return the reclamoBuscado
      */
     public boolean isReclamoBuscado() {
         return reclamoBuscado;
     }
 
-    public void addOidFallaTecnica(String oidFallaTecnica){
-        if(listaOidFallaTecnica == null){
+    public void addOidFallaTecnica(String oidFallaTecnica) {
+        if (listaOidFallaTecnica == null) {
             listaOidFallaTecnica = new ArrayList<String>();
         }
 
         listaOidFallaTecnica.add(oidFallaTecnica);
     }
+
     /**
      * @param reclamoBuscado the reclamoBuscado to set
      */

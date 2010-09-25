@@ -4,9 +4,16 @@
  */
 package Persistencia.intermediarios;
 
+import Fabricas.FabricaAdaptadoresSistemaStock;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.TareaAgente;
+import Persistencia.Entidades.TrabajoAgente;
+import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,38 +22,58 @@ import java.util.List;
  */
 public class IntermediarioPersistenciaTarea extends IntermediarioRelacional{
 
-private String oid;
-
     public String armarInsert(ObjetoPersistente obj) {
+        TareaAgente tarea = (TareaAgente) obj;
         String insert;
 
-        return insert = "insert into tarea (OIDTrabajo, CodigoTarea, DescripcionTarea) values (OIDTrabajo, CodigoTarea, DescripcionTarea)";
+        insert = "INSERT INTO tarea (OIDTrabajo, CodigoTarea, DescripcionTarea) "
+                + "VALUES ('"+tarea.getOid()+"', "+String.valueOf(tarea.getcodigoTarea())+", '"+tarea.getdescripciontarea()+"')";
+
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
-        List<Criterio> listaCriterios;
         String select;
-        listaCriterios = criterios;
 
-        return select = "select * from tarea where " ;//criterios
+        select = "SELECT * FROM tarea";
+        
+        if (!criterios.isEmpty()) {
+            select = select + " WHERE ";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
+                    select = select + " AND ";
+                }
+
+                select = select + "tarea." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+        }
+
+
+        return select;
 
     }
 
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        this.oid =oid;
         
-        return selectOid = "select * from tarea where OIDTrabajo = " + oid;
+        selectOid = "SELECT * FROM tarea WHERE OIDTrabajo = '"+oid+"'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
 
+        TareaAgente tarea = (TareaAgente) obj;
         String update;
 
-        return update = "update tarea set OIDTrabajo =" + ",CodigoTarea = " + "DescripcionTarea = " ;
+        update = "UPDATE tarea "
+                + "SET OIDTrabajo = '"+tarea.getOid()+"', "
+                + "CodigoTarea = "+String.valueOf(tarea.getcodigoTarea())+", "
+                + "DescripcionTarea = '"+tarea.getdescripciontarea()+"'" ;
 
+        return update;
     }
 
     public void guardarObjetoCompuesto(ObjetoPersistente obj) {
@@ -54,23 +81,41 @@ private String oid;
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
 
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
 
-        return null;
+        try {
+            while (rs.next()) {
+                TareaAgente nuevaTarea = (TareaAgente) FabricaEntidades.getInstancia().crearEntidad("Tarea");
+
+                nuevaTarea.setOid(rs.getString("OIDTrabajo"));
+                nuevaTarea.setIsNuevo(false);
+                nuevaTarea.setcodigoTarea(Integer.valueOf(rs.getString("CodigoTarea")));
+                nuevaTarea.setdescripciontarea(rs.getString("DescripcionTarea"));
+
+                nuevosObjetos.add(nuevaTarea);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nuevosObjetos;
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //busca el padre
+        TrabajoAgente padre = (TrabajoAgente) FachadaInterna.getInstancia().buscar("Trabajo", objPer.getOid());
+
+        ((TrabajoAgente)objPer).setNombreTrabajo(padre.getNombreTrabajo());
+        ((TrabajoAgente)objPer).settiempoEstimadoTrabajo(padre.gettiempoEstimadoTrabajo());
+        ((TrabajoAgente)objPer).settipotrabajo(padre.gettipotrabajo());
     }
 }
 

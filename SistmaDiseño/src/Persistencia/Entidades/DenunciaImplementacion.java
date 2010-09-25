@@ -1,5 +1,6 @@
 package Persistencia.Entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +13,8 @@ public class DenunciaImplementacion extends CasoImplementacion implements Denunc
     private int codigoDenuncia;
     private float prioridad;
     private List<Reclamo> reclamo;
-    private List<DenunciaEstado> denunciaEstado;
-    private FallaTecnica fallaTecnica;
+    private List<DenunciaEstado> listaDenunciaEstado;
+    private List<FallaTecnica> fallasTecnica;
 
 
     
@@ -63,27 +64,38 @@ public class DenunciaImplementacion extends CasoImplementacion implements Denunc
      * @return the denunciaEstado
      */
     public List<DenunciaEstado> getDenunciaEstado() {
-        return denunciaEstado;
+        return listaDenunciaEstado;
+    }
+
+    public void addDenunciaEstado(DenunciaEstado nuevoEstado){
+        if(listaDenunciaEstado == null){
+            listaDenunciaEstado = new ArrayList<DenunciaEstado>();
+        }
+        listaDenunciaEstado.add(nuevoEstado);
     }
 
     /**
      * @param denunciaEstado the denunciaEstado to set
      */
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado) {
-        this.denunciaEstado = denunciaEstado;
+        this.listaDenunciaEstado = denunciaEstado;
     }
 
     /**
      * @return the fallaTecnica
      */
-    public FallaTecnica getFallaTecnica() {
-        return fallaTecnica;
+    public List<FallaTecnica> getFallasTecnica() {
+        return fallasTecnica;
     }
 
     /**
      * @param fallaTecnica the fallaTecnica to set
      */
-    public void setFallaTecnica(FallaTecnica fallaTecnica) {
-        this.fallaTecnica = fallaTecnica;
+    public void setFallasTecnica(List<FallaTecnica> fallaTecnica) {
+        this.fallasTecnica = fallaTecnica;
+    }
+
+    public void addFallaTecnica(FallaTecnica nuevaFalla){
+        fallasTecnica.add(nuevaFalla);
     }
 }

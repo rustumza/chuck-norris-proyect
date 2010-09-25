@@ -68,11 +68,17 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
 
     @Override
     public ObjetoPersistente materializar(String oid){
-        ObjetoPersistente objetoEncontrado = null;
+
+        ObjetoPersistente objetoEncontrado;
         List<ObjetoPersistente> objetoRetornado = new ArrayList<ObjetoPersistente>();
+
         String consulta = armarSelectOid(oid);
+        System.out.println(consulta);
         ResultSet rs = Conexion.getInstance().select(consulta);
+
         objetoRetornado = convertirRegistrosAObjetos(rs);
+
+        objetoEncontrado = (ObjetoPersistente) objetoRetornado.get(0);
                 
         return objetoEncontrado;
     }

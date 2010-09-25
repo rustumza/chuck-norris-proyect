@@ -4,17 +4,19 @@
  */
 package Persistencia.Entidades;
 
+import java.util.Date;
+
 /**
  *
  * @author Bicentenario
  */
 public interface DenunciaEstado extends SuperDruperInterfaz {
 
-    public int getfechacambioestado();
+    public Date getfechacambioestado();
 
     public boolean isindicadorestadoactual();
 
-    public void setfechacambioestado(int newVal);
+    public void setfechacambioestado(Date newVal);
 
     public void setindicadorestadoactual(boolean newVal);
 

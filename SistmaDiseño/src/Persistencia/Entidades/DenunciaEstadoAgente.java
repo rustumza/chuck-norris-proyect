@@ -5,6 +5,7 @@
 package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.FachadaInterna;
+import java.util.Date;
 
 /**
  *
@@ -13,14 +14,11 @@ import Persistencia.ExpertosPersistencia.FachadaInterna;
 public class DenunciaEstadoAgente extends ObjetoPersistente implements DenunciaEstado {
 
     private DenunciaEstadoImplementacion implementacion;
+    private String oidDenuncia;
     private String oidEstadoDenuncia;
-    
     private boolean estadoDenunciaBuscadoscado;
-    public String getOidEstadoDenuncia;
-    public String getIndicadoresEstadoActual;
-    private boolean denunciabuscada;
 
-    public int getfechacambioestado() {
+    public Date getfechacambioestado() {
         return implementacion.getfechacambioestado();
     }
 
@@ -30,7 +28,7 @@ public class DenunciaEstadoAgente extends ObjetoPersistente implements DenunciaE
         return implementacion.isindicadorestadoactual();
     }
 
-    public void setfechacambioestado(int newVal) {
+    public void setfechacambioestado(Date newVal) {
         implementacion.setfechacambioestado(newVal);
     }
 
@@ -77,28 +75,31 @@ public class DenunciaEstadoAgente extends ObjetoPersistente implements DenunciaE
         this.estadoDenunciaBuscadoscado = estadoDenunciaBuscadoscado;
     }
 
-    public String getOidDenuncia() {
-        return implementacion.getOidDenuncia();
-    }
 
     public String getOidEstadoDenuncia() {
-        return implementacion.getOidEstadoDenuncia();
+        return oidEstadoDenuncia;
     }
 
     public Boolean getIndicadoresEstadoActual() {
         return implementacion.getIndicadoresEstadoActual();
     }
 
-    public void setOidDenuncia(String OidDenuncia) {
-         implementacion.setOidDenuncia(OidDenuncia);
+    public void setOidEstadoDenuncia(String nuevoOidEstadoDenuncia) {
+        oidEstadoDenuncia = nuevoOidEstadoDenuncia;
     }
 
-    public void setDenunciaBuscado(boolean denunciabuscada) {
-        this.denunciabuscada = denunciabuscada;
+    /**
+     * @return the oidDenuncia
+     */
+    public String getOidDenuncia() {
+        return oidDenuncia;
     }
 
-    public void setOidEstadoDenuncia(String OidEstadoDenuncia) {
-        implementacion.setOidEstadoDenuncia(OidEstadoDenuncia);
+    /**
+     * @param oidDenuncia the oidDenuncia to set
+     */
+    public void setOidDenuncia(String oidDenuncia) {
+        this.oidDenuncia = oidDenuncia;
     }
 
     
