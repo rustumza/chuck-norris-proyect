@@ -77,7 +77,7 @@ public class IntermediarioPersistenciaDenunciante extends IntermediarioRelaciona
                 + "Celular = '"+denunciante.getcelular() + "', "
                 + "Email = '"+denunciante.getemail()+"', "
                 + "TelefonoFijo = '"+denunciante.gettelefonofijo()+"', "
-                + "OIDPersonaPadron = '"+ denunciante.getOidPersonaPadron()+"'"
+                + "OIDPersonaPadron = '"+ denunciante.getOidPersonaPadron()+"' "
                 + "WHERE OIDDenunciante ='"+denunciante.getOid()+ "'";
                 
 
