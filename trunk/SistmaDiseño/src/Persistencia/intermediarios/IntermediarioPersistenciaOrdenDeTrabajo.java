@@ -39,26 +39,38 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
+        String condicion = null;
+        String join = null;
 
         select = "SELECT * FROM ordendetrabajo";
         boolean addjoin = false;
 
         if (!criterios.isEmpty()) {
+
             if (criterios.get(0).getAtributo().equals("estado")) {
                 addjoin = true;
-                String join = " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
-                        + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
-                        + "WHERE estadoordentrabajo.NombreEstado = '" + criterios.get(0).getValor() + "'";
+                join = " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+                        + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo";
+                condicion = " WHERE estadoordentrabajo.NombreEstado = '" + criterios.get(0).getValor() + "'";
+            } else {
+                condicion = " WHERE ";
             }
-            String condicion = " WHERE ";
+
             for (int i = 0; i < criterios.size(); i++) {
+                if (addjoin && i == 0) {
+                    continue;
+                }
                 if (i > 0) {
-                    select = select + " AND ";
+                    condicion = condicion + " AND ";
                 }
 
-                select = select + "ordendetrabajo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                condicion = condicion + "ordendetrabajo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
 
+        }
+
+        if (addjoin) {
+            select = select + join + condicion;
         }
 
         return select;
@@ -149,6 +161,6 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
 }

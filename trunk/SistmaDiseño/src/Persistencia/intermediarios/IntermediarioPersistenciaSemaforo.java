@@ -133,7 +133,7 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

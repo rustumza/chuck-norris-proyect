@@ -122,7 +122,7 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
         //busca el padre
         OrdenTrabajoAgente padre = (OrdenTrabajoAgente) FachadaInterna.getInstancia().buscar("OrdenTrabajo", objPer.getOid());
         //setea los datos del padre a la entidad

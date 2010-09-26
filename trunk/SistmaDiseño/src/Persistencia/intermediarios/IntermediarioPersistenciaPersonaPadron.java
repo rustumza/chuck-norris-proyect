@@ -122,6 +122,6 @@ public class IntermediarioPersistenciaPersonaPadron extends IntermediarioRelacio
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
 }
