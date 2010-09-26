@@ -9,30 +9,37 @@ import DTO.DTOOrdenes;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.OrdenTrabajo;
+import Utilidades.FormateadorFechas;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author informatica
  */
 public class ControladorConsultarOrdenesPendientes {
-    ExpertoConsultarOrdenesPendientes ecop;
-    //PantallaEjecutarOrdenTrabajo pantalla;
+    ExpertoConsultarOrdenesPendientes experto;
+    PantallaConsultarOrdenesPendientes pantalla;
 
     public ControladorConsultarOrdenesPendientes(){
-        //pantalla = new PantallaEjecutarOrdenTrabajo(this);
-        ecop = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
+        pantalla = new PantallaConsultarOrdenesPendientes(this);
+        experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
     }
 
 public List<OrdenTrabajo> buscarOrdenes(String fechaString){
 
-    ecop = (ExpertoConsultarOrdenesPendientes)FabricaExpertos.getInstance().getExperto("ExpertoConsultarOrdenesPendientes");
-    Date fechaDate = new Date(fechaString);
-
-
+    experto = (ExpertoConsultarOrdenesPendientes)FabricaExpertos.getInstance().getExperto("ExpertoConsultarOrdenesPendientes");
+    Date fechaDate = null;
+        try {
+            fechaDate = FormateadorFechas.getInstancia().StringAFecha(fechaString);
+        } catch (ParseException ex) {
+            Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
-return ecop.buscarOrdenes(fechaDate);
+return experto.buscarOrdenes(fechaDate);
 }
 
     void iniciar() {

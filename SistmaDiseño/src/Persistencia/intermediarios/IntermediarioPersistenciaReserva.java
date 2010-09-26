@@ -96,10 +96,8 @@ public class IntermediarioPersistenciaReserva extends IntermediarioRelacional {
                 nuevaReserva.setIsNuevo(false);
                 nuevaReserva.setOid(rs.getString("OIDReserva"));
                 nuevaReserva.setcodigoreserva(Integer.valueOf(rs.getString("CodigoReserva")));
+                nuevaReserva.setfecha(rs.getDate("FechaReserva"));
 
-                    nuevaReserva.setfecha(FormateadorFechas.getInstancia().StringAFecha(rs.getString("FechaReserva")));
-
-                
                 nuevaReserva.setReservaElementoTrabajoBuscado(false);
 
                 nuevosObjetos.add(nuevaReserva);

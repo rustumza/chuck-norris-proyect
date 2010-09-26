@@ -18,11 +18,8 @@ import Persistencia.Fabricas.FabricaEntidades;
 import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,9 +41,16 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
         String select;
 
         select = "SELECT * FROM ordendetrabajo";
+        boolean addjoin = false;
 
         if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
+            if (criterios.get(0).getAtributo().equals("estado")) {
+                addjoin = true;
+                String join = " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+                        + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
+                        + "WHERE estadoordentrabajo.NombreEstado = '" + criterios.get(0).getValor() + "'";
+            }
+            String condicion = " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
                 if (i > 0) {
                     select = select + " AND ";
@@ -54,6 +58,7 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
 
                 select = select + "ordendetrabajo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
+
         }
 
         return select;
@@ -96,11 +101,11 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
                 nuevaOrdenTrabajo.setIsNuevo(false);
                 nuevaOrdenTrabajo.setOid(rs.getString("OIDOrdenDeTrabajo"));
                 nuevaOrdenTrabajo.setOidEquipoDeTrabajo(rs.getString("OIDEquipoDeTrabajo"));
-                
-                nuevaOrdenTrabajo.setfechainiciotrabajo(FormateadorFechas.getInstancia().StringAFecha(rs.getString("FechaInicioTrabajo")));
-                nuevaOrdenTrabajo.setfechafintrabajo(FormateadorFechas.getInstancia().StringAFecha(rs.getString("FechaFinTrabajo")));
-                nuevaOrdenTrabajo.setfechainicioplanificada(FormateadorFechas.getInstancia().StringAFecha(rs.getString("FechaInicioPlanificada")));
-                
+
+                nuevaOrdenTrabajo.setfechainiciotrabajo(rs.getDate("FechaInicioTrabajo"));
+                nuevaOrdenTrabajo.setfechafintrabajo(rs.getDate("FechaFinTrabajo"));
+                nuevaOrdenTrabajo.setfechainicioplanificada(rs.getDate("FechaInicioPlanificada"));
+
                 nuevaOrdenTrabajo.setduracionprevistatrabajo(Integer.valueOf(rs.getString("DuracionPrevistaTrabajo")));
                 nuevaOrdenTrabajo.settipoordentrabajo(rs.getString("Tipo"));
                 nuevaOrdenTrabajo.setEquipoDeTrabajoBuscado(false);
@@ -145,6 +150,5 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer) {
-        
     }
 }
