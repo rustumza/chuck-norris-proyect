@@ -26,6 +26,7 @@ public ControladorConsultarAvanceDeReclamo(){
 }
 
 public void iniciar(){
+    pantalla.setTitle("Consultar Avance de Reclamo");
     pantalla.setLocationRelativeTo(null);
     pantalla.setVisible(true);
 }

@@ -121,7 +121,7 @@ public class IntermediarioPersistenciaFallaTecnica extends IntermediarioRelacion
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
         //busca el padre
         TrabajoAgente padre = (TrabajoAgente) FachadaInterna.getInstancia().buscar("Trabajo", objPer.getOid());
 

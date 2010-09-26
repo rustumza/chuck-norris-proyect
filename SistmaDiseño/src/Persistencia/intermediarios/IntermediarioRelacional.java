@@ -56,7 +56,7 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
         objetosEncontrados = convertirRegistrosAObjetos(rs);
 
         for (ObjetoPersistente objPer : objetosEncontrados) {
-            setearDatosPadre(objPer);
+            setearDatosPadre(objPer, criterios);
         }
 
         for (ObjetoPersistente objPer : objetosEncontrados) {
@@ -79,6 +79,9 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
         objetoRetornado = convertirRegistrosAObjetos(rs);
 
         objetoEncontrado = (ObjetoPersistente) objetoRetornado.get(0);
+
+        setearDatosPadre(objetoEncontrado, null);
+        buscarObjRelacionados(objetoEncontrado);
                 
         return objetoEncontrado;
     }
@@ -96,7 +99,7 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
     public abstract void guardarObjetosRelacionados(ObjetoPersistente obj);
     public abstract void buscarObjRelacionados(ObjetoPersistente obj);
 
-    public abstract  void setearDatosPadre(ObjetoPersistente objPer);
+    public abstract  void setearDatosPadre(ObjetoPersistente objPer,List<Criterio> listacCriterios);
 
    
 

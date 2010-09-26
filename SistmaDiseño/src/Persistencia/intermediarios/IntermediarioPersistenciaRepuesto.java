@@ -115,7 +115,7 @@ public class IntermediarioPersistenciaRepuesto extends IntermediarioRelacional{
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
         ElementoTrabajoAgente padre = (ElementoTrabajoAgente) FachadaInterna.getInstancia().buscar("ElementoTrabajo", objPer.getOid());
 
         ((RepuestoAgente)objPer).setcodigosistemaexterno(padre.getcodigosistemaexterno());

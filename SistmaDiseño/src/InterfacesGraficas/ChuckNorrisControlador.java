@@ -5,10 +5,7 @@
  */
 package InterfacesGraficas;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaBlueSteelLookAndFeel;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
 /**

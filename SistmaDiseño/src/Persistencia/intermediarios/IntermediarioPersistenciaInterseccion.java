@@ -115,7 +115,7 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
     }
 
     @Override
-    public void setearDatosPadre(ObjetoPersistente objPer) {
+    public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
 
         UbicacionAgente padre = (UbicacionAgente) FachadaInterna.getInstancia().buscar("Ubicacion", objPer.getOid());
 

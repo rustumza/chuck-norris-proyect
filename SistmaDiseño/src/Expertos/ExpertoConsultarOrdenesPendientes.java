@@ -34,19 +34,15 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         }
 
 
-
-
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "=", "pendiente"));
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("fechaInicioTrabajo", "=", "fecha"));
-        List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("OrdenTrabajo", listaDeCriterios);
+        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
+        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("fechaInicioTrabajo", "=",FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(fecha)));
+        List<SuperDruperInterfaz> ordenesEncontradas = FachadaExterna.getInstancia().buscar("OrdenTrabajo", listaDeCriterios);
         List<OrdenTrabajo> listaOrdenTrabajo = new ArrayList<OrdenTrabajo>();
-        for (SuperDruperInterfaz aux : listaDeInterfaces) {
-            listaOrdenTrabajo.add((OrdenTrabajo) aux);
+        for (SuperDruperInterfaz orden : ordenesEncontradas) {
+            listaOrdenTrabajo.add((OrdenTrabajo) orden);
         }
-
         return listaOrdenTrabajo;
-
     }
 
     public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) {
