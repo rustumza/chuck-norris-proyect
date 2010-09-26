@@ -49,8 +49,8 @@ public class Conexion {
        try{
             String userName = "fido";
             String password = "fido";
-            String url = "jdbc:mysql://localhost:3306/dise";
-            //String url = "jdbc:mysql://localhost:3306/disenio";
+            //String url = "jdbc:mysql://localhost:3306/dise";
+            String url = "jdbc:mysql://localhost:3306/disenio";
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
@@ -79,6 +79,7 @@ public class Conexion {
         try {
             resultado = conn.createStatement().executeUpdate(query);
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
