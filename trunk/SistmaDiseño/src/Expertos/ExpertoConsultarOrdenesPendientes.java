@@ -31,6 +31,10 @@ import java.util.List;
  */
 public class ExpertoConsultarOrdenesPendientes implements Experto {
 
+    public static final int ordenTrabajo = 1;
+    public static final int ordenMantenimiento = 2;
+    public static final int ordenReparacion = 3;
+
     public boolean validarFecha(Date fecha) {
 
         return (new Date().compareTo(fecha) >= 0);
@@ -95,19 +99,38 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         return ordenesEncontradas;
     }
 
-    public List<DTOOrden> buscarOrdenesDTO(Date fecha) {
+    public List<DTOOrden> buscarOrdenesDTO(Date fecha, int tipoOrden) {
         List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
-        List<OrdenTrabajo> listaOrdenes = buscarOrdenes(fecha);
+        List<OrdenTrabajo> listaOrdenes = new ArrayList<OrdenTrabajo>();
 
-        for (OrdenTrabajo ordenTrabajo : listaOrdenes) {//Por cada orden de trabajo encontrada
+        switch (tipoOrden) {
+            case ordenTrabajo:
+                listaOrdenes = buscarOrdenes(fecha);
+                break;
+            case ordenMantenimiento:
+                for (OrdenDeMantenimiento ordenMant : buscarOrdenesMantPendiente(fecha)) {
+                    listaOrdenes.add((OrdenDeMantenimiento) ordenMant);
+                }
+                break;
+            case ordenReparacion:
+                for (OrdenDeReparacion ordenRep : buscarOrdenesReparacionPendiente(fecha)) {
+                    listaOrdenes.add((OrdenDeMantenimiento) ordenRep);
+                }
+                break;
+            default:
+                break;
+        }
+
+
+        for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
             DTOOrden nuevoDTO = new DTOOrden();
 
-            nuevoDTO.setDuracionPrevista(ordenTrabajo.getduracionprevistatrabajo());
-            nuevoDTO.setFechaFinTrabajo(ordenTrabajo.getfechafintrabajo());
-            nuevoDTO.setFechaInicioPlanificada(ordenTrabajo.getfechainicioplanificada());
-            nuevoDTO.setFechaInicioTrabajo(ordenTrabajo.getfechainiciotrabajo());
+            nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
+            nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
+            nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
+            nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
 
-            for (Reserva reserva : ordenTrabajo.getRervas()) {//por cada reserva de la orden de trabajo
+            for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
                 DTOReserva nuevaReserva = new DTOReserva();
                 nuevaReserva.setFechaReserva(reserva.getfecha());
 
@@ -117,13 +140,13 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
                 for (ReservaElementoTrabajo reservaElementoTrabajo : reserva.getReservaElementoTrabajo()) {//por cada elemento reservado
                     if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("EQUIPAMIENTO")) {
                         DTOEquipamientoReservado nuevoEquipamiento = new DTOEquipamientoReservado();
-                        nuevoEquipamiento.setNombreEquipamiento(((Equipamiento)reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
+                        nuevoEquipamiento.setNombreEquipamiento(((Equipamiento) reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
                         nuevoEquipamiento.setCantidad(reservaElementoTrabajo.getcantidadreservada());
 
                         listaEquipamiento.add(nuevoEquipamiento);
-                    }else if(reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")){
+                    } else if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")) {
                         DTORepuestoReservado nuevoRepuesto = new DTORepuestoReservado();
-                        nuevoRepuesto.setNombre(((Repuesto)reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
+                        nuevoRepuesto.setNombre(((Repuesto) reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
                         nuevoRepuesto.setCantidad(reservaElementoTrabajo.getcantidadreservada());
 
                         listaRepuestos.add(nuevoRepuesto);
