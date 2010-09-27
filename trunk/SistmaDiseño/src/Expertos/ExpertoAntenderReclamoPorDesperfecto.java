@@ -61,7 +61,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
     public List<Calle> buscarCalle(String calle){
 
-        Criterio criterio = FachadaExterna.getInstancia().crearCriterio("Calle", "LIKE", calle);
+        Criterio criterio = FachadaExterna.getInstancia().crearCriterio("NombreCalle", "LIKE", calle);
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(criterio);
         List<SuperDruperInterfaz> listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("Calle", listaDeCriterios);
@@ -74,11 +74,40 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
     public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2){
 
+
+        //Busco todas las intersecciones de la calle 1
         List<Criterio> criterioBuscarInterseccion = new ArrayList<Criterio>();
-        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle1", "=", calle1));
-        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle2", "=", calle2));
+        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle", "=", calle1));
         List<SuperDruperInterfaz> listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("Interseccion", criterioBuscarInterseccion);
-        Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("Interseccion", "=", (Interseccion)listaSuperDruperInterfaz.get(0));
+        List<Interseccion> listaInterseccionCalle1 = new ArrayList<Interseccion>();
+        for (SuperDruperInterfaz aux : listaSuperDruperInterfaz) {
+            listaInterseccionCalle1.add((Interseccion) aux);
+        }
+        //busco todas las intersecciones de la calle 2
+        criterioBuscarInterseccion = new ArrayList<Criterio>();
+        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle", "=", calle1));
+        listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("Interseccion", criterioBuscarInterseccion);
+        List<Interseccion> listaInterseccionCalle2 = new ArrayList<Interseccion>();
+        for (SuperDruperInterfaz aux : listaSuperDruperInterfaz) {
+            listaInterseccionCalle2.add((Interseccion) aux);
+        }
+        Interseccion interseccionAUsar = null;
+        //comparar intersecciones
+        for (Interseccion interseccion1 : listaInterseccionCalle1) {
+            for (Interseccion interseccion2 : listaInterseccionCalle2) {
+                if(interseccion1.getcodigoubicacion() == interseccion2.getcodigoubicacion());
+                    interseccionAUsar = interseccion1;
+                    break;
+            }
+            if(interseccionAUsar!= null)
+                break;
+        }
+
+        if(interseccionAUsar!=null){
+            //mandar excepcion porqeu esas calles no se intersectarn
+        }
+        
+        Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("Interseccion", "=", interseccionAUsar);
         List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
         listaDeCriterio.add(criterioBuscarSemaforo);
         List<SuperDruperInterfaz> listaDeInterfaz = FachadaExterna.getInstancia().buscar("Semaforo", listaDeCriterio);

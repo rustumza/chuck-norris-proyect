@@ -12,6 +12,11 @@ public class CalleAgente extends ObjetoPersistente implements Calle {
 
     private CalleImplementacion implementacion;
 
+    public String toString(){
+
+        return getnombrecalle();
+    }
+
     public int getcodigoCalle() {
         return getImplementacion().getcodigoCalle();
     }

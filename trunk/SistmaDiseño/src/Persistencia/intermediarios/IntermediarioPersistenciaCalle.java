@@ -40,7 +40,6 @@ public class IntermediarioPersistenciaCalle extends IntermediarioRelacional {
                 if (i > 0) {
                     select = select + " AND ";
                 }
-
                 select = select + "calle." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
         }
