@@ -9,6 +9,7 @@ import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenDeMantenimientoAgente;
 import Persistencia.Entidades.OrdenTrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,6 +43,8 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         if (!criterios.isEmpty()) {
             select = select + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
+                if(criterios.get(i).getAtributo().equals("estado"))
+                    continue;
                 if (i > 0) {
                     select = select + " AND ";
                 }
@@ -126,8 +129,10 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
+
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", objPer.getOid()));
         //busca el padre
-        OrdenTrabajoAgente padre = (OrdenTrabajoAgente) FachadaInterna.getInstancia().buscar("OrdenTrabajo", objPer.getOid());
+        OrdenTrabajoAgente padre = (OrdenTrabajoAgente) FachadaInterna.getInstancia().buscar("OrdenTrabajo", listaCriterios);
 
         //setea los datos del padre a la entidad
         ((OrdenTrabajoAgente)objPer).setOidEquipoDeTrabajo(padre.getOidEquipoDeTrabajo());
