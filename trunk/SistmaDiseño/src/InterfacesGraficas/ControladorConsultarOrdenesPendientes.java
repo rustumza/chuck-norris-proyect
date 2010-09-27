@@ -5,7 +5,7 @@
 
 package InterfacesGraficas;
 
-import DTO.DTOOrdenes;
+import DTO.DTOOrden;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.OrdenTrabajo;
