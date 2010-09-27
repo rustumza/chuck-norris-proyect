@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author diego
  */
-public class InterseccionAgente extends ObjetoPersistente implements Interseccion {
+public class InterseccionAgente extends UbicacionAgente implements Interseccion {
 
     private InterseccionImplementacion implementacion;
     private List<String> listaOidCalle;

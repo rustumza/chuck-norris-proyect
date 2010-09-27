@@ -29,7 +29,10 @@ public class FabricaCriterios {
         Criterio nuevoCriterio = new Criterio();
         nuevoCriterio.setAtributo(atributo);
         nuevoCriterio.setOperador(operador);
-        nuevoCriterio.setValor(valor);
+        if(operador.equalsIgnoreCase("LIKE"))
+            nuevoCriterio.setValor("%" + valor + "%");
+        else
+            nuevoCriterio.setValor(valor);
 
         return nuevoCriterio;
     }

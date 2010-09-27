@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author RUSTU
  */
-public interface Interseccion extends SuperDruperInterfaz {
+public interface Interseccion extends Ubicacion{
 
     public List<Calle> getCalles();
 
