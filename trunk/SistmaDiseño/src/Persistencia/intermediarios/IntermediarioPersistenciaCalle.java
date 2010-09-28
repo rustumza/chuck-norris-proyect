@@ -30,19 +30,47 @@ public class IntermediarioPersistenciaCalle extends IntermediarioRelacional {
 
     public String armarSelect(List<Criterio> criterios) {
 
+       
         String select;
-
+        String condicion = "";
+        String join = "";
+        boolean addjoin = false;
         select = "SELECT * FROM calle";
 
         if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
+
             for (int i = 0; i < criterios.size(); i++) {
-                if (i > 0) {
-                    select = select + " AND ";
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion")) {
+                    join = " JOIN interseccioncalle ON calle.OIDCalle = interseccioncalle.OIDCalle ";
+                    addjoin=true;
+                    criterios.get(i).setAtributo("OIDInterseccion");
+                    if(i>0){
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "interseccioncalle." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }else{
+                    if (i > 0) {
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "calle." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
                 }
-                select = select + "calle." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
+
+            if(addjoin==true)
+                select = select + join;
+
+
+            select = select + " WHERE ";
+
+            select = select + condicion;
+
         }
+
+
+
+
+
+
 
         return select;
 
