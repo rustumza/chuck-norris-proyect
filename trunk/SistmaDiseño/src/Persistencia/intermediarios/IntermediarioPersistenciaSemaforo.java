@@ -43,9 +43,11 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
 
         String condicion = "";
 
-        while (!criterios.isEmpty()) {
+        if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
+                if(criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion")|criterios.get(i).getAtributo().equalsIgnoreCase("CalleSimple"))
+                    criterios.get(i).setAtributo("OIDUbicacion");
                 if (i > 0) {
                     condicion = condicion + " AND ";
                 }
@@ -124,16 +126,16 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 }

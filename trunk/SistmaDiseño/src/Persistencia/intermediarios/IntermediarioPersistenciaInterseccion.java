@@ -112,7 +112,8 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
                 nuevaInterseccion.setcodigoubicacion(rs.getInt("CodigoInterseccion"));
 
                 nuevaInterseccion.setIsNuevo(false);
-
+                nuevaInterseccion.setOidsCalle(new ArrayList<String>());
+                nuevaInterseccion.setCalles(new ArrayList<Calle>());
                 nuevosObjetos.add(nuevaInterseccion);
 
             }
@@ -136,6 +137,7 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
         for (SuperDruperInterfaz calle : FachadaInterna.getInstancia().buscar("Calle", listaCriterios)) {
             ((InterseccionAgente) obj).addOidCalle(((ObjetoPersistente) calle).getOid());
         }
+
     }
 
     @Override
