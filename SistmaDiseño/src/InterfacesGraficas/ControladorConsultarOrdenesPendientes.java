@@ -12,6 +12,7 @@ import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
+import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class ControladorConsultarOrdenesPendientes {
 
     void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
         ((ModeloTablaReservaEquipamiento)pantalla.getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
+        ((ModeloTablaResevaRepuesto)pantalla.getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
 
