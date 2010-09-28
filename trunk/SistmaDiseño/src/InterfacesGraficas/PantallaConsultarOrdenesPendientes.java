@@ -15,6 +15,7 @@ import DTO.DTOReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
+import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -58,7 +59,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
-                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva)tblOrdenesTrabajo.getModel()).getRow(fila);
+                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva)tblReservas.getModel()).getRow(fila);
                 controlador.mostrarDetalleReserva(reservaSeleccionada);
             }
         });
@@ -89,7 +90,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEquipamientoReservado = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblRepuestosReservado = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -191,18 +192,8 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         tblEquipamientoReservado.setModel(new ModeloTablaReservaEquipamiento());
         jScrollPane2.setViewportView(tblEquipamientoReservado);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        tblRepuestosReservado.setModel(new ModeloTablaResevaRepuesto());
+        jScrollPane3.setViewportView(tblRepuestosReservado);
 
         jLabel1.setText("Equipamiento");
 
@@ -326,7 +317,6 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JPanel panelReserva;
     private javax.swing.JRadioButton radioBtnOrdenMant;
@@ -334,6 +324,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioBtnOrdenTodas;
     private javax.swing.JTable tblEquipamientoReservado;
     private javax.swing.JTable tblOrdenesTrabajo;
+    private javax.swing.JTable tblRepuestosReservado;
     private javax.swing.JTable tblReservas;
     // End of variables declaration//GEN-END:variables
 
@@ -356,5 +347,12 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
      */
     public javax.swing.JTable getTblReservas() {
         return tblReservas;
+    }
+
+    /**
+     * @return the tblRepuestosReservado
+     */
+    public javax.swing.JTable getTblRepuestosReservado() {
+        return tblRepuestosReservado;
     }
 }
