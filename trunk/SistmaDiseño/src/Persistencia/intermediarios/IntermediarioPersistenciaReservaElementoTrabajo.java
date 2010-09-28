@@ -86,9 +86,10 @@ ReservaElementoTrabajoAgente elementoTrabajo = (ReservaElementoTrabajoAgente) ob
 
                 nuevaReservaElementoTrabajo.setOid(rs.getString("OIDReservaElementoTrabajo"));
                 nuevaReservaElementoTrabajo.setIsNuevo(false);
-                nuevaReservaElementoTrabajo.setOidElementoTrabajo(rs.getString("OIDReservaElementoTrabajo"));
+                nuevaReservaElementoTrabajo.setOidElementoTrabajo(rs.getString("OIDElementoTrabajo"));
                 nuevaReservaElementoTrabajo.setElementoTrabajoBuscado(false);
-                nuevaReservaElementoTrabajo.setcantidadreservada(Integer.valueOf(rs.getString("CantidadReservada")));
+                nuevaReservaElementoTrabajo.setOidReserva(rs.getString("OIDReserva"));
+                nuevaReservaElementoTrabajo.setcantidadreservada(rs.getInt("CantidadReservada"));
 
                 nuevosObjetos.add(nuevaReservaElementoTrabajo);
 

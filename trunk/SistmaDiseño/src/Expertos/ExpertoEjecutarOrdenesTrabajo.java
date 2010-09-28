@@ -5,7 +5,6 @@
 //4287227 pizzeria
 package Expertos;
 
-import DTO.DTOOrdenesTrabajo;
 import Fabricas.FabricaAdaptadoresSistemaStock;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.EstadoOrdenTrabajo;

@@ -45,17 +45,20 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
+        List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
 
-
-        List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("fechaInicioTrabajo", "=", FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(fecha)));
-        List<SuperDruperInterfaz> ordenesEncontradas = FachadaExterna.getInstancia().buscar("OrdenTrabajo", listaDeCriterios);
-        List<OrdenTrabajo> listaOrdenTrabajo = new ArrayList<OrdenTrabajo>();
-        for (SuperDruperInterfaz orden : ordenesEncontradas) {
-            listaOrdenTrabajo.add((OrdenTrabajo) orden);
+        
+        for (OrdenDeReparacion orden : buscarOrdenesReparacionPendiente(fecha)) {
+            ordenesEncontradas.add(orden);
         }
-        return listaOrdenTrabajo;
+
+        for (OrdenDeMantenimiento orden : buscarOrdenesMantPendiente(fecha)) {
+            ordenesEncontradas.add(orden);
+        }
+
+
+        return ordenesEncontradas;
+
     }
 
     public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) {
@@ -68,8 +71,9 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
         List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioTrabajo", "=", FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(fecha)));
+        
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenDeMantenimiento", listaCriterios)) {
             ordenesEncontradas.add((OrdenDeMantenimiento) orden);
@@ -88,11 +92,12 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
         List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
+        
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql((fecha))));
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioTrabajo", "=", FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(fecha)));
 
 
-        for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenDeReparacion", listaCriterios)) {
+        for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenReparacion", listaCriterios)) {
             ordenesEncontradas.add((OrdenDeReparacion) orden);
         }
 
@@ -125,6 +130,12 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
             DTOOrden nuevoDTO = new DTOOrden();
 
+            nuevoDTO.setTipo(orden.gettipoordentrabajo());
+            if (orden.gettipoordentrabajo().equalsIgnoreCase("REPARACION")) {
+                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
+            } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
+                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
+            }
             nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
             nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
             nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
@@ -134,17 +145,19 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
                 DTOReserva nuevaReserva = new DTOReserva();
                 nuevaReserva.setFechaReserva(reserva.getfecha());
+                nuevaReserva.setNumeroReserva(reserva.getcodigoreserva());
 
                 List<DTOEquipamientoReservado> listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
                 List<DTORepuestoReservado> listaRepuestos = new ArrayList<DTORepuestoReservado>();
 
                 for (ReservaElementoTrabajo reservaElementoTrabajo : reserva.getReservaElementoTrabajo()) {//por cada elemento reservado
-                    if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("EQUIPAMIENTO")) {
+                    if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")) {
                         DTOEquipamientoReservado nuevoEquipamiento = new DTOEquipamientoReservado();
                         nuevoEquipamiento.setNombreEquipamiento(((Equipamiento) reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
                         nuevoEquipamiento.setCantidad(reservaElementoTrabajo.getcantidadreservada());
 
                         listaEquipamiento.add(nuevoEquipamiento);
+
                     } else if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")) {
                         DTORepuestoReservado nuevoRepuesto = new DTORepuestoReservado();
                         nuevoRepuesto.setNombre(((Repuesto) reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
@@ -159,6 +172,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
                 nuevoDTO.getListaReservas().add(nuevaReserva);
             }
 
+            listaDTO.add(nuevoDTO);
         }
 
         return listaDTO;

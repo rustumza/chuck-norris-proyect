@@ -94,8 +94,13 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
 
     public List<Trabajo> getTrabajos() {
         if (isTrabajosBuscado() == false) {
-            for (String oidTrabBus : oidTrabajos) {
-                implementacion.addTrabajo((Trabajo) FachadaInterna.getInstancia().buscar("Trabajo", oidTrabBus));
+            if (oidTrabajos != null) {
+                for (String oidTrabBus : oidTrabajos) {
+                    implementacion.addTrabajo((Trabajo) FachadaInterna.getInstancia().buscar("Trabajo", oidTrabBus));
+                }
+                return implementacion.getTrabajos();
+            }else{
+                implementacion.setTrabajos(null);
             }
         }
 
@@ -213,7 +218,6 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
         implementacion.setListaEstadosOrdenTrabajo(listaEstadosOrdenTrabajo);
     }
 
-    
     /**
      * @return the ordenTrabajoEstadosBuscado
      */

@@ -212,7 +212,7 @@ public class FabricaIntermediarios {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaOrdenDeMantenimiento());
         }
 
-        if (nombre.equals("OrdenDeTrabajo")) {
+        if (nombre.equals("OrdenTrabajo")) {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaOrdenDeTrabajo());
         }
 

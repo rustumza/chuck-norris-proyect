@@ -64,4 +64,12 @@ public class FormateadorFechas {
 
         return nuevaFecha;
     }
+
+    public String formatearAMySql(Date fecha){
+
+        String fechaFormateada = formatMySQLyyyyMMdd.format(fecha);
+
+        return  fechaFormateada;
+
+    }
 }
