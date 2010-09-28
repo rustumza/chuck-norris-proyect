@@ -85,7 +85,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         }
         //busco todas las intersecciones de la calle 2
         criterioBuscarInterseccion = new ArrayList<Criterio>();
-        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle", "=", calle1));
+        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle", "=", calle2));
         listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("Interseccion", criterioBuscarInterseccion);
         List<Interseccion> listaInterseccionCalle2 = new ArrayList<Interseccion>();
         for (SuperDruperInterfaz aux : listaSuperDruperInterfaz) {
