@@ -22,6 +22,7 @@ public class DTOOrden {
     private Date fechaInicioPlanificada;
     private String tipo;
     private List<DTOReserva> listaReservas;
+    private String nombreEquipo;
 
     /**
      * @return the nroOrden
@@ -121,6 +122,20 @@ public class DTOOrden {
      */
     public void setListaReservas(List<DTOReserva> listaReservas) {
         this.listaReservas = listaReservas;
+    }
+
+    /**
+     * @return the nombreEquipo
+     */
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    /**
+     * @param nombreEquipo the nombreEquipo to set
+     */
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
     }
 
 }

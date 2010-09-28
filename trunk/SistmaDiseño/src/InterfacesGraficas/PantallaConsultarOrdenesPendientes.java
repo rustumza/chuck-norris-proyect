@@ -11,11 +11,17 @@
 
 package InterfacesGraficas;
 
+import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
+
 /**
  *
  * @author diego
  */
 public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
+
+    public static final int ordenTrabajo = 1;
+    public static final int ordenMantenimiento = 2;
+    public static final int ordenReparacion = 3;
 
     ControladorConsultarOrdenesPendientes controlador;
 
@@ -40,15 +46,15 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
 
         grupoTipoOrden = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        radioBtnOrdenRep = new javax.swing.JRadioButton();
         lblFecha = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        radioBtnOrdenMant = new javax.swing.JRadioButton();
+        radioBtnOrdenTodas = new javax.swing.JRadioButton();
         btnBuscar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        dataChsFecha = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblOrdenesTrabajo = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -61,24 +67,24 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Consulta de Órdenes de Trabajo"));
 
-        grupoTipoOrden.add(jRadioButton1);
-        jRadioButton1.setLabel("Tareas de Reparación");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        grupoTipoOrden.add(radioBtnOrdenRep);
+        radioBtnOrdenRep.setText("Orden de Reparación");
+        radioBtnOrdenRep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                radioBtnOrdenRepActionPerformed(evt);
             }
         });
 
         lblFecha.setText("Fecha");
 
-        grupoTipoOrden.add(jRadioButton2);
-        jRadioButton2.setText("Tareas de Mantenimiento");
+        grupoTipoOrden.add(radioBtnOrdenMant);
+        radioBtnOrdenMant.setText("Orden de Mantenimiento");
 
-        grupoTipoOrden.add(jRadioButton3);
-        jRadioButton3.setLabel("Todas");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        grupoTipoOrden.add(radioBtnOrdenTodas);
+        radioBtnOrdenTodas.setLabel("Todas");
+        radioBtnOrdenTodas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                radioBtnOrdenTodasActionPerformed(evt);
             }
         });
 
@@ -95,35 +101,30 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
-                .addContainerGap(76, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(159, Short.MAX_VALUE)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataChsFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                    .addComponent(radioBtnOrdenRep)
+                    .addComponent(radioBtnOrdenMant)
+                    .addComponent(radioBtnOrdenTodas)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFecha)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dataChsFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFecha))
+                .addGap(18, 18, 18)
+                .addComponent(radioBtnOrdenRep)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(radioBtnOrdenMant)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(radioBtnOrdenTodas)
                 .addGap(9, 9, 9)
                 .addComponent(btnBuscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -131,18 +132,8 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Órdenes de Trabajo"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        tblOrdenesTrabajo.setModel(new ModeloTablaOrdenesTrabajo());
+        jScrollPane1.setViewportView(tblOrdenesTrabajo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -157,7 +148,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -251,16 +242,25 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void radioBtnOrdenRepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtnOrdenRepActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jRadioButton1ActionPerformed
+}//GEN-LAST:event_radioBtnOrdenRepActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void radioBtnOrdenTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtnOrdenTodasActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jRadioButton3ActionPerformed
+}//GEN-LAST:event_radioBtnOrdenTodasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        int seleccion;
+        if(radioBtnOrdenMant.isEnabled()){
+            seleccion = ordenMantenimiento;
+        }else if(radioBtnOrdenRep.isEnabled()){
+            seleccion = ordenReparacion;
+        }else {
+            seleccion = ordenTrabajo;
+        }
+        controlador.buscarOrdenes(dataChsFecha.getDate(), seleccion);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -276,23 +276,30 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private com.toedter.calendar.JDateChooser dataChsFecha;
     private javax.swing.ButtonGroup grupoTipoOrden;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JRadioButton radioBtnOrdenMant;
+    private javax.swing.JRadioButton radioBtnOrdenRep;
+    private javax.swing.JRadioButton radioBtnOrdenTodas;
+    private javax.swing.JTable tblOrdenesTrabajo;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the tblOrdenesTrabajo
+     */
+    public javax.swing.JTable getTblOrdenesTrabajo() {
+        return tblOrdenesTrabajo;
+    }
 
 }

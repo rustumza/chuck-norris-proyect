@@ -5,7 +5,6 @@
 
 package Persistencia.Decoradores;
 
-import DTO.DTOOrdenesTrabajo;
 import DTO.DTOinfoParaCrearDenuncia;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Persistencia.Entidades.Denunciante;

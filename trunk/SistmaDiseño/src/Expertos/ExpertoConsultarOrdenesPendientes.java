@@ -129,6 +129,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
             nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
             nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
+            nuevoDTO.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
 
             for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
                 DTOReserva nuevaReserva = new DTOReserva();

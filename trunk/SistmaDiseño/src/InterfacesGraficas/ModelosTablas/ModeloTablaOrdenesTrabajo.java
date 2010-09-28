@@ -4,6 +4,7 @@
  */
 package InterfacesGraficas.ModelosTablas;
 
+import DTO.DTOOrden;
 import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
 import Persistencia.Entidades.OrdenTrabajo;
@@ -18,8 +19,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
 
-    private List<OrdenTrabajo> ordenesTrabajo;
-    public static String[] columnName = {"Código", "Tipo", "Fecha Inicio", "Fecha Fin", "Duración", "Equipo"};
+    private List<DTOOrden> ordenesTrabajo;
+    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Fecha inicio planificada","Duración", "Equipo"};
     private boolean editable = false;
 
     @Override
@@ -31,9 +32,9 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
         editable = edit;
     }
 
-    public void setListaOrdenes(List<OrdenTrabajo> nuevaLista) {
+    public void setListaOrdenes(List<DTOOrden> nuevaLista) {
         if (ordenesTrabajo == null) {
-            ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+            ordenesTrabajo = new ArrayList<DTOOrden>();
         }
         ordenesTrabajo = nuevaLista;
         fireTableDataChanged();
@@ -57,25 +58,23 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
             return null;
         }
 
-        OrdenTrabajo ordenTrabajo = ordenesTrabajo.get(rowIndex);
+        DTOOrden ordenTrabajo = ordenesTrabajo.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
-                if (ordenTrabajo.getClass().getSimpleName().equals("OrdenDeMantenimientoImplementacion")) {
-                    return String.valueOf(((OrdenDeMantenimiento) ordenTrabajo).getcodigoordenmantenimiento());
-                } else if (ordenTrabajo.getClass().getSimpleName().equals("OrdenDeReparacionImplementacion")) {
-                    return String.valueOf(((OrdenDeReparacion) ordenTrabajo).getcodigoordenreparacion());
-                }
+                return ordenTrabajo.getNroOrden();
             case 1:
-                return ordenTrabajo.gettipoordentrabajo();
+                return ordenTrabajo.getTipo();
             case 2:
-                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getfechainiciotrabajo());
+                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaInicioTrabajo());
             case 3:
-                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getfechafintrabajo());
+                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaFinTrabajo());
             case 4:
-                return String.valueOf(ordenTrabajo.getduracionprevistatrabajo());
+                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaInicioPlanificada());
             case 5:
-                return ordenTrabajo.getEquipoDeTrabajo().getnombreEquipo();
+                return ordenTrabajo.getDuracionPrevista();
+            case 6:
+                return ordenTrabajo.getNombreEquipo();
             default:
                 return "";
         }
@@ -86,16 +85,16 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
         return columnName[column];
     }
 
-    public void addRow(OrdenTrabajo nuevaOrden) {
+    public void addRow(DTOOrden nuevaOrden) {
         if(ordenesTrabajo==null)
-            ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+            ordenesTrabajo = new ArrayList<DTOOrden>();
         ordenesTrabajo.add(nuevaOrden);
         fireTableDataChanged();
     }
 
-    public void addAllRow(List<OrdenTrabajo> nuevaLista) {
+    public void addAllRow(List<DTOOrden> nuevaLista) {
         if (ordenesTrabajo == null) {
-            ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+            ordenesTrabajo = new ArrayList<DTOOrden>();
         }
         this.ordenesTrabajo.addAll(nuevaLista);
         fireTableDataChanged();
