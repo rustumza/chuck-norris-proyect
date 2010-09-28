@@ -37,19 +37,41 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
-
+        String condicion = "";
+        String join = "";
+        boolean addjoin = false;
         select = "SELECT * FROM interseccion";
 
         if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
-            for (int i = 0; i < criterios.size(); i++) {
-                if (i > 0) {
-                    select = select + " AND ";
-                }
 
-                select = select + "interseccion." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Calle")) {
+                    join = " JOIN interseccioncalle ON interseccion.OIDUbicacion = interseccioncalle.OIDInterseccion ";
+                    addjoin=true;
+                    criterios.get(i).setAtributo("OIDCalle");
+                    if(i>0){
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "interseccioncalle." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }else{
+                    if (i > 0) {
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "interseccion." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }
             }
+
+            if(addjoin==true)
+                select = select + join;
+
+
+            select = select + " WHERE ";
+
+            select = select + condicion;
+
         }
+
+        
 
         return select;
 
