@@ -5,9 +5,6 @@
 package InterfacesGraficas.ModelosTablas;
 
 import DTO.DTOOrden;
-import Persistencia.Entidades.OrdenDeMantenimiento;
-import Persistencia.Entidades.OrdenDeReparacion;
-import Persistencia.Entidades.OrdenTrabajo;
 import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.List;

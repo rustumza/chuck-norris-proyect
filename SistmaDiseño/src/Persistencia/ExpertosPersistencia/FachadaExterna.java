@@ -58,7 +58,7 @@ public class FachadaExterna {
        }
 
     public List<SuperDruperInterfaz> buscar(String nombreEntidad, List<Criterio> listaCriterios) {
-         return FachadaInterna.getInstancia().buscar(nombreEntidad, listaCriterios);
+          return FachadaInterna.getInstancia().buscar(nombreEntidad, listaCriterios);
     }
 
 }

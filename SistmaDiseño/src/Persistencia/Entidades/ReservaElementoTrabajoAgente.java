@@ -4,7 +4,11 @@
  */
 package Persistencia.Entidades;
 
+import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaCriterios;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,7 +32,16 @@ public class ReservaElementoTrabajoAgente extends ObjetoPersistente implements R
 
     public ElementoTrabajo getElementoTrabajo() {
         if (isElementoTrabajoBuscado() == false) {
-            implementacion.setElementoTrabajo((ElementoTrabajo) FachadaInterna.getInstancia().buscar("ElementoTrabajo", oidElementoTrabajo));
+            ElementoTrabajo elementoEncontrado = (ElementoTrabajo) FachadaInterna.getInstancia().buscar("ElementoTrabajo", oidElementoTrabajo);
+            List<Criterio> listaCriterio = new ArrayList<Criterio>();
+            listaCriterio.add(FabricaCriterios.getInstancia().crearCriterio("OIDElementoTrabajo", "=", ((ObjetoPersistente)elementoEncontrado).getOid()));
+            if(elementoEncontrado.gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")){
+
+                implementacion.setElementoTrabajo((ElementoTrabajo)FachadaInterna.getInstancia().buscar("Equipamiento", listaCriterio).get(0));
+            }else{
+                implementacion.setElementoTrabajo((ElementoTrabajo)FachadaInterna.getInstancia().buscar("Repuesto", listaCriterio).get(0));
+            }
+            elementoTrabajoBuscado = true;
         }
         return implementacion.getElementoTrabajo();
     }

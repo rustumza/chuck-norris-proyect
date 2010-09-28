@@ -42,10 +42,6 @@ public void iniciar(){
     }
 
 
- public static void main(String[] args){
-    (new ControladorConsultarAvanceDeReclamo()).iniciar();
-}
-
     void salir() {
         pantalla.dispose();
     }

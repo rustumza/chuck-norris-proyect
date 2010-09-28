@@ -50,7 +50,9 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
         List<ObjetoPersistente> objetosEncontrados = new ArrayList<ObjetoPersistente>();
 
         String consulta = armarSelect(criterios);
+        //muestra la consulta
         System.out.println(consulta);
+
         ResultSet rs = Conexion.getInstance().select(consulta);
 
         objetosEncontrados = convertirRegistrosAObjetos(rs);

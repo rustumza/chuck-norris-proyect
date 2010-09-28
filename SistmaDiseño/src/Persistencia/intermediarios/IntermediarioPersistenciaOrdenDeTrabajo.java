@@ -46,16 +46,13 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
         boolean addjoin = false;
 
         if (!criterios.isEmpty()) {
-
-            if (criterios.get(0).getAtributo().equals("estado")) {
-                addjoin = true;
-                join = " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
-                        + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo";
-                condicion = " WHERE estadoordentrabajo.NombreEstado = '" + criterios.get(0).getValor() + "'";
-            } else {
-                condicion = " WHERE ";
-            }
-
+//            if (criterios.get(0).getAtributo().equals("estado")) {
+//                addjoin = true;
+//                join = " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+//                        + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo";
+//                condicion = " WHERE estadoordentrabajo.NombreEstado = '" + criterios.get(0).getValor() + "'";
+//            } else {
+            condicion = " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
                 if (addjoin && i == 0) {
                     continue;
@@ -71,7 +68,10 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
 
         if (addjoin) {
             select = select + join + condicion;
+        } else {
+            select = select + condicion;
         }
+
 
         return select;
     }

@@ -51,7 +51,7 @@ public class IntermediarioPersistenciaTrabajo extends IntermediarioRelacional {
 
                 if (criterios.get(i).getAtributo().equals("OrdenTrabajo")) {
                     addjoin = true;
-                    condicion = condicion + "OIDOrdenDeTrabajo " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                    condicion = condicion + "OIDOrdenDeTrabajo" + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
                 } else {
                     condicion = condicion + "trabajo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
                 }

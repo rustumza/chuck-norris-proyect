@@ -92,7 +92,7 @@ public class IntermediarioPersistenciaRepuesto extends IntermediarioRelacional{
 
                 nuevoRepuesto.setOid(rs.getString("OIDElementoTrabajo"));
                 nuevoRepuesto.setIsNuevo(false);
-                nuevoRepuesto.setcodigoRepuesto(Integer.valueOf(rs.getString(rs.getString("CodigoRepuesto"))));
+                nuevoRepuesto.setcodigoRepuesto(rs.getInt("CodigoRepuesto"));
                 nuevoRepuesto.setnombreRepuesto(rs.getString("NombreRepuesto"));
 
                 nuevosObjetos.add(nuevoRepuesto);

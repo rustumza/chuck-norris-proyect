@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class DTOReserva {
     private Date fechaReserva;
+    private int numeroReserva;
     private List<DTOEquipamientoReservado> listaEquipamiento;
     private List<DTORepuestoReservado> listaRepuesto;
 
@@ -57,6 +58,20 @@ public class DTOReserva {
      */
     public void setListaRepuesto(List<DTORepuestoReservado> listaRepuesto) {
         this.listaRepuesto = listaRepuesto;
+    }
+
+    /**
+     * @return the numeroReserva
+     */
+    public int getNumeroReserva() {
+        return numeroReserva;
+    }
+
+    /**
+     * @param numeroReserva the numeroReserva to set
+     */
+    public void setNumeroReserva(int numeroReserva) {
+        this.numeroReserva = numeroReserva;
     }
 
 

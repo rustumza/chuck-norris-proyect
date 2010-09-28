@@ -29,7 +29,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         OrdenDeMantenimientoAgente ordenMant = (OrdenDeMantenimientoAgente) obj;
 
         insert = "INSERT INTO ordendemantenimiento (OIDOrdenDeTrabajo, OIDSemaforo, CodigoOrdenMantenimiento, OIDFichaMantenimiento) "
-                + "VALUES ('"+ordenMant.getOid()+"', '"+ordenMant.getOidSemaforo()+"', "+ordenMant.getcodigoordenmantenimiento()+", '"+ordenMant.getOidFichaMantenimiento()+"')";
+                + "VALUES ('" + ordenMant.getOid() + "', '" + ordenMant.getOidSemaforo() + "', " + ordenMant.getcodigoordenmantenimiento() + ", '" + ordenMant.getOidFichaMantenimiento() + "')";
 
         return insert;
     }
@@ -37,24 +37,49 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
     @Override
     public String armarSelect(List<Criterio> criterios) {
         String select;
+        String join = "";
+        String condicion = "";
+        boolean addjoin = false;
+
         select = "SELECT * "
                 + "FROM ordendemantenimiento";
 
         if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
-                if(criterios.get(i).getAtributo().equals("estado"))
+                if (criterios.get(i).getAtributo().equals("estado")) {
+                    addjoin = true;
+                    join = join + " JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+                            + "JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo";
+                    if (condicion.length() != 0) {
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "estadoordentrabajo.NombreEstado = '" + criterios.get(i).getValor() + "'";
                     continue;
+                } else if (criterios.get(i).getAtributo().equals("FechaInicioPlanificada")) {
+                    join = join + " JOIN ordendetrabajo ON ordendemantenimiento.OIDOrdenDeTrabajo = ordendetrabajo.OIDOrdenDeTrabajo";
+                    if (condicion.length() != 0) {
+                        condicion = condicion + " AND ";
+                    }
+                    condicion = condicion + "ordendetrabajo.FechaInicioPlanificada = '" + criterios.get(i).getValor() + "'";
+                    addjoin = true;
+                    continue;
+
+                }
                 if (i > 0) {
-                    select = select + " AND ";
+                    condicion = condicion + " AND ";
                 }
 
-                select = select + "ordendemantenimiento." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                condicion = condicion + "ordendemantenimiento." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
         }
 
-        return select;
+        if (addjoin) {
+            select = select + join;
+        }
 
+        select = select + " WHERE " + condicion;
+        return select;
+        
     }
 
     @Override
@@ -64,7 +89,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
 
         selectOid = "SELECT * "
                 + "FROM ordendemantenimiento "
-                + "WHERE OIDOrdenDeTrabajo = '"+oid+"'";
+                + "WHERE OIDOrdenDeTrabajo = '" + oid + "'";
 
         return selectOid;
     }
@@ -76,10 +101,10 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         OrdenDeMantenimientoAgente ordenMant = (OrdenDeMantenimientoAgente) obj;
 
         update = "UPDATE ordendemantenimiento "
-                + "SET OIDOrdenDeTrabajo = '"+ordenMant.getOid()+"', "
-                + "OIDSemaforo = '"+ordenMant.getOidSemaforo()+"', "
-                + "CodigoOrdenMantenimiento = "+ordenMant.getcodigoordenmantenimiento()+ ", "
-                + "OIDFichaMantenimiento = '"+ordenMant.getOidFichaMantenimiento()+"'";
+                + "SET OIDOrdenDeTrabajo = '" + ordenMant.getOid() + "', "
+                + "OIDSemaforo = '" + ordenMant.getOidSemaforo() + "', "
+                + "CodigoOrdenMantenimiento = " + ordenMant.getcodigoordenmantenimiento() + ", "
+                + "OIDFichaMantenimiento = '" + ordenMant.getOidFichaMantenimiento() + "'";
 
         return update;
 
@@ -105,7 +130,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                 nuevaOrdenDeMantenimiento.setInformeMantenimientoBuscado(false);
                 nuevaOrdenDeMantenimiento.setOidFichaMantenimiento(rs.getString("OIDFichaMantenimiento"));
                 nuevaOrdenDeMantenimiento.setFichaMantenimientoBuscado(false);
-                
+
                 nuevosObjetos.add(nuevaOrdenDeMantenimiento);
 
             }
@@ -120,7 +145,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
     /*
      * para armar la relacion N a N
      */
-    public void buscarObjRelacionados(ObjetoPersistente obj){
+    public void buscarObjRelacionados(ObjetoPersistente obj) {
     }
 
     @Override
@@ -129,22 +154,21 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", objPer.getOid()));
-        //busca el padre
-        OrdenTrabajoAgente padre = (OrdenTrabajoAgente) FachadaInterna.getInstancia().buscar("OrdenTrabajo", listaCriterios);
-
+       //busca el padre por oid
+        OrdenTrabajoAgente padre = (OrdenTrabajoAgente) FachadaInterna.getInstancia().buscar("OrdenTrabajo", objPer.getOid());
         //setea los datos del padre a la entidad
-        ((OrdenTrabajoAgente)objPer).setOidEquipoDeTrabajo(padre.getOidEquipoDeTrabajo());
-        ((OrdenTrabajoAgente)objPer).setfechainiciotrabajo(padre.getfechainiciotrabajo());
-        ((OrdenTrabajoAgente)objPer).setfechafintrabajo(padre.getfechafintrabajo());
-        ((OrdenTrabajoAgente)objPer).setfechainicioplanificada(padre.getfechainicioplanificada());
-        ((OrdenTrabajoAgente)objPer).setduracionprevistatrabajo(padre.getduracionprevistatrabajo());
-        ((OrdenTrabajoAgente)objPer).settipoordentrabajo(padre.gettipoordentrabajo());
-        ((OrdenTrabajoAgente)objPer).setEquipoDeTrabajoBuscado(false);
-        ((OrdenTrabajoAgente)objPer).setOrdenTrabajoEstadosBuscado(false);
-        ((OrdenTrabajoAgente)objPer).setReservaBuscado(false);
-        ((OrdenTrabajoAgente)objPer).setTrabajoBuscado(false);
-        ((OrdenTrabajoAgente)objPer).setTrabajos(padre.getTrabajos());
+        ((OrdenTrabajoAgente) objPer).setOidEquipoDeTrabajo(padre.getOidEquipoDeTrabajo());
+        ((OrdenTrabajoAgente) objPer).setfechainiciotrabajo(padre.getfechainiciotrabajo());
+        ((OrdenTrabajoAgente) objPer).setfechafintrabajo(padre.getfechafintrabajo());
+        ((OrdenTrabajoAgente) objPer).setfechainicioplanificada(padre.getfechainicioplanificada());
+        ((OrdenTrabajoAgente) objPer).setduracionprevistatrabajo(padre.getduracionprevistatrabajo());
+        ((OrdenTrabajoAgente) objPer).settipoordentrabajo(padre.gettipoordentrabajo());
+        ((OrdenTrabajoAgente) objPer).setEquipoDeTrabajoBuscado(false);
+        ((OrdenTrabajoAgente) objPer).setOrdenTrabajoEstadosBuscado(false);
+        ((OrdenTrabajoAgente) objPer).setReservaBuscado(false);
+        ((OrdenTrabajoAgente) objPer).setTrabajoBuscado(false);
+        if (padre.getTrabajos() != null) {
+            ((OrdenTrabajoAgente) objPer).setTrabajos(padre.getTrabajos());
+        }
     }
 }

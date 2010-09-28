@@ -31,7 +31,7 @@ public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelac
 
         String select;
 
-        select = "select * from equipodetrabajo";
+        select = "SELECT * FROM equipodetrabajo";
 
         if (!criterios.isEmpty()) {
             select = select + " WHERE ";
@@ -51,7 +51,7 @@ public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelac
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        return selectOid = "select * from equipodetrabajo where OIDEquipoDeTrabajo = " + oid;
+        return selectOid = "SELECT * FROM equipodetrabajo WHERE OIDEquipoDeTrabajo = " + oid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
@@ -91,17 +91,14 @@ public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelac
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
 
