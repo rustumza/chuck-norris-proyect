@@ -29,19 +29,6 @@ public class ControladorConsultarOrdenesPendientes {
         experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
     }
 
-//public List<OrdenTrabajo> buscarOrdenes(String fechaString){
-//
-//    experto = (ExpertoConsultarOrdenesPendientes)FabricaExpertos.getInstance().getExperto("ExpertoConsultarOrdenesPendientes");
-//    Date fechaDate = null;
-//        try {
-//            fechaDate = FormateadorFechas.getInstancia().StringAFecha(fechaString);
-//        } catch (ParseException ex) {
-//            Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//return experto.buscarOrdenes(fechaDate);
-//}
-
     void iniciar() {
         pantalla.setVisible(true);
     }
