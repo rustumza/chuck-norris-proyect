@@ -3,7 +3,6 @@ package Persistencia.Fabricas;
 import Persistencia.intermediarios.IntermediarioPersistencia;
 import Persistencia.intermediarios.IntermediarioPersistenciaCalle;
 import Persistencia.intermediarios.IntermediarioPersistenciaCaso;
-import Persistencia.intermediarios.IntermediarioPersistenciaCasoSemaforo;
 import Persistencia.intermediarios.IntermediarioPersistenciaCronogramaMantenimiento;
 import Persistencia.intermediarios.IntermediarioPersistenciaDenuncia;
 import Persistencia.intermediarios.IntermediarioPersistenciaDenunciaEstado;
@@ -99,9 +98,6 @@ public class FabricaIntermediarios {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCaso());
         }
 
-        if (nombre.equals("CasoSemaforo")) {
-            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCasoSemaforo());
-        }
         if (nombre.equals("CronogramaMantenimiento")) {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCronogramaMantenimiento());
         }
