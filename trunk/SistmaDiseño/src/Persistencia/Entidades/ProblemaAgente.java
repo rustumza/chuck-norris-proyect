@@ -10,7 +10,7 @@ import Persistencia.ExpertosPersistencia.FachadaInterna;
  *
  * @author diego
  */
-public class ProblemaAgente implements Problema {
+public class ProblemaAgente extends ObjetoPersistente implements Problema {
 
     private ProblemaImplementacion implementacion;
     private String oidCaso;
