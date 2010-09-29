@@ -122,4 +122,9 @@ public class IntermediarioPersistenciaReserva extends IntermediarioRelacional {
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

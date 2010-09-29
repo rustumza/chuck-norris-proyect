@@ -73,4 +73,9 @@ public class IntermediarioPersistenciaTrabajoElementoNecesario extends Intermedi
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

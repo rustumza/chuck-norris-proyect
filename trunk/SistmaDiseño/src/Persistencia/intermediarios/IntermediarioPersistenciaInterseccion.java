@@ -9,6 +9,7 @@ import Persistencia.Entidades.InterseccionAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.SuperDruperInterfaz;
+import Persistencia.Entidades.Ubicacion;
 import Persistencia.Entidades.UbicacionAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
@@ -148,5 +149,10 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
         ((UbicacionAgente) objPer).setcodigoubicacion(padre.getcodigoubicacion());
         ((UbicacionAgente) objPer).setPrioridad(padre.getPrioridad());
         ((UbicacionAgente) objPer).settipoubicacion(padre.gettipoubicacion());
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("Ubicacion", obj);
     }
 }

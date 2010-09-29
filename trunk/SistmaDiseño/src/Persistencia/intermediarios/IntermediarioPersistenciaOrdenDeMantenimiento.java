@@ -7,6 +7,7 @@ package Persistencia.intermediarios;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenDeMantenimientoAgente;
+import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.Entidades.OrdenTrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
@@ -170,5 +171,10 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         if (padre.getTrabajos() != null) {
             ((OrdenTrabajoAgente) objPer).setTrabajos(padre.getTrabajos());
         }
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("OrdenTrabajo", obj);
     }
 }

@@ -8,6 +8,7 @@ import Fabricas.FabricaAdaptadoresSistemaStock;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.TareaAgente;
+import Persistencia.Entidades.Trabajo;
 import Persistencia.Entidades.TrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaEntidades;
@@ -116,6 +117,11 @@ public class IntermediarioPersistenciaTarea extends IntermediarioRelacional{
         ((TrabajoAgente)objPer).setNombreTrabajo(padre.getNombreTrabajo());
         ((TrabajoAgente)objPer).settiempoEstimadoTrabajo(padre.gettiempoEstimadoTrabajo());
         ((TrabajoAgente)objPer).settipotrabajo(padre.gettipotrabajo());
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("Trabajo", obj);
     }
 }
 

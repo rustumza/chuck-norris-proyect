@@ -4,6 +4,7 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.FallaTecnica;
 import Persistencia.Entidades.FallaTecnicaAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -129,5 +130,10 @@ public class IntermediarioPersistenciaFallaTecnica extends IntermediarioRelacion
         ((TrabajoAgente) objPer).settiempoEstimadoTrabajo(padre.gettiempoEstimadoTrabajo());
         ((TrabajoAgente) objPer).settipotrabajo(padre.gettipotrabajo());
 
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("Trabajo", obj);
     }
 }

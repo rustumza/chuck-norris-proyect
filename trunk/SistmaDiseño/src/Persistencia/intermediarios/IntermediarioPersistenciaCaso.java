@@ -155,4 +155,9 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+    }
+    
 }
