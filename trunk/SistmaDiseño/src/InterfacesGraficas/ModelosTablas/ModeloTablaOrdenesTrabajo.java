@@ -30,7 +30,7 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public void setListaOrdenes(List<DTOOrden> nuevaLista) {
-        if (ordenesTrabajo == null) {
+        if (getOrdenesTrabajo() == null) {
             ordenesTrabajo = new ArrayList<DTOOrden>();
         }
         ordenesTrabajo = nuevaLista;
@@ -38,8 +38,8 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        if (ordenesTrabajo != null) {
-            return ordenesTrabajo.size();
+        if (getOrdenesTrabajo() != null) {
+            return getOrdenesTrabajo().size();
         } else {
             return 0;
         }
@@ -51,11 +51,11 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
 
     public Object getValueAt(int rowIndex, int columnIndex) {
 
-        if (ordenesTrabajo == null) {
+        if (getOrdenesTrabajo() == null) {
             return null;
         }
 
-        DTOOrden ordenTrabajo = ordenesTrabajo.get(rowIndex);
+        DTOOrden ordenTrabajo = getOrdenesTrabajo().get(rowIndex);
 
         switch (columnIndex) {
             case 0:
@@ -83,31 +83,38 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public void addRow(DTOOrden nuevaOrden) {
-        if(ordenesTrabajo==null)
+        if(getOrdenesTrabajo()==null)
             ordenesTrabajo = new ArrayList<DTOOrden>();
-        ordenesTrabajo.add(nuevaOrden);
+        getOrdenesTrabajo().add(nuevaOrden);
         fireTableDataChanged();
     }
 
     public void addAllRow(List<DTOOrden> nuevaLista) {
-        if (ordenesTrabajo == null) {
+        if (getOrdenesTrabajo() == null) {
             ordenesTrabajo = new ArrayList<DTOOrden>();
         }
-        this.ordenesTrabajo.addAll(nuevaLista);
+        this.getOrdenesTrabajo().addAll(nuevaLista);
         fireTableDataChanged();
     }
 
     public Object getRow(int rowIndex) {
-        return ordenesTrabajo.get(rowIndex);
+        return getOrdenesTrabajo().get(rowIndex);
     }
 
     public void clear() {
-        ordenesTrabajo.clear();
+        getOrdenesTrabajo().clear();
         fireTableDataChanged();
     }
 
     public void removeRow(int rowIndex) {
-        ordenesTrabajo.remove(rowIndex);
+        getOrdenesTrabajo().remove(rowIndex);
         fireTableDataChanged();
+    }
+
+    /**
+     * @return the ordenesTrabajo
+     */
+    public List<DTOOrden> getOrdenesTrabajo() {
+        return ordenesTrabajo;
     }
 }
