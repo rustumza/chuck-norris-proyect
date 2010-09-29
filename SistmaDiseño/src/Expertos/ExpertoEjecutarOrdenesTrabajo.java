@@ -33,68 +33,76 @@ import java.util.List;
  *
  * @author informatica
  */
-public class ExpertoEjecutarOrdenesTrabajo implements Experto{
+public class ExpertoEjecutarOrdenesTrabajo implements Experto {
+
     private String ConsultarOrdenesPendientes;
-    private List<OrdenDeMantenimiento> ordenesMantPendientes;
-    private List<OrdenDeReparacion> ordenesRepPendientes;
+    private List<OrdenTrabajo> ordenesTrabajoPendientes = new ArrayList<OrdenTrabajo>();
 
     public List<OrdenDeMantenimiento> consultarOrdenesMantenimientoPendientes(Date fecha) {
 
-        List<OrdenDeMantenimiento>ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
-        
-        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes)FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes)).buscarOrdenesMantPendiente(fecha);
+        List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
-        ordenesMantPendientes = ordenesEncontradas;
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes)).buscarOrdenesMantPendiente(fecha);
+
+        ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
         return ordenesEncontradas;
     }
 
     public List<OrdenDeReparacion> consultarOrdenesReparacionPendientes(Date fecha) {
-        List<OrdenDeReparacion>ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
+        List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
-        ordenesEncontradas =((ExpertoConsultarOrdenesPendientes)(FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes))).buscarOrdenesReparacionPendiente(fecha);
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes))).buscarOrdenesReparacionPendiente(fecha);
 
-        ordenesRepPendientes = ordenesEncontradas;
+        ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
         return ordenesEncontradas;
 
 
     }
- public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) {
 
-        List<OrdenTrabajo>ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) {
 
-        ordenesEncontradas =((ExpertoConsultarOrdenesPendientes)(FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenes(fecha);
+        List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenes(fecha);
+
+        ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
         return armarListaDTOOrden(ordenesEncontradas);
 
     }
- 
+
     public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado","=","EN EJECUCION"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "=", "EN EJECUCION"));
 
         EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
         for (OrdenTrabajo orden : ordenesTrabajo) {
 
-            OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado)FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
+            OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
             ordentrabajoestado.setEstadoOrdenTrabajo(estado);
             ordentrabajoestado.setfechacambioestado(new Date());
             ordentrabajoestado.setindicadorestadoactual(true);
 
-            for(OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()){
-                if(ordenTrabEst.isindicadorestadoactual())
+            for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
+                if (ordenTrabEst.isindicadorestadoactual()) {
                     ordenTrabEst.setindicadorestadoactual(false);
+                }
             }
             orden.addEstado(ordentrabajoestado);
-            
-            llamarWebServiceConfirmarReservas(ordenesTrabajo);
+
+            //llamarWebServiceConfirmarReservas(ordenesTrabajo);
 
             //imprimirOrdenes(ordenesTrabajo);
 
-            FachadaExterna.getInstancia().guardar("OrdenTrabajo", orden);
-            
+            if (orden.gettipoordentrabajo().equals("REPARACION")) {
+                FachadaExterna.getInstancia().guardar("OrdenReparacion", orden);
+            }else if(orden.gettipoordentrabajo().equals("MANTENIMIENTO")){
+                FachadaExterna.getInstancia().guardar("OrdenDeMantenimiento", orden);
+            }
+
         }
 
 
@@ -106,24 +114,23 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto{
 
     private void llamarWebServiceConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) {
         //LLAMAR WEB SERVICE
-        for(OrdenTrabajo orden: ordenesEncontradas){
-            for(Reserva res : orden.getRervas()){
+        for (OrdenTrabajo orden : ordenesEncontradas) {
+            for (Reserva res : orden.getRervas()) {
                 res.getcodigoreserva();     //resnro
                 int[] codigosExternos = new int[res.getReservaElementoTrabajo().size()]; //arreglo codigos de bienes
                 int cont = 0;
-                for(ReservaElementoTrabajo resElemTrab : res.getReservaElementoTrabajo()){
+                for (ReservaElementoTrabajo resElemTrab : res.getReservaElementoTrabajo()) {
                     codigosExternos[cont] = resElemTrab.getElementoTrabajo().getcodigosistemaexterno();
                 }
-                if(!FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(res.getcodigoreserva(), codigosExternos)){
+                if (!FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(res.getcodigoreserva(), codigosExternos)) {
                     //tirar excepcion poruqe no se pudo reservar
                 }
             }
             //con estos datos confirmo una reserva
-            
-           
+
+
         }
     }
-
 
     private List<DTOOrden> armarListaDTOOrden(List<OrdenTrabajo> listaOrdenes) {
         List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
@@ -181,20 +188,6 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto{
     }
 
     public void confirmarOrdenesPendientes() {
-        List<OrdenTrabajo> ordenesParaConfirmar = new ArrayList<OrdenTrabajo>();
-
-        for (OrdenDeReparacion ordenDeReparacion : ordenesRepPendientes) {
-            ordenesParaConfirmar.add(ordenDeReparacion);
-        }
-
-        for (OrdenDeMantenimiento ordenDeMantenimiento : ordenesMantPendientes) {
-            ordenesParaConfirmar.add(ordenDeMantenimiento);
-        }
-
-        guardarOrdenTrabajo(ordenesParaConfirmar);
+        guardarOrdenTrabajo(ordenesTrabajoPendientes);
     }
-
-
-
-
 }
