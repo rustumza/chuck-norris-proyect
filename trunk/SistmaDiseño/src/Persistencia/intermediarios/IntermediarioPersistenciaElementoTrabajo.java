@@ -114,4 +114,8 @@ public class IntermediarioPersistenciaElementoTrabajo extends IntermediarioRelac
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+    }
 }

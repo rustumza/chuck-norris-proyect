@@ -17,14 +17,14 @@ import java.util.List;
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelacional{
+public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
         String insert;
 
         EquipoDeTrabajoAgente equipo = (EquipoDeTrabajoAgente) obj;
 
-        return insert = "INSERT INTO equipodetrabajo VALUES ('"+equipo.getOid()+"', "+equipo.getcargaHorariaMaxPorDia()+", "+equipo.getcodigoEquipo()+", '"+equipo.getnombreEquipo()+"')";
+        return insert = "INSERT INTO equipodetrabajo VALUES ('" + equipo.getOid() + "', " + equipo.getcargaHorariaMaxPorDia() + ", " + equipo.getcodigoEquipo() + ", '" + equipo.getnombreEquipo() + "')";
     }
 
     public String armarSelect(List<Criterio> criterios) {
@@ -100,5 +100,8 @@ public class IntermediarioPersistenciaEquipoDeTrabajo extends IntermediarioRelac
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
-}
 
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+    }
+}

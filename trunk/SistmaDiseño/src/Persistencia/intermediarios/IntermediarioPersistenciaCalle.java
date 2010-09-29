@@ -7,6 +7,8 @@ package Persistencia.intermediarios;
 import Persistencia.Entidades.CalleAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.Ubicacion;
+import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -133,5 +135,9 @@ public class IntermediarioPersistenciaCalle extends IntermediarioRelacional {
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
     }
 }
