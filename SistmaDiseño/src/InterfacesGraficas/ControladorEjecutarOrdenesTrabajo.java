@@ -12,7 +12,6 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
-import Persistencia.Entidades.OrdenTrabajo;
 import java.util.Date;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package Persistencia.Fabricas;
 
-import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.intermediarios.IntermediarioPersistencia;
 import Persistencia.intermediarios.IntermediarioPersistenciaCalle;
 import Persistencia.intermediarios.IntermediarioPersistenciaCaso;
@@ -97,7 +96,7 @@ public class FabricaIntermediarios {
 
 
         if (nombre.equals("Caso")) {
-            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCaso() {});
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCaso());
         }
 
         if (nombre.equals("CasoSemaforo")) {

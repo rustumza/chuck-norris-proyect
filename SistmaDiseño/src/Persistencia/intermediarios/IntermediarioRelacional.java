@@ -27,6 +27,7 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
         String consulta = null;
         if(obj.isIsNuevo()){
             obj.setOid((generadorOid.getInstance().generarOid()));
+            guardarDatosPadre(obj);
             guardarObjetosRelacionados(obj);
             consulta = armarInsert(obj);
 
@@ -102,6 +103,8 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
     public abstract void buscarObjRelacionados(ObjetoPersistente obj);
 
     public abstract  void setearDatosPadre(ObjetoPersistente objPer,List<Criterio> listacCriterios);
+
+    public abstract void guardarDatosPadre(ObjetoPersistente obj);
 
    
 

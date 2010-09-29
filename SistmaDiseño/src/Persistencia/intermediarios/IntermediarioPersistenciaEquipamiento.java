@@ -4,6 +4,7 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.ElementoTrabajo;
 import Persistencia.Entidades.ElementoTrabajoAgente;
 import Persistencia.Entidades.EquipamientoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -120,5 +121,9 @@ public class IntermediarioPersistenciaEquipamiento extends IntermediarioRelacion
 
         ((EquipamientoAgente)objPer).setcodigosistemaexterno(padre.getcodigosistemaexterno());
         ((EquipamientoAgente)objPer).settipoelemento(padre.gettipoelemento());
+    }
+@Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+    FachadaInterna.getInstancia().guardar("ElementoTrabajo", obj);
     }
 }
