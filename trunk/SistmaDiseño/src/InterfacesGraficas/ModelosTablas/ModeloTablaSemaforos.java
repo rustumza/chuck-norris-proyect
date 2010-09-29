@@ -17,6 +17,13 @@ public class ModeloTablaSemaforos extends AbstractTableModel {
     public static String[] columnName = {"Código Semaforo", "Esquina", "Orientación", "Tipo", "Modelo"};
     private boolean editable = false;
 
+    public ModeloTablaSemaforos() {
+        listaDeSemaforos = new ArrayList<Semaforo>();
+    }
+
+
+
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return editable;
