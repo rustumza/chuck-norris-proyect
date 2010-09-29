@@ -24,6 +24,7 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,12 +35,16 @@ import java.util.List;
  */
 public class ExpertoEjecutarOrdenesTrabajo implements Experto{
     private String ConsultarOrdenesPendientes;
+    private List<OrdenDeMantenimiento> ordenesMantPendientes;
+    private List<OrdenDeReparacion> ordenesRepPendientes;
 
     public List<OrdenDeMantenimiento> consultarOrdenesMantenimientoPendientes(Date fecha) {
 
         List<OrdenDeMantenimiento>ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
         
         ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes)FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes)).buscarOrdenesMantPendiente(fecha);
+
+        ordenesMantPendientes = ordenesEncontradas;
 
         return ordenesEncontradas;
     }
@@ -48,6 +53,8 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto{
         List<OrdenDeReparacion>ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
         ordenesEncontradas =((ExpertoConsultarOrdenesPendientes)(FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes))).buscarOrdenesReparacionPendiente(fecha);
+
+        ordenesRepPendientes = ordenesEncontradas;
 
         return ordenesEncontradas;
 
@@ -63,26 +70,28 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto{
 
     }
  
-    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesEncontradas) {
+    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado","=","en Reparacion"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado","=","EN EJECUCION"));
 
         EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
-        for (OrdenTrabajo orden : ordenesEncontradas) {
+        for (OrdenTrabajo orden : ordenesTrabajo) {
+
             OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado)FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
             ordentrabajoestado.setEstadoOrdenTrabajo(estado);
             ordentrabajoestado.setfechacambioestado(new Date());
             ordentrabajoestado.setindicadorestadoactual(true);
+
             for(OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()){
                 if(ordenTrabEst.isindicadorestadoactual())
                     ordenTrabEst.setindicadorestadoactual(false);
             }
             orden.addEstado(ordentrabajoestado);
             
-            llamarWebServiceConfirmarReservas(ordenesEncontradas);
+            llamarWebServiceConfirmarReservas(ordenesTrabajo);
 
-            imprimirOrdenes(ordenesEncontradas);
+            //imprimirOrdenes(ordenesTrabajo);
 
             FachadaExterna.getInstancia().guardar("OrdenTrabajo", orden);
             
@@ -169,6 +178,20 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto{
         }
 
         return listaDTO;
+    }
+
+    public void confirmarOrdenesPendientes() {
+        List<OrdenTrabajo> ordenesParaConfirmar = new ArrayList<OrdenTrabajo>();
+
+        for (OrdenDeReparacion ordenDeReparacion : ordenesRepPendientes) {
+            ordenesParaConfirmar.add(ordenDeReparacion);
+        }
+
+        for (OrdenDeMantenimiento ordenDeMantenimiento : ordenesMantPendientes) {
+            ordenesParaConfirmar.add(ordenDeMantenimiento);
+        }
+
+        guardarOrdenTrabajo(ordenesParaConfirmar);
     }
 
 

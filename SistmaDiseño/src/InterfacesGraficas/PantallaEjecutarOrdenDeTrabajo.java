@@ -97,6 +97,8 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         tblReservas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,6 +238,15 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
 
         jButton1.setText("Salir");
 
+        btnConfirmar.setText("Confirmar Ordenes");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Imprimir Ordenes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,7 +264,12 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(panelReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConfirmar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -273,7 +289,10 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(panelReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirmar)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -300,6 +319,10 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         }
         controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        controlador.confirmarOrdenesPendientes(((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).getOrdenesTrabajo());
+    }//GEN-LAST:event_btnConfirmarActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -312,9 +335,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnConfirmar;
     private com.toedter.calendar.JDateChooser dataChsFecha;
     private javax.swing.ButtonGroup grupoTipoOrden;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -35,9 +35,9 @@ public class ControladorEjecutarOrdenesTrabajo {
         pantalla.setVisible(true);
     }
 
- public void confirmarOrden(OrdenTrabajo listaOrdenTrabajo){
-        experto.guardarOrdenTrabajo((List<OrdenTrabajo>) listaOrdenTrabajo);
-     }
+// public void confirmarOrden(OrdenTrabajo listaOrdenTrabajo){
+//        experto.guardarOrdenTrabajo((List<OrdenTrabajo>) listaOrdenTrabajo);
+//     }
 
     void buscarOrdenesPendientes(Date fecha, int seleccion) {
         List<DTOOrden> listaDTOOrdens = experto.consultarOrdenesTrabajoPendientes(fecha);
@@ -53,6 +53,10 @@ public class ControladorEjecutarOrdenesTrabajo {
     void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
         ((ModeloTablaReservaEquipamiento)pantalla.getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
         ((ModeloTablaResevaRepuesto)pantalla.getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
+    }
+
+    void confirmarOrdenesPendientes(List<DTOOrden> ordenesTrabajo) {
+        experto.confirmarOrdenesPendientes();
     }
 
  }
