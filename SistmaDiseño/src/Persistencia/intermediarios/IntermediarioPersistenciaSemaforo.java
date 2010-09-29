@@ -36,6 +36,7 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
+        String join = "";
         boolean addjoin = false;//se activa cuando es necesario hacer join para la busqueda N a N
 
         select = "SELECT * FROM semaforo";
@@ -46,15 +47,27 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
         if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
-                if(criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion")|criterios.get(i).getAtributo().equalsIgnoreCase("CalleSimple"))
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion") || criterios.get(i).getAtributo().equalsIgnoreCase("CalleSimple")) {
                     criterios.get(i).setAtributo("OIDUbicacion");
+                }
+                if (criterios.get(i).getAtributo().equals("Caso")) {//debe buscar todos los semaforos relacionados con un caso
+                    addjoin = true;
+                    join = " JOIN casosemaforo ON semaforo.OIDSemaforo = casosemaforo.OIDSemaforo";
+                    condicion = condicion + "casosemaforo.OIDCaso = '" + criterios.get(i).getValor() + "'";
+                    continue;
+                }
                 if (i > 0) {
                     condicion = condicion + " AND ";
                 }
                 condicion = condicion + " semaforo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
 
+            if (addjoin) {
+                select = select + join;
+            }
+
             select = select + condicion;
+
         }
 
         return select;
@@ -126,16 +139,13 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        
     }
 }
