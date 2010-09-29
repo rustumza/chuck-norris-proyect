@@ -12,14 +12,10 @@ import Persistencia.Entidades.ReservaAgente;
 import Persistencia.Entidades.ReservaElementoTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaEntidades;
-import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

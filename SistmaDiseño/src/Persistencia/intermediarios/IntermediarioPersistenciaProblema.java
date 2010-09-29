@@ -6,21 +6,28 @@ package Persistencia.intermediarios;
 
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.Problema;
+import Persistencia.Entidades.ProblemaAgente;
+import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaProblema extends IntermediarioRelacional{
-
-private String oid;
+public class IntermediarioPersistenciaProblema extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
+        ProblemaAgente problema = (ProblemaAgente) obj;
         String insert;
 
-        return insert = "insert into problema (OIDProblema, CodigoProblema, DescripcionProblema) values (OIDCaso, CodigoDenuncia, Prioridad)";
+        insert = "INSERT INTO problema (OIDProblema, CodigoProblema, DescripcionProblema) "
+                + "VALUES ('" + problema.getOid() + "', " + String.valueOf(problema.getcodigoProblema()) + ", '" + problema.getdescripcionProblema() + "')";
+
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
@@ -29,23 +36,42 @@ private String oid;
         String select;
         listaCriterios = criterios;
 
-        return select = "select * from problema where " ;//criterios
+        select = "SELECT * FROM problema";
+
+        if (!criterios.isEmpty()) {
+            select = select + " WHERE ";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
+                    select = select + " AND ";
+                }
+
+                select = select + "problema." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+        }
+
+        return select;
 
     }
 
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        this.oid =oid;
 
-        return selectOid = "select * from problema where OIDProblema = " + oid;
+        selectOid = "SELECT * FROM problema WHERE OIDProblema = '" + oid + "'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
-
+        ProblemaAgente problema = (ProblemaAgente) obj;
         String update;
 
-        return update = "update problema set OIDProblema =" + ",CodigoProblema = " + "DescripcionProblema = " ;
+        update = "UPDATE problema "
+                + "SET OIDProblema ='" + problema.getOid() + "', "
+                + "CodigoProblema = " + String.valueOf(problema.getcodigoProblema()) + ", "
+                + "DescripcionProblema = '" + problema.getdescripcionProblema() + "'";
+
+        return update;
 
     }
 
@@ -53,24 +79,36 @@ private String oid;
     }
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
+        try {
+            while (rs.next()) {
 
+                ProblemaAgente nuevoProblema = (ProblemaAgente) FabricaEntidades.getInstancia().crearEntidad("Problema");
 
-        return null;
+                nuevoProblema.setOid(rs.getString("OIDProblema"));
+                nuevoProblema.setIsNuevo(false);
+                nuevoProblema.setcodigoProblema(rs.getInt("CodigoProblema"));
+                nuevoProblema.setdescripcionProblema(rs.getString("DescripcionProblema"));
+
+                nuevosObjetos.add(nuevoProblema);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return nuevosObjetos;
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
-
