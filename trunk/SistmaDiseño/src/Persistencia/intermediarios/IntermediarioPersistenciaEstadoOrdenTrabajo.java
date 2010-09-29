@@ -4,29 +4,50 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.EstadoOrdenTrabajo;
+import Persistencia.Entidades.EstadoOrdenTrabajoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaEstadoOrdenTrabajo extends IntermediarioRelacional{
-
+public class IntermediarioPersistenciaEstadoOrdenTrabajo extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
+        EstadoOrdenTrabajoAgente estado = (EstadoOrdenTrabajoAgente) obj;
         String insert;
 
-        return insert = "insert into estadoordentrabajo (OIDEstadoOrdenTrabajo, CodigoEstadoOrdenTrabajo, NombreTrabajo) values (OIDEstadoOrdenTrabajo, CodigoEstadoOrdenTrabajo, NombreTrabajo)";
+        insert = "INSERT INTO estadoordentrabajo (OIDEstadoOrdenTrabajo, CodigoEstadoOrdenTrabajo, NombreEstado) "
+                + "VALUES ('" + estado.getOid() + "', " + String.valueOf(estado.getcodigoestadoordentrabajo()) + ", '" + estado.getNombreestado() + "')";
+
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
 
-        return select = "select * from estadoordentrabajo where " ;//criterios
+        select = "SELECT * FROM estadoordentrabajo";
+
+        if (!criterios.isEmpty()) {
+            select = select + " WHERE ";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
+                    select = select + " AND ";
+                }
+
+                select = select + "estadoordentrabajo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+        }
+
+        return select;
 
     }
 
@@ -34,14 +55,21 @@ public class IntermediarioPersistenciaEstadoOrdenTrabajo extends IntermediarioRe
 
         String selectOid;
 
-        return selectOid = "select * from estadoordentrabajo where OIDEstadoOrdenTrabajo = " + oid;
+        selectOid = "SELECT * FROM estadoordentrabajo WHERE OIDEstadoOrdenTrabajo = '" + oid + "'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
-
+        EstadoOrdenTrabajoAgente estado = (EstadoOrdenTrabajoAgente) obj;
         String update;
 
-        return update = "update estadoordentrabajo set OIDEstadoOrdenTrabajo =" + ",CodigoEstadoOrdenTrabajo = " + "NombreTrabajo = " ;
+        update = "UPDATE estadoordentrabajo "
+                + "SET OIDEstadoOrdenTrabajo = '" + estado.getOid() + "', "
+                + "CodigoEstadoOrdenTrabajo = " + String.valueOf(estado.getcodigoestadoordentrabajo()) + ", "
+                + "NombreEstado = '" + estado.getNombreestado() + "'";
+
+        return update;
 
     }
 
@@ -49,23 +77,36 @@ public class IntermediarioPersistenciaEstadoOrdenTrabajo extends IntermediarioRe
     }
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
+        try {
+            while (rs.next()) {
 
+                EstadoOrdenTrabajoAgente nuevoEstado = (EstadoOrdenTrabajoAgente) FabricaEntidades.getInstancia().crearEntidad("EstadoOrdenTrabajo");
 
-        return null;
+                nuevoEstado.setOid(rs.getString("OIDEstadoOrdenTrabajo"));
+                nuevoEstado.setIsNuevo(false);
+                nuevoEstado.setcodigoestadoordentrabajo(rs.getInt("CodigoEstadoOrdenTrabajo"));
+                nuevoEstado.setNombreestado(rs.getString("NombreEstado"));
+
+                nuevosObjetos.add(nuevoEstado);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return nuevosObjetos;
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

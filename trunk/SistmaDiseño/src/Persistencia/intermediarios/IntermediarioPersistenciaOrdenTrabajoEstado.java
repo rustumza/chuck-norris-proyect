@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRelacional{
+public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
         String insert;
@@ -73,18 +73,16 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
         List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
         try {
             while (rs.next()) {
-                
+
                 OrdenTrabajoEstadoAgente nuevoEstado = (OrdenTrabajoEstadoAgente) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
-                
+
                 nuevoEstado.setOid(rs.getString("OIDOrdenTrabajoEstado"));
                 nuevoEstado.setIsNuevo(false);
                 nuevoEstado.setOidEstadoOrdenTrabajo(rs.getString("OIDEstadoOrdenTrabajo"));
                 nuevoEstado.setEstadoOrdenTrabajoBuscado(false);
-                try {
-                    nuevoEstado.setfechacambioestado(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().parse(rs.getString("FechaCambioEstado")));
-                } catch (ParseException ex) {
-                    Logger.getLogger(IntermediarioPersistenciaOrdenTrabajoEstado.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                nuevoEstado.setfechacambioestado(rs.getDate("FechaCambioEstado"));
+
                 nuevoEstado.setindicadorestadoactual(Boolean.valueOf(rs.getString("IndicadoresEstadoActual")));
 
                 nuevosObjetos.add(nuevoEstado);
@@ -99,17 +97,13 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
-

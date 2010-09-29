@@ -10,7 +10,7 @@ import Persistencia.ExpertosPersistencia.FachadaInterna;
  *
  * @author diego
  */
-public class EstadoOrdenTrabajoAgente implements EstadoOrdenTrabajo {
+public class EstadoOrdenTrabajoAgente extends ObjetoPersistente implements EstadoOrdenTrabajo {
 
     private EstadoOrdenTrabajoImplementacion implementacion;
     private String oidOrdenTrabajoEstado;
@@ -27,6 +27,7 @@ public class EstadoOrdenTrabajoAgente implements EstadoOrdenTrabajo {
     public OrdenTrabajoEstado getOrdenTrabajoEstado() {
         if (isOrdenTrabajoEstadoBuscado() == false) {
             implementacion.setOrdenTrabajoEstado((OrdenTrabajoEstado) FachadaInterna.getInstancia().buscar("OrdenTrabajoEstado", oidOrdenTrabajoEstado));
+            setOrdenTrabajoEstadoBuscado(true);
         }
         return implementacion.getOrdenTrabajoEstado();
     }
