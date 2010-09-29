@@ -44,7 +44,8 @@ public class FachadaInterna {
     
     public List<SuperDruperInterfaz> buscar(String entidad, List<Criterio> listaCriterios) {
 
-
+        if(listaCriterios==null)
+            listaCriterios = new ArrayList<Criterio>();
         ArrayList<ObjetoPersistente> aux = (ArrayList<ObjetoPersistente>) FabricaIntermediarios.getInstancia().crearIntermediario(entidad).buscar(listaCriterios);
         List<SuperDruperInterfaz> objetoPeristenteInter = new ArrayList<SuperDruperInterfaz>();
         for(ObjetoPersistente op : aux){
