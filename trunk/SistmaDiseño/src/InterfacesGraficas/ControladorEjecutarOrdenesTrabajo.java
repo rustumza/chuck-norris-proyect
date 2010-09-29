@@ -4,12 +4,15 @@
  */
 package InterfacesGraficas;
 
+import DTO.DTOOrden;
+import DTO.DTOReserva;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Fabricas.FabricaExpertos;
-import Persistencia.Entidades.OrdenDeMantenimiento;
-import Persistencia.Entidades.OrdenDeReparacion;
+import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
+import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
+import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
+import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import Persistencia.Entidades.OrdenTrabajo;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +23,11 @@ import java.util.List;
 public class ControladorEjecutarOrdenesTrabajo {
 
     ExpertoEjecutarOrdenesTrabajo experto;
-    PantallaEjecutarOrdenTrabajo pantalla;
+    PantallaEjecutarOrdenDeTrabajo pantalla;
 
     public ControladorEjecutarOrdenesTrabajo() {
-        experto = (ExpertoEjecutarOrdenesTrabajo) FabricaExpertos.getInstance().getExperto("ExpertoEjecutarOrdenesTrabajo");
-        pantalla = new PantallaEjecutarOrdenTrabajo(this);
+        experto = (ExpertoEjecutarOrdenesTrabajo) FabricaExpertos.getInstance().getExperto("EjecutarOrdenesTrabajo");
+        pantalla = new PantallaEjecutarOrdenDeTrabajo(this);
     }
 
     public void iniciar() {
@@ -32,35 +35,24 @@ public class ControladorEjecutarOrdenesTrabajo {
         pantalla.setVisible(true);
     }
 
-    public List<OrdenTrabajo> consultarOrdenesPendientes(Date fecha, String tipo) {
-        if(tipo.equals("Trabajo"))
-            return experto.consultarOrdenesTrabajoPendientes(fecha);
-        else if(tipo.equals("Reparacion")){
-            List<OrdenDeReparacion> listaOrdenesRep = experto.consultarOrdenesReparacionPendientes(fecha);
-            List<OrdenTrabajo> listaOrdenTrabajo = new ArrayList<OrdenTrabajo>();
-            for( OrdenDeReparacion aux : listaOrdenesRep ){
-                listaOrdenTrabajo.add((OrdenTrabajo)aux );
-
-                 return listaOrdenTrabajo;
-           }
-
-        }        
-            else if(tipo.equals("Mantenimiento")){
-            List<OrdenDeMantenimiento> listaOrdenesMant = experto.consultarOrdenesMantenimientoPendientes(fecha);
-            List<OrdenTrabajo> listaOrdenTrabajo = new ArrayList<OrdenTrabajo>();
-            for (OrdenDeMantenimiento aux : listaOrdenesMant){
-                listaOrdenTrabajo.add((OrdenTrabajo) aux);
-            
-            return listaOrdenTrabajo;
-            } 
-     
-       }return null;
-    }
-
-
-
  public void confirmarOrden(OrdenTrabajo listaOrdenTrabajo){
-
         experto.guardarOrdenTrabajo((List<OrdenTrabajo>) listaOrdenTrabajo);
      }
+
+    void buscarOrdenesPendientes(Date fecha, int seleccion) {
+        List<DTOOrden> listaDTOOrdens = experto.consultarOrdenesTrabajoPendientes(fecha);
+        ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
+        nuevoModelo.addAllRow(listaDTOOrdens);
+        ((ModeloTablaOrdenesTrabajo)pantalla.getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+    }
+
+    void mostrarReservas(List<DTOReserva> reservas) {
+        ((ModeloTablaReserva)pantalla.getTblReservas().getModel()).setListaReserva(reservas);
+    }
+
+    void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
+        ((ModeloTablaReservaEquipamiento)pantalla.getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
+        ((ModeloTablaResevaRepuesto)pantalla.getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
+    }
+
  }

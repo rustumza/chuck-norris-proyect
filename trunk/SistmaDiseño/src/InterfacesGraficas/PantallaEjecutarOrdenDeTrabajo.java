@@ -23,22 +23,22 @@ import java.awt.event.MouseEvent;
  *
  * @author diego
  */
-public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
+public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
 
     public static final int ordenTrabajo = 1;
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
-    ControladorConsultarOrdenesPendientes controlador;
+    ControladorEjecutarOrdenesTrabajo controlador;
 
     DTOOrden ordenSeleccionada;
     DTOReserva reservaSeleccionada;
 
     /** Creates new form PantallaConsultarOrdenesPendientes */
-    public PantallaConsultarOrdenesPendientes() {
+    public PantallaEjecutarOrdenDeTrabajo() {
         initComponents();
     }
 
-    public PantallaConsultarOrdenesPendientes(ControladorConsultarOrdenesPendientes nuevoControlador) {
+    public PantallaEjecutarOrdenDeTrabajo(ControladorEjecutarOrdenesTrabajo nuevoControlador) {
         initComponents();
         controlador = nuevoControlador;
 
@@ -298,7 +298,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         } else {
             seleccion = ordenTrabajo;
         }
-        controlador.buscarOrdenes(dataChsFecha.getDate(), seleccion);
+        controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
     }//GEN-LAST:event_btnBuscarActionPerformed
     /**
      * @param args the command line arguments

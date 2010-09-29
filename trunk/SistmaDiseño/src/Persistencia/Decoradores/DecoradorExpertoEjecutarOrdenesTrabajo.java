@@ -6,6 +6,7 @@
 package Persistencia.Decoradores;
 
 
+import DTO.DTOOrden;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
@@ -21,10 +22,10 @@ import java.util.List;
 public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrdenesTrabajo {
 
     @Override
-    public List<OrdenTrabajo> consultarOrdenesTrabajoPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) {
 
         iniciarTx();
-        List<OrdenTrabajo> aux = super.consultarOrdenesTrabajoPendientes(fecha);        
+        List<DTOOrden> aux = super.consultarOrdenesTrabajoPendientes(fecha);
         return aux;
     }
 
