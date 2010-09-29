@@ -117,5 +117,10 @@ public class IntermediarioPersistenciaUbicacionSimple extends IntermediarioRelac
         ((UbicacionAgente)objPer).setPrioridad(padre.getPrioridad());
         ((UbicacionAgente)objPer).settipoubicacion(padre.gettipoubicacion());
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("Ubicacion", obj);
+    }
 }
 

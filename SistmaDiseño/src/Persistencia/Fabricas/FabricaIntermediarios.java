@@ -21,7 +21,6 @@ import Persistencia.intermediarios.IntermediarioPersistenciaEstadoFallaTecnica;
 import Persistencia.intermediarios.IntermediarioPersistenciaEstadoOrdenTrabajo;
 import Persistencia.intermediarios.IntermediarioPersistenciaEstadoPadronPersona;
 import Persistencia.intermediarios.IntermediarioPersistenciaFallaTecnica;
-import Persistencia.intermediarios.IntermediarioPersistenciaFallaTecnicaDenuncia;
 import Persistencia.intermediarios.IntermediarioPersistenciaFichaMantenimiento;
 import Persistencia.intermediarios.IntermediarioPersistenciaInformeMantenimiento;
 import Persistencia.intermediarios.IntermediarioPersistenciaInformeReparacion;
@@ -95,7 +94,7 @@ public class FabricaIntermediarios {
 
 
         if (nombre.equals("Caso")) {
-            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCaso());
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCaso() {});
         }
 
         if (nombre.equals("CronogramaMantenimiento")) {
@@ -163,9 +162,6 @@ public class FabricaIntermediarios {
 
         if (nombre.equals("FallaTecnica")) {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaFallaTecnica());
-        }
-        if (nombre.equals("FallaTecnicaDenuncia")) {
-            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaFallaTecnicaDenuncia());
         }
 
         if (nombre.equals("FichaMantenimiento")) {

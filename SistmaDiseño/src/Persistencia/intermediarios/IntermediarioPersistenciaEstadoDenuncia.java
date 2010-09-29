@@ -111,5 +111,9 @@ public class IntermediarioPersistenciaEstadoDenuncia extends IntermediarioRelaci
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
     }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+    }
 }
 

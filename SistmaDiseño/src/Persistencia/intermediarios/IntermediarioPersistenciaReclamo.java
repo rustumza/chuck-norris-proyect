@@ -4,6 +4,7 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.Caso;
 import Persistencia.Entidades.CasoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -118,6 +119,11 @@ public class IntermediarioPersistenciaReclamo extends IntermediarioRelacional{
         ((CasoAgente)objPer).setfechacaso(padre.getfechacaso());
         ((CasoAgente)objPer).settipocaso(padre.gettipocaso());
         ((CasoAgente)objPer).setOidSemaforo(padre.getOidSemaforo());
+    }
+
+    @Override
+    public void guardarDatosPadre(ObjetoPersistente obj) {
+        FachadaInterna.getInstancia().guardar("Caso", obj);
     }
 }
 
