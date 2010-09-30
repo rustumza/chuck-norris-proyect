@@ -197,6 +197,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             Numerador numerador = (Numerador)listDeInterf.get(0);
             numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
             FachadaExterna.getInstancia().guardar("Numerador", numerador);
+            den.settipocaso(1);
             den.setcodigoDenuncia(numerador.getultimonumeroregistrado());
             den.setReclamo(new ArrayList<Reclamo>());
             den.setprioridad(calcularPrioridad(den.getReclamo(), den.getSemaforo().get(0)));
