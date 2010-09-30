@@ -4,7 +4,6 @@
  */
 package Persistencia.intermediarios;
 
-import Persistencia.Entidades.ElementoTrabajo;
 import Persistencia.Entidades.ElementoTrabajoAgente;
 import Persistencia.Entidades.EquipamientoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -70,9 +69,13 @@ public class IntermediarioPersistenciaEquipamiento extends IntermediarioRelacion
         String update;
 
         update = "UPDATE INTO equipamiento "
-                + "SET OIDElementoTrabajo = "+equipamiento.getOid()+", "
+                + "SET OIDElementoTrabajo = "+equipamiento.getOid()+"', "
                 + "CodigoEquipamiento = "+String.valueOf(equipamiento.getcodigoEquipamiento())+", "
                 + "NombreEquipamiento = '"+equipamiento.getnombreEquipamiento()+"'";
+
+        String condicion = " WHERE OIDElementoTrabajo = "+equipamiento.getOid()+"'";
+
+        update = update + condicion;
 
         return update;
 

@@ -9,13 +9,13 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.Entidades.OrdenTrabajoAgente;
+import Persistencia.Entidades.OrdenTrabajoEstado;
 import Persistencia.Entidades.Reserva;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.TrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
-import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
         OrdenTrabajoAgente ordenTrabajo = (OrdenTrabajoAgente) obj;
 
         return insert = "INSERT INTO ordendetrabajo (OIDOrdenDeTrabajo, FechaInicioTrabajo, FechaFinTrabajo, FechaInicioPlanificada, DuracionPrevistaTrabajo, Tipo, OIDEquipoDeTrabajo)"
-                + " VALUES ('" + ordenTrabajo.getOid() + "', '" + ordenTrabajo.getfechainiciotrabajo() + "', '" + ordenTrabajo.getfechafintrabajo() + "', '" + ordenTrabajo.getfechainicioplanificada() + "', " + ordenTrabajo.getduracionprevistatrabajo() + ", '" + ordenTrabajo.gettipoordentrabajo() + "', '" + ordenTrabajo.getOidEquipoDeTrabajo() + "'d);";
+                + " VALUES ('" + ordenTrabajo.getOid() + "', '" + ordenTrabajo.getfechainiciotrabajo() + "', '" + ordenTrabajo.getfechafintrabajo() + "', '" + ordenTrabajo.getfechainicioplanificada() + "', " + ordenTrabajo.getduracionprevistatrabajo() + ", '" + ordenTrabajo.gettipoordentrabajo() + "', '" + ordenTrabajo.getOidEquipoDeTrabajo() + "')";
     }
 
     public String armarSelect(List<Criterio> criterios) {
@@ -80,7 +80,9 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
 
         String selectOid;
 
-        return selectOid = "SELECT * FROM ordendetrabajo WHERE OIDOrdenDeTrabajo = '" + oid + "'";
+        selectOid = "SELECT * FROM ordendetrabajo WHERE OIDOrdenDeTrabajo = '" + oid + "'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
@@ -89,13 +91,17 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
         String update;
 
         update = "UPDATE ordendetrabajo "
-                + "SET OIDOrdenDeTrabajo = '" + ordenTrabajo.getOid() + ","
+                + "SET OIDOrdenDeTrabajo = '" + ordenTrabajo.getOid() + "', "
                 + "FechaInicioTrabajo = '" + ordenTrabajo.getfechainiciotrabajo() + "', "
                 + "FechaFinTrabajo = '" + ordenTrabajo.getfechafintrabajo() + "', "
                 + "FechaInicioPlanificada = '" + ordenTrabajo.getfechainicioplanificada() + "', "
                 + "DuracionPrevistaTrabajo = " + ordenTrabajo.getduracionprevistatrabajo() + ", "
                 + "Tipo = '" + ordenTrabajo.gettipoordentrabajo() + "', "
-                + "OIDEquipoDeTrabajo = '" + ordenTrabajo.getOidEquipoDeTrabajo() + "';";
+                + "OIDEquipoDeTrabajo = '" + ordenTrabajo.getOidEquipoDeTrabajo() + "'";
+
+        String condicion = " WHERE OIDOrdenDeTrabajo = '" + ordenTrabajo.getOid() + "'";
+
+        update = update + condicion;
 
         return update;
 
@@ -139,6 +145,9 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
         for (Reserva reserva : ((OrdenTrabajo) obj).getRervas()) {
             FachadaInterna.getInstancia().guardar("Reserva", (ObjetoPersistente) reserva);
+        }
+        for (OrdenTrabajoEstado ordenTrabajoEstado : ((OrdenTrabajo)obj).getListaEstadosOrdenTrabajo()) {
+            FachadaInterna.getInstancia().guardar("OrdenTrabajoEstado", (ObjetoPersistente) ordenTrabajoEstado);
         }
     }
 

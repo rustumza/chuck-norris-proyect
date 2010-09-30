@@ -73,7 +73,8 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {
+    // <editor-fold defaultstate="collapsed" desc="comment">
+    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {// </editor-fold>
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "=", "EN EJECUCION"));
 
@@ -99,7 +100,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
             if (orden.gettipoordentrabajo().equals("REPARACION")) {
                 FachadaExterna.getInstancia().guardar("OrdenReparacion", orden);
-            }else if(orden.gettipoordentrabajo().equals("MANTENIMIENTO")){
+            } else if (orden.gettipoordentrabajo().equals("MANTENIMIENTO")) {
                 FachadaExterna.getInstancia().guardar("OrdenDeMantenimiento", orden);
             }
 
@@ -189,5 +190,9 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     public void confirmarOrdenesPendientes() {
         guardarOrdenTrabajo(ordenesTrabajoPendientes);
+
+        //llamarWebServiceConfirmarReservas(ordenesTrabajo);
+
+        //imprimirOrdenes(ordenesTrabajo);
     }
 }

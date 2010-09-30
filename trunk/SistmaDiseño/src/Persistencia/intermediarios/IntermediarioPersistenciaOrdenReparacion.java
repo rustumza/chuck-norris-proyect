@@ -8,9 +8,7 @@ import Persistencia.Entidades.OrdenTrabajoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenDeReparacionAgente;
-import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
-import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +28,7 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
 
         OrdenDeReparacionAgente ordenRep = (OrdenDeReparacionAgente) obj;
 
-        insert = "INSERT INTO ordenreparacion (OIDOrdenTrabajo, OIDDenuncia) "
+        insert = "INSERT INTO ordenreparacion (OIDOrdenDeTrabajo, OIDDenuncia) "
                 + "VALUES ('" + obj.getOid() + "', '" + ordenRep.getOidDenuncia() + "')";
 
 
@@ -57,7 +55,7 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
                     if (condicion.length() != 0) {
                         condicion = condicion + " AND ";
                     }
-                    condicion = condicion + "estadoordentrabajo.NombreEstado = '" + criterios.get(i).getValor() + "'";
+                    condicion = condicion + "estadoordentrabajo.NombreEstado = '" + criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
                     continue;
                 } else if (criterios.get(i).getAtributo().equals("FechaInicioPlanificada")) {
                     join = join + " JOIN ordendetrabajo ON ordenreparacion.OIDOrdenDeTrabajo = ordendetrabajo.OIDOrdenDeTrabajo";
@@ -103,8 +101,12 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
         OrdenDeReparacionAgente ordenRep = (OrdenDeReparacionAgente) obj;
 
         update = "UPDATE ordenreparacion "
-                + "SET OIDOrdenTrabajo = '" + ordenRep.getOid() + "', "
+                + "SET OIDOrdenDeTrabajo = '" + ordenRep.getOid() + "', "
                 + "OIDDenuncia = '" + ordenRep.getOidDenuncia() + "'";
+
+        String condicion = " WHERE OIDOrdenDeTrabajo = '" + ordenRep.getOid() + "'";
+
+        update = update + condicion;
 
         return update;
 

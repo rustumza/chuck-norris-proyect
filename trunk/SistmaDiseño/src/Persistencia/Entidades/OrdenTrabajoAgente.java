@@ -73,6 +73,7 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
             for (SuperDruperInterfaz nuevaReserva : FachadaInterna.getInstancia().buscar("Reserva", listaCriterios)) {
                 implementacion.addReserva((Reserva) nuevaReserva);
             }
+            reservasBuscado = true;
         }
         return implementacion.getRervas();
     }
@@ -84,6 +85,7 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
     public EquipoDeTrabajo getEquipoDeTrabajo() {
         if (isEquipoDeTrabajoBuscado() == false) {
             implementacion.setEquipoDeTrabajo((EquipoDeTrabajo) FachadaInterna.getInstancia().buscar("EquipoDeTrabajo", oidEquipoDeTrabajo));
+            equipoDeTrabajoBuscado = true;
         }
         return implementacion.getEquipoDeTrabajo();
     }
@@ -102,6 +104,8 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
             }else{
                 implementacion.setTrabajos(null);
             }
+
+            trabajoBuscado = true;
         }
 
         return implementacion.getTrabajos();
@@ -210,6 +214,8 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
             for (SuperDruperInterfaz estado : FachadaInterna.getInstancia().buscar("OrdenTrabajoEstado", listaCriterios)) {
                 implementacion.addEstado((OrdenTrabajoEstado) estado);
             }
+
+            ordenTrabajoEstadosBuscado = true;
         }
         return implementacion.getListaEstadosOrdenTrabajo();
     }
@@ -232,7 +238,8 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
         this.ordenTrabajoEstadosBuscado = ordenTrabajoEstadosBuscado;
     }
 
-    public void addEstado(OrdenTrabajoEstado nuevoEstado) {
-        implementacion.addEstado(nuevoEstado);
+    public void addEstado(OrdenTrabajoEstado nuevaOrdenTrabajoEstado) {
+        ((OrdenTrabajoEstadoAgente)nuevaOrdenTrabajoEstado).setOidOrdenTrabajo(getOid());
+        implementacion.addEstado(nuevaOrdenTrabajoEstado);
     }
 }

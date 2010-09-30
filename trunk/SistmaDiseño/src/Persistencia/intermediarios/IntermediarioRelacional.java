@@ -4,9 +4,6 @@ package Persistencia.intermediarios;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.ExpertosPersistencia.Conexion;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -19,35 +16,37 @@ import java.util.List;
  *
  * @author diego
  */
-public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
+public abstract class IntermediarioRelacional extends IntermediarioPersistencia {
 
     @Override
     public void desmaterializar(ObjetoPersistente obj) {
 
         String consulta = null;
-        if(obj.isIsNuevo()){
+        if (obj.isIsNuevo()) {
             obj.setOid((generadorOid.getInstance().generarOid()));
-            guardarDatosPadre(obj);
-            guardarObjetosRelacionados(obj);
             consulta = armarInsert(obj);
 
-        }else{
+        } else {
             consulta = armarUpdate(obj);
         }
 
+
+
+        guardarDatosPadre(obj);
+        guardarObjetosRelacionados(obj);
+
         //Imprime por pantalla la consulta
         System.out.println(consulta);
-        
         Conexion.getInstance().insert(consulta);
 
         guardarObjetoCompuesto(obj);
 
-        
+
 
     }
 
     @Override
-    public List<ObjetoPersistente> materializar(List<Criterio> criterios){
+    public List<ObjetoPersistente> materializar(List<Criterio> criterios) {
         List<ObjetoPersistente> objetosEncontrados = new ArrayList<ObjetoPersistente>();
 
         String consulta = armarSelect(criterios);
@@ -70,7 +69,7 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
     }
 
     @Override
-    public ObjetoPersistente materializar(String oid){
+    public ObjetoPersistente materializar(String oid) {
 
         ObjetoPersistente objetoEncontrado;
         List<ObjetoPersistente> objetoRetornado = new ArrayList<ObjetoPersistente>();
@@ -85,27 +84,31 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia{
 
         setearDatosPadre(objetoEncontrado, null);
         buscarObjRelacionados(objetoEncontrado);
-                
+
         return objetoEncontrado;
     }
 
-    public ResultSet ejecutarSelect(String consulta){
+    public ResultSet ejecutarSelect(String consulta) {
         return Conexion.getInstance().select(consulta);
     }
+
     public abstract String armarInsert(ObjetoPersistente obj);
+
     public abstract String armarSelect(List<Criterio> criterios);
+
     public abstract String armarSelectOid(String oid);
+
     public abstract String armarUpdate(ObjetoPersistente obj);
+
     public abstract void guardarObjetoCompuesto(ObjetoPersistente obj);
+
     public abstract List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs);
 
     public abstract void guardarObjetosRelacionados(ObjetoPersistente obj);
+
     public abstract void buscarObjRelacionados(ObjetoPersistente obj);
 
-    public abstract  void setearDatosPadre(ObjetoPersistente objPer,List<Criterio> listacCriterios);
+    public abstract void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listacCriterios);
 
     public abstract void guardarDatosPadre(ObjetoPersistente obj);
-
-   
-
 }

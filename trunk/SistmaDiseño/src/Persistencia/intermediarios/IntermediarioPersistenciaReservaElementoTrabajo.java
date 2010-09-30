@@ -68,6 +68,10 @@ ReservaElementoTrabajoAgente elementoTrabajo = (ReservaElementoTrabajoAgente) ob
                 + "OIDReserva = '"+elementoTrabajo.getOidReserva()+"', "
                 + "CantidadReservada = "+Integer.valueOf(elementoTrabajo.getcantidadreservada());
 
+        String condicion = " WHERE OIDReservaElementoTrabajo = '"+elementoTrabajo.getOid()+"'";
+
+        update = update + condicion;
+
         return update;
 
     }

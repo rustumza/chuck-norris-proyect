@@ -330,6 +330,7 @@ public class FabricaEntidades {
             OrdenTrabajoEstadoImplementacion ordenTrabajoEstadoImpl = new OrdenTrabajoEstadoImplementacion();
             OrdenTrabajoEstadoAgente ordenTrabajoEstadoAgente = new OrdenTrabajoEstadoAgente();
             ordenTrabajoEstadoAgente.setImplementacion(ordenTrabajoEstadoImpl);
+            ordenTrabajoEstadoAgente.setIsNuevo(true);
 
             return ordenTrabajoEstadoAgente;
         } else if (entidad.equals("OrdenTrabajoRepuestoNecesario")) {

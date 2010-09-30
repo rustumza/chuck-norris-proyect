@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -13,7 +12,7 @@ import java.util.Date;
  *
  * @author diego
  */
-public class ReparacionTareaRealizadaAgente implements ReparacionTareaRealizada{
+public class ReparacionTareaRealizadaAgente implements ReparacionTareaRealizada {
 
     private ReparacionTareaRealizadaImplementacion implementacion;
     private String oidElementoTrabajoReparacion;
@@ -63,8 +62,10 @@ public class ReparacionTareaRealizadaAgente implements ReparacionTareaRealizada{
     }
 
     public ElementoTrabajoReparacion getElementoTrabajoReparacion() {
-        if(isElementoTrabajoReparacionBuscado()==false)
-            implementacion.setElementoTrabajoReparacion((ElementoTrabajoReparacion)FachadaInterna.getInstancia().buscar("ElementoTrabajoReparacion", oidElementoTrabajoReparacion));
+        if (isElementoTrabajoReparacionBuscado() == false) {
+            implementacion.setElementoTrabajoReparacion((ElementoTrabajoReparacion) FachadaInterna.getInstancia().buscar("ElementoTrabajoReparacion", oidElementoTrabajoReparacion));
+            elementoTrabajoReparacionBuscado = true;
+        }
         return implementacion.getElementoTrabajoReparacion();
     }
 
@@ -73,8 +74,10 @@ public class ReparacionTareaRealizadaAgente implements ReparacionTareaRealizada{
     }
 
     public Tarea getTarea() {
-        if(isTareaBuscado()==false)
-            implementacion.setTarea((Tarea)FachadaInterna.getInstancia().buscar("Tarea", oidTarea));
+        if (isTareaBuscado() == false) {
+            implementacion.setTarea((Tarea) FachadaInterna.getInstancia().buscar("Tarea", oidTarea));
+            tareaBuscado = true;
+        }
         return implementacion.getTarea();
     }
 
@@ -138,9 +141,8 @@ public class ReparacionTareaRealizadaAgente implements ReparacionTareaRealizada{
         this.tareaBuscado = tareaBuscado;
     }
 
-    public void setImplementacion(ReparacionTareaRealizadaImplementacion implementacion){
+    public void setImplementacion(ReparacionTareaRealizadaImplementacion implementacion) {
         this.implementacion = implementacion;
 
     }
-
 }

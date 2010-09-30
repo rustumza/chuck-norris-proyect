@@ -8,14 +8,12 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenTrabajoEstadoAgente;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.ConvertidorBooleanos;
 import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,16 +22,20 @@ import java.util.logging.Logger;
 public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
+        OrdenTrabajoEstadoAgente ordenTrabajo = (OrdenTrabajoEstadoAgente) obj;
         String insert;
 
-        return insert = "insert into ordentrabajoestado (OIDOrdenTrabajoEstado, OIDOrdenDeTrabajo, OIDEstadoOrdenTrabajo, FechaCambioEstado, IndicadoresEstadoActual) values (OIDOrdenTrabajoEstado, OIDOrdenDeTrabajo, OIDEstadoOrdenTrabajo, FechaCambioEstado, IndicadoresEstadoActual)";
+        insert = "INSERT INTO ordentrabajoestado (OIDOrdenTrabajoEstado, OIDOrdenDeTrabajo, OIDEstadoOrdenTrabajo, FechaCambioEstado, IndicadoresEstadoActual) "
+                + "VALUES ('" +ordenTrabajo.getOid()+ "', '" +ordenTrabajo.getOidOrdenTrabajo()+"', '"+ ordenTrabajo.getOidEstadoOrdenTrabajo()+"', '"+ FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechacambioestado()) + "', "+ ConvertidorBooleanos.getInstancia().convertirBooleanToString(ordenTrabajo.isindicadorestadoactual()) +")";
+        
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
 
-        select = "select * from ordentrabajoestado";
+        select = "SELECT * FROM ordentrabajoestado";
 
         if (!criterios.isEmpty()) {
             select = select + " WHERE ";
@@ -54,14 +56,25 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
 
         String selectOid;
 
-        return selectOid = "select * from ordentrabajoestado where OIDOrdenTrabajoEstado = " + oid;
+        return selectOid = "SELECT * FROM ordentrabajoestado WHERE OIDOrdenTrabajoEstado = '" + oid + "'";
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
 
+        OrdenTrabajoEstadoAgente ordenTrabajo = (OrdenTrabajoEstadoAgente) obj;
         String update;
 
-        return update = "update ordentrabajoestado set OIDOrdenTrabajoEstado =" + ",OIDOrdenDeTrabajo = " + "OIDEstadoOrdenTrabajo = " + "FechaCambioEstado =" + "IndicadoresEstadoActual =";
+        update = "UPDATE ordentrabajoestado "
+                + "SET OIDOrdenTrabajoEstado = '" + ordenTrabajo.getOid() + "', "
+                + "OIDOrdenDeTrabajo = '" + ordenTrabajo.getOidOrdenTrabajo() + "', "
+                + "OIDEstadoOrdenTrabajo = '" + ordenTrabajo.getOidEstadoOrdenTrabajo() + "', "
+                + "FechaCambioEstado = '" + FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechacambioestado()) + "', "
+                + "IndicadoresEstadoActual = '" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(ordenTrabajo.isindicadorestadoactual()) + "'";
+
+        String condicion = " WHERE OIDOrdenTrabajoEstado = '" + ordenTrabajo.getOid() + "'";
+        update = update + condicion;
+
+        return update;
 
     }
 
@@ -78,6 +91,7 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
 
                 nuevoEstado.setOid(rs.getString("OIDOrdenTrabajoEstado"));
                 nuevoEstado.setIsNuevo(false);
+                nuevoEstado.setOidOrdenTrabajo(rs.getString("OIDOrdenDeTrabajo"));
                 nuevoEstado.setOidEstadoOrdenTrabajo(rs.getString("OIDEstadoOrdenTrabajo"));
                 nuevoEstado.setEstadoOrdenTrabajoBuscado(false);
 
@@ -109,6 +123,5 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

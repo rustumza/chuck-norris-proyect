@@ -7,10 +7,8 @@ package Persistencia.intermediarios;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.OrdenDeMantenimientoAgente;
-import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.Entidades.OrdenTrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
-import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,6 +104,10 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                 + "OIDSemaforo = '" + ordenMant.getOidSemaforo() + "', "
                 + "CodigoOrdenMantenimiento = " + ordenMant.getcodigoordenmantenimiento() + ", "
                 + "OIDFichaMantenimiento = '" + ordenMant.getOidFichaMantenimiento() + "'";
+
+        String condicion = " WHERE OIDOrdenDeTrabajo = '" + ordenMant.getOid() + "'";
+
+        update = update + condicion;
 
         return update;
 

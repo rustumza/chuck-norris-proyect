@@ -71,9 +71,14 @@ public class IntermediarioPersistenciaRepuesto extends IntermediarioRelacional{
 
         String update;
 
-        update = "UPDATE repuesto SET OIDElementoTrabajo = '"+repuesto.getOid()+ "', "
+        update = "UPDATE repuesto "
+                + "SET OIDElementoTrabajo = '"+repuesto.getOid()+ "', "
                 + "CodigoRepuesto = "+String.valueOf(repuesto.getcodigoRepuesto())+", "
                 + "NombreRepuesto = '"+repuesto.getnombreRepuesto()+"'";
+
+        String condicion = " WHERE OIDElementoTrabajo = '"+repuesto.getOid()+ "'";
+
+        update = update + condicion;
 
         return update;
 

@@ -41,6 +41,7 @@ public class ProblemaAgente extends ObjetoPersistente implements Problema {
     public Caso getCaso() {
         if (isCasoBuscado() == false) {
             implementacion.setCaso((Caso) FachadaInterna.getInstancia().buscar("Caso", oidCaso));
+            casoBuscado = true;
         }
         return implementacion.getCaso();
     }
