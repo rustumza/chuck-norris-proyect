@@ -119,7 +119,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
                 break;
             case ordenReparacion:
                 for (OrdenDeReparacion ordenRep : buscarOrdenesReparacionPendiente(fecha)) {
-                    listaOrdenes.add((OrdenDeMantenimiento) ordenRep);
+                    listaOrdenes.add((OrdenDeReparacion) ordenRep);
                 }
                 break;
             default:

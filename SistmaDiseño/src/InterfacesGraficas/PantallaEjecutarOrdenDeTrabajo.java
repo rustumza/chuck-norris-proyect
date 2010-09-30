@@ -165,7 +165,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
                 .addComponent(radioBtnOrdenTodas)
                 .addGap(9, 9, 9)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Órdenes de Trabajo"));
@@ -179,7 +179,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -237,6 +237,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         jLabel3.setText("Reservas");
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnConfirmar.setText("Confirmar Ordenes");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -323,6 +328,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         controlador.confirmarOrdenesPendientes(((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).getOrdenesTrabajo());
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     /**
      * @param args the command line arguments
      */
