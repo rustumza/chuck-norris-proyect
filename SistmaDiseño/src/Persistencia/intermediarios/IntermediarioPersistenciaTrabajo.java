@@ -83,11 +83,13 @@ public class IntermediarioPersistenciaTrabajo extends IntermediarioRelacional {
         String update;
 
         update = "UPDATE trabajo SET "
-                + "OIDTrabajo = '"+ trabajo.getOid()+ ","
+                + "OIDTrabajo = '"+ trabajo.getOid()+ "',"
                 + "NombreTrabajo = '"+trabajo.getNombreTrabajo() + "', "
                 + "TiempoEstimadoTrabajo = "+ trabajo.gettiempoEstimadoTrabajo()+", "
                 + "TipoTrabajo = '"+trabajo.gettipotrabajo() +"'";
 
+        String condicion = " WHERE OIDTrabajo = '"+ trabajo.getOid()+"'";
+        update = update  + condicion;
         return update;
     }
 

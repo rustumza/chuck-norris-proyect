@@ -9,6 +9,7 @@ import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
+import Persistencia.Decoradores.DecoradorExpertoEjecutarOrdenesTrabajo;
 
 /**
  *
@@ -41,7 +42,7 @@ public class FabricaExpertos {
         } else if (tipo.equals("ConsultarOrdenesPendientes")) {
             retorno = (Experto) new ExpertoConsultarOrdenesPendientes();
         } else if (tipo.equals("EjecutarOrdenesTrabajo")) {
-            retorno = (Experto) new ExpertoEjecutarOrdenesTrabajo();
+            retorno = (Experto) new DecoradorExpertoEjecutarOrdenesTrabajo();
         }
 
         return retorno;

@@ -40,6 +40,7 @@ public class TrabajoAgente extends ObjetoPersistente implements Trabajo {
     public TrabajoElementoNecesario getTrabajoElementoNecesario() {
         if (isTrabajoElementoNecesarioBuscado() == false) {
             getImplementacion().setTrabajoElementoNecesario((TrabajoElementoNecesario) FachadaInterna.getInstancia().buscar("TrabajoElementoNecesario", oidTrabajoElementoNecesario));
+            trabajoElementoNecesarioBuscado = true;
         }
         return getImplementacion().getTrabajoElementoNecesario();
     }

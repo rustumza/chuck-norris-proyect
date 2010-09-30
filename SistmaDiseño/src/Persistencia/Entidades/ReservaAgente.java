@@ -45,6 +45,7 @@ public class ReservaAgente extends ObjetoPersistente implements Reserva {
 
             for (SuperDruperInterfaz objEncontrado : FachadaInterna.getInstancia().buscar("ReservaElementoTrabajo", listaCriterio)) {
                 implementacion.addReservaElementoTrabajo((ReservaElementoTrabajo) objEncontrado);
+                reservaElementoTrabajoBuscado = true;
             }
         }
         return implementacion.getReservaElementoTrabajo();

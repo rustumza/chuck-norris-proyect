@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -12,7 +11,7 @@ import java.util.Date;
  *
  * @author diego
  */
-public class TrabajadorRolAgente implements TrabajadorRol{
+public class TrabajadorRolAgente implements TrabajadorRol {
 
     private TrabajadorRolImplementacion implementacion;
     private String oidRol;
@@ -38,8 +37,10 @@ public class TrabajadorRolAgente implements TrabajadorRol{
     }
 
     public Rol getRol() {
-        if(isRolBuscado()==false)
-            implementacion.setRol((Rol)FachadaInterna.getInstancia().buscar("Rol", oidRol));
+        if (isRolBuscado() == false) {
+            implementacion.setRol((Rol) FachadaInterna.getInstancia().buscar("Rol", oidRol));
+            rolBuscado = true;
+        }
         return implementacion.getRol();
     }
 
@@ -48,8 +49,10 @@ public class TrabajadorRolAgente implements TrabajadorRol{
     }
 
     public Trabajador getTrabajador() {
-        if(isTrabajadorBuscado()==false)
-            implementacion.setTrabajador((Trabajador)FachadaInterna.getInstancia().buscar("Trabajador", oidTrabajador));
+        if (isTrabajadorBuscado() == false) {
+            implementacion.setTrabajador((Trabajador) FachadaInterna.getInstancia().buscar("Trabajador", oidTrabajador));
+            trabajadorBuscado = true;
+        }
         return implementacion.getTrabajador();
     }
 
@@ -126,5 +129,4 @@ public class TrabajadorRolAgente implements TrabajadorRol{
     public void setTrabajadorBuscado(boolean trabajadorBuscado) {
         this.trabajadorBuscado = trabajadorBuscado;
     }
-
 }

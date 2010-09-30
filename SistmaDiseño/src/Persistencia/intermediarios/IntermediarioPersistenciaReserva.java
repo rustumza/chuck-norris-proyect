@@ -71,9 +71,13 @@ public class IntermediarioPersistenciaReserva extends IntermediarioRelacional {
 
         update = "UPDATE reserva "
                 + "SET OIDReserva = '" + reserva.getOid() + "' ,"
-                + "OIDOrdenDeTrabajo = '" + reserva.getOidOrdenTrabajo() + "', "
+                + "OIDOrdenDeTrabajo = '" + reserva.getOidOrdenTrabajo()+ "', "
                 + "FechaReserva = '" + reserva.getfecha().toString() + "' ,"
                 + "CodigoReserva = " + String.valueOf(reserva.getcodigoreserva());
+
+        String condicion = " WHERE OIDReserva = '"+ reserva.getOid() + "'";
+
+        update = update + condicion;
 
         return update;
 
@@ -91,6 +95,7 @@ public class IntermediarioPersistenciaReserva extends IntermediarioRelacional {
                 ReservaAgente nuevaReserva = (ReservaAgente) FabricaEntidades.getInstancia().crearEntidad("Reserva");
                 nuevaReserva.setIsNuevo(false);
                 nuevaReserva.setOid(rs.getString("OIDReserva"));
+                nuevaReserva.setOidOrdenTrabajo(rs.getString("OIDOrdenDeTrabajo"));
                 nuevaReserva.setcodigoreserva(Integer.valueOf(rs.getString("CodigoReserva")));
                 nuevaReserva.setfecha(rs.getDate("FechaReserva"));
 
@@ -125,6 +130,5 @@ public class IntermediarioPersistenciaReserva extends IntermediarioRelacional {
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -72,6 +72,10 @@ public class IntermediarioPersistenciaElementoTrabajo extends IntermediarioRelac
                 + "CodigoSistemaExterno = " + Integer.valueOf(elemento.getcodigosistemaexterno()) + ", "
                 + "TipoElemento = '" + elemento.gettipoelemento()+"'";
 
+        String condicion = " WHERE OIDElementoTrabajo = '" + elemento.getOid() + "'";
+
+        update = update + condicion;
+
         return update;
 
     }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -11,7 +10,7 @@ import Persistencia.ExpertosPersistencia.FachadaInterna;
  *
  * @author diego
  */
-public class TrabajadorAgente implements Trabajador{
+public class TrabajadorAgente implements Trabajador {
 
     private TrabajadorImplementacion implementacion;
     private String oidTrabajo;
@@ -59,8 +58,10 @@ public class TrabajadorAgente implements Trabajador{
     }
 
     public Trabajo getTrabajo() {
-        if(isTrabajoBuscado()==false)
-            implementacion.setTrabajo((Trabajo)FachadaInterna.getInstancia().buscar("Trabajo", oidTrabajo));
+        if (isTrabajoBuscado() == false) {
+            implementacion.setTrabajo((Trabajo) FachadaInterna.getInstancia().buscar("Trabajo", oidTrabajo));
+            trabajoBuscado = true;
+        }
         return implementacion.getTrabajo();
     }
 
@@ -109,5 +110,4 @@ public class TrabajadorAgente implements Trabajador{
     public void setOidTrabajo(String oidTrabajo) {
         this.oidTrabajo = oidTrabajo;
     }
-
 }

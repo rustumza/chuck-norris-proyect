@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -12,7 +11,7 @@ import java.util.Date;
  *
  * @author diego
  */
-public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
+public class SemaforoAgente extends ObjetoPersistente implements Semaforo {
 
     private SemaforoImplementacion implementacion;
     private String oidOrientacion;
@@ -44,8 +43,10 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     }
 
     public Orientacion getOrientacion() {
-        if(isOrientacionBuscado()==false)
-            implementacion.setOrientacion((Orientacion)FachadaInterna.getInstancia().buscar("Orientacion", oidOrientacion));
+        if (isOrientacionBuscado() == false) {
+            implementacion.setOrientacion((Orientacion) FachadaInterna.getInstancia().buscar("Orientacion", oidOrientacion));
+            orientacionBuscado = true;
+        }
         return implementacion.getOrientacion();
     }
 
@@ -54,8 +55,10 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     }
 
     public Modelo getModelo() {
-        if(isModeloBuscado()==false)
-            implementacion.setModelo((Modelo)FachadaInterna.getInstancia().buscar("Modelo", oidModelo));
+        if (isModeloBuscado() == false) {
+            implementacion.setModelo((Modelo) FachadaInterna.getInstancia().buscar("Modelo", oidModelo));
+            modeloBuscado = true;
+        }
         return implementacion.getModelo();
     }
 
@@ -64,8 +67,10 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     }
 
     public Esquina getEsquina() {
-        if(isEsquinaBuscado()==false)
-            implementacion.setEsquina((Esquina)FachadaInterna.getInstancia().buscar("Esquina", oidEsquina));
+        if (isEsquinaBuscado() == false) {
+            implementacion.setEsquina((Esquina) FachadaInterna.getInstancia().buscar("Esquina", oidEsquina));
+            esquinaBuscado = true;
+        }
         return implementacion.getEsquina();
     }
 
@@ -74,8 +79,10 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     }
 
     public TipoSemaforo getTipoSemaforo() {
-        if(isTipoSemaforoBuscado()==false)
-            implementacion.setTipoSemaforo((TipoSemaforo)FachadaInterna.getInstancia().buscar("TipoSemaforo", oidTipoSemaforo));
+        if (isTipoSemaforoBuscado() == false) {
+            implementacion.setTipoSemaforo((TipoSemaforo) FachadaInterna.getInstancia().buscar("TipoSemaforo", oidTipoSemaforo));
+            tipoSemaforoBuscado = true;
+        }
         return implementacion.getTipoSemaforo();
     }
 
@@ -84,8 +91,9 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     }
 
     public Ubicacion getUbicacion() {
-        if(isUbicacionBuscado()==false)
-            implementacion.setUbicacion((Ubicacion)FachadaInterna.getInstancia().buscar("Ubicacion", oidUbicacion));
+        if (isUbicacionBuscado() == false) {
+            implementacion.setUbicacion((Ubicacion) FachadaInterna.getInstancia().buscar("Ubicacion", oidUbicacion));
+        }
         return implementacion.getUbicacion();
     }
 
@@ -246,5 +254,4 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo{
     public void setUbicacionBuscado(boolean ubicacionBuscado) {
         this.ubicacionBuscado = ubicacionBuscado;
     }
-
 }

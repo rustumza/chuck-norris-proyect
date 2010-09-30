@@ -16,6 +16,7 @@ public class OrdenTrabajoEstadoAgente extends ObjetoPersistente implements Orden
 
     private OrdenTrabajoEstadoImplementacion implementacion;
     private String oidEstadoOrdenTrabajo;
+    private String oidOrdenTrabajo;
     //variable para saber si el objeto relacionado ha sido buscado en la BD
     private boolean estadoOrdenTrabajoBuscado;
 
@@ -43,6 +44,8 @@ public class OrdenTrabajoEstadoAgente extends ObjetoPersistente implements Orden
 
     public void setEstadoOrdenTrabajo(EstadoOrdenTrabajo estadoOrdenTrabajo) {
         implementacion.setEstadoOrdenTrabajo(estadoOrdenTrabajo);
+        setOidEstadoOrdenTrabajo(((ObjetoPersistente)estadoOrdenTrabajo).getOid());
+
     }
 
     /**
@@ -67,10 +70,10 @@ public class OrdenTrabajoEstadoAgente extends ObjetoPersistente implements Orden
     }
 
     /**
-     * @param oidEstadoOrdenTrabajo the oidEstadoOrdenTrabajo to set
+     * @param nuevoOid the oidEstadoOrdenTrabajo to set
      */
-    public void setOidEstadoOrdenTrabajo(String oidEstadoOrdenTrabajo) {
-        this.oidEstadoOrdenTrabajo = oidEstadoOrdenTrabajo;
+    public void setOidEstadoOrdenTrabajo(String nuevoOid) {
+        oidEstadoOrdenTrabajo = nuevoOid;
     }
 
     /**
@@ -85,6 +88,20 @@ public class OrdenTrabajoEstadoAgente extends ObjetoPersistente implements Orden
      */
     public void setEstadoOrdenTrabajoBuscado(boolean estadoOrdenTrabajoBuscado) {
         this.estadoOrdenTrabajoBuscado = estadoOrdenTrabajoBuscado;
+    }
+
+    /**
+     * @return the oidOrdenTrabajo
+     */
+    public String getOidOrdenTrabajo() {
+        return oidOrdenTrabajo;
+    }
+
+    /**
+     * @param oidOrdenTrabajo the oidOrdenTrabajo to set
+     */
+    public void setOidOrdenTrabajo(String oidOrdenTrabajo) {
+        this.oidOrdenTrabajo = oidOrdenTrabajo;
     }
 
 }

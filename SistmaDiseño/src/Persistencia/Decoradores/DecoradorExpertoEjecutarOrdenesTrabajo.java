@@ -2,9 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.Decoradores;
-
 
 import DTO.DTOOrden;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
@@ -29,7 +27,6 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
         return aux;
     }
 
-
     @Override
     public List<OrdenDeMantenimiento> consultarOrdenesMantenimientoPendientes(Date fecha) {
         iniciarTx();
@@ -37,28 +34,33 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
         return aux;
     }
 
-
     @Override
     public List<OrdenDeReparacion> consultarOrdenesReparacionPendientes(Date fecha) {
         iniciarTx();
-        List<OrdenDeReparacion> aux = super.consultarOrdenesReparacionPendientes(fecha);        
+        List<OrdenDeReparacion> aux = super.consultarOrdenesReparacionPendientes(fecha);
         return aux;
     }
 
     @Override
-    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesEncontradas){
-        guardarOrdenTrabajo(ordenesEncontradas);
+    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesEncontradas) {
+        super.guardarOrdenTrabajo(ordenesEncontradas);
         confirmarTx();
     }
 
-    private void iniciarTx(){
+    @Override
+    public void confirmarOrdenesPendientes() {
+        iniciarTx();
+        super.confirmarOrdenesPendientes();
+        confirmarTx();
+    }
+
+    private void iniciarTx() {
 
         FachadaInterna.getInstancia().iniciarTransaccion();
     }
 
-    private void confirmarTx(){
+    private void confirmarTx() {
 
-    FachadaInterna.getInstancia().confirmarTransaccion();
+        FachadaInterna.getInstancia().confirmarTransaccion();
     }
-
 }
