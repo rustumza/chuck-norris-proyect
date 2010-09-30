@@ -36,4 +36,6 @@ public interface Caso extends SuperDruperInterfaz {
     public Denunciante getDenunciante();
 
     public void setDenunciante(Denunciante denunciante);
+
+
 }

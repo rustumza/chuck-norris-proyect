@@ -31,7 +31,7 @@ public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelaci
 
 
         insert = "INSERT INTO denunciaestado (OIDDenunciaEstado, OIDDenuncia, OIDEstadoDenuncia, FechaCambioEstado, IndicadoresEstadoActual)"
-                + "VALUES '" + denunciaEstado.getOid() + "', '" + denunciaEstado.getOidDenuncia() + "', '" + denunciaEstado.getOidEstadoDenuncia() + "', '" + FormateadorFechas.getInstancia().formatearAMySql(denunciaEstado.getfechacambioestado()) + "'," + ConvertidorBooleanos.getInstancia().convertirBooleanToInt(denunciaEstado.getIndicadoresEstadoActual());
+                + "VALUES ( '" + denunciaEstado.getOid() + "', '" + denunciaEstado.getOidDenuncia() + "', '" + denunciaEstado.getOidEstadoDenuncia() + "', '" + FormateadorFechas.getInstancia().formatearAMySql(denunciaEstado.getfechacambioestado()) + "'," + ConvertidorBooleanos.getInstancia().convertirBooleanToInt(denunciaEstado.getIndicadoresEstadoActual())+")";
 
         return insert;
     }
@@ -71,12 +71,12 @@ public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelaci
 
         String update;
         DenunciaEstadoAgente denunciaestado = (DenunciaEstadoAgente) obj;
-        update = "UPDATE denunciaestado SET"
-                + "OIDDenunciaEstado= '" + denunciaestado.getOid() + "',"
+        update = "UPDATE denunciaestado SET "
+                + "OIDDenunciaEstado = '" + denunciaestado.getOid() + "',"
                 + "OIDDenuncia=' " + denunciaestado.getOidDenuncia() + "', "
                 + "OIDEstadoDenuncia = '" + denunciaestado.getOidEstadoDenuncia() + "', "
-                + "FechaCambioEstado='" + denunciaestado.getfechacambioestado() + "', "
-                + "IndicadoresEstadoActual='" + denunciaestado.getIndicadoresEstadoActual() + "'";
+                + "FechaCambioEstado='" + FormateadorFechas.getInstancia().formatearAMySql(denunciaestado.getfechacambioestado()) + "', "
+                + "IndicadoresEstadoActual='" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(denunciaestado.getIndicadoresEstadoActual()) + "'";
 
 
         return update;

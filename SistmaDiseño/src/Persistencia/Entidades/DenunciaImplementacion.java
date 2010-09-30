@@ -98,4 +98,8 @@ public class DenunciaImplementacion extends CasoImplementacion implements Denunc
     public void addFallaTecnica(FallaTecnica nuevaFalla){
         fallasTecnica.add(nuevaFalla);
     }
+
+    public void agregarDenunciaEstado(DenunciaEstado denEstado) {
+        listaDenunciaEstado.add(denEstado);
+    }
 }

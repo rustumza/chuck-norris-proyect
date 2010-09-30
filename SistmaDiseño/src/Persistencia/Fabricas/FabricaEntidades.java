@@ -1,5 +1,7 @@
 package Persistencia.Fabricas;
 
+import Persistencia.Entidades.AUXCasoSemaforo;
+import Persistencia.Entidades.AUXProblemaCaso;
 import Persistencia.Entidades.CalleAgente;
 import Persistencia.Entidades.CalleImplementacion;
 import Persistencia.Entidades.CasoAgente;
@@ -169,7 +171,7 @@ public class FabricaEntidades {
             DenunciaEstadoImplementacion denunciaEstadoImpl = new DenunciaEstadoImplementacion();
             DenunciaEstadoAgente denunciaEstadoAgente = new DenunciaEstadoAgente();
             denunciaEstadoAgente.setImplementacion(denunciaEstadoImpl);
-
+            denunciaEstadoAgente.setIsNuevo(true);
             return denunciaEstadoAgente;
         } else if (entidad.equals("Denunciante")) {
             DenuncianteImplementacion denuncianteImpl = new DenuncianteImplementacion();
@@ -472,6 +474,17 @@ public class FabricaEntidades {
             ubicacionSimpleAgente.setImplementacion(ubicacionSimpleImpl);
 
             return ubicacionSimpleAgente;
+        } else if(entidad.equals("AUXCasoSemaforo")){
+            AUXCasoSemaforo auxcaso = new AUXCasoSemaforo();
+            auxcaso.setIsNuevo(true);
+            return auxcaso;
+
+        } else if(entidad.equals("AUXProblemaCaso")){
+            AUXProblemaCaso auxcaso = new AUXProblemaCaso();
+            auxcaso.setIsNuevo(true);
+            return auxcaso;
+
+
         }
 
         return null;
