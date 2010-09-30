@@ -37,7 +37,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
     public boolean validarFecha(Date fecha) {
 
-        return (new Date().compareTo(fecha) >= 0);
+        return (new Date().compareTo(fecha) < 0);
     }
 
     public List<OrdenTrabajo> buscarOrdenes(Date fecha) {

@@ -95,7 +95,7 @@ public class IntermediarioPersistenciaEquipamiento extends IntermediarioRelacion
                 nuevoEquipamiento.setOid(rs.getString("OIDElementoTrabajo"));
                 nuevoEquipamiento.setIsNuevo(false);
                 nuevoEquipamiento.setcodigoEquipamiento(Integer.valueOf(rs.getString("CodigoEquipamiento")));
-                nuevoEquipamiento.setnombreEquipamiento("NombreEquipamiento");
+                nuevoEquipamiento.setnombreEquipamiento(rs.getString("NombreEquipamiento"));
 
 
                 nuevosObjetos.add(nuevoEquipamiento);
