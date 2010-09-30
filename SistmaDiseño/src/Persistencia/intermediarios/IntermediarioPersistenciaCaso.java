@@ -5,6 +5,8 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.AUXCasoSemaforo;
+import Persistencia.Entidades.AUXProblemaCaso;
 import Persistencia.Entidades.CasoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -135,8 +137,21 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
 
         CasoAgente caso = (CasoAgente) obj;
+        AUXCasoSemaforo auxcasosem;
+        for(String aux :caso.getOidSemaforo()){
+            auxcasosem = (AUXCasoSemaforo) FachadaInterna.getInstancia().crearEntidad("AUXCasoSemaforo");
+            auxcasosem.setOidCaso(obj.getOid());
+            auxcasosem.setOidSemaforo(aux);
+            FachadaInterna.getInstancia().guardar("AUXCasoSemaforo", auxcasosem);
+        }
+        
+        AUXProblemaCaso auxprobcaso;
+        for(String aux1 : caso.getOidProblema()) {
+            auxprobcaso = (AUXProblemaCaso) FachadaInterna.getInstancia().crearEntidad("AUXProblemaCaso");
+            auxprobcaso.setOidCaso(obj.getOid());
+            auxprobcaso.setOidProblema(aux1);
+        }
 
-        FachadaInterna.getInstancia().guardar("Denunciante", (ObjetoPersistente) caso.getDenunciante());
 
     }
 
