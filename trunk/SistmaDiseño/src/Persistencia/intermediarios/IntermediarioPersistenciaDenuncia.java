@@ -40,26 +40,31 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
 
     public String armarSelect(List<Criterio> criterios) {
 
-        String select;
+        String select = "";
+        String join = "";
+        String condicion = " WHERE ";
 
-        select = "SELECT * FROM denuncia";
-
-        if (criterios.get(0).getAtributo().equals("Reclamo")) {
-            String join = "JOIN reclamo ON reclamo.OIDDenuncia = denuncia.OIDDenuncia WHERE reclamo.OIDCaso = '" + criterios.get(0).getValor() + "'";
-            select = select + join;
-        } else if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
-
+        select = "SELECT * FROM denuncia ";
+        if (!criterios.isEmpty()) {
             for (int i = 0; i < criterios.size(); i++) {
                 if (i > 0) {
-                    select = select + " AND ";
+                    condicion = condicion + " AND ";
                 }
-
-                select = select + "denuncia." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Reclamo")) {
+                    join = " JOIN reclamo ON reclamo.OIDDenuncia = denuncia.OIDCaso ";
+                    condicion = condicion + "reclamo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }
+                else if(criterios.get(i).getAtributo().equalsIgnoreCase("Semaforo")){
+                    join = " JOIN casosemaforo ON casosemaforo.OIDCaso = denuncia.OIDCaso ";
+                    criterios.get(i).setAtributo("OIDSemaforo");
+                    condicion = condicion + "casosemaforo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }
+                else
+                    condicion = condicion + "denuncia." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
-        }
 
-        return select;
+        }
+        return select + join + condicion;
     }
 
     public String armarSelectOid(String oid) {

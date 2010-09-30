@@ -32,7 +32,7 @@ public class IntermediarioPersistenciaMarca extends IntermediarioRelacional{
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
-        select =  "SELECT * FROM marca WHERE " ;
+        select =  "SELECT * FROM marca " ;
         if(!criterios.isEmpty()){
             select = select + "WHERE";
             for(int i = 0; i < criterios.size(); i++){
