@@ -39,7 +39,7 @@ public class ControladorEjecutarOrdenesTrabajo {
 //     }
 
     void buscarOrdenesPendientes(Date fecha, int seleccion) {
-        List<DTOOrden> listaDTOOrdens = experto.consultarOrdenesTrabajoPendientes(fecha);
+        List<DTOOrden> listaDTOOrdens = experto.consultarOrdenesPendientes(fecha, seleccion);
         ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
         nuevoModelo.addAllRow(listaDTOOrdens);
         ((ModeloTablaOrdenesTrabajo)pantalla.getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);

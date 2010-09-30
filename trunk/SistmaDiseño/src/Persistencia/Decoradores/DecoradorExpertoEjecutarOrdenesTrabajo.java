@@ -28,23 +28,23 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public List<OrdenDeMantenimiento> consultarOrdenesMantenimientoPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha){
         iniciarTx();
-        List<OrdenDeMantenimiento> aux = super.consultarOrdenesMantenimientoPendientes(fecha);
+        List<DTOOrden>  aux = super.consultarOrdenesMantenimientoPendientes(fecha);
         return aux;
     }
 
     @Override
-    public List<OrdenDeReparacion> consultarOrdenesReparacionPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) {
         iniciarTx();
-        List<OrdenDeReparacion> aux = super.consultarOrdenesReparacionPendientes(fecha);
+        List<DTOOrden> aux = super.consultarOrdenesReparacionPendientes(fecha);
         return aux;
     }
 
     @Override
     public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesEncontradas) {
         super.guardarOrdenTrabajo(ordenesEncontradas);
-        confirmarTx();
+        //confirmarTx();
     }
 
     @Override
