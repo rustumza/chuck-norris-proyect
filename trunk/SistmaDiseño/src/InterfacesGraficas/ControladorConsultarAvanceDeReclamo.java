@@ -42,9 +42,7 @@ public void iniciar(){
     }
 
 
-    void salir() {
-        pantalla.dispose();
-    }
+   
 
 
 }
