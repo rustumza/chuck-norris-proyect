@@ -23,7 +23,8 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia 
 
         String consulta = null;
         if (obj.isIsNuevo()) {
-            obj.setOid((generadorOid.getInstance().generarOid()));
+            if(obj.getOid()!=null)
+                obj.setOid((generadorOid.getInstance().generarOid()));
             consulta = armarInsert(obj);
 
         } else {

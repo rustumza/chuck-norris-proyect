@@ -7,7 +7,11 @@ package Persistencia.intermediarios;
 
 import Persistencia.Entidades.Caso;
 import Persistencia.Entidades.CasoAgente;
+import Persistencia.Entidades.Denuncia;
 import Persistencia.Entidades.DenunciaAgente;
+import Persistencia.Entidades.DenunciaEstado;
+import Persistencia.Entidades.DenunciaEstadoAgente;
+import Persistencia.Entidades.EstadoDenuncia;
 import Persistencia.Entidades.FallaTecnica;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -33,7 +37,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
         DenunciaAgente denuncia = (DenunciaAgente) obj;
 
         insert = "INSERT INTO denuncia (OIDCaso, CodigoDenuncia, Prioridad)"
-                + "values '" + denuncia.getOid() + "' ,'" + denuncia.getcodigoDenuncia() + "' ,'" + denuncia.getprioridad() + "' ";
+                + "values ('" + denuncia.getOid() + "' ,'" + denuncia.getcodigoDenuncia() + "' ,'" + denuncia.getprioridad() + "') ";
 
         return insert;
     }
@@ -88,6 +92,14 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
     }
 
     public void guardarObjetoCompuesto(ObjetoPersistente obj) {
+        Denuncia den = (Denuncia)obj;
+
+        for(DenunciaEstado aux : den.getDenunciaEstado()){
+            DenunciaEstadoAgente denAgEst = (DenunciaEstadoAgente)aux;
+            denAgEst.setOidDenuncia(obj.getOid());
+            FachadaInterna.getInstancia().guardar("DenunciaEstado", (ObjetoPersistente)denAgEst);
+        }
+        
     }
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
@@ -146,6 +158,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
+
         FachadaInterna.getInstancia().guardar("Caso", obj);
     }
 }

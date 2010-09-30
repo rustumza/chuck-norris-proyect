@@ -19,7 +19,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     private CasoImplementacion implementacion;
     private String oidOperador;
     private List<String> listaOidSemaforos;
-    private String oidProblema;
+    private List<String> ListaOidProblema;
     private String oidDenunciante;
 
     /*variables para saber si los atributos han sido buscado en la BD*/
@@ -54,6 +54,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     public void setOperador(Operador operador) {
         getImplementacion().setOperador(operador);
         operadorBuscado = true;
+        setOidOperador(((ObjetoPersistente)operador).getOid());
     }
 
     public List<Semaforo> getSemaforo() {
@@ -73,6 +74,12 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     public void setSemaforo(List<Semaforo> semaforo) {
         getImplementacion().setSemaforo(semaforo);
         semaforoBuscado = true;
+        if(listaOidSemaforos==null){
+            listaOidSemaforos = new ArrayList<String>();
+        }
+        for(Semaforo aux : semaforo){
+            listaOidSemaforos.add(((ObjetoPersistente)aux).getOid());
+        }
 
     }
 
@@ -92,6 +99,12 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     public void setProblema(List<Problema> problema) {
         getImplementacion().setProblema(problema);
         problemaBuscado = true;
+        if(ListaOidProblema==null){
+            ListaOidProblema = new ArrayList<String>();
+        }
+        for(Problema aux : problema){
+            ListaOidProblema.add(((ObjetoPersistente)aux).getOid());
+        }
     }
 
     public Denunciante getDenunciante() {
@@ -104,6 +117,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     public void setDenunciante(Denunciante denunciante) {
         getImplementacion().setDenunciante(denunciante);
         denuncianteBuscado = true;
+        setOidDenunciante(((ObjetoPersistente)denunciante).getOid());
     }
 
     /**
@@ -147,15 +161,15 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     /**
      * @return the oidProblema
      */
-    public String getOidProblema() {
-        return oidProblema;
+    public List<String> getOidProblema() {
+        return ListaOidProblema;
     }
 
     /**
      * @param oidProblema the oidProblema to set
      */
-    public void setOidProblema(String oidProblema) {
-        this.oidProblema = oidProblema;
+    public void setOidProblema(List<String> oidProblema) {
+        this.ListaOidProblema = oidProblema;
     }
 
     /**

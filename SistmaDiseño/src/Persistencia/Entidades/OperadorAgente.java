@@ -9,7 +9,7 @@ package Persistencia.Entidades;
  *
  * @author diego
  */
-public class OperadorAgente implements Operador{
+public class OperadorAgente extends ObjetoPersistente implements Operador{
 
     private OperadorImplementacion implementacion;
 

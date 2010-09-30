@@ -21,11 +21,15 @@ import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.OperadorImplementacion;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Semaforo;
+import Persistencia.Entidades.SuperDruperInterfaz;
+import Persistencia.ExpertosPersistencia.Criterio;
+import Persistencia.ExpertosPersistencia.FachadaExterna;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerListModel;
@@ -391,7 +395,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
     private void asentarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asentarCasoActionPerformed
         dTOinfoParaCrearDenuncia.setDenunciante(denunciante);
-        dTOinfoParaCrearDenuncia.setOperador(new OperadorImplementacion());
+
+        //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
+        List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
+        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "22222"));
+        List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
+        Operador opera = (Operador)listaDeInterfaces.get(0);
+        //HASTA ACA
+        dTOinfoParaCrearDenuncia.setOperador(opera);
         dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
         controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
     }//GEN-LAST:event_asentarCasoActionPerformed
