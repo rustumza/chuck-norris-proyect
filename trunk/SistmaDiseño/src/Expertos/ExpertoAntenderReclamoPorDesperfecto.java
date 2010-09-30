@@ -205,7 +205,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             denEstado.setfechacambioestado(new Date());
             denEstado.setindicadorestadoactual(true);
             List<Criterio> listCriterioEstDen = new ArrayList<Criterio>();
-            listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "Pendiente de atención"));
+            listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "PENDIENTE"));
             List<SuperDruperInterfaz> listaEstDen = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCriterioEstDen);
             denEstado.setEstadoDenuncia((EstadoDenuncia)listaEstDen.get(0));
             List<DenunciaEstado> listaDenEstado = new ArrayList<DenunciaEstado>();
