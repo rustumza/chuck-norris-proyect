@@ -24,6 +24,7 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,28 +35,34 @@ import java.util.List;
  */
 public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
+    public static final int ordenTrabajo = 1;
+    public static final int ordenMantenimiento = 2;
+    public static final int ordenReparacion = 3;
+
     private String ConsultarOrdenesPendientes;
     private List<OrdenTrabajo> ordenesTrabajoPendientes = new ArrayList<OrdenTrabajo>();
 
-    public List<OrdenDeMantenimiento> consultarOrdenesMantenimientoPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha) {
 
         List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
-        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes)).buscarOrdenesMantPendiente(fecha);
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes")).buscarOrdenesMantPendiente(fecha);
 
+        ordenesTrabajoPendientes.clear();
         ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
-        return ordenesEncontradas;
+        return armarListaDTOOrden(ordenesTrabajoPendientes);
     }
 
-    public List<OrdenDeReparacion> consultarOrdenesReparacionPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) {
         List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
-        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto(ConsultarOrdenesPendientes))).buscarOrdenesReparacionPendiente(fecha);
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenesReparacionPendiente(fecha);
 
+        ordenesTrabajoPendientes.clear();
         ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
-        return ordenesEncontradas;
+        return armarListaDTOOrden(ordenesTrabajoPendientes);
 
 
     }
@@ -66,11 +73,28 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
         ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenes(fecha);
 
+        ordenesTrabajoPendientes.clear();
         ordenesTrabajoPendientes.addAll(ordenesEncontradas);
 
         return armarListaDTOOrden(ordenesEncontradas);
 
     }
+
+     public List<DTOOrden> consultarOrdenesPendientes(Date fecha, int seleccion){
+         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+
+         switch(seleccion){
+             case ordenTrabajo:
+                 return consultarOrdenesTrabajoPendientes(fecha);
+             case ordenMantenimiento:
+                 return consultarOrdenesMantenimientoPendientes(fecha);
+             case ordenReparacion:
+                 return consultarOrdenesReparacionPendientes(fecha);
+             default:
+                 return null;
+         }
+
+     }
 
     // <editor-fold defaultstate="collapsed" desc="comment">
     public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {// </editor-fold>
@@ -81,16 +105,18 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
         for (OrdenTrabajo orden : ordenesTrabajo) {
 
+            orden.setfechainiciotrabajo(new Date());
             OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
             ordentrabajoestado.setEstadoOrdenTrabajo(estado);
             ordentrabajoestado.setfechacambioestado(new Date());
-            ordentrabajoestado.setindicadorestadoactual(true);
+            
 
             for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
                 if (ordenTrabEst.isindicadorestadoactual()) {
                     ordenTrabEst.setindicadorestadoactual(false);
                 }
             }
+            ordentrabajoestado.setindicadorestadoactual(true);
             orden.addEstado(ordentrabajoestado);
 
             //llamarWebServiceConfirmarReservas(ordenesTrabajo);

@@ -16,6 +16,7 @@ import Persistencia.Entidades.TrabajoAgente;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
         OrdenTrabajoAgente ordenTrabajo = (OrdenTrabajoAgente) obj;
 
         return insert = "INSERT INTO ordendetrabajo (OIDOrdenDeTrabajo, FechaInicioTrabajo, FechaFinTrabajo, FechaInicioPlanificada, DuracionPrevistaTrabajo, Tipo, OIDEquipoDeTrabajo)"
-                + " VALUES ('" + ordenTrabajo.getOid() + "', '" + ordenTrabajo.getfechainiciotrabajo() + "', '" + ordenTrabajo.getfechafintrabajo() + "', '" + ordenTrabajo.getfechainicioplanificada() + "', " + ordenTrabajo.getduracionprevistatrabajo() + ", '" + ordenTrabajo.gettipoordentrabajo() + "', '" + ordenTrabajo.getOidEquipoDeTrabajo() + "')";
+                + " VALUES ('" + ordenTrabajo.getOid() + "', '" + FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechainiciotrabajo()) + "', '" + FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechafintrabajo()) + "', '" + FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechainicioplanificada()) + "', " + ordenTrabajo.getduracionprevistatrabajo() + ", '" + ordenTrabajo.gettipoordentrabajo() + "', '" + ordenTrabajo.getOidEquipoDeTrabajo() + "')";
     }
 
     public String armarSelect(List<Criterio> criterios) {
@@ -92,9 +93,9 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
 
         update = "UPDATE ordendetrabajo "
                 + "SET OIDOrdenDeTrabajo = '" + ordenTrabajo.getOid() + "', "
-                + "FechaInicioTrabajo = '" + ordenTrabajo.getfechainiciotrabajo() + "', "
-                + "FechaFinTrabajo = '" + ordenTrabajo.getfechafintrabajo() + "', "
-                + "FechaInicioPlanificada = '" + ordenTrabajo.getfechainicioplanificada() + "', "
+                + "FechaInicioTrabajo = '" +  FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechainiciotrabajo()) + "', "
+                + "FechaFinTrabajo = '" +  FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechafintrabajo()) + "', "
+                + "FechaInicioPlanificada = '" +  FormateadorFechas.getInstancia().formatearAMySql(ordenTrabajo.getfechainicioplanificada()) + "', "
                 + "DuracionPrevistaTrabajo = " + ordenTrabajo.getduracionprevistatrabajo() + ", "
                 + "Tipo = '" + ordenTrabajo.gettipoordentrabajo() + "', "
                 + "OIDEquipoDeTrabajo = '" + ordenTrabajo.getOidEquipoDeTrabajo() + "'";
