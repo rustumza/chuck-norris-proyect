@@ -4,6 +4,7 @@
  */
 package Persistencia.intermediarios;
 
+import Persistencia.Entidades.AUXProblemaCaso;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import java.sql.ResultSet;
@@ -13,39 +14,63 @@ import java.util.List;
  *
  * @author Eduardo
  */
-public class IntermediarioPersistenciaProblemaCaso extends IntermediarioRelacional{
-
-private String oid;
+public class IntermediarioPersistenciaProblemaCaso extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
+        AUXProblemaCaso problemaCaso = new AUXProblemaCaso();
         String insert;
 
-        return insert = "insert into problemacaso (OIDProblemaCaso, OIDCaso, OIDProblema) values (OIDCaso, CodigoDenuncia, Prioridad)";
+        insert = "INSERT INTO problemacaso (OIDProblemaCaso, OIDCaso, OIDProblema) "
+                + "VALUES ('" + problemaCaso.getOid() + "', '" + problemaCaso.getOidCaso() + "', '" + problemaCaso.getOidProblema() + "')";
+
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
-        List<Criterio> listaCriterios;
         String select;
-        listaCriterios = criterios;
 
-        return select = "select * from problemacaso where " ;//criterios
+        select = "select * from problemacaso";
+
+        if (!criterios.isEmpty()) {
+            select = select + " WHERE ";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
+                    select = select + " AND ";
+                }
+
+                select = select + "problemacaso." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+        }
+
+        return select;
 
     }
 
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        this.oid =oid;
 
-        return selectOid = "select * from problemacaso where OIDProblemaCaso = " + oid;
+        selectOid = "SELECT * FROM problemacaso WHERE OIDProblemaCaso = '" + oid + "'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {
 
+        AUXProblemaCaso problemaCaso = new AUXProblemaCaso();
         String update;
 
-        return update = "update problemacaso set OIDProblemaCaso =" + ",OIDCaso = " + "OIDProblema = " ;
+        update = "UPDATE problemacaso "
+                + "SET OIDProblemaCaso = '" + problemaCaso.getOid() + "', "
+                + "OIDCaso = '" + problemaCaso.getOidCaso() + "', "
+                + "OIDProblema = '" + problemaCaso.getOidProblema() + "'";
+        
+        String condicion = " WHERE OIDProblemaCaso = '" + obj.getOid() + "'";
+
+        update = update + condicion;
+
+        return update;
 
     }
 
@@ -60,22 +85,17 @@ private String oid;
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
-
