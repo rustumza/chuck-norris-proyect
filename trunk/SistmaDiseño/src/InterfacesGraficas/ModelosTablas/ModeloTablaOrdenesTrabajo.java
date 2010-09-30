@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
 
     private List<DTOOrden> ordenesTrabajo;
-    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Fecha inicio planificada","Duración", "Equipo"};
+    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Fecha inicio planificada", "Duración", "Equipo"};
     private boolean editable = false;
 
     @Override
@@ -63,7 +63,11 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
             case 1:
                 return ordenTrabajo.getTipo();
             case 2:
-                return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaInicioTrabajo());
+                if (ordenTrabajo.getFechaInicioTrabajo() == null) {
+                    return "";
+                } else {
+                    return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaInicioTrabajo());
+                }
             case 3:
                 return FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(ordenTrabajo.getFechaFinTrabajo());
             case 4:
@@ -83,8 +87,9 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public void addRow(DTOOrden nuevaOrden) {
-        if(getOrdenesTrabajo()==null)
+        if (getOrdenesTrabajo() == null) {
             ordenesTrabajo = new ArrayList<DTOOrden>();
+        }
         getOrdenesTrabajo().add(nuevaOrden);
         fireTableDataChanged();
     }

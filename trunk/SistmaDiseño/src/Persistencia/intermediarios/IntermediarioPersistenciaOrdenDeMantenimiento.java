@@ -133,6 +133,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                 nuevaOrdenDeMantenimiento.setInformeMantenimientoBuscado(false);
                 nuevaOrdenDeMantenimiento.setOidFichaMantenimiento(rs.getString("OIDFichaMantenimiento"));
                 nuevaOrdenDeMantenimiento.setFichaMantenimientoBuscado(false);
+                nuevaOrdenDeMantenimiento.setcodigoordenmantenimiento(rs.getInt("CodigoOrdenMantenimiento"));
 
                 nuevosObjetos.add(nuevaOrdenDeMantenimiento);
 

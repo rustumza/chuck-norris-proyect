@@ -24,7 +24,6 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
-import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

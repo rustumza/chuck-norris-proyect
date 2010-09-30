@@ -28,8 +28,8 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
 
         OrdenDeReparacionAgente ordenRep = (OrdenDeReparacionAgente) obj;
 
-        insert = "INSERT INTO ordenreparacion (OIDOrdenDeTrabajo, OIDDenuncia) "
-                + "VALUES ('" + obj.getOid() + "', '" + ordenRep.getOidDenuncia() + "')";
+        insert = "INSERT INTO ordenreparacion (OIDOrdenDeTrabajo, CodigoOrdenReparacion, OIDDenuncia) "
+                + "VALUES ('" + obj.getOid() + "', "+String.valueOf(ordenRep.getcodigoordenreparacion())+" , '" + ordenRep.getOidDenuncia() + "')";
 
 
         return insert;
@@ -102,6 +102,7 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
 
         update = "UPDATE ordenreparacion "
                 + "SET OIDOrdenDeTrabajo = '" + ordenRep.getOid() + "', "
+                + "CodigoOrdenReparacion = "+String.valueOf(ordenRep.getcodigoordenreparacion())+", "
                 + "OIDDenuncia = '" + ordenRep.getOidDenuncia() + "'";
 
         String condicion = " WHERE OIDOrdenDeTrabajo = '" + ordenRep.getOid() + "'";
@@ -129,6 +130,7 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
                 nuevaOrdenRep.setIsNuevo(false);
                 nuevaOrdenRep.setOid(rs.getString("OIDOrdenDeTrabajo"));
                 nuevaOrdenRep.setOidDenuncia(rs.getString("OIDDenuncia"));
+                nuevaOrdenRep.setcodigoordenreparacion(rs.getInt("CodigoOrdenReparacion"));
                 nuevaOrdenRep.setDenunciaBuscado(false);
                 nuevaOrdenRep.setInformeReparacionBuscado(false);
 
