@@ -71,6 +71,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
 
     public void setSemaforo(List<Semaforo> semaforo) {
         getImplementacion().setSemaforo(semaforo);
+        semaforoBuscado = true;
 
     }
 
