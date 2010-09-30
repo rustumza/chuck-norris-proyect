@@ -192,10 +192,12 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             den.setfechacaso(new Date());
             den.settipocaso(1);
             List<Criterio> listCrit = new ArrayList<Criterio>();
-            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoNumeracion", "=" , "Denuncia"));
+            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Denuncia"));
             List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
             Numerador numerador = (Numerador)listDeInterf.get(0);
-            den.setcodigoDenuncia(numerador.getultimonumeroregistrado()+1);
+            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+            FachadaExterna.getInstancia().guardar("Numerador", numerador);
+            den.setcodigoDenuncia(numerador.getultimonumeroregistrado());
             den.setReclamo(new ArrayList<Reclamo>());
             den.setprioridad(calcularPrioridad(den.getReclamo(), den.getSemaforo().get(0)));
             den.setDenunciaEstado(new ArrayList<DenunciaEstado>());

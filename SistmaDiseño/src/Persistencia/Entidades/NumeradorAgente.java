@@ -9,7 +9,7 @@ package Persistencia.Entidades;
  *
  * @author diego
  */
-public class NumeradorAgente implements Numerador{
+public class NumeradorAgente extends ObjetoPersistente implements Numerador{
 
     private NumeradorImplementacion implementacion;
 

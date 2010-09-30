@@ -331,7 +331,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
         Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
-        if(hashMapProblemasDelSemaforo.containsValue(sem.getnumeroSerie())){
+        if(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())!=null){
             hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) todosLosProblemas.getValue());
         }
         else{
