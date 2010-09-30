@@ -8,6 +8,7 @@ import Persistencia.Entidades.DenunciaEstadoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.ConvertidorBooleanos;
 import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,11 +24,14 @@ import java.util.logging.Logger;
 public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
-        String insert;
+        String insert = "";
+
         DenunciaEstadoAgente denunciaEstado = (DenunciaEstadoAgente) obj;
+        if(denunciaEstado.getIndicadoresEstadoActual())
+
 
         insert = "INSERT INTO denunciaestado (OIDDenunciaEstado, OIDDenuncia, OIDEstadoDenuncia, FechaCambioEstado, IndicadoresEstadoActual)"
-                + "VALUES '" + denunciaEstado.getOid() + "', '" + denunciaEstado.getOidDenuncia() + "', '" + denunciaEstado.getOidEstadoDenuncia() + "', '" + denunciaEstado.getfechacambioestado() + "', '" + denunciaEstado.getIndicadoresEstadoActual() + "'";
+                + "VALUES '" + denunciaEstado.getOid() + "', '" + denunciaEstado.getOidDenuncia() + "', '" + denunciaEstado.getOidEstadoDenuncia() + "', '" + FormateadorFechas.getInstancia().formatearAMySql(denunciaEstado.getfechacambioestado()) + "'," + ConvertidorBooleanos.getInstancia().convertirBooleanToInt(denunciaEstado.getIndicadoresEstadoActual());
 
         return insert;
     }

@@ -45,6 +45,7 @@ public class DenunciaEstadoAgente extends ObjetoPersistente implements DenunciaE
 
     public void setEstadoDenuncia(EstadoDenuncia estadoDenuncia) {
         implementacion.setEstadoDenuncia(estadoDenuncia);
+        setOidEstadoDenuncia(((EstadoDenunciaAgente)estadoDenuncia).getOid());
     }
 
     /**

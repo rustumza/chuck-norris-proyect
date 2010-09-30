@@ -12,6 +12,7 @@ import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
+import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
 
 
         insert = "INSERT INTO caso (OIDCaso, OIDDenunciante, OIDOperador, FechaCaso, TipoCaso) "
-                + "VALUES ('" + caso.getOid() + "', '" + caso.getOidDenunciante() + "', '" + caso.getOidOperador() + "', '" + caso.getfechacaso() + "', '" + caso.gettipocaso() + "')";
+                + "VALUES ('" + caso.getOid() + "', '" + caso.getOidDenunciante() + "', '" + caso.getOidOperador() + "', '" + FormateadorFechas.getInstancia().formatearAMySql(caso.getfechacaso()) + "', '" + caso.gettipocaso() + "')";
 
         return insert;
     }

@@ -6,7 +6,11 @@ package Persistencia.intermediarios;
 
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.OperadorAgente;
+import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +29,22 @@ public class IntermediarioPersistenciaOperador extends IntermediarioRelacional{
 
     public String armarSelect(List<Criterio> criterios) {
 
-        List<Criterio> listaCriterios;
         String select;
-        listaCriterios = criterios;
 
-        return select = "select * from operador where " ;//criterios
+        select = "SELECT * FROM operador";
 
+        if (!criterios.isEmpty()) {
+            select = select + " WHERE ";
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
+                    select = select + " AND ";
+                }
+
+                select = select + "operador." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+        }
+
+        return select;
     }
 
     public String armarSelectOid(String oid) {
@@ -53,29 +67,44 @@ public class IntermediarioPersistenciaOperador extends IntermediarioRelacional{
     }
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
+        try {
+            while (rs.next()) {
 
+                OperadorAgente nuevoOperador = (OperadorAgente) FabricaEntidades.getInstancia().crearEntidad("Operador");
+                nuevoOperador.setIsNuevo(false);
+                nuevoOperador.setOid(rs.getString("OIDOperador"));
+                nuevoOperador.setlegajo(rs.getString("OIDOperador"));
+                nuevoOperador.setnombreOperador(rs.getString("NombreOperador"));
 
-        return null;
+                nuevosObjetos.add(nuevoOperador);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return nuevosObjetos;
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listaCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 }
 

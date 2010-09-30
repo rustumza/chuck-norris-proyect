@@ -9,6 +9,9 @@ import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
+import Persistencia.Decoradores.DecoradorExpertoAntenderReclamoPorDesperfecto;
+import Persistencia.Decoradores.DecoradorExpertoConsultarAvanceDeReclamo;
+import Persistencia.Decoradores.DecoradorExpertoConsultarOrdenesPendientes;
 import Persistencia.Decoradores.DecoradorExpertoEjecutarOrdenesTrabajo;
 
 /**
@@ -36,11 +39,11 @@ public class FabricaExpertos {
         Experto retorno = null;
 
         if (tipo.equals("AtenderReclamoPorDesperfecto")) {
-            retorno = (Experto) new ExpertoAntenderReclamoPorDesperfecto();
+            retorno = (Experto) new DecoradorExpertoAntenderReclamoPorDesperfecto();
         } else if (tipo.equals("ConsultarAvanceDeReclamo")) {
-            retorno =(Experto) new ExpertoConsultarAvanceDeReclamo();
+            retorno =(Experto) new DecoradorExpertoConsultarAvanceDeReclamo();
         } else if (tipo.equals("ConsultarOrdenesPendientes")) {
-            retorno = (Experto) new ExpertoConsultarOrdenesPendientes();
+            retorno = (Experto) new DecoradorExpertoConsultarOrdenesPendientes();
         } else if (tipo.equals("EjecutarOrdenesTrabajo")) {
             retorno = (Experto) new DecoradorExpertoEjecutarOrdenesTrabajo();
         }
