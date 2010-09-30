@@ -119,7 +119,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
             ordentrabajoestado.setindicadorestadoactual(true);
             orden.addEstado(ordentrabajoestado);
 
-            //llamarWebServiceConfirmarReservas(ordenesTrabajo);
+            ConfirmarReservas(ordenesTrabajo);
 
             //imprimirOrdenes(ordenesTrabajo);
 
@@ -138,23 +138,10 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
         //MANDAR A IMPRIMIR LAS ORDENES
     }
 
-    private void llamarWebServiceConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) {
+    private void ConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) {
         //LLAMAR WEB SERVICE
         for (OrdenTrabajo orden : ordenesEncontradas) {
-            for (Reserva res : orden.getRervas()) {
-                res.getcodigoreserva();     //resnro
-                int[] codigosExternos = new int[res.getReservaElementoTrabajo().size()]; //arreglo codigos de bienes
-                int cont = 0;
-                for (ReservaElementoTrabajo resElemTrab : res.getReservaElementoTrabajo()) {
-                    codigosExternos[cont] = resElemTrab.getElementoTrabajo().getcodigosistemaexterno();
-                }
-                if (!FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(res.getcodigoreserva(), codigosExternos)) {
-                    //tirar excepcion poruqe no se pudo reservar
-                }
-            }
-            //con estos datos confirmo una reserva
-
-
+            FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(orden);
         }
     }
 

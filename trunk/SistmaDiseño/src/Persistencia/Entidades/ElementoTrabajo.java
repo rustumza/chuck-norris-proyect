@@ -10,11 +10,11 @@ package Persistencia.Entidades;
  */
 public interface ElementoTrabajo extends SuperDruperInterfaz {
 
-    public int getcodigosistemaexterno();
+    public short getcodigosistemaexterno();
 
     public String gettipoelemento();
 
-    public void setcodigosistemaexterno(int newVal);
+    public void setcodigosistemaexterno(short newVal);
 
     public void settipoelemento(String newVal);
 }
