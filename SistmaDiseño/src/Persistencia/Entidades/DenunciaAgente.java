@@ -57,6 +57,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     public void setReclamo(List<Reclamo> reclamo) {
         implementacion.setReclamo(reclamo);
+        reclamoBuscado = true;
     }
 
     public List<DenunciaEstado> getDenunciaEstado() {
