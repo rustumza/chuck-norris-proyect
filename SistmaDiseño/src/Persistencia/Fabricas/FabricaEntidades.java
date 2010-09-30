@@ -162,6 +162,7 @@ public class FabricaEntidades {
             DenunciaImplementacion denunciaImpl = new DenunciaImplementacion();
             DenunciaAgente denunciaAgente = new DenunciaAgente();
             denunciaAgente.setImplementacion(denunciaImpl);
+            denunciaAgente.setIsNuevo(true);
 
             return denunciaAgente;
         } else if (entidad.equals("DenunciaEstado")) {

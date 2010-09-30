@@ -53,6 +53,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
 
     public void setOperador(Operador operador) {
         getImplementacion().setOperador(operador);
+        operadorBuscado = true;
     }
 
     public List<Semaforo> getSemaforo() {
@@ -90,6 +91,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
 
     public void setProblema(List<Problema> problema) {
         getImplementacion().setProblema(problema);
+        problemaBuscado = true;
     }
 
     public Denunciante getDenunciante() {
@@ -101,6 +103,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
 
     public void setDenunciante(Denunciante denunciante) {
         getImplementacion().setDenunciante(denunciante);
+        denuncianteBuscado = true;
     }
 
     /**
@@ -108,6 +111,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
      */
     public String getOidOperador() {
         return oidOperador;
+
     }
 
     /**
@@ -115,6 +119,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
      */
     public void setOidOperador(String oidOperador) {
         this.oidOperador = oidOperador;
+
     }
 
     /**
