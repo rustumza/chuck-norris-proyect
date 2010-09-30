@@ -24,7 +24,7 @@ public class IntermediarioPersistenciaCasoSemaforo extends IntermediarioRelacion
         String insert;
 
         insert = "INSERT INTO casosemaforo (OIDCasoSemaforo, OIDCaso, OIDSemaforo) "
-                + "VALUES ('" + auxCasoSem.getOid() + "', '" + auxCasoSem.getOidCaso() + "', '" + auxCasoSem + "')";
+                + "VALUES ('" + auxCasoSem.getOid() + "', '" + auxCasoSem.getOidCaso() + "', '" + auxCasoSem.getOidSemaforo() + "')";
 
         return insert;
     }

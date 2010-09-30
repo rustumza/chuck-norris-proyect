@@ -17,7 +17,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     private DenunciaImplementacion implementacion;
     private String oidReclamo;
-    private String oidDenunciaEstado;
+    private List<String> oidDenunciaEstado;
     private List<String> listaOidFallaTecnica;
     //variables para saber si se han buscado los atributos en la BD
     private boolean reclamoBuscado;
@@ -74,6 +74,10 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado) {
         implementacion.setDenunciaEstado(denunciaEstado);
+        if(oidDenunciaEstado ==null)
+            oidDenunciaEstado = new ArrayList<String>();
+        for(DenunciaEstado aux : denunciaEstado)
+            oidDenunciaEstado.add(((ObjetoPersistente)aux).getOid());
     }
 
     public List<FallaTecnica> getFallasTecnica() {
@@ -121,14 +125,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     /**
      * @return the oidDenunciaEstado
      */
-    public String getOidDenunciaEstado() {
+    public List<String> getOidDenunciaEstado() {
         return oidDenunciaEstado;
     }
 
     /**
      * @param oidDenunciaEstado the oidDenunciaEstado to set
      */
-    public void setOidDenunciaEstado(String oidDenunciaEstado) {
+    public void setOidDenunciaEstado(List<String> oidDenunciaEstado) {
         this.oidDenunciaEstado = oidDenunciaEstado;
     }
 
@@ -180,5 +184,10 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
      */
     public void setFallaTecnicaBuscado(boolean fallaTecnicaBuscado) {
         this.fallaTecnicaBuscado = fallaTecnicaBuscado;
+    }
+
+    public void agregarDenunciaEstado(DenunciaEstado denEstado) {
+        oidDenunciaEstado.add(((DenunciaAgente)denEstado).getOid());
+        implementacion.agregarDenunciaEstado(denEstado);
     }
 }

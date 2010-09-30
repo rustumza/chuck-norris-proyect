@@ -33,4 +33,6 @@ public interface Denuncia extends Caso {
     public List<FallaTecnica> getFallasTecnica();
 
     public void setFallasTecnica(List<FallaTecnica> fallaTecnica);
+
+    public void agregarDenunciaEstado(DenunciaEstado denEstado);
 }

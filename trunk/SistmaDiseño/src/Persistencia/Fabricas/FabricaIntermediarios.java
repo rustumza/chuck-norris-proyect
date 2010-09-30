@@ -3,6 +3,7 @@ package Persistencia.Fabricas;
 import Persistencia.intermediarios.IntermediarioPersistencia;
 import Persistencia.intermediarios.IntermediarioPersistenciaCalle;
 import Persistencia.intermediarios.IntermediarioPersistenciaCaso;
+import Persistencia.intermediarios.IntermediarioPersistenciaCasoSemaforo;
 import Persistencia.intermediarios.IntermediarioPersistenciaCronogramaMantenimiento;
 import Persistencia.intermediarios.IntermediarioPersistenciaDenuncia;
 import Persistencia.intermediarios.IntermediarioPersistenciaDenunciaEstado;
@@ -315,7 +316,12 @@ public class FabricaIntermediarios {
         if (nombre.equals("UbicacionSimple")) {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaUbicacionSimple());
         }
-
+        if (nombre.equals("AUXCasoSemaforo")) {
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaCasoSemaforo());
+        }
+        if (nombre.equals("AUXProblemaCaso")) {
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaProblemaCaso());
+        }
         return intermediario;
     }
 }
