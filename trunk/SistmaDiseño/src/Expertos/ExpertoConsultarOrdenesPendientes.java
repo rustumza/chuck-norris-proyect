@@ -35,13 +35,13 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
 
-    public boolean validarFecha(Date fecha) {
+    public boolean esFechaIncorrecta(Date fecha) {
 
         return (new Date().compareTo(fecha) < 0);
     }
 
     public List<OrdenTrabajo> buscarOrdenes(Date fecha) {
-        if (!validarFecha(fecha)) {
+        if (esFechaIncorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
@@ -63,7 +63,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
     public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) {
 
-        if (!validarFecha(fecha)) {
+        if (esFechaIncorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
@@ -84,7 +84,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
     public List<OrdenDeReparacion> buscarOrdenesReparacionPendiente(Date fecha) {
 
-        if (!validarFecha(fecha)) {
+        if (esFechaIncorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
