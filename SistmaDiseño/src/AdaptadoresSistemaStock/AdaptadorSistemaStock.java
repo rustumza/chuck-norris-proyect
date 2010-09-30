@@ -5,10 +5,12 @@
 
 package AdaptadoresSistemaStock;
 
+import Persistencia.Entidades.OrdenTrabajo;
+
 /**
  *
  * @author rustu
  */
 public interface AdaptadorSistemaStock {
-    public boolean confirmarStock(int codigoReserva, int[] codigosBienes);
+    public void confirmarStock(OrdenTrabajo orden);
 }
