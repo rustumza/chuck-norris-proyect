@@ -13,7 +13,7 @@ public class ElementoTrabajoAgente extends ObjetoPersistente implements Elemento
 
     private ElementoTrabajoImplementacion implementacion;
 
-    public short getcodigosistemaexterno() {
+    public int getcodigosistemaexterno() {
         return implementacion.getcodigosistemaexterno();
     }
 
@@ -21,7 +21,7 @@ public class ElementoTrabajoAgente extends ObjetoPersistente implements Elemento
        return implementacion.gettipoelemento();
     }
 
-    public void setcodigosistemaexterno(short newVal) {
+    public void setcodigosistemaexterno(int newVal) {
         implementacion.setcodigosistemaexterno(newVal);
     }
 

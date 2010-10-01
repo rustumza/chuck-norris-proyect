@@ -150,6 +150,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
             auxprobcaso = (AUXProblemaCaso) FachadaInterna.getInstancia().crearEntidad("AUXProblemaCaso");
             auxprobcaso.setOidCaso(obj.getOid());
             auxprobcaso.setOidProblema(aux1);
+            FachadaInterna.getInstancia().guardar("AUXProblemaCaso", auxprobcaso);
         }
 
 

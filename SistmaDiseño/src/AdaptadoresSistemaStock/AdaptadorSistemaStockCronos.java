@@ -7,6 +7,7 @@ package AdaptadoresSistemaStock;
 import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.Entidades.Reserva;
 import Persistencia.Entidades.ReservaElementoTrabajo;
+import Utilidades.ConvertirInttoShort;
 import sistemastock.ArrayOfint;
 import sistemastock.WSConfirmarReservaExecute;
 import sistemastock.WSConfirmarReservaExecuteResponse;
@@ -28,9 +29,10 @@ public class AdaptadorSistemaStockCronos implements AdaptadorSistemaStock {
         for (Reserva res : orden.getRervas()) {    
             WSConfirmarReservaExecute confirma = new sistemastock.ObjectFactory().createWSConfirmarReservaExecute();
 
+
             ArrayOfint aux = new ArrayOfint();
             for (ReservaElementoTrabajo resElemTrab : res.getReservaElementoTrabajo()) {
-                aux.getItem().add(resElemTrab.getElementoTrabajo().getcodigosistemaexterno());
+                aux.getItem().add(ConvertirInttoShort.getInstace().convertirInttoShort(resElemTrab.getElementoTrabajo().getcodigosistemaexterno()));
                 }
             confirma.setUsuario(user);
             confirma.setPassword(pass);
