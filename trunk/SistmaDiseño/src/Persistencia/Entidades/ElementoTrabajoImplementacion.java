@@ -7,7 +7,7 @@ package Persistencia.Entidades;
  */
 public class ElementoTrabajoImplementacion implements ElementoTrabajo{
 
-	private Short codigosistemaexterno;
+	private int codigosistemaexterno;
 	private String tipoelemento;
 
 	public ElementoTrabajoImplementacion(){
@@ -15,7 +15,7 @@ public class ElementoTrabajoImplementacion implements ElementoTrabajo{
 	}
 
 	
-	public short getcodigosistemaexterno(){
+	public int getcodigosistemaexterno(){
 		return codigosistemaexterno;
 	}
 
@@ -27,7 +27,7 @@ public class ElementoTrabajoImplementacion implements ElementoTrabajo{
 	 * 
 	 * @param newVal
 	 */
-	public void setcodigosistemaexterno(short newVal){
+	public void setcodigosistemaexterno(int newVal){
 		codigosistemaexterno = newVal;
 	}
 

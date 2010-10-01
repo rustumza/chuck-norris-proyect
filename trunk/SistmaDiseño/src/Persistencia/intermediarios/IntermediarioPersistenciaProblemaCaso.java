@@ -17,7 +17,7 @@ import java.util.List;
 public class IntermediarioPersistenciaProblemaCaso extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
-        AUXProblemaCaso problemaCaso = new AUXProblemaCaso();
+        AUXProblemaCaso problemaCaso = (AUXProblemaCaso)obj;
         String insert;
 
         insert = "INSERT INTO problemacaso (OIDProblemaCaso, OIDCaso, OIDProblema) "

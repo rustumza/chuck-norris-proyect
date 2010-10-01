@@ -94,7 +94,7 @@ public class IntermediarioPersistenciaElementoTrabajo extends IntermediarioRelac
 
                 nuevoElemento.setOid(rs.getString("OIDElementoTrabajo"));
                 nuevoElemento.setIsNuevo(false);
-                nuevoElemento.setcodigosistemaexterno((rs.getShort("CodigoSistemaExterno")));
+                nuevoElemento.setcodigosistemaexterno((rs.getInt("CodigoSistemaExterno")));
                 nuevoElemento.settipoelemento(rs.getString("TipoElemento"));
 
                 nuevosObjetos.add(nuevoElemento);
