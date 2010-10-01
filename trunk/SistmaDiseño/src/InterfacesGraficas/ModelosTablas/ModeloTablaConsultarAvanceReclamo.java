@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaConsultarAvanceReclamo extends AbstractTableModel{
     private List<DTOEstadoDenuncia> listaEstadosDenuncia;
-    public static String[] columnName = {"Estado", "Fecha"};
+    public static String[] columnName = {"Estado", "Fecha","Estado"};
     private boolean editable = false;
 
     @Override
@@ -61,6 +61,8 @@ public class ModeloTablaConsultarAvanceReclamo extends AbstractTableModel{
                 return estado.getNombreestado();
             case 1:
                 return estado.getFecha();
+            case 2:
+                return estado.getIndicadorEstadoActual();
             default:
                 return "";
         }
@@ -91,6 +93,9 @@ public class ModeloTablaConsultarAvanceReclamo extends AbstractTableModel{
     }
 
     public void clear() {
+        if(listaEstadosDenuncia==null){
+            return;
+        }
         listaEstadosDenuncia.clear();
         fireTableDataChanged();
     }

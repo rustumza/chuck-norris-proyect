@@ -36,7 +36,7 @@ public void iniciar(){
 
      experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         
-        
+        modelo.clear();
         modelo.addAllRow(experto.ConsultarEstadoCaso(numcaso,seleccion));
         pantalla.getTablaConsultarAvanceReclamo().setModel(modelo);
     }

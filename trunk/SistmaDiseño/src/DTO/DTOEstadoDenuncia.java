@@ -12,6 +12,7 @@ public class DTOEstadoDenuncia {
 
     private String fecha;
     private String nombreestado;
+    private String indicadorEstadoActual;
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
@@ -33,5 +34,19 @@ public class DTOEstadoDenuncia {
      */
     public String getNombreestado() {
         return nombreestado;
+    }
+
+    /**
+     * @return the indicadorEstadoActual
+     */
+    public String getIndicadorEstadoActual() {
+        return indicadorEstadoActual;
+    }
+
+    /**
+     * @param indicadorEstadoActual the indicadorEstadoActual to set
+     */
+    public void setIndicadorEstadoActual(String indicadorEstadoActual) {
+        this.indicadorEstadoActual = indicadorEstadoActual;
     }
 }

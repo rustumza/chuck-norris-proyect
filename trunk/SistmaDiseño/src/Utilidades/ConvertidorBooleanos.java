@@ -35,4 +35,25 @@ public class ConvertidorBooleanos {
         }
     }
 
+    /*
+     * convierte Booleano a Activo si es verdadero o Inactivo si es falso
+     */
+    public String convertirBooleanToActivoInactivo(boolean booleano){
+        if(booleano){
+            return "Activo";
+        }else{
+            return "Inactivo";
+        }
+    }
+    /*
+     * convierte un entero a booleano
+     */
+    public boolean convertirIntToBoolean(int booleano){
+        if(booleano != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
