@@ -13,6 +13,8 @@ import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
+import Utilidades.ConvertidorBooleanos;
+import Utilidades.ConvertirInttoShort;
 import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +78,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
             FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(denunciaEstado.getfechacambioestado());
             dtoEstado.setFecha(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(denunciaEstado.getfechacambioestado()));
             dtoEstado.setNombreEstadoDenuncia(denunciaEstado.getEstadoDenuncia().getnombreestado());
+            dtoEstado.setIndicadorEstadoActual(ConvertidorBooleanos.getInstancia().convertirBooleanToActivoInactivo(denunciaEstado.isindicadorestadoactual()));
             listaDtoEstado.add(dtoEstado);
         }
         return listaDtoEstado;

@@ -97,7 +97,7 @@ public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelaci
                 nuevaDenunciaEstado.setOidDenuncia(rs.getString("OIDDenuncia"));
                 nuevaDenunciaEstado.setOidEstadoDenuncia(rs.getString("OIDEstadoDenuncia"));
                 nuevaDenunciaEstado.setfechacambioestado(rs.getDate("FechaCambioEstado"));
-                nuevaDenunciaEstado.setindicadorestadoactual(false);
+                nuevaDenunciaEstado.setindicadorestadoactual(ConvertidorBooleanos.getInstancia().convertirIntToBoolean(rs.getInt("IndicadoresEstadoActual")));
 
                 nuevosObjetos.add(nuevaDenunciaEstado);
             }
