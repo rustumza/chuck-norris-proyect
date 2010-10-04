@@ -56,7 +56,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
                 }
                 if (criterios.get(i).getAtributo().equalsIgnoreCase("Reclamo")) {
                     join = " JOIN reclamo ON reclamo.OIDDenuncia = denuncia.OIDCaso ";
-                    condicion = condicion + "reclamo." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                    condicion = condicion + "reclamo.OIDCaso"+ " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
                 }
                 else if(criterios.get(i).getAtributo().equalsIgnoreCase("Semaforo")){
                     join = " JOIN casosemaforo ON casosemaforo.OIDCaso = denuncia.OIDCaso ";

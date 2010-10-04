@@ -11,6 +11,11 @@
 
 package InterfacesGraficas;
 
+import java.awt.Color;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author diego
@@ -166,13 +171,13 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
 
     private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarActionPerformed
         int seleccion=1;
-        if (radioBtnDenuncia.isEnabled()) {
+        if (radioBtnDenuncia.isCursorSet()) {
             seleccion=1;
         }else{
             seleccion=2;
         }
         controlador.ConsultarEstadoCaso(txtNumeroCaso.getText(),seleccion);
-
+        ((DefaultTableCellRenderer)tablaConsultarAvanceReclamo.getModel()).getComponent(1).setBackground(Color.red)
         // TODO add your handling code here:
     }//GEN-LAST:event_botonConsultarActionPerformed
 
