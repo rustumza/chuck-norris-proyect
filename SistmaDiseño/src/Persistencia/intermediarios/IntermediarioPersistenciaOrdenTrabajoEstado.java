@@ -97,7 +97,7 @@ public class IntermediarioPersistenciaOrdenTrabajoEstado extends IntermediarioRe
 
                 nuevoEstado.setfechacambioestado(rs.getDate("FechaCambioEstado"));
 
-                nuevoEstado.setindicadorestadoactual(Boolean.valueOf(rs.getString("IndicadoresEstadoActual")));
+                nuevoEstado.setindicadorestadoactual(rs.getBoolean("IndicadoresEstadoActual"));
 
                 nuevosObjetos.add(nuevoEstado);
 

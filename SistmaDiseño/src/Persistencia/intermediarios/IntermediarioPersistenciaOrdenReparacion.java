@@ -66,6 +66,8 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
                     addjoin = true;
                     continue;
 
+                }else if(criterios.get(i).getAtributo().equals("Denuncia")){
+                    criterios.get(i).setAtributo("OIDDenuncia");
                 }
                 if (i > 0) {
                     condicion = condicion + " AND ";

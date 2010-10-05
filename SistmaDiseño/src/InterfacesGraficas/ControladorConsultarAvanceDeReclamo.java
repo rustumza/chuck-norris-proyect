@@ -4,9 +4,12 @@
  */
 package InterfacesGraficas;
 
+import DTO.DTODenuncia;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaConsultarAvanceReclamo;
+import InterfacesGraficas.ModelosTablas.ModeloTablaFallas;
+import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 
 /**
  *
@@ -16,13 +19,19 @@ public class ControladorConsultarAvanceDeReclamo {
 
    ExpertoConsultarAvanceDeReclamo experto;
    PantallaConsultarAvanceDeReclamo pantalla;
-   ModeloTablaConsultarAvanceReclamo modelo;
+   ModeloTablaConsultarAvanceReclamo modeloEstados;
+   ModeloTablaOrdenesTrabajo modeloOrdenes;
+   ModeloTablaFallas modeloFallas;
 
 public ControladorConsultarAvanceDeReclamo(){
     experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
     pantalla = new PantallaConsultarAvanceDeReclamo(this);
-    modelo = new ModeloTablaConsultarAvanceReclamo();
-    pantalla.getTablaConsultarAvanceReclamo().setModel(modelo);
+    modeloEstados = new ModeloTablaConsultarAvanceReclamo();
+    modeloOrdenes = new ModeloTablaOrdenesTrabajo();
+    modeloFallas = new ModeloTablaFallas();
+    pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+    pantalla.getTblOrdenReparacion().setModel(modeloOrdenes);
+    pantalla.getTblFallas().setModel(modeloFallas);
 }
 
 public void iniciar(){
@@ -36,9 +45,15 @@ public void iniciar(){
 
      experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         
-        modelo.clear();
-        modelo.addAllRow(experto.ConsultarEstadoCaso(numcaso,seleccion));
-        pantalla.getTablaConsultarAvanceReclamo().setModel(modelo);
+        modeloEstados.clear();
+        DTODenuncia dtoDenuncia = experto.ConsultarEstadoCaso(numcaso,seleccion);
+        modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
+        modeloOrdenes.addRow(dtoDenuncia.getOrdenRep());
+        pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+        pantalla.getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
+        pantalla.getLblEstadoOrden().setVisible(true);
+        modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
+        
     }
 
 
