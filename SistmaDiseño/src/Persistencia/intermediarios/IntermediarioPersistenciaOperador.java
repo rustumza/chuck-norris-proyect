@@ -50,9 +50,10 @@ public class IntermediarioPersistenciaOperador extends IntermediarioRelacional{
     public String armarSelectOid(String oid) {
 
         String selectOid;
-        this.oid =oid;
 
-        return selectOid = "select * from operador where OIDOperador = " + oid;
+        selectOid = "SELECT * FROM operador WHERE OIDOperador = '"+oid+"'";
+
+        return selectOid;
     }
 
     public String armarUpdate(ObjetoPersistente obj) {

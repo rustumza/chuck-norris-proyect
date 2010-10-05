@@ -5,6 +5,8 @@
 package Persistencia.Decoradores;
 
 import DTO.DTODenuncia;
+import Excepciones.ExcepcionCampoVacio;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 
@@ -15,7 +17,7 @@ import Persistencia.ExpertosPersistencia.FachadaInterna;
 public class DecoradorExpertoConsultarAvanceDeReclamo extends ExpertoConsultarAvanceDeReclamo {
 
     @Override
-    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) {
+    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) throws ExcepcionCampoVacio, ExcepcionObjetoNoEncontrado{
 
         IniciarTx();
         DTODenuncia aux = super.ConsultarEstadoCaso(numcaso,seleccion);

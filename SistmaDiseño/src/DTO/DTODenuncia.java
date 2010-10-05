@@ -35,7 +35,7 @@ public class DTODenuncia {
     public void setListaFallas(List<DTOFallaTecnica> nuevalistaFallas) {
         if(listaFallas == null )
             listaFallas = new ArrayList<DTOFallaTecnica>();
-        listaFallas.addAll(listaFallas);
+        listaFallas.addAll(nuevalistaFallas);
     }
 
     /**
