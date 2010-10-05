@@ -8,12 +8,13 @@ import DTO.DTODenuncia;
 import DTO.DTOEstadoDenuncia;
 import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
+import Excepciones.ExcepcionCampoVacio;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.FallaTecnica;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.Denuncia;
 import Persistencia.Entidades.DenunciaEstado;
 import Persistencia.Entidades.ObjetoPersistente;
-import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
 import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.Entidades.OrdenTrabajoEstado;
@@ -22,7 +23,6 @@ import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Utilidades.ConvertidorBooleanos;
-import Utilidades.ConvertirInttoShort;
 import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +34,17 @@ import javax.swing.JOptionPane;
  */
 public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
-    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) {
+    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) throws ExcepcionCampoVacio, ExcepcionObjetoNoEncontrado {
 
         Denuncia casoEncontrado;
         DTODenuncia dTODenuncia = null;
+
+        if(numcaso.equals("")){
+            ExcepcionCampoVacio ex = new ExcepcionCampoVacio();
+            ex.setMensaje("Código de Caso vacío.");
+            throw ex;
+
+        }
 
         if (seleccion == 1) {//es denuncia
 
@@ -46,8 +53,12 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
             listaDeCriterio.add(criterio);
             List<SuperDruperInterfaz> denunciasBuscadas = FachadaExterna.getInstancia().buscar("Denuncia", listaDeCriterio);
 
-            if (denunciasBuscadas == null) {
-                JOptionPane.showMessageDialog(null, "No se han encontrado Denuncias con el numero: " + numcaso, "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+            if (denunciasBuscadas.isEmpty()) {
+                //debe lanzar excepcion
+                ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                ex.setMensaje("No se han encontrado Denuncias con el numero: " + numcaso);
+                throw ex;
+
             } else {
                 casoEncontrado = (Denuncia) denunciasBuscadas.get(0);
                 dTODenuncia = armarDtoDenuncia(casoEncontrado);
