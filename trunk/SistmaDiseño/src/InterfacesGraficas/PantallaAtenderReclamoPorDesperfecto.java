@@ -131,8 +131,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         asentarCaso = new javax.swing.JButton();
         cancelarCaso = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Denunciante"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -147,13 +149,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jLabel1.setText("DNI");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        buscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
         buscarDNI.setText("Buscar");
         buscarDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarDNIActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 96, -1));
+        jPanel1.add(buscarDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 130, -1));
 
         nombre.setText("Nombre");
         jPanel1.add(nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
@@ -172,39 +175,43 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jLabel6.setText("E-mail:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 180, -1));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 340, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 390, 10));
 
+        guardarInfoDenunciante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/add_user-20.png"))); // NOI18N
         guardarInfoDenunciante.setText("Guardar");
         guardarInfoDenunciante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarInfoDenuncianteActionPerformed(evt);
             }
         });
-        jPanel1.add(guardarInfoDenunciante, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 110, -1));
+        jPanel1.add(guardarInfoDenunciante, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 130, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 86, 452, 330));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ubicación"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setText("calle 1");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         jLabel9.setText("calle 2");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 42, -1));
-        jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 150, -1));
-        jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 42, -1));
+        jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 150, -1));
+        jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 150, -1));
 
+        buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
         buscarInteseccion.setText("Buscar");
         buscarInteseccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarInteseccionActionPerformed(evt);
             }
         });
-        jPanel2.add(buscarInteseccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 80, -1));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 420, 20));
-        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 70, -1));
+        jPanel2.add(buscarInteseccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 110, -1));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 420, 10));
+        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 70, -1));
 
         jLabel10.setText("Altura");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
 
         grupoInterseccionCalle.add(jRadioButton1);
         jRadioButton1.setText("Intersección");
@@ -220,7 +227,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 validarCallesActionPerformed(evt);
             }
         });
-        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
+        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         comboCalle1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboCalle1.addActionListener(new java.awt.event.ActionListener() {
@@ -228,10 +235,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 comboCalle1ActionPerformed(evt);
             }
         });
-        jPanel2.add(comboCalle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 130, -1));
+        jPanel2.add(comboCalle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 130, -1));
 
         comboCalle2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(comboCalle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 130, -1));
+        jPanel2.add(comboCalle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 130, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 452, 192));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Semáforos"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -249,83 +258,60 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaDeSemafor);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 33, -1, 174));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 33, 600, 174));
 
         jLabel12.setText("Problemas");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, -1, -1));
-        jPanel3.add(todosLosProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 143, 102));
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
+        jPanel3.add(todosLosProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 143, 102));
 
-        agregarProblema.setText("Agregar>>");
+        agregarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/right-20.png"))); // NOI18N
+        agregarProblema.setText("Agregar");
         agregarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarProblemaActionPerformed(evt);
             }
         });
-        jPanel3.add(agregarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 120, -1));
+        jPanel3.add(agregarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 120, -1));
 
-        quitarProblema.setText("<<Quitar");
+        quitarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/left-20.png"))); // NOI18N
+        quitarProblema.setText("Quitar");
         quitarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quitarProblemaActionPerformed(evt);
             }
         });
-        jPanel3.add(quitarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 120, -1));
-        jPanel3.add(problemasDeCadaSemaforo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 142, 102));
+        jPanel3.add(quitarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 120, -1));
+        jPanel3.add(problemasDeCadaSemaforo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 142, 102));
 
         jLabel13.setText("Problemas a Cargar");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, 14));
-        jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 430, 10));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, 14));
+        jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 590, 10));
 
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 86, 651, 407));
+
+        asentarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/save-20.png"))); // NOI18N
         asentarCaso.setText("Asentar Caso");
         asentarCaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 asentarCasoActionPerformed(evt);
             }
         });
+        getContentPane().add(asentarCaso, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 530, 160, -1));
 
+        cancelarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Shutdown-20.png"))); // NOI18N
         cancelarCaso.setText("Cancelar");
         cancelarCaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarCasoActionPerformed(evt);
             }
         });
+        getContentPane().add(cancelarCaso, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 530, 160, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cancelarCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(asentarCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(asentarCaso)
-                            .addComponent(cancelarCaso))))
-                .addContainerGap())
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/new-cabecera.png"))); // NOI18N
+        jLabel2.setMaximumSize(new java.awt.Dimension(1140, 80));
+        jLabel2.setMinimumSize(new java.awt.Dimension(1140, 80));
+        jLabel2.setPreferredSize(new java.awt.Dimension(1140, 80));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -454,6 +440,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

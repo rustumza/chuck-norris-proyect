@@ -13,6 +13,7 @@ public class ExcepcionCampoVacio extends Exception {
 
     private String mensaje;
 
+
     /**
      * @param mensaje the mensaje to set
      */
