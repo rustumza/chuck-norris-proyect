@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
 
     private List<DTOOrden> ordenesTrabajo;
-    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Fecha inicio planificada", "Duración", "Equipo"};
+    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Inicio planificada", "Duración", "Equipo"};
     private boolean editable = false;
 
     @Override

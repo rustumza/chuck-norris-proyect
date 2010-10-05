@@ -4,10 +4,9 @@
  */
 package Persistencia.Decoradores;
 
-import DTO.DTOEstadoDenuncia;
+import DTO.DTODenuncia;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
-import java.util.List;
 
 /**
  *
@@ -16,10 +15,10 @@ import java.util.List;
 public class DecoradorExpertoConsultarAvanceDeReclamo extends ExpertoConsultarAvanceDeReclamo {
 
     @Override
-    public List<DTOEstadoDenuncia> ConsultarEstadoCaso(String numcaso, int seleccion) {
+    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) {
 
         IniciarTx();
-        List<DTOEstadoDenuncia> aux = super.ConsultarEstadoCaso(numcaso,seleccion);
+        DTODenuncia aux = super.ConsultarEstadoCaso(numcaso,seleccion);
         confirmarTx();
         return aux;
     }

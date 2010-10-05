@@ -23,6 +23,7 @@ public class DTOOrden {
     private String tipo;
     private List<DTOReserva> listaReservas;
     private String nombreEquipo;
+    private String estado;
 
     /**
      * @return the nroOrden
@@ -136,6 +137,20 @@ public class DTOOrden {
      */
     public void setNombreEquipo(String nombreEquipo) {
         this.nombreEquipo = nombreEquipo;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }

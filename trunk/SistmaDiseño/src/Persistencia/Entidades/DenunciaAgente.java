@@ -6,6 +6,7 @@ package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaCriterios;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,9 +83,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     public List<FallaTecnica> getFallasTecnica() {
         if (isFallaTecnicaBuscado() == false) {
-            for (String oid : listaOidFallaTecnica) {
-                implementacion.addFallaTecnica((FallaTecnica) FachadaInterna.getInstancia().buscar("FallaTecnica", oid));
+            List<Criterio> listacCriterios = new ArrayList<Criterio>();
+            listacCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Denuncia", "=",this));
+            List<FallaTecnica> listaFallas = new ArrayList<FallaTecnica>();
+            for(SuperDruperInterfaz falla :FachadaInterna.getInstancia().buscar("FallaTecnica", listacCriterios)){
+                listaFallas.add((FallaTecnica)falla);
             }
+            implementacion.setFallasTecnica(listaFallas);
+            fallaTecnicaBuscado = true;
         }
         return implementacion.getFallasTecnica();
     }

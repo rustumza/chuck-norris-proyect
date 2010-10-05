@@ -4,11 +4,19 @@
  */
 package Expertos;
 
+import DTO.DTODenuncia;
 import DTO.DTOEstadoDenuncia;
+import DTO.DTOFallaTecnica;
+import DTO.DTOOrden;
+import Persistencia.Entidades.FallaTecnica;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.Denuncia;
 import Persistencia.Entidades.DenunciaEstado;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.OrdenDeMantenimiento;
+import Persistencia.Entidades.OrdenDeReparacion;
+import Persistencia.Entidades.OrdenTrabajo;
+import Persistencia.Entidades.OrdenTrabajoEstado;
 import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
@@ -26,10 +34,10 @@ import javax.swing.JOptionPane;
  */
 public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
-    public List<DTOEstadoDenuncia> ConsultarEstadoCaso(String numcaso, int seleccion) {
+    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) {
 
         Denuncia casoEncontrado;
-        List<DTOEstadoDenuncia> listaDtoEstado = new ArrayList<DTOEstadoDenuncia>();
+        DTODenuncia dTODenuncia = null;
 
         if (seleccion == 1) {//es denuncia
 
@@ -39,13 +47,13 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
             List<SuperDruperInterfaz> denunciasBuscadas = FachadaExterna.getInstancia().buscar("Denuncia", listaDeCriterio);
 
             if (denunciasBuscadas == null) {
-                JOptionPane.showMessageDialog(null, "No se han encontrado Denuncias con el numero: "+numcaso,"ATENCIÓN",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No se han encontrado Denuncias con el numero: " + numcaso, "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
             } else {
                 casoEncontrado = (Denuncia) denunciasBuscadas.get(0);
-                listaDtoEstado = armarDtoEstadoDenuncia(casoEncontrado);
+                dTODenuncia = armarDtoDenuncia(casoEncontrado);
             }
 
-            
+
 
         } else if (seleccion == 2) {//es reclamo
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
@@ -60,11 +68,11 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
             casoEncontrado = (Denuncia) denunciasBuscadas.get(0);
 
-            listaDtoEstado = armarDtoEstadoDenuncia(casoEncontrado);
+            dTODenuncia = armarDtoDenuncia(casoEncontrado);
 
         }
 
-        return listaDtoEstado;
+        return dTODenuncia;
 
     }
 
@@ -82,5 +90,89 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
             listaDtoEstado.add(dtoEstado);
         }
         return listaDtoEstado;
+    }
+
+    public DTODenuncia armarDtoDenuncia(Denuncia denuncia) {
+
+        DTODenuncia dtoDenuncia = new DTODenuncia();
+        //busca los estados de la denuncia
+        List<DTOEstadoDenuncia> listaDtoEstado = armarDtoEstadoDenuncia(denuncia);
+        dtoDenuncia.setListaEstados(listaDtoEstado);
+
+        boolean buscarFallas = false;
+        boolean buscarOrden = false;
+
+
+        for (DTOEstadoDenuncia estado : listaDtoEstado) {
+            if (estado.getIndicadorEstadoActual().equals("Activo")) {
+
+                if (estado.getNombreestado().equals("FALLAS ASIGNADAS")) {//la denuncia tiene fallas asignadas,
+                    buscarFallas = true;
+                } else if (estado.getNombreestado().equals("RECURSOS ASIGNADOS") || estado.getNombreestado().equals("EN REPARACION") || estado.getNombreestado().equals("CERRADA")) {
+                    buscarFallas = true;
+                    buscarOrden = true;
+                }
+            }
+        }
+
+        if (buscarFallas) {
+            List<DTOFallaTecnica> dtoFallas = armarDtoFallas(denuncia.getFallasTecnica());
+            dtoDenuncia.setListaFallas(dtoFallas);
+        } else {
+            List<DTOFallaTecnica> dtoFallas = new ArrayList<DTOFallaTecnica>();
+            dtoDenuncia.setListaFallas(dtoFallas);
+        }
+
+        if (buscarOrden) {
+            List<Criterio> listacriCriterios = new ArrayList<Criterio>();
+            listacriCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Denuncia", "=", (ObjetoPersistente) denuncia));
+            OrdenTrabajo ordenTrabajo = (OrdenTrabajo) FachadaExterna.getInstancia().buscar("OrdenReparacion", listacriCriterios).get(0);
+            DTOOrden dtoOrden = armarDtoOrden(ordenTrabajo);
+            dtoDenuncia.setOrdenRep(dtoOrden);
+        } else {
+            dtoDenuncia.setOrdenRep(null);
+        }
+
+        dtoDenuncia.setFechaCaso(FormateadorFechas.getInstancia().getFormatMySQLyyyyMMdd().format(denuncia.getfechacaso()));
+
+        dtoDenuncia.setNombreOperador(denuncia.getOperador().getnombreOperador());
+
+
+        return dtoDenuncia;
+
+    }
+
+    private List<DTOFallaTecnica> armarDtoFallas(List<FallaTecnica> fallasTecnica) {
+        List<DTOFallaTecnica> dtoFallas = new ArrayList<DTOFallaTecnica>();
+
+        for (FallaTecnica falla : fallasTecnica) {
+            DTOFallaTecnica nuevoDtoFalla = new DTOFallaTecnica();
+            nuevoDtoFalla.setDescripcion(falla.getdescripcionfalla());
+            nuevoDtoFalla.setNombreFalla(falla.getNombreTrabajo());
+            dtoFallas.add(nuevoDtoFalla);
+        }
+
+        return dtoFallas;
+    }
+
+    private DTOOrden armarDtoOrden(OrdenTrabajo ordenTrabajo) {
+        DTOOrden dtoOrden = new DTOOrden();
+
+        dtoOrden.setDuracionPrevista(ordenTrabajo.getduracionprevistatrabajo());
+        dtoOrden.setFechaFinTrabajo(ordenTrabajo.getfechafintrabajo());
+        dtoOrden.setFechaInicioPlanificada(ordenTrabajo.getfechainicioplanificada());
+        dtoOrden.setFechaInicioTrabajo(dtoOrden.getFechaInicioTrabajo());
+        dtoOrden.setNombreEquipo(ordenTrabajo.getEquipoDeTrabajo().getnombreEquipo());
+        dtoOrden.setNroOrden(String.valueOf(((OrdenDeReparacion) ordenTrabajo).getcodigoordenreparacion()));
+        dtoOrden.setTipo(ordenTrabajo.gettipoordentrabajo());
+
+        for(OrdenTrabajoEstado estado : ordenTrabajo.getListaEstadosOrdenTrabajo()){
+            if(estado.isindicadorestadoactual()){
+                dtoOrden.setEstado(estado.getEstadoOrdenTrabajo().getNombreestado());
+            }
+        }
+
+        return dtoOrden;
+
     }
 }

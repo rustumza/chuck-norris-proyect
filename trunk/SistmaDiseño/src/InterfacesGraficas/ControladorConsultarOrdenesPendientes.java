@@ -30,6 +30,7 @@ public class ControladorConsultarOrdenesPendientes {
     }
 
     void iniciar() {
+        pantalla.setLocationRelativeTo(null);
         pantalla.setVisible(true);
     }
 
