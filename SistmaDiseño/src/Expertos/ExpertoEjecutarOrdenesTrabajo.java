@@ -5,10 +5,13 @@
 //4287227 pizzeria
 package Expertos;
 
+import AdaptadorSistemaReportes.AdaptadorReportes;
 import DTO.DTOEquipamientoReservado;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
+import DTO.DTOUbicacion;
+import Fabricas.FabricaAdaptadorSistemaReportes;
 import Fabricas.FabricaAdaptadoresSistemaStock;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.Equipamiento;
@@ -24,7 +27,6 @@ import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
-import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,6 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     public static final int ordenTrabajo = 1;
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
-
     private String ConsultarOrdenesPendientes;
     private List<OrdenTrabajo> ordenesTrabajoPendientes = new ArrayList<OrdenTrabajo>();
 
@@ -80,21 +81,21 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-     public List<DTOOrden> consultarOrdenesPendientes(Date fecha, int seleccion){
-         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+    public List<DTOOrden> consultarOrdenesPendientes(Date fecha, int seleccion) {
+        List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
 
-         switch(seleccion){
-             case ordenTrabajo:
-                 return consultarOrdenesTrabajoPendientes(fecha);
-             case ordenMantenimiento:
-                 return consultarOrdenesMantenimientoPendientes(fecha);
-             case ordenReparacion:
-                 return consultarOrdenesReparacionPendientes(fecha);
-             default:
-                 return null;
-         }
+        switch (seleccion) {
+            case ordenTrabajo:
+                return consultarOrdenesTrabajoPendientes(fecha);
+            case ordenMantenimiento:
+                return consultarOrdenesMantenimientoPendientes(fecha);
+            case ordenReparacion:
+                return consultarOrdenesReparacionPendientes(fecha);
+            default:
+                return null;
+        }
 
-     }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="comment">
     public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {// </editor-fold>
@@ -109,7 +110,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
             OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
             ordentrabajoestado.setEstadoOrdenTrabajo(estado);
             ordentrabajoestado.setfechacambioestado(new Date());
-            
+
 
             for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
                 if (ordenTrabEst.isindicadorestadoactual()) {
@@ -206,5 +207,9 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
         //llamarWebServiceConfirmarReservas(ordenesTrabajo);
 
         //imprimirOrdenes(ordenesTrabajo);
+    }
+
+    public void imprimirOrdenesPendientes() {
+        (FabricaAdaptadorSistemaReportes.getInstancia().crearAdaptadorReportes()).generarReporteReparacion(armarListaDTOOrden(ordenesTrabajoPendientes));
     }
 }

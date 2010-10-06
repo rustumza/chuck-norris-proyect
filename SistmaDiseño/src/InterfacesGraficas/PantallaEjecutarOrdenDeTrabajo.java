@@ -10,6 +10,7 @@
  */
 package InterfacesGraficas;
 
+import AdaptadorSistemaReportes.AdaptadorReportes;
 import DTO.DTOOrden;
 import DTO.DTOReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
@@ -98,7 +99,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
         cabecera = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -266,9 +267,14 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         });
         getContentPane().add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 190, -1));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/HP-Printer_20.png"))); // NOI18N
-        jButton3.setText("Imprimir Ordenes");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 500, 170, -1));
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/HP-Printer_20.png"))); // NOI18N
+        btnImprimir.setText("Imprimir Ordenes");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 500, 170, -1));
 
         cabecera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/new-cabecera.png"))); // NOI18N
         getContentPane().add(cabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -305,6 +311,10 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        controlador.imprimirOrdenesPendientes();
+    }//GEN-LAST:event_btnImprimirActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -318,11 +328,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel cabecera;
     private com.toedter.calendar.JDateChooser dataChsFecha;
     private javax.swing.ButtonGroup grupoTipoOrden;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
