@@ -58,4 +58,8 @@ public class ControladorEjecutarOrdenesTrabajo {
         experto.confirmarOrdenesPendientes();
     }
 
+    void imprimirOrdenesPendientes() {
+        experto.imprimirOrdenesPendientes();
+    }
+
  }

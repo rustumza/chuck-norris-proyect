@@ -25,6 +25,10 @@ public class DTOOrden {
     private String nombreEquipo;
     private String estado;
 
+
+    //datos adicionales usados para la generacion de reportes
+    private DTOUbicacion ubicacion;
+
     /**
      * @return the nroOrden
      */
@@ -151,6 +155,20 @@ public class DTOOrden {
      */
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the ubicacion
+     */
+    public DTOUbicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    /**
+     * @param ubicacion the ubicacion to set
+     */
+    public void setUbicacion(DTOUbicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
 }
