@@ -401,8 +401,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_guardarInfoDenuncianteActionPerformed
 
     private void cancelarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCasoActionPerformed
-        this.dispose();
-        System.exit(0);
+        controladorARPD.cerrar();
+
     }//GEN-LAST:event_cancelarCasoActionPerformed
 
     private void comboCalle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCalle1ActionPerformed

@@ -308,8 +308,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-        System.exit(0);        // TODO add your handling code here:
+        controlador.cerrar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed

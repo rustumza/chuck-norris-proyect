@@ -47,7 +47,7 @@ public class ChuckNorrisControlador {
 
     public void iniciarCUAtenderReclamoPorDesperfecto() {
         getPantPrinc().setVisible(false);
-        contAtendRecl = new ControladorAtenderReclamoPorDesperfecto();
+        contAtendRecl = new ControladorAtenderReclamoPorDesperfecto(this);
         contAtendRecl.iniciar();
 
 
@@ -55,14 +55,14 @@ public class ChuckNorrisControlador {
 
     public void iniciarCUConsultarAvanceDeReclamo() {
         getPantPrinc().setVisible(false);
-        contConsAvancRec = new ControladorConsultarAvanceDeReclamo();
+        contConsAvancRec = new ControladorConsultarAvanceDeReclamo(this);
         contConsAvancRec.iniciar();
 
     }
 
     public void iniciarCUConsultarOrdenesPendientes() {
         getPantPrinc().setVisible(false);
-        contConsOrdPend = new ControladorConsultarOrdenesPendientes();
+        contConsOrdPend = new ControladorConsultarOrdenesPendientes(this);
         contConsOrdPend.iniciar();
 
 
@@ -71,7 +71,7 @@ public class ChuckNorrisControlador {
     public void iniciarCUEjecutarOrdenesPendientes() {
 
         getPantPrinc().setVisible(false);
-        contEjecOrdTrab = new ControladorEjecutarOrdenesTrabajo();
+        contEjecOrdTrab = new ControladorEjecutarOrdenesTrabajo(this);
         contEjecOrdTrab.iniciar();
 
     }

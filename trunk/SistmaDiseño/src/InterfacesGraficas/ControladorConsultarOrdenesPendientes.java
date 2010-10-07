@@ -23,8 +23,10 @@ import java.util.List;
 public class ControladorConsultarOrdenesPendientes {
     ExpertoConsultarOrdenesPendientes experto;
     PantallaConsultarOrdenesPendientes pantalla;
+    ChuckNorrisControlador chuck;
 
-    public ControladorConsultarOrdenesPendientes(){
+    public ControladorConsultarOrdenesPendientes(ChuckNorrisControlador chuckCont){
+        chuck=chuckCont;
         pantalla = new PantallaConsultarOrdenesPendientes(this);
         experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
     }
@@ -50,7 +52,12 @@ public class ControladorConsultarOrdenesPendientes {
         ((ModeloTablaResevaRepuesto)pantalla.getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
+    public void cerrar(){
+        pantalla.setVisible(false);
+        pantalla.dispose();
+        chuck.iniciar();
 
+    }
 
 
 
