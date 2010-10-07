@@ -29,10 +29,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="logo" min="-2" pref="400" max="-2" attributes="0"/>
                   <Component id="panelBotonera" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="206" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="181" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -44,8 +40,7 @@
               <Component id="logo" pref="204" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panelBotonera" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,13 +62,14 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="botonConsultarAvanceReclamo" alignment="0" pref="376" max="32767" attributes="1"/>
                       <Component id="botonAtenderReclamo" alignment="0" pref="376" max="32767" attributes="1"/>
                       <Component id="botonConsultarOrdenesPendientes" alignment="0" pref="376" max="32767" attributes="1"/>
                       <Component id="botonEjecutarOrdenesTrabajo" alignment="0" pref="376" max="32767" attributes="1"/>
+                      <Component id="jButton1" alignment="1" min="-2" pref="181" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -90,7 +86,8 @@
                   <Component id="botonConsultarOrdenesPendientes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="botonEjecutarOrdenesTrabajo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -128,6 +125,17 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAtenderReclamoActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Utilidades/Imagenes/iconos/Monster inc.JPG"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Me jui a mi choza"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="logo">
@@ -136,17 +144,6 @@
           <Image iconType="3" name="/Utilidades/Imagenes/logo-sys.png"/>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Utilidades/Imagenes/iconos/Monster inc.JPG"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Me jui a mi choza"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>
