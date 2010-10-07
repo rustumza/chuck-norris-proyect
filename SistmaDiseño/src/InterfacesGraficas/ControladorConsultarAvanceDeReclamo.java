@@ -30,8 +30,10 @@ public class ControladorConsultarAvanceDeReclamo {
     ModeloTablaConsultarAvanceReclamo modeloEstados;
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
+    ChuckNorrisControlador chuck;
 
-    public ControladorConsultarAvanceDeReclamo() {
+    public ControladorConsultarAvanceDeReclamo(ChuckNorrisControlador chuckCont) {
+        chuck=chuckCont;
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         pantalla = new PantallaConsultarAvanceDeReclamo(this);
         modeloEstados = new ModeloTablaConsultarAvanceReclamo();
@@ -83,4 +85,12 @@ public class ControladorConsultarAvanceDeReclamo {
                 System.out.println(mensaje);
         }
     }
+
+    public void cerrar(){
+        pantalla.setVisible(false);
+        pantalla.dispose();
+        chuck.iniciar();
+    }
+    
+
 }

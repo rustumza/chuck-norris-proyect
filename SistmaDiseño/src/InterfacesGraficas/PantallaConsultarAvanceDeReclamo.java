@@ -290,8 +290,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     }//GEN-LAST:event_botonConsultarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        this.dispose();
-        System.exit(0);
+        controlador.cerrar();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**

@@ -22,8 +22,10 @@ public class ControladorAtenderReclamoPorDesperfecto {
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
     PantallaAtenderReclamoPorDesperfecto pantallaARPD;
+    ChuckNorrisControlador chuck;
 
-    public ControladorAtenderReclamoPorDesperfecto(){
+    public ControladorAtenderReclamoPorDesperfecto(ChuckNorrisControlador chuckCont){
+         chuck=chuckCont;
          earpd = (ExpertoAntenderReclamoPorDesperfecto)FabricaExpertos.getInstance().getExperto("AtenderReclamoPorDesperfecto");
          pantallaARPD = new PantallaAtenderReclamoPorDesperfecto(this);
     }
@@ -41,6 +43,13 @@ public class ControladorAtenderReclamoPorDesperfecto {
     public void guardarDenunciante(Denunciante denunciante){
 
         earpd.guardarDenunciante(denunciante);
+
+    }
+
+    public void cerrar(){
+        pantallaARPD.setVisible(false);
+        pantallaARPD.dispose();
+        chuck.iniciar();
 
     }
 

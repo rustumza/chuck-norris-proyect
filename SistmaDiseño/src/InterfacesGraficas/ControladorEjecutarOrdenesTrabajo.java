@@ -23,8 +23,10 @@ public class ControladorEjecutarOrdenesTrabajo {
 
     ExpertoEjecutarOrdenesTrabajo experto;
     PantallaEjecutarOrdenDeTrabajo pantalla;
+    ChuckNorrisControlador chuck;
 
-    public ControladorEjecutarOrdenesTrabajo() {
+    public ControladorEjecutarOrdenesTrabajo(ChuckNorrisControlador chuckCont) {
+        chuck = chuckCont;
         experto = (ExpertoEjecutarOrdenesTrabajo) FabricaExpertos.getInstance().getExperto("EjecutarOrdenesTrabajo");
         pantalla = new PantallaEjecutarOrdenDeTrabajo(this);
     }
@@ -61,5 +63,12 @@ public class ControladorEjecutarOrdenesTrabajo {
     void imprimirOrdenesPendientes() {
         experto.imprimirOrdenesPendientes();
     }
+
+    public void cerrar(){
+        pantalla.setVisible(false);
+        pantalla.dispose();
+        chuck.iniciar();
+    }
+
 
  }
