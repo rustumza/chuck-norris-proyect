@@ -5,7 +5,7 @@
 package InterfacesGraficas;
 
 import DTO.DTODenuncia;
-import Excepciones.ExcepcionCampoVacio;
+import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
 import Fabricas.FabricaExpertos;
@@ -65,7 +65,7 @@ public class ControladorConsultarAvanceDeReclamo {
             pantalla.getLblEstadoOrden().setForeground(Color.ORANGE);
             modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
             pantalla.getLbloperador().setText(pantalla.getLbloperador().getText() + dtoDenuncia.getNombreOperador());
-        } catch (ExcepcionCampoVacio ex) {
+        } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
             mostrarMensaje(BUSQUEDA_VACIA, ex.getMessage());
