@@ -74,7 +74,7 @@ public class IntermediarioPersistenciaDenunciante extends IntermediarioRelaciona
         update = "UPDATE denunciante "
                 + "SET OIDDenunciante = '"+denunciante.getOid()+ "', "
                 + "Domicilio = '"+denunciante.getdomicilio()+"', "
-                + "Celular = '"+denunciante.getcelular() + "', "
+                + "Celular = '"+Integer.parseInt(denunciante.getcelular()) + "', "
                 + "Email = '"+denunciante.getemail()+"', "
                 + "TelefonoFijo = '"+denunciante.gettelefonofijo()+"', "
                 + "OIDPersonaPadron = '"+ denunciante.getOidPersonaPadron()+"' "
@@ -99,7 +99,7 @@ public class IntermediarioPersistenciaDenunciante extends IntermediarioRelaciona
                 nuevoDenunciante.setOid(rs.getString("OIDDenunciante"));
                 nuevoDenunciante.setIsNuevo(false);
                 nuevoDenunciante.setdomicilio(rs.getString("Domicilio"));
-                nuevoDenunciante.setcelular(rs.getString("Celular"));
+                nuevoDenunciante.setcelular(String.valueOf(rs.getInt("Celular")));
                 nuevoDenunciante.setemail(rs.getString("Email"));
                 nuevoDenunciante.settelefonofijo(rs.getString("TelefonoFijo"));
                 nuevoDenunciante.setOidPersonaPadron(rs.getString("OIDPersonaPadron"));

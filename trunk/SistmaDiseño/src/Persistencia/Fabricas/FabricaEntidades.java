@@ -177,6 +177,12 @@ public class FabricaEntidades {
             DenuncianteImplementacion denuncianteImpl = new DenuncianteImplementacion();
             DenuncianteAgente denuncianteAgente = new DenuncianteAgente();
             denuncianteAgente.setImplementacion(denuncianteImpl);
+            denuncianteAgente.setcelular("");
+            denuncianteAgente.setdomicilio("");
+            denuncianteAgente.setemail("");
+            denuncianteAgente.settelefonofijo("");
+            denuncianteAgente.setPersonaPadronBuscado(true);
+            denuncianteAgente.setIsNuevo(true);
 
             return denuncianteAgente;
         } else if (entidad.equals("DetalleInformeMantenimiento")) {
