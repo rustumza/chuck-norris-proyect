@@ -24,6 +24,9 @@ public class DTOOrden {
     private List<DTOReserva> listaReservas;
     private String nombreEquipo;
     private String estado;
+    private String nroCaso;
+    private List<DTOSemaforo> listaSemaforos;
+    private List<DTOFallaTecnica>listaFalla;
 
 
     //datos adicionales usados para la generacion de reportes
@@ -169,6 +172,62 @@ public class DTOOrden {
      */
     public void setUbicacion(DTOUbicacion ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    /**
+     * @return the listaFalla
+     */
+    public List<DTOFallaTecnica> getListaFalla() {
+        return listaFalla;
+    }
+
+    /**
+     * @param listaFalla the listaFalla to set
+     */
+    public void setListaFalla(List<DTOFallaTecnica> listaFalla) {
+        this.listaFalla = listaFalla;
+    }
+
+    public void addFalla(DTOFallaTecnica falla){
+        if (listaFalla == null){
+            listaFalla = new ArrayList<DTOFallaTecnica>();
+        }
+        listaFalla.add(falla);
+    }
+
+    /**
+     * @return the nroCaso
+     */
+    public String getNroCaso() {
+        return nroCaso;
+    }
+
+    /**
+     * @param nroCaso the nroCaso to set
+     */
+    public void setNroCaso(String nroCaso) {
+        this.nroCaso = nroCaso;
+    }
+
+    /**
+     * @return the listaSemaforos
+     */
+    public List<DTOSemaforo> getListaSemaforos() {
+        return listaSemaforos;
+    }
+
+    /**
+     * @param listaSemaforos the listaSemaforos to set
+     */
+    public void setListaSemaforos(List<DTOSemaforo> listaSemaforos) {
+        this.listaSemaforos = listaSemaforos;
+    }
+
+    public void addSemaforo(DTOSemaforo nuevoSem){
+        if(listaSemaforos == null){
+            listaSemaforos = new ArrayList<DTOSemaforo>();
+        }
+        listaSemaforos.add(nuevoSem);
     }
 
 }

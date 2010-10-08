@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
 /**
@@ -12,6 +11,7 @@ package DTO;
  */
 public class DTOFallaTecnica {
 
+    private String codigoFalla;
     private String nombreFalla;
     private String descripcion;
 
@@ -43,5 +43,17 @@ public class DTOFallaTecnica {
         this.descripcion = descripcion;
     }
 
+    /**
+     * @return the codigoFalla
+     */
+    public String getCodigoFalla() {
+        return codigoFalla;
+    }
 
+    /**
+     * @param codigoFalla the codigoFalla to set
+     */
+    public void setCodigoFalla(String codigoFalla) {
+        this.codigoFalla = codigoFalla;
+    }
 }

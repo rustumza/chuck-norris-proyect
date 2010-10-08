@@ -32,6 +32,7 @@ public class OrdenDeReparacionAgente extends OrdenTrabajoAgente implements Orden
     public Denuncia getDenuncia() {
         if (isDenunciaBuscado() == false) {
             ((OrdenDeReparacionImplementacion) super.getImplementacion()).setDenuncia((Denuncia) FachadaInterna.getInstancia().buscar("Denuncia", oidDenuncia));
+            denunciaBuscado = true;
         }
         return ((OrdenDeReparacionImplementacion) super.getImplementacion()).getDenuncia();
 

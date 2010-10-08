@@ -25,7 +25,7 @@ public class AdaptadorReportes {
     public void generarReporteReparacion(List<DTOOrden> listaOrdenesRep){
 
         System.out.println(WorkingDirectory.getPath());
-        String fileName = WorkingDirectory.getPath().split("build")[0]+"OrdenDeReparacion.jasper";
+        String fileName = WorkingDirectory.getPath().split("build")[0]+"/Reportes/OrdenDeReparacionConSubReportes.jasper";
 
         HashMap param = new HashMap();
 

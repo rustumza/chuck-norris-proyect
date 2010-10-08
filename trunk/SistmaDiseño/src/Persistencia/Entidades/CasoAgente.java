@@ -61,13 +61,15 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
          
         if (isSemaforoBuscado() == false) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
-            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Denuncia", "=", super.getOid()));
+            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Caso", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Semaforo", listaDeCriterio);
             List<Semaforo> listaDeSemaforo=new ArrayList<Semaforo>();
             for(SuperDruperInterfaz aux : listaDeInterfaces)
                 listaDeSemaforo.add((Semaforo) aux);
             getImplementacion().setSemaforo(listaDeSemaforo);
+            semaforoBuscado = true;
         }
+
         return getImplementacion().getSemaforo();
     }
 

@@ -7,15 +7,19 @@ package Expertos;
 
 import AdaptadorSistemaReportes.AdaptadorReportes;
 import DTO.DTOEquipamientoReservado;
+import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
+import DTO.DTOSemaforo;
 import DTO.DTOUbicacion;
 import Fabricas.FabricaAdaptadorSistemaReportes;
 import Fabricas.FabricaAdaptadoresSistemaStock;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.Equipamiento;
 import Persistencia.Entidades.EstadoOrdenTrabajo;
+import Persistencia.Entidades.FallaTecnica;
+import Persistencia.Entidades.Interseccion;
 import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
 import Persistencia.Entidades.OrdenTrabajo;
@@ -23,6 +27,7 @@ import Persistencia.Entidades.OrdenTrabajoEstado;
 import Persistencia.Entidades.Repuesto;
 import Persistencia.Entidades.Reserva;
 import Persistencia.Entidades.ReservaElementoTrabajo;
+import Persistencia.Entidades.Semaforo;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
@@ -151,19 +156,46 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
 
         for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
-            DTOOrden nuevoDTO = new DTOOrden();
+            DTOOrden nuevoDtoOrden = new DTOOrden();
 
-            nuevoDTO.setTipo(orden.gettipoordentrabajo());
+            nuevoDtoOrden.setTipo(orden.gettipoordentrabajo());
             if (orden.gettipoordentrabajo().equalsIgnoreCase("REPARACION")) {
-                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
+                //setea numero de caso
+                nuevoDtoOrden.setNroCaso(String.valueOf(((OrdenDeReparacion) orden).getDenuncia().getcodigoDenuncia()));
+                nuevoDtoOrden.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
+                // busca la ubicacion para setearla al dto
+                if (((OrdenDeReparacion) orden).getDenuncia().getSemaforo().get(0).getUbicacion().gettipoubicacion().equals("INTERSECCION")) {
+                    DTOUbicacion dtoUbicacion = new DTOUbicacion();
+                    dtoUbicacion.setCalle1(((Interseccion) ((OrdenDeReparacion) orden).getDenuncia().getSemaforo().get(0).getUbicacion()).getCalles().get(0).getnombrecalle());
+                    dtoUbicacion.setCalle2(((Interseccion) ((OrdenDeReparacion) orden).getDenuncia().getSemaforo().get(0).getUbicacion()).getCalles().get(1).getnombrecalle());
+                    nuevoDtoOrden.setUbicacion(dtoUbicacion);
+                }
+                //busca las fallas para generar reportes
+                for (FallaTecnica falla : ((OrdenDeReparacion) orden).getDenuncia().getFallasTecnica()) {
+                    DTOFallaTecnica dtoFalla = new DTOFallaTecnica();
+                    dtoFalla.setNombreFalla(falla.getNombreTrabajo());
+                    dtoFalla.setCodigoFalla(String.valueOf(falla.getcodigoFallaTecnica()));
+                    nuevoDtoOrden.addFalla(dtoFalla);
+                }
+                //busca los semaforos
+                for(Semaforo semaforo: ((OrdenDeReparacion) orden).getDenuncia().getSemaforo()){
+                    DTOSemaforo dTOSemaforo = new DTOSemaforo();
+                    dTOSemaforo.setNumeroSerie(semaforo.getnumeroSerie());
+                    dTOSemaforo.setModelo(semaforo.getModelo().getnombremodelo());
+                    nuevoDtoOrden.addSemaforo(dTOSemaforo);
+                }
+
             } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
-                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
+                nuevoDtoOrden.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
             }
-            nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
-            nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
-            nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
-            nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
-            nuevoDTO.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
+
+            nuevoDtoOrden.setDuracionPrevista(orden.getduracionprevistatrabajo());
+            nuevoDtoOrden.setFechaFinTrabajo(orden.getfechafintrabajo());
+            nuevoDtoOrden.setFechaInicioPlanificada(orden.getfechainicioplanificada());
+            nuevoDtoOrden.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
+            nuevoDtoOrden.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
+
+
 
             for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
                 DTOReserva nuevaReserva = new DTOReserva();
@@ -192,10 +224,10 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
                 nuevaReserva.setListaEquipamiento(listaEquipamiento);
                 nuevaReserva.setListaRepuesto(listaRepuestos);
 
-                nuevoDTO.getListaReservas().add(nuevaReserva);
+                nuevoDtoOrden.getListaReservas().add(nuevaReserva);
             }
 
-            listaDTO.add(nuevoDTO);
+            listaDTO.add(nuevoDtoOrden);
         }
 
         return listaDTO;
