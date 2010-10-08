@@ -23,6 +23,7 @@ public class InterseccionAgente extends UbicacionAgente implements Interseccion 
             for (String oid : listaOidCalle) {
                 implementacion.addCalle((Calle) FachadaInterna.getInstancia().buscar("Calle", oid));
             }
+            calleBuscado = true;
         }
         return implementacion.getCalles();
     }

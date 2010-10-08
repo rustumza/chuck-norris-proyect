@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fallasOrdenReparacion" language="groovy" pageWidth="280" pageHeight="720" orientation="Landscape" columnWidth="270" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="2.143588810000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="cantidad" class="java.lang.String"/>
+	<field name="nombreEquipamiento" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="25" width="77" height="25"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="78" y="25" width="193" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="78" y="25" width="193" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="5" width="270" height="20" backcolor="#6F6F6F"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="5" width="270" height="20" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Equipamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="25" width="77" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="77" height="25"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="78" y="0" width="193" height="25"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="0" width="77" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="193" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreEquipamiento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -37,7 +37,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
         DenunciaAgente denuncia = (DenunciaAgente) obj;
 
         insert = "INSERT INTO denuncia (OIDCaso, CodigoDenuncia, Prioridad)"
-                + "values ('" + denuncia.getOid() + "' ,'" + denuncia.getcodigoDenuncia() + "' ,'" + denuncia.getprioridad() + "') ";
+                + "VALUES ('" + denuncia.getOid() + "' ,'" + denuncia.getcodigoDenuncia() + "' ,'" + denuncia.getprioridad() + "') ";
 
         return insert;
     }
@@ -75,7 +75,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
 
         String selectOid;
 
-        return selectOid = "SELECT * FROM denuncia where OIDDenuncia = '" + oid + "'";
+        return selectOid = "SELECT * FROM denuncia WHERE OIDCaso = '" + oid + "'";
     }
 
     public String armarUpdate(ObjetoPersistente obj) {

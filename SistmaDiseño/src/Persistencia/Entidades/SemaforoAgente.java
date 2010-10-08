@@ -4,8 +4,11 @@
  */
 package Persistencia.Entidades;
 
+import Persistencia.ExpertosPersistencia.Cache;
+import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -92,7 +95,16 @@ public class SemaforoAgente extends ObjetoPersistente implements Semaforo {
 
     public Ubicacion getUbicacion() {
         if (isUbicacionBuscado() == false) {
-            implementacion.setUbicacion((Ubicacion) FachadaInterna.getInstancia().buscar("Ubicacion", oidUbicacion));
+            Ubicacion ubicacionEncontrada = (Ubicacion) FachadaInterna.getInstancia().buscar("Ubicacion", oidUbicacion);
+
+            if (ubicacionEncontrada.gettipoubicacion().equals("INTERSECCION")) {
+                Cache.getInstancia().eliminarObjeto(oidUbicacion);
+                implementacion.setUbicacion((Ubicacion) FachadaInterna.getInstancia().buscar("Interseccion", oidUbicacion));
+            } else if (ubicacionEncontrada.gettipoubicacion().equals("SIMPLE")) {
+                Cache.getInstancia().eliminarObjeto(oidUbicacion);
+                implementacion.setUbicacion((Ubicacion) FachadaInterna.getInstancia().buscar("UbicacionSimple", oidUbicacion));
+            }
+            ubicacionBuscado = true;
         }
         return implementacion.getUbicacion();
     }
