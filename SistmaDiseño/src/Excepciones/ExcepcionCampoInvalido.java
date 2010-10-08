@@ -9,7 +9,7 @@ package Excepciones;
  *
  * @author diego
  */
-public class ExcepcionCampoVacio extends Exception {
+public class ExcepcionCampoInvalido extends Exception {
 
     private String mensaje;
 

@@ -8,7 +8,7 @@ import DTO.DTODenuncia;
 import DTO.DTOEstadoDenuncia;
 import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
-import Excepciones.ExcepcionCampoVacio;
+import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.FallaTecnica;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -33,13 +33,13 @@ import java.util.List;
  */
 public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
-    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) throws ExcepcionCampoVacio, ExcepcionObjetoNoEncontrado {
+    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
 
         Denuncia casoEncontrado;
         DTODenuncia dTODenuncia = null;
 
         if(numcaso.equals("")){
-            ExcepcionCampoVacio ex = new ExcepcionCampoVacio();
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
             ex.setMensaje("Código de Caso vacío.");
             throw ex;
 
