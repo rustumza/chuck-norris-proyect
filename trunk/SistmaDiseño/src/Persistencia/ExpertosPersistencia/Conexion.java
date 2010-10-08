@@ -106,14 +106,6 @@ public class Conexion {
         
     }
 
-    public void commit() {
-        try {
-            conn.commit();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
 
     public void rollback() {
         try {
