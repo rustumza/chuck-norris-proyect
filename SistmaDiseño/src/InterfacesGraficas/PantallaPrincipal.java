@@ -80,7 +80,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Monster inc.JPG"))); // NOI18N
-        jButton1.setText("Me jui a mi choza");
+        jButton1.setText("Me jui pa' mi choza");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

@@ -130,7 +130,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/Monster inc.JPG"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Me jui a mi choza"/>
+            <Property name="text" type="java.lang.String" value="Me jui pa&apos; mi choza"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>

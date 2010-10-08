@@ -42,12 +42,15 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         List<Criterio> listaDeCriterios2 = new ArrayList<Criterio>();
         listaDeCriterios2.add(criterio);
         listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denunciante", listaDeCriterios2);
-        List<Denunciante> listaDenunciantes = new ArrayList<Denunciante>() ;
-        for(SuperDruperInterfaz aux : listaDeInterfaces ){
-            listaDenunciantes.add((Denunciante) aux);
+        if(!listaDeInterfaces.isEmpty()){
+            return (Denunciante)listaDeInterfaces.get(0);
         }
 
-        return listaDenunciantes.get(0);
+        else{
+            Denunciante denun = (Denunciante)FachadaExterna.getInstancia().crearEntidad("Denunciante");
+            denun.setPersonaPadron(perspad);
+            return denun;
+        }
     }
 
 
@@ -206,7 +209,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             denEstado.setfechacambioestado(new Date());
             denEstado.setindicadorestadoactual(true);
             List<Criterio> listCriterioEstDen = new ArrayList<Criterio>();
-            listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "PENDIENTE"));
+            listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "Pendiente"));
             List<SuperDruperInterfaz> listaEstDen = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCriterioEstDen);
             denEstado.setEstadoDenuncia((EstadoDenuncia)listaEstDen.get(0));
             List<DenunciaEstado> listaDenEstado = new ArrayList<DenunciaEstado>();

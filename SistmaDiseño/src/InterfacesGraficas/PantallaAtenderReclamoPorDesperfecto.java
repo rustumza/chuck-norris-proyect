@@ -105,6 +105,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         guardarInfoDenunciante = new javax.swing.JButton();
+        celular = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -185,6 +187,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             }
         });
         jPanel1.add(guardarInfoDenunciante, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 130, -1));
+        jPanel1.add(celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 160, -1));
+
+        jLabel3.setText("Celular");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 86, 452, 330));
 
@@ -308,9 +314,6 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         getContentPane().add(cancelarCaso, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 530, 160, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/new-cabecera.png"))); // NOI18N
-        jLabel2.setMaximumSize(new java.awt.Dimension(1140, 80));
-        jLabel2.setMinimumSize(new java.awt.Dimension(1140, 80));
-        jLabel2.setPreferredSize(new java.awt.Dimension(1140, 80));
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -345,6 +348,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         domicilio.setText(denunciante.getdomicilio());
         telefono.setText(denunciante.gettelefonofijo());
         email.setText(denunciante.getemail());
+        celular.setText(denunciante.getcelular());
 
     }//GEN-LAST:event_buscarDNIActionPerformed
 
@@ -384,7 +388,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "22222"));
+        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "2222"));
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
         Operador opera = (Operador)listaDeInterfaces.get(0);
         //HASTA ACA
@@ -397,6 +401,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         denunciante.setdomicilio(domicilio.getText());
         denunciante.setemail(email.getText());
         denunciante.settelefonofijo(telefono.getText());
+        denunciante.setcelular(celular.getText());
         controladorARPD.guardarDenunciante(denunciante);
     }//GEN-LAST:event_guardarInfoDenuncianteActionPerformed
 
@@ -429,6 +434,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JTextField calle1;
     private javax.swing.JTextField calle2;
     private javax.swing.JButton cancelarCaso;
+    private javax.swing.JTextField celular;
     private javax.swing.JComboBox comboCalle1;
     private javax.swing.JComboBox comboCalle2;
     private javax.swing.JTextField dni;
@@ -441,6 +447,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
