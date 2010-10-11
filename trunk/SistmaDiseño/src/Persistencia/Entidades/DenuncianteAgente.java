@@ -58,6 +58,8 @@ public class DenuncianteAgente extends ObjetoPersistente implements Denunciante 
 
     public void setPersonaPadron(PersonaPadron personaPadron) {
         getImplementacion().setPersonaPadron(personaPadron);
+        personaPadronBuscado=true;
+        oidPersonaPadron = ((PersonaPadronAgente)personaPadron).getOid();
     }
 
     /**

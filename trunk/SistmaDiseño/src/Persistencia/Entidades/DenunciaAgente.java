@@ -75,6 +75,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado) {
         implementacion.setDenunciaEstado(denunciaEstado);
+        denunciaEstadoBuscado=true;
         if(oidDenunciaEstado ==null)
             oidDenunciaEstado = new ArrayList<String>();
         for(DenunciaEstado aux : denunciaEstado)

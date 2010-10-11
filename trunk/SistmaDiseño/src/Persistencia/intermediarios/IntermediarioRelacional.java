@@ -34,12 +34,12 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia 
 
 
         guardarDatosPadre(obj);
-        guardarObjetosRelacionados(obj);
+        
 
         //Imprime por pantalla la consulta
         System.out.println(consulta);
         Conexion.getInstance().insert(consulta);
-
+        guardarObjetosRelacionados(obj);
         guardarObjetoCompuesto(obj);
 
 
