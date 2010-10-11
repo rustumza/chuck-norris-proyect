@@ -56,6 +56,8 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
                     condicion = condicion + "casosemaforo.OIDCaso = '" + criterios.get(i).getValor() + "'";
                     continue;
                 }
+                if(criterios.get(i).getAtributo().equalsIgnoreCase("Ubicacion"))
+                    criterios.get(i).setAtributo("OIDUbicacion");
                 if (i > 0) {
                     condicion = condicion + " AND ";
                 }

@@ -15,11 +15,11 @@ public interface Caso extends SuperDruperInterfaz {
 
     public Date getfechacaso();
 
-    public int gettipocaso();
+    public String gettipocaso();
 
     public void setfechacaso(Date newVal);
 
-    public void settipocaso(int newVal);
+    public void settipocaso(String newVal);
 
     public Operador getOperador();
 

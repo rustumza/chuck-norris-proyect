@@ -11,7 +11,7 @@ import java.util.List;
 public class CasoImplementacion implements Caso{
 
     private Date fechacaso;
-    private int tipocaso;
+    private String tipocaso;
     private Operador operador;
     private List<Semaforo> semaforo;
     private List<Problema> problema;
@@ -25,7 +25,7 @@ public class CasoImplementacion implements Caso{
         return fechacaso;
     }
 
-    public int gettipocaso() {
+    public String gettipocaso() {
         return tipocaso;
     }
 
@@ -41,7 +41,7 @@ public class CasoImplementacion implements Caso{
      *
      * @param newVal
      */
-    public void settipocaso(int newVal) {
+    public void settipocaso(String newVal) {
         tipocaso = newVal;
     }
 

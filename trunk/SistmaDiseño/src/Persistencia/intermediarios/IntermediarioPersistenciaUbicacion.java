@@ -40,7 +40,7 @@ public class IntermediarioPersistenciaUbicacion extends IntermediarioRelacional{
 
         boolean addjoin = false;//se activa cuando es necesario hacer join para la busqueda N a N
 
-        String join = " JOIN interseccioncalle ON ubicacion.OIDUbicacion = interseccioncalle.OIDUbicacion";
+        String join = "";
 
         String condicion = "";
 
@@ -51,9 +51,15 @@ public class IntermediarioPersistenciaUbicacion extends IntermediarioRelacional{
                     condicion = condicion + " AND ";
                 }
 
-                if (criterios.get(i).getAtributo().equals("Interseccion")) {
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion")) {
                     addjoin = true;
+                    join = " JOIN interseccioncalle ON ubicacion.OIDUbicacion = interseccioncalle.OIDUbicacion";
                     condicion = condicion + "OIDInterseccion" + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }else if(criterios.get(i).getAtributo().equalsIgnoreCase("Semaforo")){
+                    addjoin = true;
+                    join = " JOIN semaforo ON semaforo.OIDUbicacion = ubicacion.OIDUbicacion ";
+                    condicion = condicion + "OIDSemaforo " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+
                 } else {
                     condicion = condicion + "ubicacion." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
                 }

@@ -32,7 +32,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
         return getImplementacion().getfechacaso();
     }
 
-    public int gettipocaso() {
+    public String gettipocaso() {
         return getImplementacion().gettipocaso();
     }
 
@@ -40,7 +40,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
         getImplementacion().setfechacaso(newVal);
     }
 
-    public void settipocaso(int newVal) {
+    public void settipocaso(String newVal) {
         getImplementacion().settipocaso(newVal);
     }
 
