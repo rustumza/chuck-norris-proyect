@@ -183,6 +183,7 @@ public class FabricaEntidades {
             denuncianteAgente.settelefonofijo("");
             denuncianteAgente.setPersonaPadronBuscado(true);
             denuncianteAgente.setIsNuevo(true);
+            denuncianteAgente.setEstadoBaja(true);
 
             return denuncianteAgente;
         } else if (entidad.equals("DetalleInformeMantenimiento")) {
