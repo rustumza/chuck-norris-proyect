@@ -5,6 +5,7 @@
 package Persistencia.Decoradores;
 
 import DTO.DTOOrden;
+import Excepciones.ExcepcionCampoInvalido;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
@@ -20,7 +21,7 @@ import java.util.List;
 public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrdenesTrabajo {
 
     @Override
-    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) throws ExcepcionCampoInvalido {
 
         iniciarTx();
         List<DTOOrden> aux = super.consultarOrdenesTrabajoPendientes(fecha);
@@ -42,15 +43,9 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesEncontradas) {
-        super.guardarOrdenTrabajo(ordenesEncontradas);
-        //confirmarTx();
-    }
-
-    @Override
-    public void confirmarOrdenesPendientes() {
+    public void guardarOrdenTrabajo() {
         iniciarTx();
-        super.confirmarOrdenesPendientes();
+        super.guardarOrdenTrabajo();
         confirmarTx();
     }
 

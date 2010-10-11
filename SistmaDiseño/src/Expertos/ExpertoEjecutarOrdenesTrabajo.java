@@ -5,7 +5,6 @@
 //4287227 pizzeria
 package Expertos;
 
-import AdaptadorSistemaReportes.AdaptadorReportes;
 import DTO.DTOEquipamientoReservado;
 import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
@@ -13,10 +12,14 @@ import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
 import DTO.DTOSemaforo;
 import DTO.DTOUbicacion;
+import Excepciones.ExcepcionCampoInvalido;
 import Fabricas.FabricaAdaptadorSistemaReportes;
 import Fabricas.FabricaAdaptadoresSistemaStock;
 import Fabricas.FabricaExpertos;
+import Persistencia.Entidades.Denuncia;
+import Persistencia.Entidades.DenunciaEstado;
 import Persistencia.Entidades.Equipamiento;
+import Persistencia.Entidades.EstadoDenuncia;
 import Persistencia.Entidades.EstadoOrdenTrabajo;
 import Persistencia.Entidades.FallaTecnica;
 import Persistencia.Entidades.Interseccion;
@@ -45,7 +48,6 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     public static final int ordenTrabajo = 1;
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
-    private String ConsultarOrdenesPendientes;
     private List<OrdenTrabajo> ordenesTrabajoPendientes = new ArrayList<OrdenTrabajo>();
 
     public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha) {
@@ -73,7 +75,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) throws ExcepcionCampoInvalido {
 
         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
 
@@ -86,8 +88,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-    public List<DTOOrden> consultarOrdenesPendientes(Date fecha, int seleccion) {
-        List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+    public List<DTOOrden> consultarOrdenesPendientes(Date fecha, int seleccion) throws ExcepcionCampoInvalido {
 
         switch (seleccion) {
             case ordenTrabajo:
@@ -103,45 +104,60 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     }
 
     // <editor-fold defaultstate="collapsed" desc="comment">
-    public void guardarOrdenTrabajo(List<OrdenTrabajo> ordenesTrabajo) {// </editor-fold>
+    public void guardarOrdenTrabajo() {// </editor-fold>
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "=", "EN EJECUCION"));
 
         EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
-        for (OrdenTrabajo orden : ordenesTrabajo) {
-
-            orden.setfechainiciotrabajo(new Date());
-            OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
-            ordentrabajoestado.setEstadoOrdenTrabajo(estado);
-            ordentrabajoestado.setfechacambioestado(new Date());
-
+        for (OrdenTrabajo orden : ordenesTrabajoPendientes) {//Por cada orden de trabajo
 
             for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
                 if (ordenTrabEst.isindicadorestadoactual()) {
                     ordenTrabEst.setindicadorestadoactual(false);
                 }
             }
+
+            orden.setfechainiciotrabajo(new Date());
+            OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
+            ordentrabajoestado.setEstadoOrdenTrabajo(estado);
+            ordentrabajoestado.setfechacambioestado(new Date());
             ordentrabajoestado.setindicadorestadoactual(true);
+            
             orden.addEstado(ordentrabajoestado);
 
-            ConfirmarReservas(ordenesTrabajo);
-
-            //imprimirOrdenes(ordenesTrabajo);
 
             if (orden.gettipoordentrabajo().equals("REPARACION")) {
+
+                for (DenunciaEstado denunciaEstado : ((OrdenDeReparacion) orden).getDenuncia().getDenunciaEstado()) {
+                    if(denunciaEstado.isindicadorestadoactual()){
+                        denunciaEstado.setindicadorestadoactual(false);
+                    }
+                }
+
+                DenunciaEstado nuevoDenunciaEstado = (DenunciaEstado) FabricaEntidades.getInstancia().crearEntidad("DenunciaEstado");
+                listaCriterios.clear();
+                listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN REPARACION"));
+                EstadoDenuncia nuevoEstado = (EstadoDenuncia) FachadaExterna.getInstancia().buscar("EstadoDenuncia", listaCriterios).get(0);
+                nuevoDenunciaEstado.setEstadoDenuncia(nuevoEstado);
+                nuevoDenunciaEstado.setfechacambioestado(new Date());
+                nuevoDenunciaEstado.setindicadorestadoactual(true);
+                
+                ((OrdenDeReparacion) orden).getDenuncia().agregarDenunciaEstado(nuevoDenunciaEstado);
+
+
                 FachadaExterna.getInstancia().guardar("OrdenReparacion", orden);
+
+
             } else if (orden.gettipoordentrabajo().equals("MANTENIMIENTO")) {
                 FachadaExterna.getInstancia().guardar("OrdenDeMantenimiento", orden);
             }
 
         }
 
+        ConfirmarReservas(ordenesTrabajoPendientes);
 
-    }
 
-    private void imprimirOrdenes(List<OrdenTrabajo> ordenesEncontradas) {
-        //MANDAR A IMPRIMIR LAS ORDENES
     }
 
     private void ConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) {
@@ -178,7 +194,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
                     nuevoDtoOrden.addFalla(dtoFalla);
                 }
                 //busca los semaforos
-                for(Semaforo semaforo: ((OrdenDeReparacion) orden).getDenuncia().getSemaforo()){
+                for (Semaforo semaforo : ((OrdenDeReparacion) orden).getDenuncia().getSemaforo()) {
                     DTOSemaforo dTOSemaforo = new DTOSemaforo();
                     dTOSemaforo.setNumeroSerie(semaforo.getnumeroSerie());
                     dTOSemaforo.setModelo(semaforo.getModelo().getnombremodelo());
@@ -186,7 +202,26 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
                 }
 
             } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
+
                 nuevoDtoOrden.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
+
+                //setea el semaforo
+                DTOSemaforo dTOSemaforo = new DTOSemaforo();
+                dTOSemaforo.setModelo(((OrdenDeMantenimiento) orden).getSemaforo().getModelo().getnombremodelo());
+                dTOSemaforo.setNumeroSerie(((OrdenDeMantenimiento) orden).getSemaforo().getnumeroSerie());
+
+
+                if (((OrdenDeMantenimiento) orden).getSemaforo().getUbicacion().gettipoubicacion().equals("INTERSECCION")) {
+                    //setea la ubicacion
+                    DTOUbicacion dtoUbicacion = new DTOUbicacion();
+                    dtoUbicacion.setCalle1(((Interseccion) ((OrdenDeMantenimiento) orden).getSemaforo().getUbicacion()).getCalles().get(0).getnombrecalle());
+                    dtoUbicacion.setCalle2(((Interseccion) ((OrdenDeMantenimiento) orden).getSemaforo().getUbicacion()).getCalles().get(1).getnombrecalle());
+                    nuevoDtoOrden.setUbicacion(dtoUbicacion);
+                }
+
+
+
+                nuevoDtoOrden.addSemaforo(dTOSemaforo);
             }
 
             nuevoDtoOrden.setDuracionPrevista(orden.getduracionprevistatrabajo());
@@ -233,15 +268,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
         return listaDTO;
     }
 
-    public void confirmarOrdenesPendientes() {
-        guardarOrdenTrabajo(ordenesTrabajoPendientes);
-
-        //llamarWebServiceConfirmarReservas(ordenesTrabajo);
-
-        //imprimirOrdenes(ordenesTrabajo);
-    }
-
     public void imprimirOrdenesPendientes() {
-        (FabricaAdaptadorSistemaReportes.getInstancia().crearAdaptadorReportes()).generarReporteReparacion(armarListaDTOOrden(ordenesTrabajoPendientes));
+        (FabricaAdaptadorSistemaReportes.getInstancia().crearAdaptadorReportes()).generarReportes(armarListaDTOOrden(ordenesTrabajoPendientes));
     }
 }

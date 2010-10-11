@@ -92,6 +92,9 @@ public class ModeloTablaFallas extends AbstractTableModel {
     }
 
     public void clear() {
+        if(fallasTecnicas==null){
+            return;
+        }
         fallasTecnicas.clear();
         fireTableDataChanged();
     }

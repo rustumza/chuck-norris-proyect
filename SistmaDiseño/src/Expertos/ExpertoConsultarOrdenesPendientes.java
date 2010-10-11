@@ -8,6 +8,7 @@ import DTO.DTOEquipamientoReservado;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
+import Excepciones.ExcepcionCampoInvalido;
 import Persistencia.Entidades.ElementoTrabajo;
 import Persistencia.Entidades.Equipamiento;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -40,14 +41,18 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         return (new Date().compareTo(fecha) < 0);
     }
 
-    public List<OrdenTrabajo> buscarOrdenes(Date fecha) {
-        if (esFechaIncorrecta(fecha)) {
+    public List<OrdenTrabajo> buscarOrdenes(Date fecha) throws ExcepcionCampoInvalido {
+        if (fecha == null) {
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Fecha incorrecta.");
+            throw ex;
+        } else if (esFechaIncorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
 
-        
+
         for (OrdenDeReparacion orden : buscarOrdenesReparacionPendiente(fecha)) {
             ordenesEncontradas.add(orden);
         }
@@ -72,8 +77,8 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
-        
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
+
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenDeMantenimiento", listaCriterios)) {
             ordenesEncontradas.add((OrdenDeMantenimiento) orden);
@@ -92,9 +97,9 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
         List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
-        
+
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql((fecha))));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "=", "PENDIENTE"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
 
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenReparacion", listaCriterios)) {
@@ -104,7 +109,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         return ordenesEncontradas;
     }
 
-    public List<DTOOrden> buscarOrdenesDTO(Date fecha, int tipoOrden) {
+    public List<DTOOrden> buscarOrdenesDTO(Date fecha, int tipoOrden) throws ExcepcionCampoInvalido {
         List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
         List<OrdenTrabajo> listaOrdenes = new ArrayList<OrdenTrabajo>();
 

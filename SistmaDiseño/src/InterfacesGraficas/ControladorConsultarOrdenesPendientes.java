@@ -7,6 +7,7 @@ package InterfacesGraficas;
 
 import DTO.DTOOrden;
 import DTO.DTOReserva;
+import Excepciones.ExcepcionCampoInvalido;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
@@ -15,6 +16,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,11 +38,20 @@ public class ControladorConsultarOrdenesPendientes {
         pantalla.setVisible(true);
     }
 
-    void buscarOrdenes(Date fecha, int seleccion) {
-        List<DTOOrden> listaDTOOrdens = experto.buscarOrdenesDTO(fecha, seleccion);
-        ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
+    void buscarOrdenes(Date fecha, int seleccion){
+
+        List<DTOOrden> listaDTOOrdens;
+        try {
+            listaDTOOrdens = experto.buscarOrdenesDTO(fecha, seleccion);
+            ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
         nuevoModelo.addAllRow(listaDTOOrdens);
         ((ModeloTablaOrdenesTrabajo)pantalla.getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+        } catch (ExcepcionCampoInvalido ex) {
+            JOptionPane.showMessageDialog(pantalla, ex.getMessage(),"ATENCION",JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
+            //Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     void mostrarReservas(List<DTOReserva> reservas) {

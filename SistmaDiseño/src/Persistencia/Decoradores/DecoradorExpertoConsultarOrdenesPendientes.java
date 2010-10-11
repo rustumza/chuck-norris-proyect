@@ -6,6 +6,7 @@
 package Persistencia.Decoradores;
 
 
+import Excepciones.ExcepcionCampoInvalido;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -19,7 +20,7 @@ import java.util.List;
 public class DecoradorExpertoConsultarOrdenesPendientes extends ExpertoConsultarOrdenesPendientes {
 
     @Override
-     public List<OrdenTrabajo> buscarOrdenes(Date fecha) {
+     public List<OrdenTrabajo> buscarOrdenes(Date fecha) throws ExcepcionCampoInvalido {
     iniciarTx();
     List<OrdenTrabajo> aux = super.buscarOrdenes(fecha);
     confirmarTx();
