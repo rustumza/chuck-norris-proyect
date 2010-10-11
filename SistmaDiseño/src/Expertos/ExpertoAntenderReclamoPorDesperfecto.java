@@ -8,6 +8,8 @@ package Expertos;
 
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionDenunciaExistente;
+import Fabricas.FabricaDeEstrategiaCalcularPrioridad;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denuncia;
@@ -21,6 +23,7 @@ import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.Semaforo;
 import Persistencia.Entidades.SuperDruperInterfaz;
+import Persistencia.Entidades.Ubicacion;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +59,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
     public void guardarDenunciante(Denunciante denunciante){
 
-        FachadaExterna.getInstancia().guardar("Denunciante", (SuperDruperInterfaz)denunciante);
+        FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
 
     }
 
@@ -129,9 +132,117 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         return listaDeProblema;
     }
 
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia){
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
 
-        List<Criterio> listaDeCriterios;
+
+        Criterio crit = FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().get(0).getSemaforo());
+        List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
+        listaDeCriterios.add(crit);
+        List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Ubicacion", listaDeCriterios);
+        Ubicacion ubicacion = (Ubicacion)listaDeInterfaces.get(0);
+        crit = FachadaExterna.getInstancia().crearCriterio("Ubicacion", "=", ubicacion);
+        listaDeCriterios = new ArrayList<Criterio>();
+        listaDeCriterios.add(crit);
+        listaDeInterfaces = FachadaExterna.getInstancia().buscar("Semaforo", listaDeCriterios);
+        List<Semaforo> listaDeSemaforo = new ArrayList<Semaforo>();
+        for (SuperDruperInterfaz superDruperInterfaz : listaDeInterfaces) {
+            listaDeSemaforo.add((Semaforo) superDruperInterfaz);
+        }
+        Denuncia denunciaAUsar = null;
+        for (Semaforo semaforo : listaDeSemaforo) {
+            listaDeCriterios = new ArrayList<Criterio>();
+            crit = FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", semaforo);
+            listaDeCriterios.add(crit);
+            listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denuncia", listaDeCriterios);
+            List<Denuncia> listaDeDenuncia = new ArrayList<Denuncia>();
+            for (SuperDruperInterfaz superDruperInterfaz : listaDeInterfaces) {
+                listaDeDenuncia.add((Denuncia) superDruperInterfaz);
+            }
+            for (Denuncia denuncia : listaDeDenuncia) {
+                for (DenunciaEstado denEst : denuncia.getDenunciaEstado()) {
+                    if(denEst.isindicadorestadoactual() & denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Pendiente")){
+                        denunciaAUsar = denuncia;
+                        break;
+                    }
+                    else if(denEst.isindicadorestadoactual() & !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada"))
+                        throw new ExcepcionDenunciaExistente();
+                }
+                if(denunciaAUsar!=null)
+                    break;
+            }
+
+        }
+
+        if(denunciaAUsar!=null){
+        //hacer reclamo
+            Reclamo reclamo = (Reclamo)FachadaExterna.getInstancia().crearEntidad("Reclamo");
+            reclamo.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
+            reclamo.setOperador(dtoInfoParaCrearDenuncia.getOperador());
+
+            List<Criterio> listCrit = new ArrayList<Criterio>();
+            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Reclamo"));
+            List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
+            Numerador numerador = (Numerador)listDeInterf.get(0);
+            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+            FachadaExterna.getInstancia().guardar("Numerador", numerador);
+            reclamo.setcodigoreclamo(numerador.getultimonumeroregistrado());
+            reclamo.setfechacaso(new Date());
+            reclamo.settipocaso("RECLAMO");
+            reclamo.setProblema(new ArrayList<Problema>());
+            for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
+                reclamo.getProblema().addAll(dTOProblemasDelSemaforo.getListaDeProblemas());
+                reclamo.getSemaforo().add(dTOProblemasDelSemaforo.getSemaforo());
+            }
+            if(denunciaAUsar.getReclamo().isEmpty())
+                denunciaAUsar.setReclamo(new ArrayList<Reclamo>());
+
+            denunciaAUsar.getReclamo().add(reclamo);
+            
+            denunciaAUsar.setprioridad(FabricaDeEstrategiaCalcularPrioridad.getInstace().crearEstrategiaDeCalculoDePrioridadDenuncia().calcularPrioridad(denunciaAUsar, ubicacion));
+
+            
+        }else{
+            //hacer una denuncia nueva
+            denunciaAUsar = (Denuncia) FachadaExterna.getInstancia().crearEntidad("Denuncia");
+            denunciaAUsar.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
+            denunciaAUsar.setOperador(dtoInfoParaCrearDenuncia.getOperador());
+            denunciaAUsar.settipocaso("DENUNCIA");
+            denunciaAUsar.setfechacaso(new Date());
+            List<Criterio> listCrit = new ArrayList<Criterio>();
+            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Denuncia"));
+            List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
+            Numerador numerador = (Numerador)listDeInterf.get(0);
+            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+            FachadaExterna.getInstancia().guardar("Numerador", numerador);
+            denunciaAUsar.setcodigoDenuncia(numerador.getultimonumeroregistrado());
+            denunciaAUsar.setReclamo(new ArrayList<Reclamo>());
+            denunciaAUsar.setProblema(new ArrayList<Problema>());
+            denunciaAUsar.setSemaforo(new ArrayList<Semaforo>());
+            for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
+
+                denunciaAUsar.getProblema().addAll(dTOProblemasDelSemaforo.getListaDeProblemas());
+                denunciaAUsar.getSemaforo().add(dTOProblemasDelSemaforo.getSemaforo());
+
+            }
+            denunciaAUsar.setprioridad(FabricaDeEstrategiaCalcularPrioridad.getInstace().crearEstrategiaDeCalculoDePrioridadDenuncia().calcularPrioridad(denunciaAUsar, ubicacion));
+            denunciaAUsar.setDenunciaEstado(new ArrayList<DenunciaEstado>());
+            crit = FachadaExterna.getInstancia().crearCriterio("NombreEstado", "=", "Pendiente");
+            listCrit = new ArrayList<Criterio>();
+            listCrit.add(crit);
+            listaDeInterfaces = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCrit);
+            DenunciaEstado denEst = (DenunciaEstado)FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
+            denEst.setEstadoDenuncia((EstadoDenuncia)listaDeInterfaces.get(0));
+            denEst.setfechacambioestado(new Date());
+            denEst.setindicadorestadoactual(true);
+            denunciaAUsar.getDenunciaEstado().add(denEst);
+
+        }
+        FachadaExterna.getInstancia().guardar("Denuncia", denunciaAUsar);
+
+
+
+
+        /*List<Criterio> listaDeCriterios;
         List<Denuncia> listaDeDenuncias;
         List<DTOProblemasDelSemaforo> listaDTOProblemasDelSemaforosParaHacerleDenuncia = new ArrayList<DTOProblemasDelSemaforo>();
         List<SuperDruperInterfaz> listaDeInterfaces;
@@ -220,30 +331,10 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
 
         }
-
+*/
 
 
     }
 
-private float calcularPrioridad(List<Reclamo> listaReclamos, Semaforo semaforo){
 
-    float prioridadDenuncia = 0;
-    int cantReclamos = listaReclamos.size();
-    float pesoReclamos=0;
-    if(cantReclamos <= 2)
-	pesoReclamos=1;
-    else if(cantReclamos <=5)
-	pesoReclamos=2;
-    else if (cantReclamos <=7)
-	pesoReclamos=3;
-    else if (cantReclamos <=10)
-	pesoReclamos=4;
-    else
-	pesoReclamos=5;
-    
-    float prioridadInterseccion = semaforo.getUbicacion().getPrioridad();
-    prioridadDenuncia = (float) (0.75 * prioridadInterseccion + 0.25 * pesoReclamos);
-
-    return prioridadDenuncia;
-}
 }

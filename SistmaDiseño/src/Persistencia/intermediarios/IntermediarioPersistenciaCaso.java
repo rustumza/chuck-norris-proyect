@@ -121,7 +121,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
                 nuevoCaso.setOperadorBuscado(false);
                 nuevoCaso.setfechacaso(rs.getDate("FechaCaso"));
 
-                nuevoCaso.settipocaso(Integer.valueOf(rs.getString("TipoCaso")));
+                nuevoCaso.settipocaso(rs.getString("TipoCaso"));
 
                 nuevosObjetos.add(nuevoCaso);
 
