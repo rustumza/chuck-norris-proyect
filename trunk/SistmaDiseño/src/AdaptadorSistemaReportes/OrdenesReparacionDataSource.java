@@ -16,7 +16,7 @@ import net.sf.jasperreports.engine.JRField;
  * @author diego
  * Contiene la informacion que se pasa cuando se genera un nuevo reporte
  */
-public class OrdenesDataSource implements JRDataSource {
+public class OrdenesReparacionDataSource implements JRDataSource {
 
     private int indicadorOrdenActual = -1;
     private List<DTOOrden> listaOrdenes;
@@ -25,10 +25,10 @@ public class OrdenesDataSource implements JRDataSource {
     private EquipamientoDataSource equipamientoDataSource;
     private RepuestoDataSource repuestoDataSource;
 
-    public OrdenesDataSource() {
+    public OrdenesReparacionDataSource() {
     }
 
-    public OrdenesDataSource(List<DTOOrden> nuevaListaDtoOrdenes) {
+    public OrdenesReparacionDataSource(List<DTOOrden> nuevaListaDtoOrdenes) {
         listaOrdenes = new ArrayList<DTOOrden>();
         listaOrdenes.addAll(listaOrdenes);
         fallasDataSource = new FallasTecnicasDataSource();
@@ -83,6 +83,14 @@ public class OrdenesDataSource implements JRDataSource {
         } else if (jrf.getName().equals("repuestos")) {
             repuestoDataSource = new RepuestoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaReservas().get(0).getListaRepuesto());
             valor = repuestoDataSource;
+        } else if (jrf.getName().equals("numCaso")) {
+            valor = listaOrdenes.get(indicadorOrdenActual).getNroCaso();
+        } else if (jrf.getName().equals("altura")) {
+            if (listaOrdenes.get(indicadorOrdenActual).getUbicacion().getAltura() == null) {
+                valor = "";
+            } else {
+                valor = listaOrdenes.get(indicadorOrdenActual).getUbicacion().getAltura();
+            }
         }
 
         return valor;
@@ -100,5 +108,9 @@ public class OrdenesDataSource implements JRDataSource {
      */
     public void setFallasDataSource(FallasTecnicasDataSource fallasDataSource) {
         this.fallasDataSource = fallasDataSource;
+    }
+
+    public boolean isVacio() {
+        return (listaOrdenes == null) ? true : false;
     }
 }

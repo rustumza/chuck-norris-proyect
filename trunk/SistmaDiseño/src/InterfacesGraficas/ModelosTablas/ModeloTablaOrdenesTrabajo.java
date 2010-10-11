@@ -107,7 +107,10 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public void clear() {
-        getOrdenesTrabajo().clear();
+        if(ordenesTrabajo==null){
+            return;
+        }
+        ordenesTrabajo.clear();
         fireTableDataChanged();
     }
 

@@ -12,12 +12,15 @@ package InterfacesGraficas;
 
 import DTO.DTOOrden;
 import DTO.DTOReserva;
+import Excepciones.ExcepcionCampoInvalido;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +32,6 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
     ControladorConsultarOrdenesPendientes controlador;
-
     DTOOrden ordenSeleccionada;
     DTOReserva reservaSeleccionada;
 
@@ -48,18 +50,18 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
-                ordenSeleccionada = (DTOOrden) ((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).getRow(fila);
+                ordenSeleccionada = (DTOOrden) ((ModeloTablaOrdenesTrabajo) tblOrdenesTrabajo.getModel()).getRow(fila);
                 controlador.mostrarReservas(ordenSeleccionada.getListaReservas());
             }
         });
 
-         ///////*Setea el comportamiento a la tabla Reserva:
+        ///////*Setea el comportamiento a la tabla Reserva:
         tblReservas.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
-                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva)tblReservas.getModel()).getRow(fila);
+                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva) tblReservas.getModel()).getRow(fila);
                 controlador.mostrarDetalleReserva(reservaSeleccionada);
             }
         });

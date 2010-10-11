@@ -10,7 +10,6 @@
  */
 package InterfacesGraficas;
 
-import AdaptadorSistemaReportes.AdaptadorReportes;
 import DTO.DTOOrden;
 import DTO.DTOReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
@@ -304,7 +303,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        controlador.confirmarOrdenesPendientes(((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).getOrdenesTrabajo());
+        controlador.confirmarOrdenesPendientes();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

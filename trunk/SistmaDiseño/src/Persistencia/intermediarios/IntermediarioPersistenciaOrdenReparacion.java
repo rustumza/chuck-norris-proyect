@@ -150,6 +150,8 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
+        OrdenDeReparacionAgente ordenReparacion = (OrdenDeReparacionAgente) obj;
+        FachadaInterna.getInstancia().guardar("Denuncia", (ObjetoPersistente)ordenReparacion.getDenuncia());
     }
 
     @Override

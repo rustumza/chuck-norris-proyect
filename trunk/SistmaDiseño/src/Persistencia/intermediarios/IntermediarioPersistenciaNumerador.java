@@ -4,7 +4,6 @@
  */
 package Persistencia.intermediarios;
 
-import Persistencia.Entidades.Numerador;
 import Persistencia.Entidades.NumeradorAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -13,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import sun.management.Agent;
 
 /**
  *

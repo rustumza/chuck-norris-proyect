@@ -68,9 +68,9 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
         } else if (seleccion == 2) {//es reclamo
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
             listaDeCriterio.add(FabricaCriterios.getInstancia().crearCriterio("CodigoReclamo", "=", numcaso));
-            List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Reclamo", listaDeCriterio);
+            List<SuperDruperInterfaz> interfaceCasoEncontrado = FachadaExterna.getInstancia().buscar("Reclamo", listaDeCriterio);
 
-            Reclamo reclamoEncontrado = (Reclamo) listaDeInterfaces.get(0);
+            Reclamo reclamoEncontrado = (Reclamo) interfaceCasoEncontrado.get(0);
 
             listaDeCriterio.clear();
             listaDeCriterio.add(FabricaCriterios.getInstancia().crearCriterio("Reclamo", "=", (ObjetoPersistente) reclamoEncontrado));

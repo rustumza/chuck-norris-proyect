@@ -55,6 +55,8 @@ public class ControladorConsultarAvanceDeReclamo {
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
 
         modeloEstados.clear();
+        modeloOrdenes.clear();
+        modeloFallas.clear();
         try {
             DTODenuncia dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion);
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
