@@ -59,7 +59,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
 
     public List<Semaforo> getSemaforo() {
          
-        if (isSemaforoBuscado() == false) {
+        if (isSemaforoBuscado() == false & (implementacion.getSemaforo() == null | implementacion.getSemaforo().isEmpty())) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
             listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Caso", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Semaforo", listaDeCriterio);
@@ -86,10 +86,10 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     }
 
     public List<Problema> getProblema() {
-        if (isProblemaBuscado() == false) {
+        if (isProblemaBuscado() == false & (implementacion.getProblema() == null | implementacion.getProblema().isEmpty())) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
-            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Denuncia", "=", super.getOid()));
-            List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Semaforo", listaDeCriterio);
+            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Caso", "=", super.getOid()));
+            List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Problema", listaDeCriterio);
             List<Problema> listaDeProblema = new ArrayList<Problema>();
             for(SuperDruperInterfaz aux : listaDeInterfaces)
                 listaDeProblema.add((Problema) aux);

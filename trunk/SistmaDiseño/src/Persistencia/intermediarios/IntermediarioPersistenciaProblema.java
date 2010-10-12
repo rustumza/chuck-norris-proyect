@@ -37,12 +37,20 @@ public class IntermediarioPersistenciaProblema extends IntermediarioRelacional {
         listaCriterios = criterios;
 
         select = "SELECT * FROM problema";
-
+        boolean addjoin = false;
+        String join="";
+        String condicion="";
         if (!criterios.isEmpty()) {
             select = select + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
                 if (i > 0) {
                     select = select + " AND ";
+                }
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Caso")|criterios.get(i).getAtributo().equalsIgnoreCase("Denuncia")|criterios.get(i).getAtributo().equalsIgnoreCase("Reclamo")) {//debe buscar todos los problemas relacionados con un caso
+                    addjoin = true;
+                    join = " JOIN problemacaso ON problema.OIDProblema = problemacaso.OIDProblema";
+                    condicion = condicion + "problemacaso.OIDCaso"+criterios.get(i).getOperador()+ "'" + criterios.get(i).getValor() + "'";
+                    continue;
                 }
 
                 select = select + "problema." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";

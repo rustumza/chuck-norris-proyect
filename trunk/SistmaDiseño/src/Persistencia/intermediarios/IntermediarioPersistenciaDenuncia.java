@@ -15,6 +15,8 @@ import Persistencia.Entidades.EstadoDenuncia;
 import Persistencia.Entidades.FallaTecnica;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.Reclamo;
+import Persistencia.Entidades.ReclamoAgente;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
@@ -98,6 +100,10 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
             DenunciaEstadoAgente denAgEst = (DenunciaEstadoAgente)aux;
             denAgEst.setOidDenuncia(obj.getOid());
             FachadaInterna.getInstancia().guardar("DenunciaEstado", (ObjetoPersistente)denAgEst);
+        }
+        for(Reclamo rec : den.getReclamo()){
+            ((ReclamoAgente) rec).setOidDenuncia(obj.getOid());
+            FachadaInterna.getInstancia().guardar("Reclamo", (ObjetoPersistente)rec);
         }
         
     }

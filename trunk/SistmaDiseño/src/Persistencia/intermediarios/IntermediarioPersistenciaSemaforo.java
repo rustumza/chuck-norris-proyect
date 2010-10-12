@@ -50,10 +50,10 @@ public class IntermediarioPersistenciaSemaforo extends IntermediarioRelacional {
                 if (criterios.get(i).getAtributo().equalsIgnoreCase("Interseccion") || criterios.get(i).getAtributo().equalsIgnoreCase("CalleSimple")) {
                     criterios.get(i).setAtributo("OIDUbicacion");
                 }
-                if (criterios.get(i).getAtributo().equals("Caso")) {//debe buscar todos los semaforos relacionados con un caso
+                if (criterios.get(i).getAtributo().equalsIgnoreCase("Caso")|criterios.get(i).getAtributo().equalsIgnoreCase("Denuncia")|criterios.get(i).getAtributo().equalsIgnoreCase("Reclamo")) {//debe buscar todos los semaforos relacionados con un caso
                     addjoin = true;
                     join = " JOIN casosemaforo ON semaforo.OIDSemaforo = casosemaforo.OIDSemaforo";
-                    condicion = condicion + "casosemaforo.OIDCaso = '" + criterios.get(i).getValor() + "'";
+                    condicion = condicion + "casosemaforo.OIDCaso"+ criterios.get(i).getOperador()+ "'" + criterios.get(i).getValor() + "'";
                     continue;
                 }
                 if(criterios.get(i).getAtributo().equalsIgnoreCase("Ubicacion"))
