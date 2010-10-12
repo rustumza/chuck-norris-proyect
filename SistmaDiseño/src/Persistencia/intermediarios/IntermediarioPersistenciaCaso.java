@@ -10,6 +10,10 @@ import Persistencia.Entidades.AUXProblemaCaso;
 import Persistencia.Entidades.CasoAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.Problema;
+import Persistencia.Entidades.ProblemaAgente;
+import Persistencia.Entidades.Semaforo;
+import Persistencia.Entidades.SemaforoAgente;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaCriterios;
@@ -91,10 +95,10 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
         String update;
 
         update = "UPDATE caso SET "
-                + "OIDCaso = '" + caso.getOid() + ","
+                + "OIDCaso = '" + caso.getOid() + "',"
                 + "OIDDenunciante = '" + caso.getOidDenunciante() + "', "
-                + "OIDOperador = " + caso.getOidOperador() + ", "
-                + "FechaCaso = '" + caso.getfechacaso() + "'"
+                + "OIDOperador = '" + caso.getOidOperador() + "', "
+                + "FechaCaso = '" + caso.getfechacaso() + "', "
                 + "TipoCaso = '" + caso.gettipocaso() + "'";
 
         return update;
@@ -138,7 +142,9 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
 
         CasoAgente caso = (CasoAgente) obj;
         AUXCasoSemaforo auxcasosem;
-        for(String aux :caso.getOidSemaforo()){
+        String aux;
+        for(Semaforo auxsem :caso.getSemaforo()){
+            aux = ((SemaforoAgente) auxsem).getOid();
             auxcasosem = (AUXCasoSemaforo) FachadaInterna.getInstancia().crearEntidad("AUXCasoSemaforo");
             auxcasosem.setOidCaso(obj.getOid());
             auxcasosem.setOidSemaforo(aux);
@@ -146,7 +152,9 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
         }
         
         AUXProblemaCaso auxprobcaso;
-        for(String aux1 : caso.getOidProblema()) {
+        String aux1;
+        for(Problema auxProb : caso.getProblema()) {
+            aux1=((ProblemaAgente)auxProb).getOid();
             auxprobcaso = (AUXProblemaCaso) FachadaInterna.getInstancia().crearEntidad("AUXProblemaCaso");
             auxprobcaso.setOidCaso(obj.getOid());
             auxprobcaso.setOidProblema(aux1);
