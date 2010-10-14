@@ -60,7 +60,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
         implementacion.setReclamo(reclamo);
         reclamoBuscado = true;
     }
-
+   
     public List<DenunciaEstado> getDenunciaEstado() {
         if (isDenunciaEstadoBuscado() == false) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();

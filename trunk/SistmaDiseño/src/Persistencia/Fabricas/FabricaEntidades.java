@@ -80,6 +80,7 @@ import Persistencia.Entidades.PersonaPadronEstadoImplementacion;
 import Persistencia.Entidades.PersonaPadronImplementacion;
 import Persistencia.Entidades.PesoDeReclamoAgente;
 import Persistencia.Entidades.PesoDeReclamoImplementacion;
+import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.ProblemaAgente;
 import Persistencia.Entidades.ProblemaImplementacion;
 import Persistencia.Entidades.RangoAniosAgente;
@@ -96,6 +97,7 @@ import Persistencia.Entidades.ReservaElementoTrabajoImplementacion;
 import Persistencia.Entidades.ReservaImplementacion;
 import Persistencia.Entidades.RolAgente;
 import Persistencia.Entidades.RolImplementacion;
+import Persistencia.Entidades.Semaforo;
 import Persistencia.Entidades.SemaforoAgente;
 import Persistencia.Entidades.SemaforoImplementacion;
 import Persistencia.Entidades.SuperDruperInterfaz;
@@ -115,6 +117,7 @@ import Persistencia.Entidades.UbicacionAgente;
 import Persistencia.Entidades.UbicacionImplementacion;
 import Persistencia.Entidades.UbicacionSimpleAgente;
 import Persistencia.Entidades.UbicacionSimpleImplementacion;
+import java.util.ArrayList;
 
 /*
  * To change this template, choose Tools | Templates
@@ -151,6 +154,8 @@ public class FabricaEntidades {
         } else if (entidad.equals("Caso")) {
             CasoImplementacion casoImpl = new CasoImplementacion();
             CasoAgente casoAgente = new CasoAgente();
+            casoImpl.setSemaforo(new ArrayList<Semaforo>());
+            casoImpl.setProblema(new ArrayList<Problema>());
             casoAgente.setImplementacion(casoImpl);
 
             return casoAgente;
