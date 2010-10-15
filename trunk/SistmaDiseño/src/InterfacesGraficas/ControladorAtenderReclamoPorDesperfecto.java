@@ -79,9 +79,13 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
         return listaDeProblemas.toArray(new Problema[listaDeProblemas.size()]);
     }
 
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
+        try{
         earpd.guardarDenuncia(infoParaCrearDenuncia);
+        }catch(ExcepcionDenunciaExistente e){
+            //abrir ventana en la interfaz!
 
+        }
 
     }
 
