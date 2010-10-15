@@ -399,12 +399,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         Operador opera = (Operador)listaDeInterfaces.get(0);
         //HASTA ACA
         dTOinfoParaCrearDenuncia.setOperador(opera);
-        dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
-        try {
-            controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
-        } catch (ExcepcionDenunciaExistente ex) {
-            Logger.getLogger(PantallaAtenderReclamoPorDesperfecto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());        
+        controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);        
     }//GEN-LAST:event_asentarCasoActionPerformed
 
     private void guardarInfoDenuncianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarInfoDenuncianteActionPerformed
