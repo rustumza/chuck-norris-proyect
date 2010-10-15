@@ -22,10 +22,14 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorConsultarOrdenesPendientes {
+public class ControladorConsultarOrdenesPendientes implements Controlador{
     ExpertoConsultarOrdenesPendientes experto;
     PantallaConsultarOrdenesPendientes pantalla;
     ChuckNorrisControlador chuck;
+
+    public ControladorConsultarOrdenesPendientes(){
+        
+    }
 
     public ControladorConsultarOrdenesPendientes(ChuckNorrisControlador chuckCont){
         chuck=chuckCont;

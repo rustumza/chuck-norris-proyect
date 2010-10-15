@@ -6,6 +6,7 @@
 package Persistencia.Decoradores;
 
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionDenunciaExistente;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Persistencia.Entidades.Denunciante;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -24,7 +25,7 @@ public class DecoradorExpertoAntenderReclamoPorDesperfecto extends ExpertoAntend
     }
 
     @Override
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia){
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
         super.guardarDenuncia(dtoInfoParaCrearDenuncia);
         confirmarTx();
     }

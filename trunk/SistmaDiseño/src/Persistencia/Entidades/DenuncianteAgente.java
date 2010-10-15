@@ -14,7 +14,7 @@ public class DenuncianteAgente extends ObjetoPersistente implements Denunciante 
 
     private DenuncianteImplementacion implementacion;
     private String oidPersonaPadron;
-
+//variable para buscar objetos relacionados
     private boolean personaPadronBuscado;
 
     public String getcelular() {

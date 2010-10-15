@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author LEIVA
  */
-public class ControladorConsultarAvanceDeReclamo {
+public class ControladorConsultarAvanceDeReclamo implements Controlador{
 
     //Mensajes de error
     public static final int COD_CASO_VACIO = 1;
@@ -31,6 +31,10 @@ public class ControladorConsultarAvanceDeReclamo {
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
     ChuckNorrisControlador chuck;
+
+    public ControladorConsultarAvanceDeReclamo(){
+        
+    }
 
     public ControladorConsultarAvanceDeReclamo(ChuckNorrisControlador chuckCont) {
         chuck=chuckCont;

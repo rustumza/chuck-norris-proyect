@@ -23,8 +23,8 @@ public class IntermediarioPersistenciaCasoSemaforo extends IntermediarioRelacion
         AUXCasoSemaforo auxCasoSem = (AUXCasoSemaforo) obj;
         String insert;
 
-        insert = "INSERT INTO casosemaforo (OIDCasoSemaforo, OIDCaso, OIDSemaforo) "
-                + "VALUES ('" + auxCasoSem.getOid() + "', '" + auxCasoSem.getOidCaso() + "', '" + auxCasoSem.getOidSemaforo() + "')";
+        insert = "INSERT INTO casosemaforo (OIDCasoSemaforo, OIDSemaforo , OIDCaso)"
+                + "VALUES ('" + auxCasoSem.getOid() + "', '" + auxCasoSem.getOidSemaforo() + "', '" + auxCasoSem.getOidCaso() + "')";
 
         return insert;
     }
