@@ -158,7 +158,9 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
         ((CasoAgente) objPer).setOperadorBuscado(false);
         ((CasoAgente) objPer).setfechacaso(padre.getfechacaso());
         ((CasoAgente) objPer).settipocaso(padre.gettipocaso());
+        ((CasoAgente) objPer).setSemaforoBuscado(false);
         ((CasoAgente) objPer).setOidSemaforo(padre.getOidSemaforo());
+        
 
     }
 
