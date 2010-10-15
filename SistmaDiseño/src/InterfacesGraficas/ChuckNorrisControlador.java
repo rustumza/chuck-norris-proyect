@@ -12,7 +12,7 @@ import javax.swing.UIManager;
  *
  * @author rustu
  */
-public class ChuckNorrisControlador {
+public class ChuckNorrisControlador{
 
     private PantallaPrincipal pantPrinc;
     ControladorAtenderReclamoPorDesperfecto contAtendRecl;

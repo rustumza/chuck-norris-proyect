@@ -10,6 +10,10 @@ import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
+//<<<<<<< .mine
+//import Fabricas.FabricaAdaptadoresSistemaStock;
+//
+
 import DTO.DTOSemaforo;
 import DTO.DTOUbicacion;
 import Excepciones.ExcepcionCampoInvalido;

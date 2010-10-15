@@ -30,7 +30,7 @@ public abstract class IntermediarioPersistencia {
 
 
         
-    };
+    }
 
     public List<ObjetoPersistente> buscar(List<Criterio> criterios){
         List<ObjetoPersistente> objetosEncontrados = new ArrayList<ObjetoPersistente>();

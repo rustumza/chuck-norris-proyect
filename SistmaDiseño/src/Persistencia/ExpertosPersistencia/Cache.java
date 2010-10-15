@@ -1,4 +1,3 @@
-
 package Persistencia.ExpertosPersistencia;
 
 /*
@@ -45,12 +44,10 @@ public class Cache {
     public void eliminarObjeto(String oid) {
 
         listaObjetos.remove(oid);
-
     }
 
     public boolean seEncuentra(String oid) {
 
         return listaObjetos.containsKey(oid);
-
     }
 }

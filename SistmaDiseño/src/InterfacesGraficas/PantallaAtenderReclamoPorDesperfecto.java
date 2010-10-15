@@ -14,6 +14,7 @@ package InterfacesGraficas;
 
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionDenunciaExistente;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerListModel;
@@ -397,7 +400,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         //HASTA ACA
         dTOinfoParaCrearDenuncia.setOperador(opera);
         dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
-        controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+        try {
+            controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+        } catch (ExcepcionDenunciaExistente ex) {
+            Logger.getLogger(PantallaAtenderReclamoPorDesperfecto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_asentarCasoActionPerformed
 
     private void guardarInfoDenuncianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarInfoDenuncianteActionPerformed

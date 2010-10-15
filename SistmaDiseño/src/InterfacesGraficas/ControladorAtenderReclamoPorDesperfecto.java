@@ -6,6 +6,7 @@
 package InterfacesGraficas;
 
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionDenunciaExistente;
 import Persistencia.Entidades.Denunciante;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Fabricas.FabricaExpertos;
@@ -18,12 +19,15 @@ import javax.swing.SpinnerListModel;
  *
  * @author LEIVA
  */
-public class ControladorAtenderReclamoPorDesperfecto {
+public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
     PantallaAtenderReclamoPorDesperfecto pantallaARPD;
     ChuckNorrisControlador chuck;
 
+    public ControladorAtenderReclamoPorDesperfecto(){
+        
+    }
     public ControladorAtenderReclamoPorDesperfecto(ChuckNorrisControlador chuckCont){
          chuck=chuckCont;
          earpd = (ExpertoAntenderReclamoPorDesperfecto)FabricaExpertos.getInstance().getExperto("AtenderReclamoPorDesperfecto");
@@ -75,7 +79,7 @@ public class ControladorAtenderReclamoPorDesperfecto {
         return listaDeProblemas.toArray(new Problema[listaDeProblemas.size()]);
     }
 
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
         earpd.guardarDenuncia(infoParaCrearDenuncia);
 
 

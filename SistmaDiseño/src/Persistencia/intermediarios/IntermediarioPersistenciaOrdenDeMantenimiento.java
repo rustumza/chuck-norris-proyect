@@ -27,7 +27,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
 
         OrdenDeMantenimientoAgente ordenMant = (OrdenDeMantenimientoAgente) obj;
 
-        insert = "INSERT INTO ordendemantenimiento (OIDOrdenDeTrabajo, OIDSemaforo, CodigoOrdenMantenimiento, OIDFichaMantenimiento) "
+        insert = "INSERT INTO ordenmantenimiento (OIDOrdenDeTrabajo, OIDSemaforo, CodigoOrdenMantenimiento, OIDFichaMantenimiento) "
                 + "VALUES ('" + ordenMant.getOid() + "', '" + ordenMant.getOidSemaforo() + "', " + ordenMant.getcodigoordenmantenimiento() + ", '" + ordenMant.getOidFichaMantenimiento() + "')";
 
         return insert;
@@ -41,7 +41,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         boolean addjoin = false;
 
         select = "SELECT * "
-                + "FROM ordendemantenimiento";
+                + "FROM ordenmantenimiento";
 
         if (!criterios.isEmpty()) {
             for (int i = 0; i < criterios.size(); i++) {
@@ -55,7 +55,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                     condicion = condicion + "estadoordentrabajo.NombreEstado = '" + criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
                     continue;
                 } else if (criterios.get(i).getAtributo().equals("FechaInicioPlanificada")) {
-                    join = join + " JOIN ordendetrabajo ON ordendemantenimiento.OIDOrdenDeTrabajo = ordendetrabajo.OIDOrdenDeTrabajo";
+                    join = join + " JOIN ordendetrabajo ON ordenmantenimiento.OIDOrdenDeTrabajo = ordendetrabajo.OIDOrdenDeTrabajo";
                     if (condicion.length() != 0) {
                         condicion = condicion + " AND ";
                     }
@@ -68,7 +68,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                     condicion = condicion + " AND ";
                 }
 
-                condicion = condicion + "ordendemantenimiento." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                condicion = condicion + "ordenmantenimiento." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
         }
 
@@ -87,7 +87,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         String selectOid;
 
         selectOid = "SELECT * "
-                + "FROM ordendemantenimiento "
+                + "FROM ordenmantenimiento "
                 + "WHERE OIDOrdenDeTrabajo = '" + oid + "'";
 
         return selectOid;
@@ -99,7 +99,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
         String update;
         OrdenDeMantenimientoAgente ordenMant = (OrdenDeMantenimientoAgente) obj;
 
-        update = "UPDATE ordendemantenimiento "
+        update = "UPDATE ordenmantenimiento "
                 + "SET OIDOrdenDeTrabajo = '" + ordenMant.getOid() + "', "
                 + "OIDSemaforo = '" + ordenMant.getOidSemaforo() + "', "
                 + "CodigoOrdenMantenimiento = " + ordenMant.getcodigoordenmantenimiento() + ", "

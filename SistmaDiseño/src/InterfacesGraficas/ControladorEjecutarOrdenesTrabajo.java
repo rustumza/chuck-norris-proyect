@@ -23,11 +23,15 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorEjecutarOrdenesTrabajo {
+public class ControladorEjecutarOrdenesTrabajo implements Controlador{
 
     ExpertoEjecutarOrdenesTrabajo experto;
     PantallaEjecutarOrdenDeTrabajo pantalla;
     ChuckNorrisControlador chuck;
+
+    public ControladorEjecutarOrdenesTrabajo(){
+        
+    }
 
     public ControladorEjecutarOrdenesTrabajo(ChuckNorrisControlador chuckCont) {
         chuck = chuckCont;
