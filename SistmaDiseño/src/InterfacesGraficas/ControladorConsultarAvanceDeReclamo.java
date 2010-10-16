@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author LEIVA
  */
-public class ControladorConsultarAvanceDeReclamo implements Controlador{
+public class ControladorConsultarAvanceDeReclamo{
 
     //Mensajes de error
     public static final int COD_CASO_VACIO = 1;

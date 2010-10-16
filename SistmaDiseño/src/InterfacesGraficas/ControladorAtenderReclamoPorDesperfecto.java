@@ -19,7 +19,7 @@ import javax.swing.SpinnerListModel;
  *
  * @author LEIVA
  */
-public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
+public class ControladorAtenderReclamoPorDesperfecto {
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
     PantallaAtenderReclamoPorDesperfecto pantallaARPD;

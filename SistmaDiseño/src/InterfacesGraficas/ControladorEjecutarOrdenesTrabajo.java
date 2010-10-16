@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorEjecutarOrdenesTrabajo implements Controlador{
+public class ControladorEjecutarOrdenesTrabajo{
 
     ExpertoEjecutarOrdenesTrabajo experto;
     PantallaEjecutarOrdenDeTrabajo pantalla;
