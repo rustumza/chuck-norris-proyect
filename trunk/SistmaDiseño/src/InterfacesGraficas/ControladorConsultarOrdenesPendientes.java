@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorConsultarOrdenesPendientes implements Controlador{
+public class ControladorConsultarOrdenesPendientes{
     ExpertoConsultarOrdenesPendientes experto;
     PantallaConsultarOrdenesPendientes pantalla;
     ChuckNorrisControlador chuck;
