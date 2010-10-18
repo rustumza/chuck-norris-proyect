@@ -77,7 +77,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
         listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado","LIKE","PENDIENTE"));
 
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenDeMantenimiento", listaCriterios)) {
@@ -98,8 +98,8 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
 
 
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql((fecha))));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("estado","LIKE","PENDIENTE"));
 
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenReparacion", listaCriterios)) {
