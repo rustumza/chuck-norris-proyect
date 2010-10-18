@@ -110,7 +110,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     // <editor-fold defaultstate="collapsed" desc="comment">
     public void guardarOrdenTrabajo() {// </editor-fold>
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "=", "EN EJECUCION"));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN EJECUCION"));
 
         EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
