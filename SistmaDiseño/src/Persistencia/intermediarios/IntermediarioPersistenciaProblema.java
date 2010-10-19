@@ -41,7 +41,7 @@ public class IntermediarioPersistenciaProblema extends IntermediarioRelacional {
         String join="";
         String condicion="";
         if (!criterios.isEmpty()) {
-            select = select + " WHERE ";
+            condicion = condicion + " WHERE ";
             for (int i = 0; i < criterios.size(); i++) {
                 if (i > 0) {
                     select = select + " AND ";
@@ -53,11 +53,11 @@ public class IntermediarioPersistenciaProblema extends IntermediarioRelacional {
                     continue;
                 }
 
-                select = select + "problema." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                condicion = condicion + "problema." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
         }
 
-        return select;
+        return select + join + condicion;
 
     }
 

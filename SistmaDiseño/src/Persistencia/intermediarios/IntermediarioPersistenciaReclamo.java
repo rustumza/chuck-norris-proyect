@@ -70,7 +70,8 @@ public class IntermediarioPersistenciaReclamo extends IntermediarioRelacional{
         return update = "UPDATE reclamo "
                 + "SET OIDCaso = '"+reclamo.getOid()+ "', "
                 + "CodigoReclamo = "+String.valueOf(reclamo.getcodigoreclamo())+", "
-                + "OIDDenuncia = '"+reclamo.getOidDenuncia()+"'" ;
+                + "OIDDenuncia = '"+reclamo.getOidDenuncia()+"'"
+                + " WHERE OIDCaso = '" + reclamo.getOid() + "'";
 
     }
 

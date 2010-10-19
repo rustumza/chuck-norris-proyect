@@ -75,7 +75,8 @@ public class IntermediarioPersistenciaPersonaPadron extends IntermediarioRelacio
                 + "Nombre = '" + personaPadron.getnombre() + "',"
                 + "Domicilio = '" + personaPadron.getdomicilio() + "', "
                 + "NroDocumento = '" + personaPadron.getNroDocumento() + "', "
-                + "TipoDocumento ='" + personaPadron.gettipoDocumento() + "'";
+                + "TipoDocumento ='" + personaPadron.gettipoDocumento() + "'"
+                + " WHERE OIDPersonaPadron = '" + personaPadron.getOid() +"'";
 
     }
 

@@ -86,7 +86,7 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     }
 
     public List<Problema> getProblema() {
-        if (isProblemaBuscado() == false & (implementacion.getProblema() == null | implementacion.getProblema().isEmpty())) {
+        if (isProblemaBuscado() == false & (implementacion.getProblema() == null || implementacion.getProblema().isEmpty())) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
             listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("Caso", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Problema", listaDeCriterio);
@@ -99,7 +99,9 @@ public class CasoAgente extends ObjetoPersistente implements Caso  {
     }
 
     public void setProblema(List<Problema> problema) {
-        getImplementacion().setProblema(problema);
+        if(getImplementacion().getProblema()==null)
+            getImplementacion().setProblema(new ArrayList<Problema>());
+        getImplementacion().getProblema().addAll(problema);
         problemaBuscado = true;
         if(ListaOidProblema==null){
             ListaOidProblema = new ArrayList<String>();

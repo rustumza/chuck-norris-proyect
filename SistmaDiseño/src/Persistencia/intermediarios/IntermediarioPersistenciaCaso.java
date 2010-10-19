@@ -99,7 +99,9 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
                 + "OIDDenunciante = '" + caso.getOidDenunciante() + "', "
                 + "OIDOperador = '" + caso.getOidOperador() + "', "
                 + "FechaCaso = '" + caso.getfechacaso() + "', "
-                + "TipoCaso = '" + caso.gettipocaso() + "'";
+                + "TipoCaso = '" + caso.gettipocaso() + "'"
+                + " WHERE OIDCaso = '"+caso.getOid() + "'";
+
 
         return update;
     }

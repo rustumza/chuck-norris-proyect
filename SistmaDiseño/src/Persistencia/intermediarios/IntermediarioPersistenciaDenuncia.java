@@ -86,9 +86,10 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
         DenunciaAgente denuncia = (DenunciaAgente) obj;
 
         update = "UPDATE denuncia SET"
-                + "OIDDenuncia ='" + denuncia.getOid() + "'"
-                + "CodigoDenuncia ='" + denuncia.getcodigoDenuncia() + "'"
-                + "Prioridad = '" + denuncia.getprioridad() + "'";
+                + "OIDDenuncia ='" + denuncia.getOid() + "',"
+                + "CodigoDenuncia ='" + denuncia.getcodigoDenuncia() + "',"
+                + "Prioridad = '" + denuncia.getprioridad() + "',"
+                + " WHERE OIDDenuncia = '" + denuncia.getOid() + "'";
 
         return update;
     }

@@ -178,6 +178,7 @@ public class FabricaEntidades {
             denunciaEstadoAgente.setImplementacion(denunciaEstadoImpl);
             denunciaEstadoAgente.setIsNuevo(true);
             return denunciaEstadoAgente;
+
         } else if (entidad.equals("Denunciante")) {
             DenuncianteImplementacion denuncianteImpl = new DenuncianteImplementacion();
             DenuncianteAgente denuncianteAgente = new DenuncianteAgente();

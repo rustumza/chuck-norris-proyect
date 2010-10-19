@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class DenunciaAgente extends CasoAgente implements Denuncia {
 
-    private DenunciaImplementacion implementacion;
     private String oidReclamo;
     private List<String> oidDenunciaEstado;
     private List<String> listaOidFallaTecnica;
@@ -26,19 +25,19 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     private boolean fallaTecnicaBuscado;
 
     public int getcodigoDenuncia() {
-        return implementacion.getcodigoDenuncia();
+        return getImplementacion().getcodigoDenuncia();
     }
 
     public float getprioridad() {
-        return implementacion.getprioridad();
+        return getImplementacion().getprioridad();
     }
 
     public void setcodigoDenuncia(int newVal) {
-        implementacion.setcodigoDenuncia(newVal);
+        getImplementacion().setcodigoDenuncia(newVal);
     }
 
     public void setprioridad(float newVal) {
-        implementacion.setprioridad(newVal);
+        getImplementacion().setprioridad(newVal);
     }
 
     public List<Reclamo> getReclamo() {
@@ -51,13 +50,13 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
                 listaReclamo.add((Reclamo) aux);
             }
 
-            implementacion.setReclamo(listaReclamo);
+            getImplementacion().setReclamo(listaReclamo);
         }
-        return implementacion.getReclamo();
+        return getImplementacion().getReclamo();
     }
 
     public void setReclamo(List<Reclamo> reclamo) {
-        implementacion.setReclamo(reclamo);
+        getImplementacion().setReclamo(reclamo);
         reclamoBuscado = true;
     }
    
@@ -67,14 +66,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
             listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDencunaEstados = FachadaInterna.getInstancia().buscar("DenunciaEstado", listaDeCriterio);
             for (SuperDruperInterfaz denunciaEstado : listaDencunaEstados) {
-                implementacion.addDenunciaEstado((DenunciaEstado) denunciaEstado);
+                getImplementacion().addDenunciaEstado((DenunciaEstado) denunciaEstado);
             }
         }
-        return implementacion.getDenunciaEstado();
+        return getImplementacion().getDenunciaEstado();
     }
 
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado) {
-        implementacion.setDenunciaEstado(denunciaEstado);
+        getImplementacion().setDenunciaEstado(denunciaEstado);
         denunciaEstadoBuscado=true;
         if(oidDenunciaEstado ==null)
             oidDenunciaEstado = new ArrayList<String>();
@@ -90,14 +89,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
             for(SuperDruperInterfaz falla :FachadaInterna.getInstancia().buscar("FallaTecnica", listacCriterios)){
                 listaFallas.add((FallaTecnica)falla);
             }
-            implementacion.setFallasTecnica(listaFallas);
+            getImplementacion().setFallasTecnica(listaFallas);
             fallaTecnicaBuscado = true;
         }
-        return implementacion.getFallasTecnica();
+        return getImplementacion().getFallasTecnica();
     }
 
     public void setFallasTecnica(List<FallaTecnica> fallaTecnica) {
-        implementacion.setFallasTecnica(fallaTecnica);
+        getImplementacion().setFallasTecnica(fallaTecnica);
     }
 
     /**
@@ -105,14 +104,14 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
      */
     @Override
     public DenunciaImplementacion getImplementacion() {
-        return implementacion;
+        return (DenunciaImplementacion) super.getImplementacion();
     }
 
     /**
      * @param implementacion the implementacion to set
      */
     public void setImplementacion(DenunciaImplementacion implementacion) {
-        this.implementacion = implementacion;
+        super.setImplementacion(implementacion);
     }
 
     /**
@@ -195,6 +194,6 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     public void agregarDenunciaEstado(DenunciaEstado denEstado) {
         oidDenunciaEstado.add(((DenunciaAgente)denEstado).getOid());
-        implementacion.agregarDenunciaEstado(denEstado);
+        getImplementacion().agregarDenunciaEstado(denEstado);
     }
 }
