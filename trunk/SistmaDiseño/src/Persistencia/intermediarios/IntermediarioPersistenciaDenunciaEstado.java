@@ -76,7 +76,8 @@ public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelaci
                 + "OIDDenuncia=' " + denunciaestado.getOidDenuncia() + "', "
                 + "OIDEstadoDenuncia = '" + denunciaestado.getOidEstadoDenuncia() + "', "
                 + "FechaCambioEstado='" + FormateadorFechas.getInstancia().formatearAMySql(denunciaestado.getfechacambioestado()) + "', "
-                + "IndicadoresEstadoActual='" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(denunciaestado.getIndicadoresEstadoActual()) + "'";
+                + "IndicadoresEstadoActual='" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(denunciaestado.getIndicadoresEstadoActual()) + "'"
+                + " WHERE OIDDenunciaEstado = '" + denunciaestado.getOid() + "'";
 
 
         return update;
