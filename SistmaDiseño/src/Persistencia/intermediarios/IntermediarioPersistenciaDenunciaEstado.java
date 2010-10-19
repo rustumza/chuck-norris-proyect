@@ -73,10 +73,10 @@ public class IntermediarioPersistenciaDenunciaEstado extends IntermediarioRelaci
         DenunciaEstadoAgente denunciaestado = (DenunciaEstadoAgente) obj;
         update = "UPDATE denunciaestado SET "
                 + "OIDDenunciaEstado = '" + denunciaestado.getOid() + "',"
-                + "OIDDenuncia=' " + denunciaestado.getOidDenuncia() + "', "
+                + "OIDDenuncia = '" + denunciaestado.getOidDenuncia() + "', "
                 + "OIDEstadoDenuncia = '" + denunciaestado.getOidEstadoDenuncia() + "', "
-                + "FechaCambioEstado='" + FormateadorFechas.getInstancia().formatearAMySql(denunciaestado.getfechacambioestado()) + "', "
-                + "IndicadoresEstadoActual='" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(denunciaestado.getIndicadoresEstadoActual()) + "'"
+                + "FechaCambioEstado = '" + FormateadorFechas.getInstancia().formatearAMySql(denunciaestado.getfechacambioestado()) + "', "
+                + "IndicadoresEstadoActual = '" + ConvertidorBooleanos.getInstancia().convertirBooleanToString(denunciaestado.getIndicadoresEstadoActual()) + "'"
                 + " WHERE OIDDenunciaEstado = '" + denunciaestado.getOid() + "'";
 
 
