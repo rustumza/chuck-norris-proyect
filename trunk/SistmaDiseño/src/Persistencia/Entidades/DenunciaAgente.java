@@ -51,6 +51,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
             }
 
             getImplementacion().setReclamo(listaReclamo);
+            setReclamoBuscado(true);
         }
         return getImplementacion().getReclamo();
     }
