@@ -95,7 +95,6 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
         String update;
 
         update = "UPDATE caso SET "
-                + "OIDCaso = '" + caso.getOid() + "',"
                 + "OIDDenunciante = '" + caso.getOidDenunciante() + "', "
                 + "OIDOperador = '" + caso.getOidOperador() + "', "
                 + "FechaCaso = '" + caso.getfechacaso() + "', "

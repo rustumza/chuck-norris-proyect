@@ -401,6 +401,7 @@ public class FabricaEntidades {
             ReclamoImplementacion reclamoImpl = new ReclamoImplementacion();
             ReclamoAgente reclamoAgente = new ReclamoAgente();
             reclamoAgente.setImplementacion(reclamoImpl);
+            reclamoAgente.setIsNuevo(true);
 
             return reclamoAgente;
         } else if (entidad.equals("ReparacionTareaRealizada")) {
