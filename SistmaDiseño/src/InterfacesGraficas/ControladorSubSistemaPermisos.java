@@ -8,6 +8,7 @@ package InterfacesGraficas;
 
 import Expertos.ExpertoSubSistemaPermisos;
 import Fabricas.FabricaExpertos;
+import Persistencia.Entidades.Usuario;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import javax.swing.UIManager;
 
@@ -61,5 +62,14 @@ public class ControladorSubSistemaPermisos {
     public void setPantPermisos(PantallaSubSistemaPermiso pantPerm){
         this.pantallaPSSP = pantPerm;
     }
+
+    //realiza la busqueda del usuario y contraseña
+    //para habilitarle los casos de uso que le corresponden
+    public Usuario buscarUsuario(String nombreUsuario, String clave){
+
+        return essp.buscarUsuario(nombreUsuario,clave);
+    }
+
+
 
 }
