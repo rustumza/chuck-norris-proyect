@@ -5,10 +5,17 @@
 
 package Expertos;
 
+import Persistencia.Entidades.Usuario;
+
 /**
  *
  * @author informatica
  */
 public class ExpertoSubSistemaPermisos implements Experto{
+
+    public Usuario buscarUsuario(String nombreUsuario, String clave){
+
+        return null;
+    }
 
 }
