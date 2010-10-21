@@ -24,7 +24,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal(ChuckNorrisControlador chuck) {
         initComponents();
         this.chuck = chuck;
-        this.setTitle("Sistema ChuckNorrys powered by Bicentenario");
+        
     }
 
     /** This method is called from within the constructor to

@@ -22,7 +22,8 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
     public PantallaSubSistemaPermiso(ControladorSubSistemaPermisos controlSSP) {
        initComponents();
         this.controladorSSP = controlSSP;
-        this.setTitle("Inicio de Sesión");
+        this.setTitle("Sistema ChuckNorrys powered by Bicentenario");
+        
     }
 
     @SuppressWarnings("unchecked")
