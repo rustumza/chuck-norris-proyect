@@ -14,13 +14,15 @@ import javax.swing.UIManager;
  */
 public class ChuckNorrisControlador{
 
+    private PantallaSubSistemaPermiso pantPermisos;
     private PantallaPrincipal pantPrinc;
     ControladorAtenderReclamoPorDesperfecto contAtendRecl;
     ControladorConsultarAvanceDeReclamo contConsAvancRec;
     ControladorConsultarOrdenesPendientes contConsOrdPend;
     ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
+    ControladorSubSistemaPermisos contSubSisPerm;
 
-    public static void main(String[] args) {
+   /** public static void main(String[] args) {
 
         try {
             UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
@@ -29,13 +31,20 @@ public class ChuckNorrisControlador{
         }
 
         ChuckNorrisControlador chuck = new ChuckNorrisControlador();
+
         chuck.setPantPrinc(new PantallaPrincipal(chuck));
         chuck.iniciar();
 
 
     }
+*/
 
     public ChuckNorrisControlador() {
+    }
+
+    public ChuckNorrisControlador (ControladorSubSistemaPermisos contPerm){
+         contSubSisPerm = contPerm;
+         pantPrinc = new PantallaPrincipal(this);
     }
 
     public void iniciar() {
@@ -76,6 +85,11 @@ public class ChuckNorrisControlador{
 
     }
 
+    //public void iniciarSistemaPermiso(){
+    //    contSubSisPerm = new ControladorSubSistemaPermisos(this);
+    //   contSubSisPerm.iniciar();
+    //}
+
     /**
      * @return the pantPrinc
      */
@@ -83,10 +97,20 @@ public class ChuckNorrisControlador{
         return pantPrinc;
     }
 
+    
+
     /**
      * @param pantPrinc the pantPrinc to set
      */
     public void setPantPrinc(PantallaPrincipal pantPrinc) {
         this.pantPrinc = pantPrinc;
     }
+
+    public void cerrar(){
+        pantPrinc.setVisible(false);
+        pantPrinc.dispose();
+        contSubSisPerm.iniciar();
+
+    }
+    
 }
