@@ -52,7 +52,7 @@ public class IntermediarioPersistenciaOrdenDeMantenimiento extends Intermediario
                     if (condicion.length() != 0) {
                         condicion = condicion + " AND ";
                     }
-                    condicion = condicion + "estadoordentrabajo.NombreEstado " + criterios.get(i).getOperador() +" '"+ criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
+                    condicion = condicion + "estadoordentrabajo.NombreEstado" + "'" + criterios.get(i).getOperador() + " '" + " '" + criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
                     continue;
                 } else if (criterios.get(i).getAtributo().equals("FechaInicioPlanificada")) {
                     join = join + " JOIN ordendetrabajo ON ordenmantenimiento.OIDOrdenDeTrabajo = ordendetrabajo.OIDOrdenDeTrabajo";
