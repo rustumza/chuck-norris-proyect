@@ -107,7 +107,7 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
 
     private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
        
-        controladorSSP.buscarUsuario(nombreDelUsuario.getText(), String.valueOf(pass.getPassword()));
+        controladorSSP.buscarUsuario(getNombreDelUsuario().getText(), String.valueOf(getPass().getPassword()));
 
 
     }//GEN-LAST:event_botonIngresarActionPerformed
@@ -128,6 +128,9 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
         });
     }
 */
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonIngresar;
     private javax.swing.JButton botonSalir;
@@ -137,5 +140,33 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
     private javax.swing.JTextField nombreDelUsuario;
     private javax.swing.JPasswordField pass;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the nombreDelUsuario
+     */
+    public javax.swing.JTextField getNombreDelUsuario() {
+        return nombreDelUsuario;
+    }
+
+    /**
+     * @param nombreDelUsuario the nombreDelUsuario to set
+     */
+    public void setNombreDelUsuario(javax.swing.JTextField nombreDelUsuario) {
+        this.nombreDelUsuario = nombreDelUsuario;
+    }
+
+    /**
+     * @return the pass
+     */
+    public javax.swing.JPasswordField getPass() {
+        return pass;
+    }
+
+    /**
+     * @param pass the pass to set
+     */
+    public void setPass(javax.swing.JPasswordField pass) {
+        this.pass = pass;
+    }
 
 }

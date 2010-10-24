@@ -52,13 +52,11 @@ public class ControladorSubSistemaPermisos {
     public void iniciar(){
         pantallaPSSP.setLocationRelativeTo(null);
         pantallaPSSP.setVisible(true);
+        pantallaPSSP.getPass().setText("");
+        pantallaPSSP.getNombreDelUsuario().setText("");
+        usuarioEncontrado = null;
     }
 
-    public void iniciarChuckNorris(){
-        getPantPermisos().setVisible(false);
-        chuk = new ChuckNorrisControlador(this);
-        chuk.iniciar();
-    }
 
     public PantallaSubSistemaPermiso getPantPermisos(){
         return pantallaPSSP;
@@ -74,7 +72,9 @@ public class ControladorSubSistemaPermisos {
         try{
 
             usuarioEncontrado = essp.buscarUsuario(nombreUsuario, clave);
-            iniciarChuckNorris();
+            getPantPermisos().setVisible(false);
+            chuk = new ChuckNorrisControlador(this);
+            chuk.iniciar();
         }catch(ExcepcionObjetoNoEncontrado e){
             JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);
         }
