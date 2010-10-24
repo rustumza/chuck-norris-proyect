@@ -36,7 +36,9 @@ import Persistencia.intermediarios.IntermediarioPersistenciaOrdenDeTrabajo;
 import Persistencia.intermediarios.IntermediarioPersistenciaOrdenReparacion;
 import Persistencia.intermediarios.IntermediarioPersistenciaOrdenTrabajoEstado;
 import Persistencia.intermediarios.IntermediarioPersistenciaOrientacion;
+import Persistencia.intermediarios.IntermediarioPersistenciaPerfil;
 import Persistencia.intermediarios.IntermediarioPersistenciaPeriodicidad;
+import Persistencia.intermediarios.IntermediarioPersistenciaPermiso;
 import Persistencia.intermediarios.IntermediarioPersistenciaPersonaPadron;
 import Persistencia.intermediarios.IntermediarioPersistenciaPersonaPadronEstado;
 import Persistencia.intermediarios.IntermediarioPersistenciaPesoDeReclamo;
@@ -325,6 +327,12 @@ public class FabricaIntermediarios {
         }
         if (nombre.equals("Usuario")) {
             intermediario = (IntermediarioPersistencia) (new IntermediarioPersistenciaUsuario());
+        }
+        if (nombre.equals("Perfil")) {
+            intermediario = (IntermediarioPersistencia) (new IntermediarioPersistenciaPerfil());
+        }
+        if (nombre.equals("Permiso")) {
+            intermediario = (IntermediarioPersistencia) (new IntermediarioPersistenciaPermiso());
         }
         return intermediario;
     }
