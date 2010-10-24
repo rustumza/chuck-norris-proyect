@@ -43,6 +43,8 @@ public class ControladorSubSistemaPermisos {
     }
 
     public ControladorSubSistemaPermisos(){
+        essp = (ExpertoSubSistemaPermisos) FabricaExpertos.getInstance().getExperto("ExpertoSubSistemaPermisos");
+
 
     }
 
@@ -70,6 +72,7 @@ public class ControladorSubSistemaPermisos {
     //para habilitarle los casos de uso que le corresponden
     public void buscarUsuario(String nombreUsuario, String clave){
         try{
+
             usuarioEncontrado = essp.buscarUsuario(nombreUsuario, clave);
             iniciarChuckNorris();
         }catch(ExcepcionObjetoNoEncontrado e){
