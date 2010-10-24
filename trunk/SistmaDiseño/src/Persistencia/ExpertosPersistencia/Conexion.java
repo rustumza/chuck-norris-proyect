@@ -50,7 +50,7 @@ public class Conexion {
        try{
             String userName = "bicentenario";
             String password = "bicentenario";
-            String url = "jdbc:mysql://localhost:3306/dise";
+            String url = "jdbc:mysql://localhost:3306/disenio";
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
             return conn;
