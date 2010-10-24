@@ -324,7 +324,7 @@ public class FabricaIntermediarios {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaProblemaCaso());
         }
         if (nombre.equals("Usuario")) {
-            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaUsuario());
+            intermediario = (IntermediarioPersistencia) (new IntermediarioPersistenciaUsuario());
         }
         return intermediario;
     }
