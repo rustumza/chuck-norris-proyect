@@ -19,21 +19,29 @@ import javax.swing.JOptionPane;
  *
  * @author LEIVA
  */
-public class ControladorConsultarAvanceDeReclamo{
+public class ControladorConsultarAvanceDeReclamo implements Controlador{
 
     //Mensajes de error
     public static final int COD_CASO_VACIO = 1;
     public static final int BUSQUEDA_VACIA = 2;
     //
     ExpertoConsultarAvanceDeReclamo experto;
-    PantallaConsultarAvanceDeReclamo pantalla;
+    private PantallaConsultarAvanceDeReclamo pantalla;
     ModeloTablaConsultarAvanceReclamo modeloEstados;
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
-    ChuckNorrisControlador chuck;
+    private ChuckNorrisControlador chuck;
 
     public ControladorConsultarAvanceDeReclamo(){
-        
+        experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
+        pantalla = new PantallaConsultarAvanceDeReclamo(this);
+        modeloEstados = new ModeloTablaConsultarAvanceReclamo();
+        modeloOrdenes = new ModeloTablaOrdenesTrabajo();
+        modeloFallas = new ModeloTablaFallas();
+        pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+        pantalla.getTblOrdenReparacion().setModel(modeloOrdenes);
+        pantalla.getTblFallas().setModel(modeloFallas);
+
     }
 
     public ControladorConsultarAvanceDeReclamo(ChuckNorrisControlador chuckCont) {
@@ -49,9 +57,9 @@ public class ControladorConsultarAvanceDeReclamo{
     }
 
     public void iniciar() {
-        pantalla.setTitle("Consultar Avance de Reclamo");
-        pantalla.setLocationRelativeTo(null);
-        pantalla.setVisible(true);
+        getPantalla().setTitle("Consultar Avance de Reclamo");
+        getPantalla().setLocationRelativeTo(null);
+        getPantalla().setVisible(true);
     }
 
     public void ConsultarEstadoCaso(String numcaso, int seleccion) {
@@ -65,12 +73,12 @@ public class ControladorConsultarAvanceDeReclamo{
             DTODenuncia dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion);
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
             modeloOrdenes.addRow(dtoDenuncia.getOrdenRep());
-            pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
-            pantalla.getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
-            pantalla.getLblEstadoOrden().setVisible(true);
-            pantalla.getLblEstadoOrden().setForeground(Color.ORANGE);
+            getPantalla().getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+            getPantalla().getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
+            getPantalla().getLblEstadoOrden().setVisible(true);
+            getPantalla().getLblEstadoOrden().setForeground(Color.ORANGE);
             modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
-            pantalla.getLbloperador().setText(pantalla.getLbloperador().getText() + dtoDenuncia.getNombreOperador());
+            getPantalla().getLbloperador().setText(getPantalla().getLbloperador().getText() + dtoDenuncia.getNombreOperador());
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
@@ -84,18 +92,32 @@ public class ControladorConsultarAvanceDeReclamo{
 
         switch (seleccion) {
             case COD_CASO_VACIO:
-                JOptionPane.showMessageDialog(pantalla, "Debe ingresar Código Caso", "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(getPantalla(), "Debe ingresar Código Caso", "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(mensaje);
             case BUSQUEDA_VACIA:
-                JOptionPane.showMessageDialog(pantalla, mensaje, "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(getPantalla(),mensaje, "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(mensaje);
         }
     }
 
     public void cerrar(){
-        pantalla.setVisible(false);
-        pantalla.dispose();
+        getPantalla().setVisible(false);
+        getPantalla().dispose();
         chuck.iniciar();
+    }
+
+    /**
+     * @return the pantalla
+     */
+    public PantallaConsultarAvanceDeReclamo getPantalla() {
+        return pantalla;
+    }
+
+    /**
+     * @param chuck the chuck to set
+     */
+    public void setChuck(ChuckNorrisControlador chuck) {
+        this.chuck = chuck;
     }
     
 

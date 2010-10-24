@@ -22,13 +22,16 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorConsultarOrdenesPendientes{
+public class ControladorConsultarOrdenesPendientes implements Controlador{
     ExpertoConsultarOrdenesPendientes experto;
-    PantallaConsultarOrdenesPendientes pantalla;
-    ChuckNorrisControlador chuck;
+    private PantallaConsultarOrdenesPendientes pantalla;
+    private ChuckNorrisControlador chuck;
 
     public ControladorConsultarOrdenesPendientes(){
-        
+    
+        pantalla = new PantallaConsultarOrdenesPendientes(this);
+        experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
+
     }
 
     public ControladorConsultarOrdenesPendientes(ChuckNorrisControlador chuckCont){
@@ -37,41 +40,55 @@ public class ControladorConsultarOrdenesPendientes{
         experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
     }
 
-    void iniciar() {
-        pantalla.setLocationRelativeTo(null);
-        pantalla.setVisible(true);
+    public void iniciar() {
+        getPantalla().setLocationRelativeTo(null);
+        getPantalla().setVisible(true);
     }
 
-    void buscarOrdenes(Date fecha, int seleccion){
+    public void buscarOrdenes(Date fecha, int seleccion){
 
         List<DTOOrden> listaDTOOrdens;
         try {
             listaDTOOrdens = experto.buscarOrdenesDTO(fecha, seleccion);
             ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
         nuevoModelo.addAllRow(listaDTOOrdens);
-        ((ModeloTablaOrdenesTrabajo)pantalla.getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+        ((ModeloTablaOrdenesTrabajo)getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
         } catch (ExcepcionCampoInvalido ex) {
-            JOptionPane.showMessageDialog(pantalla, ex.getMessage(),"ATENCION",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog( getPantalla(), ex.getMessage(),"ATENCION",JOptionPane.WARNING_MESSAGE);
             System.out.println(ex.getMessage());
             //Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
 
-    void mostrarReservas(List<DTOReserva> reservas) {
-        ((ModeloTablaReserva)pantalla.getTblReservas().getModel()).setListaReserva(reservas);
+    public void mostrarReservas(List<DTOReserva> reservas) {
+        ((ModeloTablaReserva)getPantalla().getTblReservas().getModel()).setListaReserva(reservas);
     }
 
-    void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
-        ((ModeloTablaReservaEquipamiento)pantalla.getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
-        ((ModeloTablaResevaRepuesto)pantalla.getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
+    public void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
+        ((ModeloTablaReservaEquipamiento)getPantalla().getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
+        ((ModeloTablaResevaRepuesto)getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
     public void cerrar(){
-        pantalla.setVisible(false);
-        pantalla.dispose();
+        getPantalla().setVisible(false);
+        getPantalla().dispose();
         chuck.iniciar();
 
+    }
+
+    /**
+     * @return the pantalla
+     */
+    public PantallaConsultarOrdenesPendientes getPantalla() {
+        return pantalla;
+    }
+
+    /**
+     * @param chuck the chuck to set
+     */
+    public void setChuck(ChuckNorrisControlador chuck) {
+        this.chuck = chuck;
     }
 
 

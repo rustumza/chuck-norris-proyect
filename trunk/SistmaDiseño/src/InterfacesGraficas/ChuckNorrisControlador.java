@@ -5,14 +5,12 @@
  */
 package InterfacesGraficas;
 
-import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import javax.swing.UIManager;
 
 /**
  *
  * @author rustu
  */
-public class ChuckNorrisControlador{
+public class ChuckNorrisControlador implements Controlador{
 
     private PantallaSubSistemaPermiso pantPermisos;
     private PantallaPrincipal pantPrinc;
@@ -40,7 +38,11 @@ public class ChuckNorrisControlador{
 */
 
     public ChuckNorrisControlador() {
+    
+        pantPrinc = new PantallaPrincipal(this);
+
     }
+
 
     public ChuckNorrisControlador (ControladorSubSistemaPermisos contPerm){
          contSubSisPerm = contPerm;
@@ -57,6 +59,7 @@ public class ChuckNorrisControlador{
     public void iniciarCUAtenderReclamoPorDesperfecto() {
         getPantPrinc().setVisible(false);
         contAtendRecl = new ControladorAtenderReclamoPorDesperfecto(this);
+        contAtendRecl.setChuck(this);
         contAtendRecl.iniciar();
 
 
@@ -65,6 +68,7 @@ public class ChuckNorrisControlador{
     public void iniciarCUConsultarAvanceDeReclamo() {
         getPantPrinc().setVisible(false);
         contConsAvancRec = new ControladorConsultarAvanceDeReclamo(this);
+        contConsAvancRec.setChuck(this);
         contConsAvancRec.iniciar();
 
     }
@@ -72,6 +76,7 @@ public class ChuckNorrisControlador{
     public void iniciarCUConsultarOrdenesPendientes() {
         getPantPrinc().setVisible(false);
         contConsOrdPend = new ControladorConsultarOrdenesPendientes(this);
+        contConsOrdPend.setChuck(this);
         contConsOrdPend.iniciar();
 
 
@@ -81,6 +86,7 @@ public class ChuckNorrisControlador{
 
         getPantPrinc().setVisible(false);
         contEjecOrdTrab = new ControladorEjecutarOrdenesTrabajo(this);
+        contEjecOrdTrab.setChuck(this);
         contEjecOrdTrab.iniciar();
 
     }

@@ -9,6 +9,7 @@ package InterfacesGraficas;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoSubSistemaPermisos;
 import Fabricas.FabricaExpertos;
+import Fabricas.FabricaControladores;
 import Persistencia.Entidades.Usuario;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.UIManager;
  *
  * @author informatica
  */
-public class ControladorSubSistemaPermisos {
+public class ControladorSubSistemaPermisos implements Controlador{
 
     private ExpertoSubSistemaPermisos essp;
     private PantallaSubSistemaPermiso pantallaPSSP;
@@ -73,7 +74,7 @@ public class ControladorSubSistemaPermisos {
 
             usuarioEncontrado = essp.buscarUsuario(nombreUsuario, clave);
             getPantPermisos().setVisible(false);
-            chuk = new ChuckNorrisControlador(this);
+            chuk = (ChuckNorrisControlador) FabricaControladores.getInstance().getControlador("ChuckNorris");
             chuk.iniciar();
         }catch(ExcepcionObjetoNoEncontrado e){
             JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);

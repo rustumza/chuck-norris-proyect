@@ -19,14 +19,16 @@ import javax.swing.SpinnerListModel;
  *
  * @author LEIVA
  */
-public class ControladorAtenderReclamoPorDesperfecto {
+public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
-    PantallaAtenderReclamoPorDesperfecto pantallaARPD;
-    ChuckNorrisControlador chuck;
+    private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
+    private ChuckNorrisControlador chuck;
 
     public ControladorAtenderReclamoPorDesperfecto(){
-        
+        earpd = (ExpertoAntenderReclamoPorDesperfecto)FabricaExpertos.getInstance().getExperto("AtenderReclamoPorDesperfecto");
+        pantallaARPD = new PantallaAtenderReclamoPorDesperfecto(this);
+
     }
     public ControladorAtenderReclamoPorDesperfecto(ChuckNorrisControlador chuckCont){
          chuck=chuckCont;
@@ -35,8 +37,8 @@ public class ControladorAtenderReclamoPorDesperfecto {
     }
 
     public void iniciar(){
-        pantallaARPD.setLocationRelativeTo(null);
-        pantallaARPD.setVisible(true);
+        getPantallaARPD().setLocationRelativeTo(null);
+        getPantallaARPD().setVisible(true);
     }
 
     public Denunciante buscarDenunciante(String dni){
@@ -51,8 +53,8 @@ public class ControladorAtenderReclamoPorDesperfecto {
     }
 
     public void cerrar(){
-        pantallaARPD.setVisible(false);
-        pantallaARPD.dispose();
+        getPantallaARPD().setVisible(false);
+        getPantallaARPD().dispose();
         chuck.iniciar();
 
     }
@@ -70,8 +72,8 @@ public class ControladorAtenderReclamoPorDesperfecto {
 
         ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
         modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
-        pantallaARPD.getTablaDeSemafor().setModel(modTabSem);
-        pantallaARPD.getTodosLosProblemas().setModel(new SpinnerListModel(buscarProblema()));
+        getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
+        getPantallaARPD().getTodosLosProblemas().setModel(new SpinnerListModel(buscarProblema()));
     }
 
     public Problema[] buscarProblema(){
@@ -87,6 +89,20 @@ public class ControladorAtenderReclamoPorDesperfecto {
 
         }
 
+    }
+
+    /**
+     * @return the pantallaARPD
+     */
+    public PantallaAtenderReclamoPorDesperfecto getPantallaARPD() {
+        return pantallaARPD;
+    }
+
+    /**
+     * @param chuck the chuck to set
+     */
+    public void setChuck(ChuckNorrisControlador chuck) {
+        this.chuck = chuck;
     }
 
     /*
