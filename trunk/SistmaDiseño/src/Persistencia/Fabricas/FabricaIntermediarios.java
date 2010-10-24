@@ -61,6 +61,7 @@ import Persistencia.intermediarios.IntermediarioPersistenciaTrabajoElementoNeces
 import Persistencia.intermediarios.IntermediarioPersistenciaTrabajoOrdenDeTrabajo;
 import Persistencia.intermediarios.IntermediarioPersistenciaUbicacion;
 import Persistencia.intermediarios.IntermediarioPersistenciaUbicacionSimple;
+import Persistencia.intermediarios.IntermediarioPersistenciaUsuario;
 
 /*
  * To change this template, choose Tools | Templates
@@ -321,6 +322,9 @@ public class FabricaIntermediarios {
         }
         if (nombre.equals("AUXProblemaCaso")) {
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaProblemaCaso());
+        }
+        if (nombre.equals("Usuario")) {
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaUsuario());
         }
         return intermediario;
     }
