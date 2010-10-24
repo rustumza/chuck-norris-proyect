@@ -5,7 +5,14 @@
 
 package Expertos;
 
+import Excepciones.ExcepcionObjetoNoEncontrado;
+import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.Usuario;
+import Persistencia.ExpertosPersistencia.Criterio;
+import Persistencia.ExpertosPersistencia.FachadaExterna;
+import Persistencia.Fabricas.FabricaCriterios;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,9 +20,23 @@ import Persistencia.Entidades.Usuario;
  */
 public class ExpertoSubSistemaPermisos implements Experto{
 
-    public Usuario buscarUsuario(String nombreUsuario, String clave){
+    public Usuario buscarUsuario(String nombreUsuario, String clave) throws ExcepcionObjetoNoEncontrado{
 
-        return null;
+        List<Criterio> listaCriterios = new ArrayList<Criterio>();
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreUsuario", "=", nombreUsuario));
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Clave", "=", clave));
+
+
+        List<SuperDruperInterfaz> listaInterfaces = FachadaExterna.getInstancia().buscar("Usuario", listaCriterios);
+
+        if (listaInterfaces.isEmpty()) {
+            ExcepcionObjetoNoEncontrado excep = new ExcepcionObjetoNoEncontrado();
+            excep.setMensaje("Usuario o Clave Incorrecta.");
+            throw excep;
+        } else {
+            Usuario usuarioEncontrado = (Usuario) listaInterfaces.get(0);
+            return usuarioEncontrado;
+        }
     }
 
 }
