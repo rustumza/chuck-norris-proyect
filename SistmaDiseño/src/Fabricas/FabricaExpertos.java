@@ -5,10 +5,6 @@
 package Fabricas;
 
 import Expertos.Experto;
-import Expertos.ExpertoAntenderReclamoPorDesperfecto;
-import Expertos.ExpertoConsultarAvanceDeReclamo;
-import Expertos.ExpertoConsultarOrdenesPendientes;
-import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Expertos.ExpertoSubSistemaPermisos;
 import Persistencia.Decoradores.DecoradorExpertoAntenderReclamoPorDesperfecto;
 import Persistencia.Decoradores.DecoradorExpertoConsultarAvanceDeReclamo;
