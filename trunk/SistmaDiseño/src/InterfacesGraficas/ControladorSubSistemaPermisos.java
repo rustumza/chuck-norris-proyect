@@ -6,10 +6,12 @@
 package InterfacesGraficas;
 
 
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoSubSistemaPermisos;
 import Fabricas.FabricaExpertos;
 import Persistencia.Entidades.Usuario;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -18,9 +20,10 @@ import javax.swing.UIManager;
  */
 public class ControladorSubSistemaPermisos {
 
-    ExpertoSubSistemaPermisos essp;
-    PantallaSubSistemaPermiso pantallaPSSP;
-    ChuckNorrisControlador chuk;
+    private ExpertoSubSistemaPermisos essp;
+    private PantallaSubSistemaPermiso pantallaPSSP;
+    private ChuckNorrisControlador chuk;
+    private Usuario usuarioEncontrado;
 
 
      public static void main(String[] args) {
@@ -65,9 +68,14 @@ public class ControladorSubSistemaPermisos {
 
     //realiza la busqueda del usuario y contraseña
     //para habilitarle los casos de uso que le corresponden
-    public Usuario buscarUsuario(String nombreUsuario, String clave){
+    public void buscarUsuario(String nombreUsuario, String clave){
+        try{
+            usuarioEncontrado = essp.buscarUsuario(nombreUsuario, clave);
+            iniciarChuckNorris();
+        }catch(ExcepcionObjetoNoEncontrado e){
+            JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);
+        }
 
-        return essp.buscarUsuario(nombreUsuario,clave);
     }
 
 
