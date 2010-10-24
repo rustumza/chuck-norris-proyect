@@ -5,6 +5,8 @@
 
 package Persistencia.Entidades;
 
+import java.util.List;
+
 /**
  *
  * @author informatica
@@ -45,6 +47,18 @@ public class PerfilAgente extends ObjetoPersistente implements Perfil{
         public void setImplementacion(PerfilImplementacion impl){
             this.implementacion = impl;
         }
+
+    public List<Permiso> getPermisos() {
+        return implementacion.getPermisos();
+    }
+
+    public void setPermisos(List<Permiso> permisos) {
+        implementacion.setPermisos(permisos);
+    }
+
+    public void addPermiso(Permiso nuevoPermiso) {
+       implementacion.addPermiso(nuevoPermiso);
+    }
 
 
 

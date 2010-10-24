@@ -5,6 +5,9 @@
 
 package Persistencia.Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author informatica
@@ -13,6 +16,7 @@ public class PerfilImplementacion implements Perfil{
 
     	private String NombrePerfil;
 	private int NroPerfil;
+        private List<Permiso> permisos;
 
 
 	public PerfilImplementacion(){
@@ -43,6 +47,28 @@ public class PerfilImplementacion implements Perfil{
 	public void setNroPerfil(int newVal){
 		NroPerfil = newVal;
 	}
+
+    /**
+     * @return the permisos
+     */
+    public List<Permiso> getPermisos() {
+        return permisos;
+    }
+
+    /**
+     * @param permisos the permisos to set
+     */
+    public void setPermisos(List<Permiso> permisos) {
+        this.permisos = permisos;
+    }
+
+    public void addPermiso(Permiso nuevoPermiso){
+        if(permisos == null){
+            permisos = new ArrayList<Permiso>();
+        }
+
+        permisos.add(nuevoPermiso);
+    }
 
 
 }

@@ -37,7 +37,7 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
         select = "SELECT * FROM permiso";
         String condicion = "";
 
-        while (!criterios.isEmpty()) {
+        if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
 
             for (int i = 0; i < criterios.size(); i++) {

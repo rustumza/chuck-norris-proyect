@@ -72,8 +72,12 @@ import Persistencia.Entidades.OrdenTrabajoRepuestoNecesarioAgente;
 import Persistencia.Entidades.OrdenTrabajoRepuestoNecesarioImplementacion;
 import Persistencia.Entidades.OrientacionAgente;
 import Persistencia.Entidades.OrientacionImplementacion;
+import Persistencia.Entidades.PerfilAgente;
+import Persistencia.Entidades.PerfilImplementacion;
 import Persistencia.Entidades.PeriodicidadAgente;
 import Persistencia.Entidades.PeriodicidadImplementacion;
+import Persistencia.Entidades.PermisoAgente;
+import Persistencia.Entidades.PermisoImplementacion;
 import Persistencia.Entidades.PersonaPadronAgente;
 import Persistencia.Entidades.PersonaPadronEstadoAgente;
 import Persistencia.Entidades.PersonaPadronEstadoImplementacion;
@@ -133,9 +137,10 @@ public class FabricaEntidades {
 
     private static FabricaEntidades instancia = null;
 
-    public static FabricaEntidades getInstancia(){
-        if(instancia == null)
+    public static FabricaEntidades getInstancia() {
+        if (instancia == null) {
             instancia = new FabricaEntidades();
+        }
         return instancia;
     }
 
@@ -490,21 +495,33 @@ public class FabricaEntidades {
             ubicacionSimpleAgente.setImplementacion(ubicacionSimpleImpl);
 
             return ubicacionSimpleAgente;
-        } else if(entidad.equals("AUXCasoSemaforo")){
+        } else if (entidad.equals("AUXCasoSemaforo")) {
             AUXCasoSemaforo auxcaso = new AUXCasoSemaforo();
             auxcaso.setIsNuevo(true);
             return auxcaso;
 
-        } else if(entidad.equals("AUXProblemaCaso")){
+        } else if (entidad.equals("AUXProblemaCaso")) {
             AUXProblemaCaso auxcaso = new AUXProblemaCaso();
             auxcaso.setIsNuevo(true);
             return auxcaso;
-        
-        } else if(entidad.equals("Usuario")){
+
+        } else if (entidad.equals("Usuario")) {
             UsuarioAgente usuario = new UsuarioAgente();
             usuario.setIsNuevo(true);
             usuario.setImplementacion(new UsuarioImplementacion());
             return usuario;
+
+        } else if (entidad.equals("Perfil")) {
+            PerfilAgente perfil = new PerfilAgente();
+            perfil.setIsNuevo(true);
+            perfil.setImplementacion(new PerfilImplementacion());
+            return perfil;
+
+        } else if (entidad.equals("Permiso")) {
+            PermisoAgente permiso = new PermisoAgente();
+            permiso.setIsNuevo(true);
+            permiso.setImplementacion(new PermisoImplementacion());
+            return permiso;
 
         }
 

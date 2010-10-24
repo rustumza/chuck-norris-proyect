@@ -2,12 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Persistencia.intermediarios;
 
 import Persistencia.Entidades.ObjetoPersistente;
+import Persistencia.Entidades.Perfil;
+import Persistencia.Entidades.PerfilAgente;
+import Persistencia.Entidades.PerfilImplementacion;
+import Persistencia.Entidades.Permiso;
+import Persistencia.Entidades.PermisoAgente;
+import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.UsuarioAgente;
 import Persistencia.ExpertosPersistencia.Criterio;
+import Persistencia.ExpertosPersistencia.FachadaInterna;
+import Persistencia.Fabricas.FabricaCriterios;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,38 +27,37 @@ import java.util.logging.Logger;
  *
  * @author informatica
  */
-public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
-
+public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional {
 
     public String armarInsert(ObjetoPersistente obj) {
         String insert;
-        UsuarioAgente usuario = (UsuarioAgente)obj;
+        UsuarioAgente usuario = (UsuarioAgente) obj;
 
         insert = "INSERT INTO usuario (OIDUsuario, OIDPerfil, NroUsuario, NombreUsuario, Clave)"
-                + "VALUES '" + usuario.getOid() + "','" + usuario.getOidPerfil() + "', '" + usuario.getNroUsuario() + "', '" + usuario.getNombreUsuario()+ "', '" + usuario.getClave() + "'";
-    return insert;
+                + "VALUES '" + usuario.getOid() + "','" + usuario.getOidPerfil() + "', '" + usuario.getNroUsuario() + "', '" + usuario.getNombreUsuario() + "', '" + usuario.getClave() + "'";
+        return insert;
     }
 
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
-        select = "SELECT * FROM usuario" ;
+        select = "SELECT * FROM usuario";
         String condicion = "";
 
         if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
 
-            for(int i = 0; i< criterios.size(); i++){
-                if(i>0){
+            for (int i = 0; i < criterios.size(); i++) {
+                if (i > 0) {
                     condicion = condicion + " AND ";
-                    }
+                }
                 condicion = condicion + "usuario." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
 
-        select = select + condicion;
+            select = select + condicion;
         }
 
-    return select;
+        return select;
     }
 
     public String armarSelectOid(String oid) {
@@ -65,17 +71,17 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
     public String armarUpdate(ObjetoPersistente obj) {
 
         String update;
-        UsuarioAgente usuario = (UsuarioAgente)obj;
+        UsuarioAgente usuario = (UsuarioAgente) obj;
 
-         update = "UPDATE usuario SET"
-                 + "OIDUsuario ='" + usuario.getOid() + "', "
-                 + "OIDPerfil = '" + usuario.getOidPerfil() + "', "
-                 + "NroUsuario = " + usuario.getNroUsuario() + ", "
-                 + "NombreUsuario ='" + usuario.getNombreUsuario() + "', "
-                 + "Clave = '" + usuario.getClave() + "'";
+        update = "UPDATE usuario SET"
+                + "OIDUsuario ='" + usuario.getOid() + "', "
+                + "OIDPerfil = '" + usuario.getOidPerfil() + "', "
+                + "NroUsuario = " + usuario.getNroUsuario() + ", "
+                + "NombreUsuario ='" + usuario.getNombreUsuario() + "', "
+                + "Clave = '" + usuario.getClave() + "'";
 
 
-         return update;
+        return update;
     }
 
     public void guardarObjetoCompuesto(ObjetoPersistente obj) {
@@ -83,10 +89,11 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
 
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
 
-    List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
+        List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
         try {
             while (rs.next()) {
                 UsuarioAgente nuevoUsuario = (UsuarioAgente) FabricaEntidades.getInstancia().crearEntidad("Usuario");
+
                 nuevoUsuario.setIsNuevo(false);
                 nuevoUsuario.setOid(rs.getString("OIDUsuario"));
                 nuevoUsuario.setOidPerfil(rs.getString("OIDPerfil"));
@@ -102,16 +109,24 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
         }
 
 
-    return nuevosObjetos;
+        return nuevosObjetos;
     }
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
+        UsuarioAgente usuario = (UsuarioAgente) obj;
+        List<Criterio> listaCriterios = new ArrayList<Criterio>();
+        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDPerfil", "=", usuario.getOidPerfil()));
+        Perfil perfil = (Perfil) FachadaInterna.getInstancia().buscar("Perfil", listaCriterios).get(0);
+
+        for(SuperDruperInterfaz objetoEncontrado : FachadaInterna.getInstancia().buscar("Permiso", listaCriterios)){
+           perfil.addPermiso((Permiso)objetoEncontrado);
+        }
+        usuario.setPerfil(perfil);
     }
 
     @Override
@@ -122,4 +137,3 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
     public void guardarDatosPadre(ObjetoPersistente obj) {
     }
 }
-
