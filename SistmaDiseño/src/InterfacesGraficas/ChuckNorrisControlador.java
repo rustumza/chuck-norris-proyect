@@ -18,7 +18,7 @@ public class ChuckNorrisControlador implements Controlador{
     ControladorConsultarAvanceDeReclamo contConsAvancRec;
     ControladorConsultarOrdenesPendientes contConsOrdPend;
     ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
-    ControladorSubSistemaPermisos contSubSisPerm;
+    private ControladorSubSistemaPermisos contSubSisPerm;
 
    /** public static void main(String[] args) {
 
@@ -52,8 +52,8 @@ public class ChuckNorrisControlador implements Controlador{
     public void iniciar() {
 
 
-        pantPrinc.setLocationRelativeTo(null);
-        pantPrinc.setVisible(true);
+        getPantPrinc().setLocationRelativeTo(null);
+        getPantPrinc().setVisible(true);
     }
 
     public void iniciarCUAtenderReclamoPorDesperfecto() {
@@ -113,10 +113,17 @@ public class ChuckNorrisControlador implements Controlador{
     }
 
     public void cerrar(){
-        pantPrinc.setVisible(false);
-        pantPrinc.dispose();
+        getPantPrinc().setVisible(false);
+        getPantPrinc().dispose();
         contSubSisPerm.iniciar();
 
+    }
+
+    /**
+     * @param contSubSisPerm the contSubSisPerm to set
+     */
+    public void setContSubSisPerm(ControladorSubSistemaPermisos contSubSisPerm) {
+        this.contSubSisPerm = contSubSisPerm;
     }
     
 }
