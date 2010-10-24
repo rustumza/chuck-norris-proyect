@@ -29,8 +29,8 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
         InterseccionAgente interseccion = (InterseccionAgente) obj;
         String insert;
 
-        insert = "INSERT INTO interseccion (OIDUbicacion, CodigoInterseccion) "
-                + "VALUES ('" + interseccion.getOid() + "','"+interseccion.getcodigoubicacion()+"')";
+        insert = "INSERT INTO interseccion (OIDUbicacion) "
+                + "VALUES ('" + interseccion.getOid() + "')";
 
         return insert;
     }
@@ -110,7 +110,6 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
                 InterseccionAgente nuevaInterseccion = (InterseccionAgente) FabricaEntidades.getInstancia().crearEntidad("Interseccion");
 
                 nuevaInterseccion.setOid(rs.getString("OIDUbicacion"));
-                nuevaInterseccion.setcodigoubicacion(rs.getInt("CodigoInterseccion"));
 
                 nuevaInterseccion.setIsNuevo(false);
                 nuevaInterseccion.setOidsCalle(new ArrayList<String>());

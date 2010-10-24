@@ -15,6 +15,7 @@ package InterfacesGraficas;
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionDenunciaExistente;
+import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerListModel;
 
@@ -74,10 +76,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
             Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
             if(hashMapProblemasDelSemaforo.containsKey(sem.getnumeroSerie()))
-                problemasDeCadaSemaforo.setModel(new SpinnerListModel((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
+                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()));
             else
-                problemasDeCadaSemaforo.setModel(new SpinnerListModel());
-      
+                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
+
+
             }
         }
    });
@@ -128,12 +131,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDeSemafor = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
-        todosLosProblemas = new javax.swing.JSpinner();
         agregarProblema = new javax.swing.JButton();
         quitarProblema = new javax.swing.JButton();
-        problemasDeCadaSemaforo = new javax.swing.JSpinner();
         jLabel13 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        todosLosProblemas = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        problemasDeCadaSemaforo = new javax.swing.JList();
         asentarCaso = new javax.swing.JButton();
         cancelarCaso = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -271,7 +276,6 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         jLabel12.setText("Problemas");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
-        jPanel3.add(todosLosProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 143, 102));
 
         agregarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/right-20.png"))); // NOI18N
         agregarProblema.setText("Agregar");
@@ -290,11 +294,28 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             }
         });
         jPanel3.add(quitarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 120, -1));
-        jPanel3.add(problemasDeCadaSemaforo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 142, 102));
 
         jLabel13.setText("Problemas a Cargar");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, 14));
         jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 590, 10));
+
+        todosLosProblemas.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(todosLosProblemas);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 160, 100));
+
+        problemasDeCadaSemaforo.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(problemasDeCadaSemaforo);
+
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 170, 100));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 86, 651, 407));
 
@@ -386,6 +407,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             if(dtoProbDeSem.getListaDeProblemas().get(i).getcodigoProblema()==prob.getcodigoProblema());
                 dtoProbDeSem.getListaDeProblemas().remove(i);
         }
+        if(dtoProbDeSem.getListaDeProblemas().isEmpty()){
+            problemasDeCadaSemaforo.setModel(new SpinnerListModel());
+        }
         problemasDeCadaSemaforo.setModel(new SpinnerListModel((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
     }//GEN-LAST:event_quitarProblemaActionPerformed
 
@@ -465,16 +489,18 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel nombre;
-    private javax.swing.JSpinner problemasDeCadaSemaforo;
+    private javax.swing.JList problemasDeCadaSemaforo;
     private javax.swing.JButton quitarProblema;
     private javax.swing.JTable tablaDeSemafor;
     private javax.swing.JTextField telefono;
-    private javax.swing.JSpinner todosLosProblemas;
+    private javax.swing.JList todosLosProblemas;
     private javax.swing.JButton validarCalles;
     // End of variables declaration//GEN-END:variables
 

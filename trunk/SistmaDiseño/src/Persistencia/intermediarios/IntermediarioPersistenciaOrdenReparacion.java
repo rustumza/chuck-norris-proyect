@@ -55,8 +55,6 @@ public class IntermediarioPersistenciaOrdenReparacion extends IntermediarioRelac
                         condicion = condicion + " AND ";
                     }
 
-                    condicion = condicion + "estadoordentrabajo.NombreEstado " + criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
-
                     condicion = condicion + "estadoordentrabajo.NombreEstado " + criterios.get(i).getOperador() +" '"+ criterios.get(i).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = 1";
 
                     continue;

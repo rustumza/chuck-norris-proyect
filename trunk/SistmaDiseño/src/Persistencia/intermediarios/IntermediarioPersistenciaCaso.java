@@ -142,6 +142,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
 
         CasoAgente caso = (CasoAgente) obj;
+        if(caso.isIsNuevo()){
         AUXCasoSemaforo auxcasosem;
         String aux;
         for(Semaforo auxsem :caso.getSemaforo()){
@@ -162,7 +163,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
             FachadaInterna.getInstancia().guardar("AUXProblemaCaso", auxprobcaso);
         }
 
-
+        }
     }
 
     @Override
