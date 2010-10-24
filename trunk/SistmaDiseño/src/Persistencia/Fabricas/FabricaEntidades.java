@@ -117,6 +117,8 @@ import Persistencia.Entidades.UbicacionAgente;
 import Persistencia.Entidades.UbicacionImplementacion;
 import Persistencia.Entidades.UbicacionSimpleAgente;
 import Persistencia.Entidades.UbicacionSimpleImplementacion;
+import Persistencia.Entidades.UsuarioAgente;
+import Persistencia.Entidades.UsuarioImplementacion;
 import java.util.ArrayList;
 
 /*
@@ -497,7 +499,12 @@ public class FabricaEntidades {
             AUXProblemaCaso auxcaso = new AUXProblemaCaso();
             auxcaso.setIsNuevo(true);
             return auxcaso;
-
+        
+        } else if(entidad.equals("Usuario")){
+            UsuarioAgente usuario = new UsuarioAgente();
+            usuario.setIsNuevo(true);
+            usuario.setImplementacion(new UsuarioImplementacion());
+            return usuario;
 
         }
 

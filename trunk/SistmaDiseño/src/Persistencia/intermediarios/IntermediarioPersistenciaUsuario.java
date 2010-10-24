@@ -38,7 +38,7 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional{
         select = "SELECT * FROM usuario" ;
         String condicion = "";
 
-        while (!criterios.isEmpty()) {
+        if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
 
             for(int i = 0; i< criterios.size(); i++){
