@@ -25,12 +25,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="logo" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
-                  <Component id="panelBotonera" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+          <Component id="logo" alignment="0" pref="424" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="12" pref="12" max="12" attributes="0"/>
+              <Component id="panelBotonera" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="12" pref="12" max="12" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,8 +38,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="logo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelBotonera" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="panelBotonera" min="-2" pref="169" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,20 +63,35 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="botonConsultarAvanceReclamo" alignment="0" pref="380" max="32767" attributes="1"/>
-                      <Component id="botonAtenderReclamo" alignment="0" pref="380" max="32767" attributes="1"/>
-                      <Component id="botonConsultarOrdenesPendientes" alignment="0" pref="380" max="32767" attributes="1"/>
-                      <Component id="botonEjecutarOrdenesTrabajo" alignment="0" pref="380" max="32767" attributes="1"/>
-                      <Component id="jButton1" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="botonConsultarAvanceReclamo" pref="376" max="32767" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="botonAtenderReclamo" pref="376" max="32767" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="botonConsultarOrdenesPendientes" pref="376" max="32767" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="botonEjecutarOrdenesTrabajo" pref="376" max="32767" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jButton1" min="-2" pref="74" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="52" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
                   <Component id="botonAtenderReclamo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="botonConsultarAvanceReclamo" min="-2" max="-2" attributes="0"/>
@@ -86,7 +99,7 @@
                   <Component id="botonConsultarOrdenesPendientes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="botonEjecutarOrdenesTrabajo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
