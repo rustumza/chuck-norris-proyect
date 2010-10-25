@@ -40,7 +40,7 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        botonIngresar.setText("Ingresar");
+        botonIngresar.setText("Iniciar Sesión");
         botonIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonIngresarActionPerformed(evt);
