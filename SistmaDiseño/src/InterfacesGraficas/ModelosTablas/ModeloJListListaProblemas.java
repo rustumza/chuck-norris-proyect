@@ -54,6 +54,12 @@ public class ModeloJListListaProblemas extends AbstractListModel{
 
     }
 
+    public void addElement(Problema prob){
+
+        listaDeProblemas.add(prob);
+
+    }
+
 
 
 
