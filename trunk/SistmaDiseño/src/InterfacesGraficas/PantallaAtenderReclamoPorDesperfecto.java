@@ -59,6 +59,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         initComponents();
         dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
         dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
+        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
         //inicializo los combobox de las calles para que esten vacias
         comboCalle1.setModel(new DefaultComboBoxModel());
         comboCalle2.setModel(new DefaultComboBoxModel());
