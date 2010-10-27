@@ -7,6 +7,7 @@ package InterfacesGraficas;
 
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionDenunciaExistente;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.Denunciante;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Fabricas.FabricaExpertos;
@@ -16,6 +17,7 @@ import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Problema;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,7 +45,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
         getPantallaARPD().setVisible(true);
     }
 
-    public Denunciante buscarDenunciante(String dni){
+    public Denunciante buscarDenunciante(String dni) throws ExcepcionObjetoNoEncontrado{
         
         return earpd.buscarDenunciante(dni);
     }
@@ -73,7 +75,8 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     public void buscarAlturas(Calle calle){
 
         List<Integer> listaDeAlturas = earpd.buscarAltura(calle);
-        pantallaARPD.getAltura().setModel(new DefaultComboBoxModel(listaDeAlturas.toArray(new Integer[listaDeAlturas.size()])));
+        if(!listaDeAlturas.isEmpty())
+            pantallaARPD.getAltura().setModel(new DefaultComboBoxModel(listaDeAlturas.toArray(new Integer[listaDeAlturas.size()])));
     }
 
     public void buscarSemaforo(Calle calle1, Calle calle2){

@@ -52,6 +52,7 @@ public class DenuncianteAgente extends ObjetoPersistente implements Denunciante 
     public PersonaPadron getPersonaPadron() {
         if (isPersonaPadronBuscado() == false) {
             implementacion.setPersonaPadron((PersonaPadron) FachadaInterna.getInstancia().buscar("PersonaPadron", oidPersonaPadron));
+            setPersonaPadronBuscado(true);
         }
         return getImplementacion().getPersonaPadron();
     }

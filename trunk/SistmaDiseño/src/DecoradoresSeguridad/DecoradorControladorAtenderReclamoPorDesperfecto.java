@@ -6,6 +6,7 @@
 package DecoradoresSeguridad;
 
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import InterfacesGraficas.ControladorAtenderReclamoPorDesperfecto;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
@@ -25,7 +26,7 @@ public class DecoradorControladorAtenderReclamoPorDesperfecto extends Controlado
     }
 
     @Override
-    public Denunciante buscarDenunciante(String dni){
+    public Denunciante buscarDenunciante(String dni) throws ExcepcionObjetoNoEncontrado{
         return super.buscarDenunciante(dni);
     }
 
