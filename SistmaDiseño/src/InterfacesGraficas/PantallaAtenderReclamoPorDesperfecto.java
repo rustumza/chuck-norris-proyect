@@ -14,6 +14,7 @@ package InterfacesGraficas;
 
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
@@ -29,9 +30,12 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 
 
@@ -365,28 +369,36 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void agregarProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarProblemaActionPerformed
         
         ModeloTablaSemaforos modTablaSem = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
-        Semaforo sem = (Semaforo) modTablaSem.getRow(filaSeleccionada);
-        ModeloJListListaProblemas modTodosLosProblemas = (ModeloJListListaProblemas) todosLosProblemas.getModel();
-        boolean guardarProblema;
-        if(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())!=null){
-            Problema problemaAGuardar = (Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex());
-            guardarProblema = true;
-            for(Problema prob : hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()){
-                if(prob.getcodigoProblema() == problemaAGuardar.getcodigoProblema())
-                    guardarProblema = false;
-                
+        if(filaSeleccionada == -1){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un semáforo", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+            Semaforo sem = (Semaforo) modTablaSem.getRow(filaSeleccionada);
+            ModeloJListListaProblemas modTodosLosProblemas = (ModeloJListListaProblemas) todosLosProblemas.getModel();
+            boolean guardarProblema;
+            if(todosLosProblemas.getSelectedIndex()==-1){
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un problema", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }else{
+                if(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())!=null){
+                    Problema problemaAGuardar = (Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex());
+                    guardarProblema = true;
+                    for(Problema prob : hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()){
+                        if(prob.getcodigoProblema() == problemaAGuardar.getcodigoProblema())
+                            guardarProblema = false;
+
+                    }
+                    if(guardarProblema)
+                        hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add(problemaAGuardar);
+                }
+                else{
+                    DTOProblemasDelSemaforo dtoprobDSem = new DTOProblemasDelSemaforo();
+                    dtoprobDSem.setSemaforo(sem);
+                    dtoprobDSem.setListaDeProblemas(new ArrayList<Problema>());
+                    hashMapProblemasDelSemaforo.put(sem.getnumeroSerie(),dtoprobDSem);
+                    hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex()));
+                }
+                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
             }
-            if(guardarProblema)
-                hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add(problemaAGuardar);
         }
-        else{
-            DTOProblemasDelSemaforo dtoprobDSem = new DTOProblemasDelSemaforo();
-            dtoprobDSem.setSemaforo(sem);
-            dtoprobDSem.setListaDeProblemas(new ArrayList<Problema>());
-            hashMapProblemasDelSemaforo.put(sem.getnumeroSerie(),dtoprobDSem);
-            hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex()));
-        }
-        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
 }//GEN-LAST:event_agregarProblemaActionPerformed
 
     private void dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniActionPerformed
@@ -394,17 +406,28 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_dniActionPerformed
 
     private void buscarDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarDNIActionPerformed
-        denunciante = controladorARPD.buscarDenunciante(dni.getText());
-        apellido.setText(denunciante.getPersonaPadron().getapellido());
-        nombre.setText(denunciante.getPersonaPadron().getnombre());
-        if(denunciante.getdomicilio()!=null)
-            domicilio.setText(denunciante.getdomicilio());
-        else
-            domicilio.setText(denunciante.getPersonaPadron().getdomicilio());
-        telefono.setText(denunciante.gettelefonofijo());
-        email.setText(denunciante.getemail());
-        celular.setText(denunciante.getcelular());
-
+        if(dni.getText().isEmpty()){
+        
+            JOptionPane.showMessageDialog(rootPane, "No ha ingresado el DNI del denunciante", "ERROR", JOptionPane.WARNING_MESSAGE);
+            
+        }else{
+            try {
+                denunciante = controladorARPD.buscarDenunciante(dni.getText());
+                apellido.setText(denunciante.getPersonaPadron().getapellido());
+                nombre.setText(denunciante.getPersonaPadron().getnombre());
+                if (!denunciante.getdomicilio().equals("")) {
+                    domicilio.setText(denunciante.getdomicilio());
+                } else {
+                    domicilio.setText(denunciante.getPersonaPadron().getdomicilio());
+                    denunciante.setdomicilio(denunciante.getPersonaPadron().getdomicilio());
+                }
+                telefono.setText(denunciante.gettelefonofijo());
+                email.setText(denunciante.getemail());
+                celular.setText(denunciante.getcelular());
+            } catch (ExcepcionObjetoNoEncontrado ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_buscarDNIActionPerformed
 
     private void validarCallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarCallesActionPerformed
@@ -424,30 +447,46 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
     private void buscarInteseccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarInteseccionActionPerformed
 
-        if(interseccionRadioButton.isSelected())
-            controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
-        else
-            controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), ((Integer)altura.getSelectedItem()));
-
+        if(comboCalle1.getModel().getSize()==0){
+            JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna calle", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if(interseccionRadioButton.isSelected()){
+                controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
+            } else {
+                if(altura.getModel().getSize()==0){
+                    JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna altura", "ERROR", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), ((Integer)altura.getSelectedItem()));
+                }
+            }
+        }
     }//GEN-LAST:event_buscarInteseccionActionPerformed
 
     private void quitarProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarProblemaActionPerformed
 
-        ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
-        Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
-        //ModeloJListListaProblemas mod = (ModeloJListListaProblemas) problemasDeCadaSemaforo.getModel();
-        //mod.addElement((Problema) todosLosProblemas.getModel().getElementAt(todosLosProblemas.getSelectedIndex()));
-        Problema prob = (Problema) problemasDeCadaSemaforo.getModel().getElementAt(problemasDeCadaSemaforo.getSelectedIndex());
-        DTOProblemasDelSemaforo dtoProbDeSem = hashMapProblemasDelSemaforo.get(sem.getnumeroSerie());
-        for(int i=0; i<dtoProbDeSem.getListaDeProblemas().size();i++){
-            if(dtoProbDeSem.getListaDeProblemas().get(i).getcodigoProblema()==prob.getcodigoProblema())
-                dtoProbDeSem.getListaDeProblemas().remove(i);
+        if(filaSeleccionada == -1){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un semáforo", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+            ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
+            Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
+            //ModeloJListListaProblemas mod = (ModeloJListListaProblemas) problemasDeCadaSemaforo.getModel();
+            //mod.addElement((Problema) todosLosProblemas.getModel().getElementAt(todosLosProblemas.getSelectedIndex()));
+            if(problemasDeCadaSemaforo.getSelectedIndex() == -1){
+                JOptionPane.showMessageDialog(rootPane, "Seleccione un problema", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }else{
+                Problema prob = (Problema) problemasDeCadaSemaforo.getModel().getElementAt(problemasDeCadaSemaforo.getSelectedIndex());
+                DTOProblemasDelSemaforo dtoProbDeSem = hashMapProblemasDelSemaforo.get(sem.getnumeroSerie());
+                for(int i=0; i<dtoProbDeSem.getListaDeProblemas().size();i++){
+                    if(dtoProbDeSem.getListaDeProblemas().get(i).getcodigoProblema()==prob.getcodigoProblema())
+                        dtoProbDeSem.getListaDeProblemas().remove(i);
 
+                }
+                if(dtoProbDeSem.getListaDeProblemas().isEmpty()){
+                    problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
+                }
+                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
+            }
         }
-        if(dtoProbDeSem.getListaDeProblemas().isEmpty()){
-            problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
-        }
-        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
     }//GEN-LAST:event_quitarProblemaActionPerformed
 
     private void asentarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asentarCasoActionPerformed
@@ -465,11 +504,15 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_asentarCasoActionPerformed
 
     private void guardarInfoDenuncianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarInfoDenuncianteActionPerformed
+        if(denunciante==null){
+            JOptionPane.showMessageDialog(rootPane, "No se ha buscado un denunciante", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
         denunciante.setdomicilio(domicilio.getText());
         denunciante.setemail(email.getText());
         denunciante.settelefonofijo(telefono.getText());
         denunciante.setcelular(celular.getText());
         controladorARPD.guardarDenunciante(denunciante);
+        }
     }//GEN-LAST:event_guardarInfoDenuncianteActionPerformed
 
     private void cancelarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarCasoActionPerformed

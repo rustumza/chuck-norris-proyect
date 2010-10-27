@@ -9,6 +9,7 @@ package Expertos;
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionDenunciaExistente;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Fabricas.FabricaDeEstrategiaCalcularPrioridad;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.Calle;
@@ -36,25 +37,33 @@ import java.util.List;
  */
 public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
-    public Denunciante buscarDenunciante(String dni){
+    public Denunciante buscarDenunciante(String dni) throws ExcepcionObjetoNoEncontrado{
         Criterio criterio = FachadaExterna.getInstancia().crearCriterio("NroDocumento", "=", dni);
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(criterio);
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("PersonaPadron", listaDeCriterios);
-        PersonaPadron perspad = (PersonaPadron)listaDeInterfaces.get(0);
-        criterio = FachadaExterna.getInstancia().crearCriterio("PersonaPadron", "=", perspad);
-        List<Criterio> listaDeCriterios2 = new ArrayList<Criterio>();
-        listaDeCriterios2.add(criterio);
-        listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denunciante", listaDeCriterios2);
-        if(!listaDeInterfaces.isEmpty()){
-            return (Denunciante)listaDeInterfaces.get(0);
+        if(listaDeInterfaces.isEmpty()){
+             ExcepcionObjetoNoEncontrado e = new ExcepcionObjetoNoEncontrado();
+             e.setMensaje("Denunciante no encontrado");
+             throw e;
         }
-
         else{
-            Denunciante denun = (Denunciante)FachadaExterna.getInstancia().crearEntidad("Denunciante");
-            denun.setPersonaPadron(perspad);
-            return denun;
+            PersonaPadron perspad = (PersonaPadron) listaDeInterfaces.get(0);
+            criterio = FachadaExterna.getInstancia().crearCriterio("PersonaPadron", "=", perspad);
+            List<Criterio> listaDeCriterios2 = new ArrayList<Criterio>();
+            listaDeCriterios2.add(criterio);
+            listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denunciante", listaDeCriterios2);
+            if(!listaDeInterfaces.isEmpty()){
+                return (Denunciante)listaDeInterfaces.get(0);
+            }
+
+            else{
+                Denunciante denun = (Denunciante)FachadaExterna.getInstancia().crearEntidad("Denunciante");
+                denun.setPersonaPadron(perspad);
+                return denun;
+            }
         }
+      
     }
 
 
