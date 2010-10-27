@@ -59,7 +59,6 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         initComponents();
         dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
         dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
-        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
         //inicializo los combobox de las calles para que esten vacias
         comboCalle1.setModel(new DefaultComboBoxModel());
         comboCalle2.setModel(new DefaultComboBoxModel());
@@ -448,10 +447,17 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void buscarInteseccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarInteseccionActionPerformed
 
         if(comboCalle1.getModel().getSize()==0){
-            JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna calle", "ERROR", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna calle 1", "ERROR", JOptionPane.WARNING_MESSAGE);
+
         }else{
+            hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+            problemasDeCadaSemaforo.setModel(new DefaultComboBoxModel());
             if(interseccionRadioButton.isSelected()){
-                controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
+                if(comboCalle2.getModel().getSize()==0){
+                    JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna calle 2", "ERROR", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
+                }
             } else {
                 if(altura.getModel().getSize()==0){
                     JOptionPane.showMessageDialog(rootPane, "No se ha seleccionado alguna altura", "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -472,7 +478,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             //ModeloJListListaProblemas mod = (ModeloJListListaProblemas) problemasDeCadaSemaforo.getModel();
             //mod.addElement((Problema) todosLosProblemas.getModel().getElementAt(todosLosProblemas.getSelectedIndex()));
             if(problemasDeCadaSemaforo.getSelectedIndex() == -1){
-                JOptionPane.showMessageDialog(rootPane, "Seleccione un problema", "ERROR", JOptionPane.WARNING_MESSAGE);
+                if(problemasDeCadaSemaforo.getModel().getSize()!=0)
+                    JOptionPane.showMessageDialog(rootPane, "Seleccione un problema", "ERROR", JOptionPane.WARNING_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(rootPane, "El semáforo no tiene problemas asociados", "ERROR", JOptionPane.WARNING_MESSAGE);
             }else{
                 Problema prob = (Problema) problemasDeCadaSemaforo.getModel().getElementAt(problemasDeCadaSemaforo.getSelectedIndex());
                 DTOProblemasDelSemaforo dtoProbDeSem = hashMapProblemasDelSemaforo.get(sem.getnumeroSerie());
@@ -490,17 +499,26 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_quitarProblemaActionPerformed
 
     private void asentarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asentarCasoActionPerformed
-        dTOinfoParaCrearDenuncia.setDenunciante(denunciante);
+        if(denunciante==null){
+            JOptionPane.showMessageDialog(rootPane, "No se ha buscado un denunciante", "ERROR", JOptionPane.WARNING_MESSAGE);
+        
+        }else if(hashMapProblemasDelSemaforo.isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "No se han seleccionado semáforo con problemas", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+        else {
 
-        //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
-        List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
-        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "2222"));
-        List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
-        Operador opera = (Operador)listaDeInterfaces.get(0);
-        //HASTA ACA
-        dTOinfoParaCrearDenuncia.setOperador(opera);
-        dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());        
-        controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);        
+            dTOinfoParaCrearDenuncia.setDenunciante(denunciante);
+
+            //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
+            List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
+            listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "2222"));
+            List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
+            Operador opera = (Operador)listaDeInterfaces.get(0);
+            //HASTA ACA
+            dTOinfoParaCrearDenuncia.setOperador(opera);
+            dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
+            controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+        }
     }//GEN-LAST:event_asentarCasoActionPerformed
 
     private void guardarInfoDenuncianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarInfoDenuncianteActionPerformed
