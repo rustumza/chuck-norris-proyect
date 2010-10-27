@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
 
     private List<DTOOrden> ordenesTrabajo;
-    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Inicio planificada", "Duración", "Equipo"};
+    public static String[] columnName = {"Número Orden", "Tipo", "Fecha Inicio", "Fecha Fin", "Inicio planificada", "Duración", "Equipo", "Estado"};
     private boolean editable = false;
 
     @Override
@@ -76,6 +76,8 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
                 return ordenTrabajo.getDuracionPrevista();
             case 6:
                 return ordenTrabajo.getNombreEquipo();
+            case 7:
+                return ordenTrabajo.getEstado();
             default:
                 return "";
         }
@@ -107,7 +109,7 @@ public class ModeloTablaOrdenesTrabajo extends AbstractTableModel {
     }
 
     public void clear() {
-        if(ordenesTrabajo==null){
+        if (ordenesTrabajo == null) {
             return;
         }
         ordenesTrabajo.clear();

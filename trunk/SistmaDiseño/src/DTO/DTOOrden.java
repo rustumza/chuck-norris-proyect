@@ -27,6 +27,7 @@ public class DTOOrden {
     private String nroCaso;
     private List<DTOSemaforo> listaSemaforos;
     private List<DTOFallaTecnica>listaFalla;
+    private DTOInformeReparacion informeReparacion;
 
 
     //datos adicionales usados para la generacion de reportes
@@ -228,6 +229,20 @@ public class DTOOrden {
             listaSemaforos = new ArrayList<DTOSemaforo>();
         }
         listaSemaforos.add(nuevoSem);
+    }
+
+    /**
+     * @return the informeReparacion
+     */
+    public DTOInformeReparacion getInformeReparacion() {
+        return informeReparacion;
+    }
+
+    /**
+     * @param informeReparacion the informeReparacion to set
+     */
+    public void setInformeReparacion(DTOInformeReparacion informeReparacion) {
+        this.informeReparacion = informeReparacion;
     }
 
 }
