@@ -15,6 +15,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Problema;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -69,10 +70,23 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     }
 
 
+    public void buscarAlturas(Calle calle){
+
+        List<Integer> listaDeAlturas = earpd.buscarAltura(calle);
+        pantallaARPD.getAltura().setModel(new DefaultComboBoxModel(listaDeAlturas.toArray(new Integer[listaDeAlturas.size()])));
+    }
+
     public void buscarSemaforo(Calle calle1, Calle calle2){
 
         ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
         modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
+        getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
+        getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+    }
+
+    public void buscarSemaforo(Calle calle1, int altura){
+        ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
+        modTabSem.addAllRow(earpd.buscarSemaforo(calle1, altura));
         getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
         getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
     }

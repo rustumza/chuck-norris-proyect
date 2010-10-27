@@ -43,7 +43,10 @@ public class IntermediarioPersistenciaUbicacionSimple extends IntermediarioRelac
                 if (i > 0) {
                     select = select + " AND ";
                 }
-
+                if(criterios.get(i).getAtributo().equalsIgnoreCase("calle")){
+                    criterios.get(i).setAtributo("OIDCalle");
+                }
+                
                 select = select + "ubicacionsimple." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }
         }
@@ -68,7 +71,8 @@ public class IntermediarioPersistenciaUbicacionSimple extends IntermediarioRelac
         update = "UPDATE ubicacionsimple "
                 + "SET OIDUbicacion = '"+ubicacionSimple.getOid()+"', "
                 + "Altura = '"+String.valueOf(ubicacionSimple.getaltura())+"',"
-                + "OIDCalle = '"+ubicacionSimple.getOidCalle()+"'";
+                + "OIDCalle = '"+ubicacionSimple.getOidCalle()+"'"
+                + " WHERE OIDUbicacion = '" + ubicacionSimple.getOid() + "'";
 
         return update;
 

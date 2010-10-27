@@ -24,6 +24,7 @@ import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.Semaforo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.Ubicacion;
+import Persistencia.Entidades.UbicacionSimple;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +79,21 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         return listaCalles;
     }
 
+    public List<Integer> buscarAltura(Calle calle){
+
+        Criterio criterio = FachadaExterna.getInstancia().crearCriterio("calle", "=", calle);
+        List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
+        listaDeCriterio.add(criterio);
+        List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("UbicacionSimple", listaDeCriterio);
+        List<Integer> listaDeAlturas = new ArrayList<Integer>();
+        for(int i = 0; i < listaDeInterfaces.size(); i++){
+            listaDeAlturas.add(((UbicacionSimple)listaDeInterfaces.get(i)).getaltura());
+        }
+
+
+        return listaDeAlturas;
+    }
+
     public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2){
 
 
@@ -122,6 +138,30 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             listaSemaforos.add((Semaforo) aux);
         return listaSemaforos;
     }
+
+    public List<Semaforo> buscarSemaforo(Calle calle1, int altura){
+
+        //Busco todas las intersecciones de la calle 1
+        List<Criterio> criterioBuscarInterseccion = new ArrayList<Criterio>();
+        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("Calle", "=", calle1));
+        criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("altura", "=", String.valueOf(altura)));
+        List<SuperDruperInterfaz> listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("UbicacionSimple", criterioBuscarInterseccion);
+        Ubicacion ubicacionSimpleAUsar = (Ubicacion) listaSuperDruperInterfaz.get(0);
+        
+        Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("UbicacionSimple", "=", ubicacionSimpleAUsar);
+        List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
+        listaDeCriterio.add(criterioBuscarSemaforo);
+        List<SuperDruperInterfaz> listaDeInterfaz = FachadaExterna.getInstancia().buscar("Semaforo", listaDeCriterio);
+        List<Semaforo> listaSemaforos = new ArrayList<Semaforo>();
+        for(SuperDruperInterfaz aux : listaDeInterfaz)
+            listaSemaforos.add((Semaforo) aux);
+
+
+        return listaSemaforos;
+    }
+
+
+
 
     public List<Problema> buscarProblemas() {
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Problema", null);

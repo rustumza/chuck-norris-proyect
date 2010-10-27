@@ -14,13 +14,11 @@ package InterfacesGraficas;
 
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoParaCrearDenuncia;
-import Excepciones.ExcepcionDenunciaExistente;
 import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
 import Persistencia.Entidades.Operador;
-import Persistencia.Entidades.OperadorImplementacion;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Semaforo;
 import Persistencia.Entidades.SuperDruperInterfaz;
@@ -30,15 +28,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.ListModel;
 
 
 
@@ -63,11 +56,21 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
         dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
         hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+        //inicializo los combobox de las calles para que esten vacias
         comboCalle1.setModel(new DefaultComboBoxModel());
         comboCalle2.setModel(new DefaultComboBoxModel());
+        altura.setModel(new DefaultComboBoxModel());
+        //inicializo las listas de problemas para que esten vacias
         todosLosProblemas.setModel(new ModeloJListListaProblemas());
         problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
+        //inicializo la tabla de los semaforos
         tablaDeSemafor.setModel(new ModeloTablaSemaforos());
+        //inicializo los radio butons, combo box y textbox relacionados a la ubicacion
+        interseccionRadioButton.setSelected(true);
+        altura.setEnabled(false);
+        calle2.setEditable(true);
+        comboCalle2.setEnabled(true);
+        
         tablaDeSemafor.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                  int fila = tablaDeSemafor.rowAtPoint(e.getPoint());
@@ -124,13 +127,13 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         calle1 = new javax.swing.JTextField();
         buscarInteseccion = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jTextField9 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        interseccionRadioButton = new javax.swing.JRadioButton();
+        calleSimpleRadioButton = new javax.swing.JRadioButton();
         validarCalles = new javax.swing.JButton();
         comboCalle1 = new javax.swing.JComboBox();
         comboCalle2 = new javax.swing.JComboBox();
+        altura = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDeSemafor = new javax.swing.JTable();
@@ -210,12 +213,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setText("calle 1");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jLabel9.setText("calle 2");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 42, -1));
-        jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 150, -1));
-        jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 150, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 42, -1));
+        jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 150, -1));
+        jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 150, -1));
 
         buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
         buscarInteseccion.setText("Buscar");
@@ -226,18 +229,27 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         });
         jPanel2.add(buscarInteseccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 110, -1));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 420, 10));
-        jPanel2.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 70, -1));
 
         jLabel10.setText("Altura");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
 
-        grupoInterseccionCalle.add(jRadioButton1);
-        jRadioButton1.setText("Intersección");
-        jPanel2.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+        grupoInterseccionCalle.add(interseccionRadioButton);
+        interseccionRadioButton.setText("Intersección");
+        interseccionRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                interseccionRadioButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(interseccionRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
-        grupoInterseccionCalle.add(jRadioButton2);
-        jRadioButton2.setText("Calle Simple");
-        jPanel2.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        grupoInterseccionCalle.add(calleSimpleRadioButton);
+        calleSimpleRadioButton.setText("Calle Simple");
+        calleSimpleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calleSimpleRadioButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(calleSimpleRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
         validarCalles.setText("Buscar coincidencia");
         validarCalles.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +257,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 validarCallesActionPerformed(evt);
             }
         });
-        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
 
         comboCalle1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboCalle1.addActionListener(new java.awt.event.ActionListener() {
@@ -253,10 +265,13 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 comboCalle1ActionPerformed(evt);
             }
         });
-        jPanel2.add(comboCalle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 130, -1));
+        jPanel2.add(comboCalle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 130, -1));
 
         comboCalle2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(comboCalle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 130, -1));
+        jPanel2.add(comboCalle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 130, -1));
+
+        altura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(altura, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 80, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 452, 192));
 
@@ -395,8 +410,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void validarCallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarCallesActionPerformed
 
         comboCalle1.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle1.getText())));
-        comboCalle2.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle2.getText())));
-
+        if(interseccionRadioButton.isSelected())
+            comboCalle2.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle2.getText())));
+        else
+            controladorARPD.buscarAlturas((Calle)comboCalle1.getSelectedItem());
 
     }//GEN-LAST:event_validarCallesActionPerformed
 
@@ -407,7 +424,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
     private void buscarInteseccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarInteseccionActionPerformed
 
-        controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
+        if(interseccionRadioButton.isSelected())
+            controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), (Calle)comboCalle2.getSelectedItem());
+        else
+            controladorARPD.buscarSemaforo((Calle)comboCalle1.getSelectedItem(), ((Integer)altura.getSelectedItem()));
 
     }//GEN-LAST:event_buscarInteseccionActionPerformed
 
@@ -458,8 +478,32 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarCasoActionPerformed
 
     private void comboCalle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCalle1ActionPerformed
-        // TODO add your handling code here:
+
+        if(calleSimpleRadioButton.isSelected())
+            controladorARPD.buscarAlturas((Calle)comboCalle1.getSelectedItem());
+
     }//GEN-LAST:event_comboCalle1ActionPerformed
+
+    private void interseccionRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interseccionRadioButtonActionPerformed
+
+        altura.setModel(new DefaultComboBoxModel());
+        altura.setEnabled(false);
+        calle2.setEditable(true);
+        calle1.setText("");
+        comboCalle2.setEnabled(true);
+        comboCalle1.setModel(new DefaultComboBoxModel());
+        
+    }//GEN-LAST:event_interseccionRadioButtonActionPerformed
+
+    private void calleSimpleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calleSimpleRadioButtonActionPerformed
+        calle2.setEditable(false);
+        comboCalle2.setEnabled(false);
+        altura.setEnabled(true);
+        calle2.setText("");
+        calle1.setText("");
+        comboCalle2.setModel(new DefaultComboBoxModel());
+        comboCalle1.setModel(new DefaultComboBoxModel());
+    }//GEN-LAST:event_calleSimpleRadioButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -474,12 +518,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarProblema;
+    private javax.swing.JComboBox altura;
     private javax.swing.JLabel apellido;
     private javax.swing.JButton asentarCaso;
     private javax.swing.JButton buscarDNI;
     private javax.swing.JButton buscarInteseccion;
     private javax.swing.JTextField calle1;
     private javax.swing.JTextField calle2;
+    private javax.swing.JRadioButton calleSimpleRadioButton;
     private javax.swing.JButton cancelarCaso;
     private javax.swing.JTextField celular;
     private javax.swing.JComboBox comboCalle1;
@@ -489,6 +535,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JTextField email;
     private javax.swing.ButtonGroup grupoInterseccionCalle;
     private javax.swing.JButton guardarInfoDenunciante;
+    private javax.swing.JRadioButton interseccionRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -503,15 +550,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel nombre;
     private javax.swing.JList problemasDeCadaSemaforo;
     private javax.swing.JButton quitarProblema;
@@ -561,6 +605,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
      */
     public void setTodosLosProblemas(javax.swing.JList todosLosProblemas) {
         this.todosLosProblemas = todosLosProblemas;
+    }
+
+    public JComboBox getAltura(){
+        return altura;
     }
 
 }
