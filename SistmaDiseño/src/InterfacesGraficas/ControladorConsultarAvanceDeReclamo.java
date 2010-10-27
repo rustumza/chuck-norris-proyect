@@ -72,11 +72,11 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
         try {
             DTODenuncia dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion);
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
-            modeloOrdenes.addRow(dtoDenuncia.getOrdenRep());
-            getPantalla().getTablaConsultarAvanceReclamo().setModel(modeloEstados);
-            getPantalla().getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
-            getPantalla().getLblEstadoOrden().setVisible(true);
-            getPantalla().getLblEstadoOrden().setForeground(Color.ORANGE);
+            modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
+            pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+            //pantalla.getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
+            pantalla.getLblEstadoOrden().setVisible(true);
+            pantalla.getLblEstadoOrden().setForeground(Color.ORANGE);
             modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
             getPantalla().getLbloperador().setText(getPantalla().getLbloperador().getText() + dtoDenuncia.getNombreOperador());
         } catch (ExcepcionCampoInvalido ex) {

@@ -5,6 +5,7 @@
 
 package DTO;
 
+import Persistencia.Entidades.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,15 @@ import java.util.List;
  * DTO para contener datos de la denuncia, sus estados, fallas y orden de reparacion
  * su uso es para construir tablas
  */
-public class DTODenuncia {
+public class DTODenuncia extends ObjetoPersistente{
 
-    private List<DTOEstadoDenuncia> listaEstados;
-    private DTOOrden ordenRep;
+    private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
+    private List<DTOOrden> ordenesReparacion;
     private List<DTOFallaTecnica> listaFallas;
     private String nombreOperador;
     private String fechaCaso;
+    private String nroCaso;
+    private int cantidadReclamos = 0;
 
     /**
      * @return the listaFallas
@@ -57,15 +60,22 @@ public class DTODenuncia {
     /**
      * @return the ordenRep
      */
-    public DTOOrden getOrdenRep() {
-        return ordenRep;
+    public List<DTOOrden> getOrdenesRep() {
+        return ordenesReparacion;
     }
 
     /**
      * @param ordenRep the ordenRep to set
      */
-    public void setOrdenRep(DTOOrden ordenRep) {
-        this.ordenRep = ordenRep;
+    public void setOrdenRep(List<DTOOrden> ordenRep) {
+        this.ordenesReparacion = ordenRep;
+    }
+
+    public void addOrden(DTOOrden nuevaOrden){
+        if(ordenesReparacion == null){
+            ordenesReparacion = new ArrayList<DTOOrden>();
+        }
+        ordenesReparacion.add(nuevaOrden);
     }
 
     /**
@@ -95,4 +105,37 @@ public class DTODenuncia {
     public void setFechaCaso(String fechaCaso) {
         this.fechaCaso = fechaCaso;
     }
+
+    /**
+     * @return the nroCaso
+     */
+    public String getNroCaso() {
+        return nroCaso;
+    }
+
+    /**
+     * @param nroCaso the nroCaso to set
+     */
+    public void setNroCaso(String nroCaso) {
+        this.nroCaso = nroCaso;
+    }
+
+    public void addEstado(DTOEstadoDenuncia nuevoEstado){
+        listaEstados.add(nuevoEstado);
+    }
+
+    /**
+     * @return the cantidadReclamos
+     */
+    public int getCantidadReclamos() {
+        return cantidadReclamos;
+    }
+
+    /**
+     * @param cantidadReclamos the cantidadReclamos to set
+     */
+    public void setCantidadReclamos(int cantidadReclamos) {
+        this.cantidadReclamos = cantidadReclamos;
+    }
+
 }
