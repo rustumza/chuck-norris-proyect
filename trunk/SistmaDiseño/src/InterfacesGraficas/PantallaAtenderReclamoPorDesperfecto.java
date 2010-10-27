@@ -36,8 +36,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.SpinnerListModel;
+import javax.swing.ListModel;
+
 
 
 
@@ -63,27 +65,29 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
         comboCalle1.setModel(new DefaultComboBoxModel());
         comboCalle2.setModel(new DefaultComboBoxModel());
+        todosLosProblemas.setModel(new ModeloJListListaProblemas());
+        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
         tablaDeSemafor.setModel(new ModeloTablaSemaforos());
-        tablaDeSemafor.addMouseListener(new MouseAdapter()
-
-   {
-      public void mouseClicked(MouseEvent e) 
-      {
-         int fila = tablaDeSemafor.rowAtPoint(e.getPoint());
-         int columna = tablaDeSemafor.columnAtPoint(e.getPoint());
-         if ((fila > -1) && (columna > -1)){
-            filaSeleccionada = fila;
-            ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
-            Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
-            if(hashMapProblemasDelSemaforo.containsKey(sem.getnumeroSerie()))
-                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()));
-            else
-                problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
+        tablaDeSemafor.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                 int fila = tablaDeSemafor.rowAtPoint(e.getPoint());
+                 int columna = tablaDeSemafor.columnAtPoint(e.getPoint());
+                 if ((fila > -1) && (columna > -1)){
+                    filaSeleccionada = fila;
+                    ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
+                    Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
+                    if(hashMapProblemasDelSemaforo.containsKey(sem.getnumeroSerie()))
+                        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()));
+                    else
+                        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
 
 
-            }
-        }
-   });
+                    }
+                    }
+            });
+
+
+
 
     }
 
@@ -345,20 +349,29 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
     private void agregarProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarProblemaActionPerformed
         
-
-        ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
-        Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
+        ModeloTablaSemaforos modTablaSem = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
+        Semaforo sem = (Semaforo) modTablaSem.getRow(filaSeleccionada);
+        ModeloJListListaProblemas modTodosLosProblemas = (ModeloJListListaProblemas) todosLosProblemas.getModel();
+        boolean guardarProblema;
         if(hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())!=null){
-            hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) todosLosProblemas.getValue());
+            Problema problemaAGuardar = (Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex());
+            guardarProblema = true;
+            for(Problema prob : hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas()){
+                if(prob.getcodigoProblema() == problemaAGuardar.getcodigoProblema())
+                    guardarProblema = false;
+                
+            }
+            if(guardarProblema)
+                hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add(problemaAGuardar);
         }
         else{
             DTOProblemasDelSemaforo dtoprobDSem = new DTOProblemasDelSemaforo();
             dtoprobDSem.setSemaforo(sem);
             dtoprobDSem.setListaDeProblemas(new ArrayList<Problema>());
             hashMapProblemasDelSemaforo.put(sem.getnumeroSerie(),dtoprobDSem);
-            hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) todosLosProblemas.getValue());
+            hashMapProblemasDelSemaforo.get(sem.getnumeroSerie()).getListaDeProblemas().add((Problema) modTodosLosProblemas.getElementAt(todosLosProblemas.getSelectedIndex()));
         }
-        problemasDeCadaSemaforo.setModel(new SpinnerListModel((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
+        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
 }//GEN-LAST:event_agregarProblemaActionPerformed
 
     private void dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniActionPerformed
@@ -399,18 +412,22 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarInteseccionActionPerformed
 
     private void quitarProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarProblemaActionPerformed
+
         ModeloTablaSemaforos mod = (ModeloTablaSemaforos)tablaDeSemafor.getModel();
         Semaforo sem = (Semaforo) mod.getRow(filaSeleccionada);
-        Problema prob = (Problema) problemasDeCadaSemaforo.getValue();
+        //ModeloJListListaProblemas mod = (ModeloJListListaProblemas) problemasDeCadaSemaforo.getModel();
+        //mod.addElement((Problema) todosLosProblemas.getModel().getElementAt(todosLosProblemas.getSelectedIndex()));
+        Problema prob = (Problema) problemasDeCadaSemaforo.getModel().getElementAt(problemasDeCadaSemaforo.getSelectedIndex());
         DTOProblemasDelSemaforo dtoProbDeSem = hashMapProblemasDelSemaforo.get(sem.getnumeroSerie());
         for(int i=0; i<dtoProbDeSem.getListaDeProblemas().size();i++){
-            if(dtoProbDeSem.getListaDeProblemas().get(i).getcodigoProblema()==prob.getcodigoProblema());
+            if(dtoProbDeSem.getListaDeProblemas().get(i).getcodigoProblema()==prob.getcodigoProblema())
                 dtoProbDeSem.getListaDeProblemas().remove(i);
+
         }
         if(dtoProbDeSem.getListaDeProblemas().isEmpty()){
-            problemasDeCadaSemaforo.setModel(new SpinnerListModel());
+            problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
         }
-        problemasDeCadaSemaforo.setModel(new SpinnerListModel((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
+        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas((hashMapProblemasDelSemaforo.get(sem.getnumeroSerie())).getListaDeProblemas()));
     }//GEN-LAST:event_quitarProblemaActionPerformed
 
     private void asentarCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asentarCasoActionPerformed
@@ -521,28 +538,28 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     /**
      * @return the problemasDeCadaSemaforo
      */
-    public javax.swing.JSpinner getProblemasDeCadaSemaforo() {
+    public javax.swing.JList getProblemasDeCadaSemaforo() {
         return problemasDeCadaSemaforo;
     }
 
     /**
      * @param problemasDeCadaSemaforo the problemasDeCadaSemaforo to set
      */
-    public void setProblemasDeCadaSemaforo(javax.swing.JSpinner problemasDeCadaSemaforo) {
+    public void setProblemasDeCadaSemaforo(JList problemasDeCadaSemaforo) {
         this.problemasDeCadaSemaforo = problemasDeCadaSemaforo;
     }
 
     /**
      * @return the todosLosProblemas
      */
-    public javax.swing.JSpinner getTodosLosProblemas() {
+    public javax.swing.JList getTodosLosProblemas() {
         return todosLosProblemas;
     }
 
     /**
      * @param todosLosProblemas the todosLosProblemas to set
      */
-    public void setTodosLosProblemas(javax.swing.JSpinner todosLosProblemas) {
+    public void setTodosLosProblemas(javax.swing.JList todosLosProblemas) {
         this.todosLosProblemas = todosLosProblemas;
     }
 

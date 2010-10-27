@@ -6,11 +6,8 @@
 package DTO;
 
 
-import Persistencia.Entidades.Denuncia;
-import Persistencia.Entidades.DenunciaImplementacion;
 import Persistencia.Entidades.Denunciante;
 import Persistencia.Entidades.Operador;
-import java.util.Date;
 import java.util.List;
 
 /**

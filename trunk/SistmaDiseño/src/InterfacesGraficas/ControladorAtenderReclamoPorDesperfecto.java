@@ -10,11 +10,12 @@ import Excepciones.ExcepcionDenunciaExistente;
 import Persistencia.Entidades.Denunciante;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
 import Fabricas.FabricaExpertos;
+import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Problema;
 import java.util.List;
-import javax.swing.SpinnerListModel;
+
 /**
  *
  * @author LEIVA
@@ -73,12 +74,16 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
         ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
         modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
         getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
-        getPantallaARPD().getTodosLosProblemas().setModel(new SpinnerListModel(buscarProblema()));
+        getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
     }
 
     public Problema[] buscarProblema(){
         List<Problema> listaDeProblemas = earpd.buscarProblemas();
         return listaDeProblemas.toArray(new Problema[listaDeProblemas.size()]);
+    }
+
+    public List<Problema> buscarProblemaList(){
+        return earpd.buscarProblemas();
     }
 
     public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
