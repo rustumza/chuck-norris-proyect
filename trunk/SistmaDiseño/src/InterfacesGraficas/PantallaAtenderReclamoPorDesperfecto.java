@@ -34,6 +34,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -57,23 +59,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         this.controladorARPD = controladorARPD;
 
         initComponents();
-        dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
-        dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
-        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
-        //inicializo los combobox de las calles para que esten vacias
-        comboCalle1.setModel(new DefaultComboBoxModel());
-        comboCalle2.setModel(new DefaultComboBoxModel());
-        altura.setModel(new DefaultComboBoxModel());
-        //inicializo las listas de problemas para que esten vacias
-        todosLosProblemas.setModel(new ModeloJListListaProblemas());
-        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
-        //inicializo la tabla de los semaforos
-        tablaDeSemafor.setModel(new ModeloTablaSemaforos());
-        //inicializo los radio butons, combo box y textbox relacionados a la ubicacion
-        interseccionRadioButton.setSelected(true);
-        altura.setEnabled(false);
-        calle2.setEditable(true);
-        comboCalle2.setEnabled(true);
+        ponerTodoEnBlanco();
         
         tablaDeSemafor.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
@@ -108,6 +94,19 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void initComponents() {
 
         grupoInterseccionCalle = new javax.swing.ButtonGroup();
+        denunciaExistente = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        aceptarDenunciaExistente = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        numeroDeDenunciaDenunciaExistente = new javax.swing.JLabel();
+        cantidadDeReclamosDenunciaExistente = new javax.swing.JLabel();
+        denunciaGuardada = new javax.swing.JDialog();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        aceptarDenunciaGuardad = new javax.swing.JButton();
+        denunciaReclamo = new javax.swing.JLabel();
+        codigoDenunciaReclamo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dni = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -153,6 +152,117 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         asentarCaso = new javax.swing.JButton();
         cancelarCaso = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+
+        jLabel7.setText("DENUNCIA EXISTENTE");
+
+        aceptarDenunciaExistente.setText("Aceptar");
+        aceptarDenunciaExistente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarDenunciaExistenteActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Cantidad de reclamos:");
+
+        jLabel14.setText("Número de denuncia:");
+
+        numeroDeDenunciaDenunciaExistente.setText(" ");
+
+        cantidadDeReclamosDenunciaExistente.setText(" ");
+
+        javax.swing.GroupLayout denunciaExistenteLayout = new javax.swing.GroupLayout(denunciaExistente.getContentPane());
+        denunciaExistente.getContentPane().setLayout(denunciaExistenteLayout);
+        denunciaExistenteLayout.setHorizontalGroup(
+            denunciaExistenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(denunciaExistenteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(denunciaExistenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(denunciaExistenteLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(numeroDeDenunciaDenunciaExistente))
+                    .addGroup(denunciaExistenteLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(6, 6, 6)
+                        .addComponent(cantidadDeReclamosDenunciaExistente)))
+                .addContainerGap(80, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaExistenteLayout.createSequentialGroup()
+                .addContainerGap(172, Short.MAX_VALUE)
+                .addComponent(aceptarDenunciaExistente)
+                .addContainerGap())
+        );
+        denunciaExistenteLayout.setVerticalGroup(
+            denunciaExistenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(denunciaExistenteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(denunciaExistenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(numeroDeDenunciaDenunciaExistente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(denunciaExistenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(cantidadDeReclamosDenunciaExistente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(aceptarDenunciaExistente)
+                .addContainerGap())
+        );
+
+        denunciaGuardada.setTitle("¡¡EN HORA BUENA!!");
+
+        jLabel15.setText("Se generó un/una:");
+
+        jLabel16.setText("Código: ");
+
+        aceptarDenunciaGuardad.setText("Aceptar");
+        aceptarDenunciaGuardad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarDenunciaGuardadActionPerformed(evt);
+            }
+        });
+
+        denunciaReclamo.setText(" ");
+
+        codigoDenunciaReclamo.setText(" ");
+
+        javax.swing.GroupLayout denunciaGuardadaLayout = new javax.swing.GroupLayout(denunciaGuardada.getContentPane());
+        denunciaGuardada.getContentPane().setLayout(denunciaGuardadaLayout);
+        denunciaGuardadaLayout.setHorizontalGroup(
+            denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codigoDenunciaReclamo))
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(denunciaReclamo)))
+                .addContainerGap(126, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
+                .addContainerGap(219, Short.MAX_VALUE)
+                .addComponent(aceptarDenunciaGuardad)
+                .addContainerGap())
+        );
+        denunciaGuardadaLayout.setVerticalGroup(
+            denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(denunciaReclamo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(codigoDenunciaReclamo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(aceptarDenunciaGuardad)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -519,6 +629,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             dTOinfoParaCrearDenuncia.setOperador(opera);
             dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
             controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+            ponerTodoEnBlanco();
+
         }
     }//GEN-LAST:event_asentarCasoActionPerformed
 
@@ -567,6 +679,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         comboCalle1.setModel(new DefaultComboBoxModel());
     }//GEN-LAST:event_calleSimpleRadioButtonActionPerformed
 
+    private void aceptarDenunciaGuardadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarDenunciaGuardadActionPerformed
+        denunciaGuardada.setVisible(false);
+    }//GEN-LAST:event_aceptarDenunciaGuardadActionPerformed
+
+    private void aceptarDenunciaExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarDenunciaExistenteActionPerformed
+        denunciaExistente.setVisible(false);
+    }//GEN-LAST:event_aceptarDenunciaExistenteActionPerformed
+
     /**
     * @param args the command line arguments
     
@@ -579,6 +699,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }
 */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptarDenunciaExistente;
+    private javax.swing.JButton aceptarDenunciaGuardad;
     private javax.swing.JButton agregarProblema;
     private javax.swing.JComboBox altura;
     private javax.swing.JLabel apellido;
@@ -589,9 +711,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JTextField calle2;
     private javax.swing.JRadioButton calleSimpleRadioButton;
     private javax.swing.JButton cancelarCaso;
+    private javax.swing.JLabel cantidadDeReclamosDenunciaExistente;
     private javax.swing.JTextField celular;
+    private javax.swing.JLabel codigoDenunciaReclamo;
     private javax.swing.JComboBox comboCalle1;
     private javax.swing.JComboBox comboCalle2;
+    private javax.swing.JDialog denunciaExistente;
+    private javax.swing.JDialog denunciaGuardada;
+    private javax.swing.JLabel denunciaReclamo;
     private javax.swing.JTextField dni;
     private javax.swing.JTextField domicilio;
     private javax.swing.JTextField email;
@@ -600,13 +727,18 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JRadioButton interseccionRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -619,6 +751,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel nombre;
+    private javax.swing.JLabel numeroDeDenunciaDenunciaExistente;
     private javax.swing.JList problemasDeCadaSemaforo;
     private javax.swing.JButton quitarProblema;
     private javax.swing.JTable tablaDeSemafor;
@@ -673,4 +806,62 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         return altura;
     }
 
+    public JDialog getPantallaDenunciaExistente(){
+        return denunciaExistente;
+
+    }
+
+    public JDialog getPantallaDenunciaGuardad(){
+        return denunciaGuardada;
+
+    }
+
+    public JLabel getNumeroDeDenuncia(){
+        return numeroDeDenunciaDenunciaExistente;
+    }
+
+    public JLabel getCantidadDeReclamos(){
+        return cantidadDeReclamosDenunciaExistente;
+    }
+
+    public JLabel getDenunciaReclamo(){
+        return denunciaReclamo;
+    }
+
+    public JLabel getcodigoDenunciaReclamo(){
+        return codigoDenunciaReclamo;
+    }
+
+
+    public void ponerTodoEnBlanco(){
+
+        dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
+        dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
+        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+        //inicializo los combobox de las calles para que esten vacias
+        comboCalle1.setModel(new DefaultComboBoxModel());
+        comboCalle2.setModel(new DefaultComboBoxModel());
+        altura.setModel(new DefaultComboBoxModel());
+        //inicializo las listas de problemas para que esten vacias
+        todosLosProblemas.setModel(new ModeloJListListaProblemas());
+        problemasDeCadaSemaforo.setModel(new ModeloJListListaProblemas());
+        //inicializo la tabla de los semaforos
+        tablaDeSemafor.setModel(new ModeloTablaSemaforos());
+        //inicializo los radio butons, combo box y textbox relacionados a la ubicacion
+        interseccionRadioButton.setSelected(true);
+        altura.setEnabled(false);
+        calle1.setText("");
+        calle2.setEditable(true);
+        calle2.setText("");
+        comboCalle2.setEnabled(true);
+        denunciante = null;
+        dni.setText("");
+        domicilio.setText("");
+        telefono.setText("");
+        celular.setText("");
+        apellido.setText("Apellido: ");
+        nombre.setText("Nombre: ");
+
+
+    }
 }

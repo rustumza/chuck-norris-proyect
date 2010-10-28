@@ -7,6 +7,7 @@
 package Expertos;
 
 import DTO.DTOProblemasDelSemaforo;
+import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
@@ -181,7 +182,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         return listaDeProblema;
     }
 
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
+    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
 
 
         Criterio crit = FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().get(0).getSemaforo());
@@ -213,15 +214,20 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
                         denunciaAUsar = denuncia;
                         break;
                     }
-                    else if(denEst.isindicadorestadoactual() & !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada"))
-                        throw new ExcepcionDenunciaExistente();
+                    else if(denEst.isindicadorestadoactual() & (!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Notificada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Anulada"))){
+                        ExcepcionDenunciaExistente e = new ExcepcionDenunciaExistente();
+                        e.setNumeroDeDenuncia(denuncia.getcodigoDenuncia());
+                        e.setCantidadDeReclamos(denuncia.getReclamo().size());
+                        throw e;
+
+                    }
                 }
-                if(denunciaAUsar!=null)
+                if (denunciaAUsar != null)
                     break;
             }
 
         }
-
+        DTOinfoDeDenunciaGuardada dtoinfo = new DTOinfoDeDenunciaGuardada();
         if(denunciaAUsar!=null){
         //hacer reclamo
             Reclamo reclamo = (Reclamo)FachadaExterna.getInstancia().crearEntidad("Reclamo");
@@ -249,6 +255,8 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             
             denunciaAUsar.setprioridad(FabricaDeEstrategiaCalcularPrioridad.getInstace().crearEstrategiaDeCalculoDePrioridadDenuncia().calcularPrioridad(denunciaAUsar, ubicacion));
 
+            dtoinfo.setIsDenuncia(false);
+            dtoinfo.setCodigo(reclamo.getcodigoreclamo());
             
         }else{
             //hacer una denuncia nueva
@@ -284,9 +292,14 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             denEst.setfechacambioestado(new Date());
             denEst.setindicadorestadoactual(true);
             denunciaAUsar.getDenunciaEstado().add(denEst);
+            
+            dtoinfo.setIsDenuncia(true);
+            dtoinfo.setCodigo(denunciaAUsar.getcodigoDenuncia());
 
         }
         FachadaExterna.getInstancia().guardar("Denuncia", denunciaAUsar);
+
+        return dtoinfo;
 
 
 
