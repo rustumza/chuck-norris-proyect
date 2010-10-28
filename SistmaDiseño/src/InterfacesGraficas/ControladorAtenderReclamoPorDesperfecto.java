@@ -5,6 +5,7 @@
 
 package InterfacesGraficas;
 
+import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
@@ -105,10 +106,17 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
         try{
-        earpd.guardarDenuncia(infoParaCrearDenuncia);
+        DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
+            if(dto.isIsDenuncia())
+                pantallaARPD.getDenunciaReclamo().setText("Denuncia");
+            else
+                pantallaARPD.getDenunciaReclamo().setText("Reclamo");
+            pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
+            pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
         }catch(ExcepcionDenunciaExistente e){
-            //abrir ventana en la interfaz!
-
+            pantallaARPD.getNumeroDeDenuncia().setText(String.valueOf(e.getCantidadDeReclamos()));
+            pantallaARPD.getCantidadDeReclamos().setText(String.valueOf(e.getCantidadDeReclamos()));
+            pantallaARPD.getPantallaDenunciaExistente().setVisible(true);
         }
 
     }
