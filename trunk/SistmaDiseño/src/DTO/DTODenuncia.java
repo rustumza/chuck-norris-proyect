@@ -18,8 +18,8 @@ import java.util.List;
 public class DTODenuncia extends ObjetoPersistente{
 
     private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
-    private List<DTOOrden> ordenesReparacion;
-    private List<DTOFallaTecnica> listaFallas;
+    private List<DTOOrden> ordenesReparacion = new ArrayList<DTOOrden>();
+    private List<DTOFallaTecnica> listaFallas = new ArrayList<DTOFallaTecnica>();
     private String nombreOperador;
     private String fechaCaso;
     private String nroCaso;
@@ -39,6 +39,10 @@ public class DTODenuncia extends ObjetoPersistente{
         if(listaFallas == null )
             listaFallas = new ArrayList<DTOFallaTecnica>();
         listaFallas.addAll(nuevalistaFallas);
+    }
+
+    public void addFalla(DTOFallaTecnica nuevaFalla){
+        listaFallas.add(nuevaFalla);
     }
 
     /**
@@ -136,6 +140,16 @@ public class DTODenuncia extends ObjetoPersistente{
      */
     public void setCantidadReclamos(int cantidadReclamos) {
         this.cantidadReclamos = cantidadReclamos;
+    }
+
+    public boolean seEncuentraFalla(String codigoFalla){
+        boolean resultado = false;
+        for (DTOFallaTecnica dtoFalla : listaFallas) {
+            if(dtoFalla.getCodigoFalla().equals(codigoFalla))
+                resultado = true;
+        }
+
+        return resultado;
     }
 
 }

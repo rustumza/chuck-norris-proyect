@@ -5,6 +5,8 @@
 package InterfacesGraficas;
 
 import DTO.DTODenuncia;
+import DTO.DTOInformeReparacion;
+import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoConsultarAvanceDeReclamo;
@@ -19,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author LEIVA
  */
-public class ControladorConsultarAvanceDeReclamo implements Controlador{
+public class ControladorConsultarAvanceDeReclamo implements Controlador {
 
     //Mensajes de error
     public static final int COD_CASO_VACIO = 1;
@@ -27,12 +29,13 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
     //
     ExpertoConsultarAvanceDeReclamo experto;
     private PantallaConsultarAvanceDeReclamo pantalla;
+    private PantallaDetalleOrden pantallaDetalleOrden;
     ModeloTablaConsultarAvanceReclamo modeloEstados;
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
     private ChuckNorrisControlador chuck;
 
-    public ControladorConsultarAvanceDeReclamo(){
+    public ControladorConsultarAvanceDeReclamo() {
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         pantalla = new PantallaConsultarAvanceDeReclamo(this);
         modeloEstados = new ModeloTablaConsultarAvanceReclamo();
@@ -45,7 +48,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
     }
 
     public ControladorConsultarAvanceDeReclamo(ChuckNorrisControlador chuckCont) {
-        chuck=chuckCont;
+        chuck = chuckCont;
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
         pantalla = new PantallaConsultarAvanceDeReclamo(this);
         modeloEstados = new ModeloTablaConsultarAvanceReclamo();
@@ -64,6 +67,8 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
 
     public void ConsultarEstadoCaso(String numcaso, int seleccion) {
 
+        limpiarPantalla();
+
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
 
         modeloEstados.clear();
@@ -74,15 +79,13 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
             modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
             pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
-            //pantalla.getLblEstadoOrden().setText(dtoDenuncia.getOrdenRep().getEstado());
-            pantalla.getLblEstadoOrden().setVisible(true);
-            pantalla.getLblEstadoOrden().setForeground(Color.ORANGE);
             modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
-            getPantalla().getLbloperador().setText(getPantalla().getLbloperador().getText() + dtoDenuncia.getNombreOperador());
+           pantalla.getLblCantReclamos().setText(pantalla.getLblCantReclamos().getText()+" "+dtoDenuncia.getCantidadReclamos()+".");
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
             mostrarMensaje(BUSQUEDA_VACIA, ex.getMessage());
+            pantalla.getTxtNumeroCaso().setText("");
         }
 
 
@@ -92,15 +95,25 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
 
         switch (seleccion) {
             case COD_CASO_VACIO:
-                JOptionPane.showMessageDialog(getPantalla(), "Debe ingresar Código Caso", "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(getPantalla(), mensaje, "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(mensaje);
+                break;
             case BUSQUEDA_VACIA:
-                JOptionPane.showMessageDialog(getPantalla(),mensaje, "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(getPantalla(), mensaje, "ATENCIÓN!", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(mensaje);
+                break;
         }
     }
 
-    public void cerrar(){
+    public void mostrarDetalleOrden(DTOInformeReparacion informe) {
+        pantallaDetalleOrden = new PantallaDetalleOrden(this);
+        pantallaDetalleOrden.setTitle("Detalle Orden Reparación");
+        pantallaDetalleOrden.setLocationRelativeTo(null);
+        pantallaDetalleOrden.setVisible(true);
+        pantallaDetalleOrden.setInformeReparacion(informe);
+    }
+
+    public void cerrar() {
         getPantalla().setVisible(false);
         getPantalla().dispose();
         chuck.iniciar();
@@ -119,6 +132,29 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador{
     public void setChuck(ChuckNorrisControlador chuck) {
         this.chuck = chuck;
     }
-    
 
+    public void habilitarBotonDetalleOrden(DTOOrden dtoOrdenRep) {
+        boolean habilitar = false;
+
+        if (dtoOrdenRep != null) {
+            habilitar = experto.habilitarBotonDetalleOrden(dtoOrdenRep);
+        }
+        if (habilitar) {
+            pantalla.getBtnDetalleOrden().setVisible(true);
+        } else {
+            pantalla.getBtnDetalleOrden().setVisible(false);
+        }
+    }
+
+    public void limpiarPantalla() {
+        modeloEstados.clear();
+        modeloOrdenes.clear();
+        modeloFallas.clear();
+        pantalla.getLblCantReclamos().setText("Cantidad de Reclamos Caso:");
+        habilitarBotonDetalleOrden(null);
+    }
+
+    public void cerrarPantallaDetalle(){
+        pantallaDetalleOrden = null;
+    }
 }
