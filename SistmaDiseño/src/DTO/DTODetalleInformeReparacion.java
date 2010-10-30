@@ -11,35 +11,50 @@ package DTO;
  */
 public class DTODetalleInformeReparacion {
 
-    private String Falla;
-    private String EstadoFalla;
+    private String falla;
+    private String estadoFalla;
+    private String comentario;
 
     /**
      * @return the Falla
      */
     public String getFalla() {
-        return Falla;
+        return falla;
     }
 
     /**
      * @param Falla the Falla to set
      */
     public void setFalla(String Falla) {
-        this.Falla = Falla;
+        this.falla = Falla;
     }
 
     /**
      * @return the EstadoFalla
      */
     public String getEstadoFalla() {
-        return EstadoFalla;
+        return estadoFalla;
     }
 
     /**
      * @param EstadoFalla the EstadoFalla to set
      */
     public void setEstadoFalla(String EstadoFalla) {
-        this.EstadoFalla = EstadoFalla;
+        this.estadoFalla = EstadoFalla;
+    }
+
+    /**
+     * @return the comentario
+     */
+    public String getComentario() {
+        return comentario;
+    }
+
+    /**
+     * @param comentario the comentario to set
+     */
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
 }

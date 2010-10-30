@@ -5,26 +5,16 @@
 package Expertos;
 
 import DTO.DTODenuncia;
-import DTO.DTOEstadoDenuncia;
-import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
-import Persistencia.Entidades.FallaTecnica;
-import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.Denuncia;
-import Persistencia.Entidades.DenunciaEstado;
 import Persistencia.Entidades.ObjetoPersistente;
-import Persistencia.Entidades.OrdenDeReparacion;
-import Persistencia.Entidades.OrdenTrabajo;
-import Persistencia.Entidades.OrdenTrabajoEstado;
 import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.SuperDruperInterfaz;
+import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Persistencia.Fabricas.FabricaCriterios;
-import Utilidades.ConvertidorBooleanos;
-import Utilidades.FormateadorFechas;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,17 +31,35 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 //        Denuncia casoEncontrado;
 //        DTODenuncia dTODenuncia = null;
 //
-        if(numcaso.equals("")){
+        if (numcaso.equals("")) {
             ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
             ex.setMensaje("Código de Caso vacío.");
             throw ex;
 
         }
 
-        List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
-        DTODenuncia dtoEncontrado = (DTODenuncia)FachadaExterna.getInstancia().buscar("DTOEstadoCaso", listaCriterios).get(0);
-        return dtoEncontrado;
+        DTODenuncia dtoEncontrado;
+
+        if (seleccion == 1) {
+            return buscarDTODenuncia(numcaso);
+        }else{
+            List<Criterio> listaCriterios = new ArrayList<Criterio>();
+            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("CodigoReclamo", "=", numcaso));
+            List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("Reclamo", listaCriterios);
+            if (listaEncontrada.isEmpty()) {
+                ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                ex.setMensaje("No se han encontrado Casos con el numero: " + numcaso);
+                throw ex;
+            }
+            listaCriterios.clear();
+            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Reclamo", "=", (ObjetoPersistente) listaEncontrada.get(0)));
+            List<SuperDruperInterfaz> denunciasBuscadas = FachadaExterna.getInstancia().buscar("Denuncia", listaCriterios);
+
+            return buscarDTODenuncia(String.valueOf(((Denuncia)denunciasBuscadas.get(0)).getcodigoDenuncia()));
+        }
+
+
+
 //
 //        if (seleccion == 1) {//es denuncia
 //
@@ -160,6 +168,26 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
     }
 
+    public DTODenuncia buscarDTODenuncia(String numcaso) throws ExcepcionObjetoNoEncontrado{
+        List<Criterio> listaCriterios = new ArrayList<Criterio>();
+            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
+            List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("DTOEstadoCaso", listaCriterios);
+            if (listaEncontrada.isEmpty()) {
+                ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                ex.setMensaje("No se han encontrado Casos con el numero: " + numcaso);
+                throw ex;
+            }
+              DTODenuncia dtoEncontrado = (DTODenuncia) listaEncontrada.get(0);
+             return dtoEncontrado;
+    }
+
+    public boolean habilitarBotonDetalleOrden(DTOOrden dtoOrdenRep) {
+        if (dtoOrdenRep.getInformeReparacion() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 //    private List<DTOFallaTecnica> armarDtoFallas(List<FallaTecnica> fallasTecnica) {
 //        List<DTOFallaTecnica> dtoFallas = new ArrayList<DTOFallaTecnica>();
 //

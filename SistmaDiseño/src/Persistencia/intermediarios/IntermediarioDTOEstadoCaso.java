@@ -7,6 +7,7 @@ package Persistencia.intermediarios;
 import DTO.DTODenuncia;
 import DTO.DTODetalleInformeReparacion;
 import DTO.DTOEstadoDenuncia;
+import DTO.DTOFallaTecnica;
 import DTO.DTOInformeReparacion;
 import DTO.DTOOrden;
 import Persistencia.Entidades.ObjetoPersistente;
@@ -33,40 +34,46 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
     @Override
     public String armarSelect(List<Criterio> criterios) {
 
-        String select = "SELECT caso.FechaCaso,"
-                + " denuncia.CodigoDenuncia, "
-                + "denunciaestado.FechaCambioEstado AS FechaCambioEstadoDenuncia, denunciaestado.IndicadoresEstadoActual AS indicadorEstadoDenuncia,"
-                + "estadodenuncia.NombreEstado AS nombreEstadoDenuncia, "
-                + "ordenrep.CodigoOrdenReparacion, "
-                + "orden.Tipo, orden.DuracionPrevistaTrabajo, orden.FechaInicioPlanificada, orden.FechaFinTrabajo, orden.FechaInicioTrabajo, "
-                + "estadoordentrabajo.NombreEstado AS nombreEstadoOrden, "
-                + "equipodetrabajo.NombreEquipo,"
-                + "informe.DuracionReparacion, informe.FechaInforme, informe.HoraInforme, "
-                + "detalleinforme.NombreEstado AS nombreEstadoFallaInforme, detalleinforme.DescripcionFalla AS descripcionFallaInforme, "
-                + "reclamo.CodigoReclamo, "
-                + "fallaDen.DescripcionFalla AS fallaDenuncia "
-                + "FROM caso "
-                + "JOIN denuncia ON caso.OIDCaso = denuncia.OIDCaso "
-                + "JOIN denunciaestado ON denuncia.OIDCaso = denunciaestado.OIDDenuncia "
-                + "JOIN estadodenuncia ON denunciaestado.OIDEstadoDenuncia = estadodenuncia.OIDEstadoDenuncia "
-                + "left JOIN fallatecnicadenuncia AS fallasDenuncia ON denuncia.OIDCaso = fallasDenuncia.OIDDenuncia "
-                + "left JOIN fallatecnica AS fallaDen ON fallasDenuncia.OIDFallaTecnica = fallaDen.OIDTrabajo "
-                + "left JOIN reclamo ON denuncia.OIDCaso = reclamo.OIDDenuncia "
-                + "left JOIN ordenreparacion AS ordenrep ON denuncia.OIDCaso = ordenrep.OIDDenuncia "
-                + "left JOIN ordendetrabajo AS orden ON ordenrep.OIDOrdenDeTrabajo = orden.OIDOrdenDeTrabajo "
-                + "left JOIN ordentrabajoestado ON orden.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
-                + "left JOIN estadoordentrabajo ON ordentrabajoestado.OIDOrdenDeTrabajo = orden.OIDOrdenDeTrabajo "
-                + "left JOIN equipodetrabajo ON orden.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo "
-                + "left JOIN informereparacion AS informe ON ordenrep.OIDOrdenDeTrabajo = informe.OIDOrdenDeTrabajo "
-                + "left JOIN ("
-                + "select detalle.OIDInformeReparacion, detalle.Comentario, estado.NombreEstado, falla.DescripcionFalla "
-                + "FROM detalleinformereparacion AS detalle "
-                + "JOIN estadofallatecnica AS estado ON detalle.OIDEstadoFallaTecnica = estado.OIDEstadoFallaTecnica "
-                + "JOIN fallatecnica AS falla ON detalle.OIDFallaTecnica = falla.OIDTrabajo"
-                + ") AS detalleinforme ON informe.OIDInformeReparacion = detalleinforme.OIDInformeReparacion ";
+        String select = "SELECT * from ("
+                + "select caso.OIDCaso as oidDenunciaEncontrada, caso.FechaCaso,"
+                + "denuncia.CodigoDenuncia, "
+                + "denunciaestado.FechaCambioEstado as fechaCambioEstadoDenuncia, denunciaestado.IndicadoresEstadoActual as indicadorEstadoDenuncia, "
+                + "estadodenuncia.NombreEstado as nombreEstadoDenuncia, "
+                + "trabajo.NombreTrabajo as nombreFallaDenuncia, "
+                + "fallatecnica.DescripcionFalla as descripcionFallaDenuncia, fallatecnica.CodigoFallaTecnica as codigoFallaDenuncia, "
+                + "reclamo.CodigoReclamo "
+                + "from caso "
+                + "join denuncia on caso.OIDCaso = denuncia.OIDCaso "
+                + "join denunciaestado on denuncia.OIDCaso = denunciaestado.OIDDenuncia "
+                + "join estadodenuncia on denunciaestado.OIDEstadoDenuncia = estadodenuncia.OIDEstadoDenuncia "
+                + "left join fallatecnicadenuncia on denuncia.OIDCaso = fallatecnicadenuncia.OIDDenuncia "
+                + "join fallatecnica on fallatecnicadenuncia.OIDFallaTecnica = fallatecnica.OIDTrabajo "
+                + "join trabajo on fallatecnica.OIDTrabajo = trabajo.OIDTrabajo "
+                + "left join reclamo on denuncia.OIDCaso = reclamo.OIDDenuncia"
+                + ") as denunciaCompleta "
+                + "join ("
+                + "Select ordendetrabajo.FechaInicioTrabajo, ordendetrabajo.FechaFinTrabajo, ordendetrabajo.FechaInicioPlanificada, ordendetrabajo.DuracionPrevistaTrabajo, "
+                + "equipodetrabajo.NombreEquipo, "
+                + "estadoordentrabajo.NombreEstado as nombreEstadoOrden, "
+                + "ordenreparacion.OIDDenuncia, ordenreparacion.CodigoOrdenReparacion,"
+                + "informereparacion.FechaInforme, informereparacion.HoraInforme, informereparacion.DuracionReparacion, "
+                + "detalleinformereparacion.Comentario, "
+                + "fallatecnica.DescripcionFalla as descripcionFallaInforme, "
+                + "estadofallatecnica.NombreEstado as nombreEstadoFallaInforme "
+                + "from ordendetrabajo "
+                + "join equipodetrabajo on ordendetrabajo.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo "
+                + "join ordentrabajoestado on ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+                + "join estadoordentrabajo on ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
+                + "join ordenreparacion on ordendetrabajo.OIDOrdenDeTrabajo = ordenreparacion.OIDOrdenDeTrabajo "
+                + "left join informereparacion on ordenreparacion.OIDOrdenDeTrabajo = informereparacion.OIDOrdenDeTrabajo "
+                + "join detalleinformereparacion on informereparacion.OIDInformeReparacion = detalleinformereparacion.OIDInformeReparacion "
+                + "join estadofallatecnica on detalleinformereparacion.OIDEstadoFallaTecnica = estadofallatecnica.OIDEstadoFallaTecnica "
+                + "join fallatecnica on detalleinformereparacion.OIDFallaTecnica = fallatecnica.OIDTrabajo "
+                + "where ordentrabajoestado.IndicadoresEstadoActual = TRUE "
+                + ")as ordenReparacionCompleta on denunciaCompleta.oidDenunciaEncontrada = ordenReparacionCompleta.OIDDenuncia";
 
-        String condicion = " WHERE denuncia." + criterios.get(0).getAtributo() + " = '" + criterios.get(0).getValor() + "' AND ordentrabajoestado.IndicadoresEstadoActual = TRUE";
-        condicion = condicion + " ORDER BY denuncia.CodigoDenuncia, estadodenuncia.NombreEstado, ordenrep.CodigoOrdenReparacion";
+        String condicion = " WHERE denunciaCompleta." + criterios.get(0).getAtributo() + " = '" + criterios.get(0).getValor() + "'";
+        condicion = condicion + " ORDER BY denunciaCompleta.CodigoDenuncia, denunciaCompleta.nombreEstadoDenuncia, denunciaCompleta.nombreFallaDenuncia,ordenReparacionCompleta.CodigoOrdenReparacion";
         select = select + condicion;
 
         return select;
@@ -89,21 +96,77 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
     @Override
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
 
-        DTODenuncia dtoDenuncia = new DTODenuncia();
+        DTODenuncia dtoDenuncia = null;
+
         boolean pedirDatosPrincipales = true;
-        String auxUltimoReclamo = "";
+        boolean crearNuevoEstadoDenuncia = false;
+        boolean crearNuevaOrdenReparacion = false;
+        boolean crearNuevoInformeReparacion = false;
+        boolean crearNuevoDetalleInforme = false;
+        boolean crearNuevaFallaDenuncia = false;
+        boolean sumarReclamo = true;
+
+        List<String> auxiliaresReclamo = new ArrayList<String>();
+
         List<ObjetoPersistente> nuevosObjetos = new ArrayList<ObjetoPersistente>();
         try {
+
             while (rs.next()) {
 
+
                 if (pedirDatosPrincipales) {
+                    dtoDenuncia = new DTODenuncia();
                     dtoDenuncia.setFechaCaso(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(rs.getDate("FechaCaso")));
                     dtoDenuncia.setNroCaso(rs.getString("CodigoDenuncia"));
                     pedirDatosPrincipales = false;
                 }
 
+                //If para saber si crear nuevo Estado de denuncia
+                if (dtoDenuncia.getListaEstados().isEmpty() && rs.getString("nombreEstadoDenuncia") != null) {
+                    crearNuevoEstadoDenuncia = true;
+                } else if (!dtoDenuncia.getListaEstados().get(dtoDenuncia.getListaEstados().size() - 1).getNombreestado().equals(rs.getString("nombreEstadoDenuncia")) && rs.getString("nombreEstadoDenuncia") != null) {
+                    crearNuevoEstadoDenuncia = true;
+                } else {
+                    crearNuevoEstadoDenuncia = false;
+                }
 
-                if (dtoDenuncia.getOrdenesRep().isEmpty() || !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size()-1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))) {
+                if (crearNuevoEstadoDenuncia) {
+                    DTOEstadoDenuncia nuevoEstado = new DTOEstadoDenuncia();
+                    nuevoEstado.setFecha(rs.getString("fechaCambioEstadoDenuncia"));
+                    nuevoEstado.setIndicadorEstadoActual(ConvertidorBooleanos.getInstancia().convertirBooleanToActivoInactivo(rs.getBoolean("indicadorEstadoDenuncia")));
+                    nuevoEstado.setNombreEstadoDenuncia(rs.getString("nombreEstadoDenuncia"));
+                    dtoDenuncia.addEstado(nuevoEstado);
+
+                }
+
+                //If para saber si crear dto Falla denuncia
+                if (dtoDenuncia.getListaFallas().isEmpty() && rs.getString("nombreFallaDenuncia") != null) {
+                    crearNuevaFallaDenuncia = true;
+                } else if (!dtoDenuncia.seEncuentraFalla(rs.getString("codigoFallaDenuncia")) && rs.getString("codigoFallaDenuncia") != null) {
+                    crearNuevaFallaDenuncia = true;
+                } else {
+                    crearNuevaFallaDenuncia = false;
+                }
+
+                if (crearNuevaFallaDenuncia) {
+                    DTOFallaTecnica nuevaFallaDenuncia = new DTOFallaTecnica();
+                    nuevaFallaDenuncia.setCodigoFalla(rs.getString("codigoFallaDenuncia"));
+                    nuevaFallaDenuncia.setDescripcion(rs.getString("descripcionFallaDenuncia"));
+                    nuevaFallaDenuncia.setNombreFalla(rs.getString("nombreFallaDenuncia"));
+                    dtoDenuncia.addFalla(nuevaFallaDenuncia);
+                }
+
+
+                //If para saber si crear nueva Orden de Reparacion
+                if (dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("CodigoOrdenReparacion") != null) {
+                    crearNuevaOrdenReparacion = true;
+                } else if (!dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion")) && rs.getString("CodigoOrdenReparacion") != null) {
+                    crearNuevaOrdenReparacion = true;
+                } else {
+                    crearNuevaOrdenReparacion = false;
+                }
+
+                if (crearNuevaOrdenReparacion) {
                     DTOOrden nuevaOrden = new DTOOrden();
                     nuevaOrden.setNroOrden(rs.getString("CodigoOrdenReparacion"));
                     nuevaOrden.setDuracionPrevista(rs.getInt("DuracionPrevistaTrabajo"));
@@ -112,29 +175,63 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                     nuevaOrden.setFechaInicioPlanificada(rs.getDate("FechaInicioPlanificada"));
                     nuevaOrden.setFechaInicioTrabajo(rs.getDate("FechaInicioTrabajo"));
                     nuevaOrden.setNombreEquipo(rs.getString("NombreEquipo"));
+                    dtoDenuncia.addOrden(nuevaOrden);
                 }
 
-                if(!dtoDenuncia.getOrdenesRep().isEmpty()|| !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size()-1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))){
+                //If para saber si crear nuevo informe de Reparacion
+                if (!dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("DuracionReparacion") != null && dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))) {
+                    if (dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion() == null) {
+                        crearNuevoInformeReparacion = true;
+                    } else {
+                        crearNuevoInformeReparacion = false;
+                    }
+                } else {
+                    crearNuevoInformeReparacion = false;
+                }
+
+                if (crearNuevoInformeReparacion) {
                     DTOInformeReparacion nuevoInformeReparacion = new DTOInformeReparacion();
                     nuevoInformeReparacion.setDuracion(rs.getString("DuracionReparacion"));
                     nuevoInformeReparacion.setFechaInforme(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(rs.getDate("FechaInforme")));
                     nuevoInformeReparacion.setHoraInforme(rs.getString("HoraInforme"));
+                    dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).setInformeReparacion(nuevoInformeReparacion);
                 }
 
-                if(!dtoDenuncia.getOrdenesRep().isEmpty()|| !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size()-1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))){
+                //If para saber si crear nuevo detalleDeInforme
+                if (!dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("nombreEstadoFallaInforme") != null && !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion().seEncuentraDetalle(rs.getString("descripcionFallaInforme"))) {
+                    crearNuevoDetalleInforme = true;
+                } else {
+                    crearNuevoDetalleInforme = false;
+                }
+
+
+                if (crearNuevoDetalleInforme) {
                     DTODetalleInformeReparacion nuevoDetalleInforme = new DTODetalleInformeReparacion();
                     nuevoDetalleInforme.setEstadoFalla(rs.getString("nombreEstadoFallaInforme"));
                     nuevoDetalleInforme.setFalla(rs.getString("descripcionFallaInforme"));
-                    dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size()-1).getInformeReparacion().addDetalle(nuevoDetalleInforme);
+                    nuevoDetalleInforme.setComentario(rs.getString("Comentario"));
+                    dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion().addDetalle(nuevoDetalleInforme);
                 }
 
-               if(rs.getString("CodigoReclamo")!=null && !rs.getString("CodigoReclamo").equals(auxUltimoReclamo)){
-                   dtoDenuncia.setCantidadReclamos(dtoDenuncia.getCantidadReclamos()+1);
-                   auxUltimoReclamo = rs.getString("CodigoReclamo");
-               }
+                if (auxiliaresReclamo.isEmpty() && rs.getString("CodigoReclamo") != null) {
+                } else {
+                    int cantMaxRecl = auxiliaresReclamo.size();
+                    for (int i = 0; i < cantMaxRecl; i++) {
+                        if (auxiliaresReclamo.get(i).equals(rs.getString("CodigoReclamo"))) {
+                            sumarReclamo = false;
+                        }
+                    }
+                }
+                if(sumarReclamo){
+                    auxiliaresReclamo.add(rs.getString("CodigoReclamo"));
+                }
+
+                dtoDenuncia.setCantidadReclamos(auxiliaresReclamo.size());
 
             }
-            nuevosObjetos.add(dtoDenuncia);
+            if (dtoDenuncia != null) {
+                nuevosObjetos.add(dtoDenuncia);
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
