@@ -46,7 +46,7 @@ public class OrdenDeMantenimientoAgente extends OrdenTrabajoAgente implements Or
     public InformeMantenimiento getInformeMantenimiento() {
         if (informeMantenimientoBuscado == false) {
             List<Criterio> listaCriterio = new ArrayList<Criterio>();
-            listaCriterio.add(FabricaCriterios.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", getOid()));
+            listaCriterio.add(FachadaInterna.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", getOid()));
             ((OrdenDeMantenimientoImplementacion) super.getImplementacion()).setInformeMantenimiento((InformeMantenimiento) FachadaInterna.getInstancia().buscar("InformeMantenimiento", listaCriterio).get(0));
         }
 

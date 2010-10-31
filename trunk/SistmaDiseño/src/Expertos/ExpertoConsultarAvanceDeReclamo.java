@@ -10,7 +10,6 @@ import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.Denuncia;
 import Persistencia.Entidades.ObjetoPersistente;
-import Persistencia.Entidades.Reclamo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
@@ -38,13 +37,11 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
         }
 
-        DTODenuncia dtoEncontrado;
-
         if (seleccion == 1) {
             return buscarDTODenuncia(numcaso);
         }else{
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("CodigoReclamo", "=", numcaso));
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("CodigoReclamo", "=", numcaso));
             List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("Reclamo", listaCriterios);
             if (listaEncontrada.isEmpty()) {
                 ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
@@ -52,7 +49,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
                 throw ex;
             }
             listaCriterios.clear();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Reclamo", "=", (ObjetoPersistente) listaEncontrada.get(0)));
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Reclamo", "=", (ObjetoPersistente) listaEncontrada.get(0)));
             List<SuperDruperInterfaz> denunciasBuscadas = FachadaExterna.getInstancia().buscar("Denuncia", listaCriterios);
 
             return buscarDTODenuncia(String.valueOf(((Denuncia)denunciasBuscadas.get(0)).getcodigoDenuncia()));
@@ -170,7 +167,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
     public DTODenuncia buscarDTODenuncia(String numcaso) throws ExcepcionObjetoNoEncontrado{
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
             List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("DTOEstadoCaso", listaCriterios);
             if (listaEncontrada.isEmpty()) {
                 ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();

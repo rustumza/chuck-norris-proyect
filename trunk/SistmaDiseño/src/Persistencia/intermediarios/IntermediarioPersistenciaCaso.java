@@ -172,7 +172,7 @@ public abstract class IntermediarioPersistenciaCaso extends IntermediarioRelacio
      */
     public void buscarObjRelacionados(ObjetoPersistente obj) {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Caso", "=", obj.getOid()));
+        listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("Caso", "=", obj.getOid()));
 
         for (SuperDruperInterfaz semaforo : FachadaInterna.getInstancia().buscar("Semaforo", listaCriterios)) {
             ((CasoAgente) obj).addOidSemaforo(((ObjetoPersistente) semaforo).getOid());

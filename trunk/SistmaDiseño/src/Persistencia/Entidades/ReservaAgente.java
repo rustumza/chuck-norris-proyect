@@ -41,7 +41,7 @@ public class ReservaAgente extends ObjetoPersistente implements Reserva {
     public List<ReservaElementoTrabajo> getReservaElementoTrabajo() {
         if (isReservaElementoTrabajoBuscado() == false) {
             List<Criterio> listaCriterio = new ArrayList<Criterio>();
-            listaCriterio.add(FabricaCriterios.getInstancia().crearCriterio("OIDReserva", "=", super.getOid()));
+            listaCriterio.add(FachadaInterna.getInstancia().crearCriterio("OIDReserva", "=", super.getOid()));
 
             for (SuperDruperInterfaz objEncontrado : FachadaInterna.getInstancia().buscar("ReservaElementoTrabajo", listaCriterio)) {
                 implementacion.addReservaElementoTrabajo((ReservaElementoTrabajo) objEncontrado);

@@ -69,7 +69,7 @@ public class OrdenTrabajoAgente extends ObjetoPersistente implements OrdenTrabaj
     public List<Reserva> getRervas() {
         if (isReservaBuscado() == false) {
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", super.getOid()));
+            listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDOrdenDeTrabajo", "=", super.getOid()));
             for (SuperDruperInterfaz nuevaReserva : FachadaInterna.getInstancia().buscar("Reserva", listaCriterios)) {
                 implementacion.addReserva((Reserva) nuevaReserva);
             }

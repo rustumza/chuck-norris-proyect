@@ -132,7 +132,7 @@ public class IntermediarioPersistenciaInterseccion extends IntermediarioRelacion
     public void buscarObjRelacionados(ObjetoPersistente obj) {
 
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Interseccion", "=", obj.getOid()));
+        listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("Interseccion", "=", obj.getOid()));
 
         for (SuperDruperInterfaz calle : FachadaInterna.getInstancia().buscar("Calle", listaCriterios)) {
             ((InterseccionAgente) obj).addOidCalle(((ObjetoPersistente) calle).getOid());

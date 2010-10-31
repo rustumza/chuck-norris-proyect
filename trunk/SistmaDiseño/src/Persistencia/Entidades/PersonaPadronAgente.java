@@ -63,7 +63,7 @@ public class PersonaPadronAgente extends ObjetoPersistente implements PersonaPad
     public List<PersonaPadronEstado> getPersonaPadronEstado() {
         if (isPersonaPadronEstadoBuscado() == false) {
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDPersonaPadron", "OIDPersonaPadron", getOid()));
+            listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDPersonaPadron", "OIDPersonaPadron", getOid()));
             
             for (SuperDruperInterfaz personaPadron : FachadaInterna.getInstancia().buscar("PersonaPadronEstado", listaCriterios)) {
                 implementacion.addPersonaPadronEstado((PersonaPadronEstado) personaPadron);

@@ -120,7 +120,7 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional {
     public void buscarObjRelacionados(ObjetoPersistente obj) {
         UsuarioAgente usuario = (UsuarioAgente) obj;
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDPerfil", "=", usuario.getOidPerfil()));
+        listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDPerfil", "=", usuario.getOidPerfil()));
         Perfil perfil = (Perfil) FachadaInterna.getInstancia().buscar("Perfil", listaCriterios).get(0);
 
         for(SuperDruperInterfaz objetoEncontrado : FachadaInterna.getInstancia().buscar("Permiso", listaCriterios)){

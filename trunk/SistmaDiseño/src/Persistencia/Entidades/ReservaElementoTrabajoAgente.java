@@ -34,7 +34,7 @@ public class ReservaElementoTrabajoAgente extends ObjetoPersistente implements R
         if (isElementoTrabajoBuscado() == false) {
             ElementoTrabajo elementoEncontrado = (ElementoTrabajo) FachadaInterna.getInstancia().buscar("ElementoTrabajo", oidElementoTrabajo);
             List<Criterio> listaCriterio = new ArrayList<Criterio>();
-            listaCriterio.add(FabricaCriterios.getInstancia().crearCriterio("OIDElementoTrabajo", "=", ((ObjetoPersistente)elementoEncontrado).getOid()));
+            listaCriterio.add(FachadaInterna.getInstancia().crearCriterio("OIDElementoTrabajo", "=", ((ObjetoPersistente)elementoEncontrado).getOid()));
             if(elementoEncontrado.gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")){
 
                 implementacion.setElementoTrabajo((ElementoTrabajo)FachadaInterna.getInstancia().buscar("Equipamiento", listaCriterio).get(0));

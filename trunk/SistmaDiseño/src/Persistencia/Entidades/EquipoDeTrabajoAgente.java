@@ -46,7 +46,7 @@ public class EquipoDeTrabajoAgente extends ObjetoPersistente implements EquipoDe
     public List<TrabajadorRol> getTrabajadorRol() {
         if (isTrabajadorBuscado() == false) {
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDEquipoDeTrabajo", "=", super.getOid()));
+            listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDEquipoDeTrabajo", "=", super.getOid()));
 
             for (SuperDruperInterfaz rol : FachadaInterna.getInstancia().buscar("TrabajadorRol", listaCriterios)) {
                 implementacion.addRol((TrabajadorRol)rol);
