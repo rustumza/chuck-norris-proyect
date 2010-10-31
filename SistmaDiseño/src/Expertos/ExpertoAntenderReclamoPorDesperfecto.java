@@ -61,6 +61,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             else{
                 Denunciante denun = (Denunciante)FachadaExterna.getInstancia().crearEntidad("Denunciante");
                 denun.setPersonaPadron(perspad);
+                FachadaExterna.getInstancia().guardar("Denunciante", denun);
                 return denun;
             }
         }
@@ -104,7 +105,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         return listaDeAlturas;
     }
 
-    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2){
+    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2) throws ExcepcionObjetoNoEncontrado{
 
 
         //Busco todas las intersecciones de la calle 1
@@ -135,8 +136,10 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
                 break;
         }
 
-        if(interseccionAUsar!=null){
-            //mandar excepcion porqeu esas calles no se intersectarn
+        if(interseccionAUsar==null){
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No se encontraron semáforos para las calles seleccionadas");
+            throw ex;
         }
         
         Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("Interseccion", "=", interseccionAUsar);
@@ -182,8 +185,34 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         return listaDeProblema;
     }
 
-    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
+    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente, ExcepcionObjetoNoEncontrado{
 
+
+        if(dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().isEmpty()){
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No hay semáforos denunciados");
+            throw ex;
+        }
+
+        if(dtoInfoParaCrearDenuncia.getDenunciante()==null){
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("Falta ingresar denunciante");
+            throw ex;
+        }
+
+        if(dtoInfoParaCrearDenuncia.getOperador()==null){
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("Falta ingresar operador");
+            throw ex;
+        }
+
+        if(dtoInfoParaCrearDenuncia.getDenunciante().getcelular().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().gettelefonofijo().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().getemail().equalsIgnoreCase("")){
+
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No se ha ingresado alguna forma de contacto con el denunciante");
+            throw ex;
+
+        }
 
         Criterio crit = FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().get(0).getSemaforo());
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
@@ -215,6 +244,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
                         break;
                     }
                     else if(denEst.isindicadorestadoactual() & (!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Notificada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Anulada"))){
+                        //denuncia existente y en estado igual a cerrada o notificada
                         ExcepcionDenunciaExistente e = new ExcepcionDenunciaExistente();
                         e.setNumeroDeDenuncia(denuncia.getcodigoDenuncia());
                         e.setCantidadDeReclamos(denuncia.getReclamo().size());
@@ -245,6 +275,11 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             reclamo.settipocaso("RECLAMO");
             reclamo.setProblema(new ArrayList<Problema>());
             for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
+                if(dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()){
+                    ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                    ex.setMensaje("No hay problemas para el semaforo: " + dTOProblemasDelSemaforo.getSemaforo().getnumeroSerie());
+                    throw ex;
+                }
                 reclamo.getProblema().addAll(dTOProblemasDelSemaforo.getListaDeProblemas());
                 reclamo.getSemaforo().add(dTOProblemasDelSemaforo.getSemaforo());
             }
@@ -276,7 +311,11 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             denunciaAUsar.setProblema(new ArrayList<Problema>());
             denunciaAUsar.setSemaforo(new ArrayList<Semaforo>());
             for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
-
+                if(dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()){
+                    ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                    ex.setMensaje("No hay problemas para el semaforo: " + dTOProblemasDelSemaforo.getSemaforo().getnumeroSerie());
+                    throw ex;
+                }
                 denunciaAUsar.getProblema().addAll(dTOProblemasDelSemaforo.getListaDeProblemas());
                 denunciaAUsar.getSemaforo().add(dTOProblemasDelSemaforo.getSemaforo());
 
