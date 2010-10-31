@@ -77,6 +77,7 @@ public class ControladorSubSistemaPermisos implements Controlador{
             getPantPermisos().setVisible(false);
             chuk = (ChuckNorrisControlador) FabricaControladores.getInstance().getControlador("ChuckNorris");
             chuk.setContSubSisPerm(this);
+            chuk.setUsuarioEncontrado(usuarioEncontrado);
             chuk.iniciar();
         }catch(ExcepcionObjetoNoEncontrado e){
             JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);

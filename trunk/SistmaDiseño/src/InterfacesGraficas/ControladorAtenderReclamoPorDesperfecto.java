@@ -16,7 +16,10 @@ import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Problema;
+import Persistencia.Entidades.Usuario;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -81,11 +84,14 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     }
 
     public void buscarSemaforo(Calle calle1, Calle calle2){
-
-        ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
-        modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
-        getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
-        getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+        try {
+            ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
+            modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
+            getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
+            getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+        } catch (ExcepcionObjetoNoEncontrado ex) {
+            JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public void buscarSemaforo(Calle calle1, int altura){
@@ -106,17 +112,25 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
         try{
-        DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
+            DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
             if(dto.isIsDenuncia())
                 pantallaARPD.getDenunciaReclamo().setText("Denuncia");
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
-            pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
+            pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));          
             pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
+
+
+            
         }catch(ExcepcionDenunciaExistente e){
             pantallaARPD.getNumeroDeDenuncia().setText(String.valueOf(e.getCantidadDeReclamos()));
             pantallaARPD.getCantidadDeReclamos().setText(String.valueOf(e.getCantidadDeReclamos()));
             pantallaARPD.getPantallaDenunciaExistente().setVisible(true);
+
+        }catch(ExcepcionObjetoNoEncontrado e){
+
+            JOptionPane.showMessageDialog(pantallaARPD, e.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
     }

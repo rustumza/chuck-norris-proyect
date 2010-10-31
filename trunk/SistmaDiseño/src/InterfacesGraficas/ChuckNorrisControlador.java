@@ -5,6 +5,8 @@
  */
 package InterfacesGraficas;
 
+import Persistencia.Entidades.Usuario;
+
 
 /**
  *
@@ -12,13 +14,14 @@ package InterfacesGraficas;
  */
 public class ChuckNorrisControlador implements Controlador{
 
-    private PantallaSubSistemaPermiso pantPermisos;
+    
     private PantallaPrincipal pantPrinc;
-    ControladorAtenderReclamoPorDesperfecto contAtendRecl;
-    ControladorConsultarAvanceDeReclamo contConsAvancRec;
-    ControladorConsultarOrdenesPendientes contConsOrdPend;
-    ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
+    private ControladorAtenderReclamoPorDesperfecto contAtendRecl;
+    private ControladorConsultarAvanceDeReclamo contConsAvancRec;
+    private ControladorConsultarOrdenesPendientes contConsOrdPend;
+    private ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
     private ControladorSubSistemaPermisos contSubSisPerm;
+    private Usuario usuarioEncontrado;
 
    /** public static void main(String[] args) {
 
@@ -124,6 +127,20 @@ public class ChuckNorrisControlador implements Controlador{
      */
     public void setContSubSisPerm(ControladorSubSistemaPermisos contSubSisPerm) {
         this.contSubSisPerm = contSubSisPerm;
+    }
+
+    /**
+     * @return the usuarioEncontrado
+     */
+    public Usuario getUsuarioEncontrado() {
+        return usuarioEncontrado;
+    }
+
+    /**
+     * @param usuarioEncontrado the usuarioEncontrado to set
+     */
+    public void setUsuarioEncontrado(Usuario usuarioEncontrado) {
+        this.usuarioEncontrado = usuarioEncontrado;
     }
     
 }

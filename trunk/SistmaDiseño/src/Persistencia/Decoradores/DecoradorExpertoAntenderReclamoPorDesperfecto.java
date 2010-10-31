@@ -27,7 +27,7 @@ public class DecoradorExpertoAntenderReclamoPorDesperfecto extends ExpertoAntend
     }
 
     @Override
-    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente{
+    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente, ExcepcionObjetoNoEncontrado{
         DTOinfoDeDenunciaGuardada aux = super.guardarDenuncia(dtoInfoParaCrearDenuncia);
         confirmarTx();
         return aux;

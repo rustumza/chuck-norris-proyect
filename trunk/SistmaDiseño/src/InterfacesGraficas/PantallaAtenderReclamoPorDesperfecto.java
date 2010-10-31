@@ -60,7 +60,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         initComponents();
         ponerTodoEnBlanco();
-        
+
         tablaDeSemafor.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                  int fila = tablaDeSemafor.rowAtPoint(e.getPoint());
@@ -94,14 +94,14 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void initComponents() {
 
         grupoInterseccionCalle = new javax.swing.ButtonGroup();
-        denunciaExistente = new javax.swing.JDialog();
+        denunciaExistente = new javax.swing.JDialog(this);
         jLabel7 = new javax.swing.JLabel();
         aceptarDenunciaExistente = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         numeroDeDenunciaDenunciaExistente = new javax.swing.JLabel();
         cantidadDeReclamosDenunciaExistente = new javax.swing.JLabel();
-        denunciaGuardada = new javax.swing.JDialog();
+        denunciaGuardada = new javax.swing.JDialog(this);
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         aceptarDenunciaGuardad = new javax.swing.JButton();
@@ -152,6 +152,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         asentarCaso = new javax.swing.JButton();
         cancelarCaso = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+
+        denunciaExistente.setTitle("Atención");
 
         jLabel7.setText("DENUNCIA EXISTENTE");
 
@@ -211,6 +213,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         );
 
         denunciaGuardada.setTitle("¡¡EN HORA BUENA!!");
+        denunciaGuardada.setAlwaysOnTop(true);
 
         jLabel15.setText("Se generó un/una:");
 
@@ -621,6 +624,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             dTOinfoParaCrearDenuncia.setDenunciante(denunciante);
 
             //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
+            
             List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
             listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "2222"));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
@@ -833,7 +837,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     }
 
 
-    public void ponerTodoEnBlanco(){
+    private void ponerTodoEnBlanco(){
 
         dTOinfoParaCrearDenuncia = new DTOinfoParaCrearDenuncia();
         dTOinfoParaCrearDenuncia.setProblemasDelSemaforo(new ArrayList<DTOProblemasDelSemaforo>());
@@ -861,7 +865,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         celular.setText("");
         apellido.setText("Apellido: ");
         nombre.setText("Nombre: ");
-
+        denunciaGuardada.setLocationRelativeTo(null);
+        denunciaGuardada.pack();
+        denunciaGuardada.setModal(true);
+        denunciaExistente.setLocationRelativeTo(null);
+        denunciaExistente.pack();
+        denunciaExistente.setModal(true);
 
     }
 }

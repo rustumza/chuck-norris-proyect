@@ -5,6 +5,12 @@
     <Component class="javax.swing.ButtonGroup" name="grupoInterseccionCalle">
     </Component>
     <Container class="javax.swing.JDialog" name="denunciaExistente">
+      <Properties>
+        <Property name="title" type="java.lang.String" value="Atenci&#xf3;n"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDialog(this)"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -94,7 +100,11 @@
     <Container class="javax.swing.JDialog" name="denunciaGuardada">
       <Properties>
         <Property name="title" type="java.lang.String" value="&#xa1;&#xa1;EN HORA BUENA!!"/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDialog(this)"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
