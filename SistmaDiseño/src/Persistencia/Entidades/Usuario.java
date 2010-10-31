@@ -19,4 +19,8 @@ public interface Usuario extends SuperDruperInterfaz{
 
 	public void setNroUsuario(int newVal);
 
+        public void setPerfil(Perfil perf);
+
+        public Perfil getPerfil();
+
 }

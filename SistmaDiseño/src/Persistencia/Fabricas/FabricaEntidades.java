@@ -107,6 +107,9 @@ import Persistencia.Entidades.SemaforoImplementacion;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.TareaAgente;
 import Persistencia.Entidades.TareaImplementacion;
+import Persistencia.Entidades.TipoOperador;
+import Persistencia.Entidades.TipoOperadorAgente;
+import Persistencia.Entidades.TipoOperadorImplementacion;
 import Persistencia.Entidades.TipoSemaforoAgente;
 import Persistencia.Entidades.TipoSemaforoImplementacion;
 import Persistencia.Entidades.TrabajadorAgente;
@@ -522,6 +525,12 @@ public class FabricaEntidades {
             permiso.setIsNuevo(true);
             permiso.setImplementacion(new PermisoImplementacion());
             return permiso;
+
+        } else if (entidad.equals("TipoOperador")) {
+            TipoOperadorAgente agente = new TipoOperadorAgente();
+            agente.setImplementacion(new TipoOperadorImplementacion());
+            agente.setIsNuevo(true);
+            return agente;
 
         }
 

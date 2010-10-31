@@ -5,7 +5,7 @@
  */
 package InterfacesGraficas;
 
-import Persistencia.Entidades.Usuario;
+import Persistencia.Entidades.Operador;
 
 
 /**
@@ -21,7 +21,7 @@ public class ChuckNorrisControlador implements Controlador{
     private ControladorConsultarOrdenesPendientes contConsOrdPend;
     private ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
     private ControladorSubSistemaPermisos contSubSisPerm;
-    private Usuario usuarioEncontrado;
+    private Operador operadorEncontrado;
 
    /** public static void main(String[] args) {
 
@@ -132,15 +132,15 @@ public class ChuckNorrisControlador implements Controlador{
     /**
      * @return the usuarioEncontrado
      */
-    public Usuario getUsuarioEncontrado() {
-        return usuarioEncontrado;
+    public Operador getOperadorEncontrado() {
+        return operadorEncontrado;
     }
 
     /**
      * @param usuarioEncontrado the usuarioEncontrado to set
      */
-    public void setUsuarioEncontrado(Usuario usuarioEncontrado) {
-        this.usuarioEncontrado = usuarioEncontrado;
+    public void setOperadorEncontrado(Operador operadorEncontrado) {
+        this.operadorEncontrado = operadorEncontrado;
     }
     
 }

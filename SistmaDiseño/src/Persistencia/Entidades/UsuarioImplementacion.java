@@ -15,7 +15,7 @@ public class UsuarioImplementacion implements Usuario{
         private String Clave;
 	private String NombreUsuario;
 	private int NroUsuario;
-	public Perfil perfil;
+	private Perfil perfil;
 
 	public UsuarioImplementacion(){
 

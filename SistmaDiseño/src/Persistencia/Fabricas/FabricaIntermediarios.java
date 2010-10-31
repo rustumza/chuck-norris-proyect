@@ -55,6 +55,7 @@ import Persistencia.intermediarios.IntermediarioPersistenciaRol;
 import Persistencia.intermediarios.IntermediarioPersistenciaSemaforo;
 import Persistencia.intermediarios.IntermediarioPersistenciaTarea;
 import Persistencia.intermediarios.IntermediarioPersistenciaTareaFichaMantenimiento;
+import Persistencia.intermediarios.IntermediarioPersistenciaTipoOperador;
 import Persistencia.intermediarios.IntermediarioPersistenciaTipoSemaforo;
 import Persistencia.intermediarios.IntermediarioPersistenciaTrabajador;
 import Persistencia.intermediarios.IntermediarioPersistenciaTrabajadorRol;
@@ -337,6 +338,9 @@ public class FabricaIntermediarios {
         }
         if (nombre.equals("DTOEstadoCaso")) {
             intermediario = (IntermediarioPersistencia) (new IntermediarioDTOEstadoCaso());
+        }
+        if(nombre.equalsIgnoreCase("TipoOperador")){
+            intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaTipoOperador());
         }
         return intermediario;
     }

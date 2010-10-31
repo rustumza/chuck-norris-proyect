@@ -11,6 +11,7 @@ import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoSubSistemaPermisos;
 import Fabricas.FabricaExpertos;
 import Fabricas.FabricaControladores;
+import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Usuario;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import javax.swing.JOptionPane;
@@ -25,7 +26,7 @@ public class ControladorSubSistemaPermisos implements Controlador{
     private ExpertoSubSistemaPermisos essp;
     private PantallaSubSistemaPermiso pantallaPSSP;
     private ChuckNorrisControlador chuk;
-    private Usuario usuarioEncontrado;
+    private Operador operadorEncontrado;
 
 
      public static void main(String[] args) {
@@ -56,7 +57,7 @@ public class ControladorSubSistemaPermisos implements Controlador{
         pantallaPSSP.setVisible(true);
         pantallaPSSP.getPass().setText("");
         pantallaPSSP.getNombreDelUsuario().setText("");
-        usuarioEncontrado = null;
+        operadorEncontrado = null;
     }
 
 
@@ -73,11 +74,13 @@ public class ControladorSubSistemaPermisos implements Controlador{
     public void buscarUsuario(String nombreUsuario, String clave){
         try{
 
-            usuarioEncontrado = essp.buscarUsuario(nombreUsuario, clave);
+            operadorEncontrado = essp.buscarOperador(nombreUsuario, clave);
+
+
             getPantPermisos().setVisible(false);
             chuk = (ChuckNorrisControlador) FabricaControladores.getInstance().getControlador("ChuckNorris");
             chuk.setContSubSisPerm(this);
-            chuk.setUsuarioEncontrado(usuarioEncontrado);
+            chuk.setOperadorEncontrado(operadorEncontrado);
             chuk.iniciar();
         }catch(ExcepcionObjetoNoEncontrado e){
             JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);

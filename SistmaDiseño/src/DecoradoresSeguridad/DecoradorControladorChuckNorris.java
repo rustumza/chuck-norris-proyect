@@ -6,7 +6,11 @@
 package DecoradoresSeguridad;
 
 import InterfacesGraficas.ChuckNorrisControlador;
+import InterfacesGraficas.ControladorSubSistemaPermisos;
 import InterfacesGraficas.PantallaPrincipal;
+import Persistencia.Entidades.Operador;
+import Persistencia.Entidades.Permiso;
+import Utilidades.validarPermisos;
 
 /**
  *
@@ -18,6 +22,14 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
     public void iniciar() {
 
         super.iniciar();
+        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 21))
+            getPantPrinc().getatenderReclamo().setEnabled(false);
+        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 22))
+            getPantPrinc().getconsultarAvanceDeReclamo().setEnabled(false);
+        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 23))
+            getPantPrinc().getconsultarOrdenesPendientes().setEnabled(false);
+        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 24))
+            getPantPrinc().getejecutarOrdenesDeTrabajos().setEnabled(false);
 
     }
 
@@ -67,5 +79,24 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
         super.cerrar();
 
     }
+
+
+
+    @Override
+    public void setContSubSisPerm(ControladorSubSistemaPermisos contSubSisPerm) {
+        super.setContSubSisPerm(contSubSisPerm);
+    }
+
+    @Override
+    public Operador getOperadorEncontrado() {
+        return super.getOperadorEncontrado();
+    }
+
+
+    @Override
+    public void setOperadorEncontrado(Operador operadorEncontrado) {
+        super.setOperadorEncontrado(operadorEncontrado);
+    }
+
 
 }
