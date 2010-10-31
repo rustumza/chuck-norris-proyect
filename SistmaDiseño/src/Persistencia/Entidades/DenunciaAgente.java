@@ -85,7 +85,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     public List<FallaTecnica> getFallasTecnica() {
         if (isFallaTecnicaBuscado() == false) {
             List<Criterio> listacCriterios = new ArrayList<Criterio>();
-            listacCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Denuncia", "=",this));
+            listacCriterios.add(FachadaInterna.getInstancia().crearCriterio("Denuncia", "=",this));
             List<FallaTecnica> listaFallas = new ArrayList<FallaTecnica>();
             for(SuperDruperInterfaz falla :FachadaInterna.getInstancia().buscar("FallaTecnica", listacCriterios)){
                 listaFallas.add((FallaTecnica)falla);

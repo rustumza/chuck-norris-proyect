@@ -141,7 +141,7 @@ public class IntermediarioPersistenciaDenuncia extends IntermediarioRelacional {
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Denuncia", "=", obj.getOid()));
+        listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("Denuncia", "=", obj.getOid()));
 
         for (SuperDruperInterfaz fallaTecnica : FachadaInterna.getInstancia().buscar("FallaTecnica", listaCriterios)) {
             ((DenunciaAgente) obj).addOidFallaTecnica(((ObjetoPersistente) fallaTecnica).getOid());

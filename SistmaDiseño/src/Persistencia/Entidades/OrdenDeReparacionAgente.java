@@ -45,7 +45,7 @@ public class OrdenDeReparacionAgente extends OrdenTrabajoAgente implements Orden
     public InformeReparacion getInformeReparacion() {
         if (isInformeReparacionBuscado() == false) {
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OIDOrdenTrabajo", "=", getOid()));
+            listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDOrdenTrabajo", "=", getOid()));
             ((OrdenDeReparacionImplementacion) super.getImplementacion()).setInformeReparacion((InformeReparacion) FachadaInterna.getInstancia().buscar("InformeReparacion", listaCriterios).get(0));
         }
         return ((OrdenDeReparacionImplementacion) super.getImplementacion()).getInformeReparacion();

@@ -159,7 +159,7 @@ public class IntermediarioPersistenciaOrdenDeTrabajo extends IntermediarioRelaci
     public void buscarObjRelacionados(ObjetoPersistente obj) {
 
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("OrdenTrabajo", "=", obj.getOid()));
+        listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OrdenTrabajo", "=", obj.getOid()));
 
         List<SuperDruperInterfaz> listaTrabajos = FachadaInterna.getInstancia().buscar("Trabajo", listaCriterios);
 

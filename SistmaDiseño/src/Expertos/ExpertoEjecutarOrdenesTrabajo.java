@@ -110,7 +110,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     // <editor-fold defaultstate="collapsed" desc="comment">
     public void guardarOrdenTrabajo() {// </editor-fold>
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN EJECUCION"));
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN EJECUCION"));
 
         EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
@@ -141,7 +141,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
                 DenunciaEstado nuevoDenunciaEstado = (DenunciaEstado) FabricaEntidades.getInstancia().crearEntidad("DenunciaEstado");
                 listaCriterios.clear();
-                listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN REPARACION"));
+                listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN REPARACION"));
                 EstadoDenuncia nuevoEstado = (EstadoDenuncia) FachadaExterna.getInstancia().buscar("EstadoDenuncia", listaCriterios).get(0);
                 nuevoDenunciaEstado.setEstadoDenuncia(nuevoEstado);
                 nuevoDenunciaEstado.setfechacambioestado(new Date());

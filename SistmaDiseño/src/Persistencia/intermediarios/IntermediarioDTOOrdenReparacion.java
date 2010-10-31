@@ -66,8 +66,9 @@ public  class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional{
                 + " join equipodetrabajo "
                 + " on ordensemaforo.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo";
 
+        return select;
+
         
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
