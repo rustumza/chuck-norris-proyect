@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Expertos;
 
 import Excepciones.ExcepcionObjetoNoEncontrado;
+import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.Usuario;
 import Persistencia.ExpertosPersistencia.Criterio;
@@ -18,13 +18,14 @@ import java.util.List;
  *
  * @author informatica
  */
-public class ExpertoSubSistemaPermisos implements Experto{
+public class ExpertoSubSistemaPermisos implements Experto {
 
-    public Usuario buscarUsuario(String nombreUsuario, String clave) throws ExcepcionObjetoNoEncontrado{
+    public Operador buscarOperador(String nombreUsuario, String clave) throws ExcepcionObjetoNoEncontrado {
 
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("NombreUsuario", "=", nombreUsuario));
-        listaCriterios.add(FabricaCriterios.getInstancia().crearCriterio("Clave", "=", clave));
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreUsuario", "=", nombreUsuario));
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Clave", "=", clave));
+
 
 
         List<SuperDruperInterfaz> listaInterfaces = FachadaExterna.getInstancia().buscar("Usuario", listaCriterios);
@@ -35,8 +36,14 @@ public class ExpertoSubSistemaPermisos implements Experto{
             throw excep;
         } else {
             Usuario usuarioEncontrado = (Usuario) listaInterfaces.get(0);
-            return usuarioEncontrado;
-        }
-    }
 
+            listaCriterios = new ArrayList<Criterio>();
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Usuario", "=", usuarioEncontrado));
+
+            listaInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaCriterios);
+
+            return (Operador) listaInterfaces.get(0);
+        }
+
+    }
 }

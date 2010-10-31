@@ -180,6 +180,27 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
     }*/
 
+    public javax.swing.JButton getatenderReclamo(){
+        return botonAtenderReclamo;
+
+    }
+
+    public javax.swing.JButton getconsultarAvanceDeReclamo(){
+        return botonConsultarAvanceReclamo;
+
+    }
+
+    public javax.swing.JButton getconsultarOrdenesPendientes(){
+        return botonConsultarOrdenesPendientes;
+
+    }
+
+    public javax.swing.JButton getejecutarOrdenesDeTrabajos(){
+        return botonEjecutarOrdenesTrabajo;
+
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAtenderReclamo;
     private javax.swing.JButton botonConsultarAvanceReclamo;

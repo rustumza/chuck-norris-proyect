@@ -9,6 +9,8 @@ public class OperadorImplementacion implements Operador{
 
 	private String legajo;
 	private String nombreOperador;
+        private TipoOperador tipoOperador;
+        private Usuario usuario;
 
 	public OperadorImplementacion(){
 
@@ -38,5 +40,33 @@ public class OperadorImplementacion implements Operador{
 	public void setnombreOperador(String newVal){
 		nombreOperador = newVal;
 	}
+
+    /**
+     * @return the tipoOperador
+     */
+    public TipoOperador getTipoOperador() {
+        return tipoOperador;
+    }
+
+    /**
+     * @param tipoOperador the tipoOperador to set
+     */
+    public void setTipoOperador(TipoOperador tipoOperador) {
+        this.tipoOperador = tipoOperador;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 }
