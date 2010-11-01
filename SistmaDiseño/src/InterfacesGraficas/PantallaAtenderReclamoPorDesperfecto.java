@@ -869,6 +869,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         domicilio.setText("");
         telefono.setText("");
         celular.setText("");
+        email.setText("");
         apellido.setText("Apellido: ");
         nombre.setText("Nombre: ");
         denunciaGuardada.setLocationRelativeTo(null);
