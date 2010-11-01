@@ -41,6 +41,7 @@ public abstract class IntermediarioRelacional extends IntermediarioPersistencia 
         Conexion.getInstance().insert(consulta);
         guardarObjetosRelacionados(obj);
         guardarObjetoCompuesto(obj);
+        obj.setIsNuevo(false);
 
 
 

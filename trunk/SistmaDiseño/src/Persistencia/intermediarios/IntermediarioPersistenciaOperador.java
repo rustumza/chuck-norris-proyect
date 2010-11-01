@@ -39,6 +39,8 @@ public class IntermediarioPersistenciaOperador extends IntermediarioRelacional{
                 if (i > 0) {
                     select = select + " AND ";
                 }
+                if(criterios.get(i).getAtributo().equalsIgnoreCase("Usuario"))
+                    criterios.get(i).setAtributo("OIDUsuario");
 
                 select = select + "operador." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
             }

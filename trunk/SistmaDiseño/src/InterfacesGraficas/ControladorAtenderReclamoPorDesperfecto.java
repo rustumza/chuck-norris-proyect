@@ -112,6 +112,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
         try{
+            infoParaCrearDenuncia.setOperador(chuck.getOperadorEncontrado());
             DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
             if(dto.isIsDenuncia())
                 pantallaARPD.getDenunciaReclamo().setText("Denuncia");
@@ -119,6 +120,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
             pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));          
             pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
+            pantallaARPD.ponerTodoEnBlancoPublico();
 
 
             
@@ -126,6 +128,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             pantallaARPD.getNumeroDeDenuncia().setText(String.valueOf(e.getCantidadDeReclamos()));
             pantallaARPD.getCantidadDeReclamos().setText(String.valueOf(e.getCantidadDeReclamos()));
             pantallaARPD.getPantallaDenunciaExistente().setVisible(true);
+            pantallaARPD.ponerTodoEnBlancoPublico();
 
         }catch(ExcepcionObjetoNoEncontrado e){
 

@@ -623,17 +623,23 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
             dTOinfoParaCrearDenuncia.setDenunciante(denunciante);
 
+            /*
             //Estos DATOS LOS TIENE QUE DEVOLVER EL SISTMEA DE LOGUEO
+             * AHORA SE CARGAN EN EL CONTROLADOR!!!
             
             List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
             listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Legajo", "=", "2222"));
             List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaDeCriterios);
             Operador opera = (Operador)listaDeInterfaces.get(0);
-            //HASTA ACA
+             *
+            
             dTOinfoParaCrearDenuncia.setOperador(opera);
+             *  */
+            //HASTA ACA
+             
             dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
             controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
-            ponerTodoEnBlanco();
+        
 
         }
     }//GEN-LAST:event_asentarCasoActionPerformed
@@ -872,5 +878,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         denunciaExistente.pack();
         denunciaExistente.setModal(true);
 
+    }
+
+    public void ponerTodoEnBlancoPublico(){
+        ponerTodoEnBlanco();
     }
 }
