@@ -22,7 +22,8 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
     public void iniciar() {
 
         super.iniciar();
-        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 21))
+        /*
+         if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 21))
             getPantPrinc().getatenderReclamo().setEnabled(false);
         if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 22))
             getPantPrinc().getconsultarAvanceDeReclamo().setEnabled(false);
@@ -30,7 +31,7 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
             getPantPrinc().getconsultarOrdenesPendientes().setEnabled(false);
         if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 24))
             getPantPrinc().getejecutarOrdenesDeTrabajos().setEnabled(false);
-
+        */
     }
 
     @Override
