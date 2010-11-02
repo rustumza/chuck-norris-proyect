@@ -12,7 +12,6 @@ import Expertos.ExpertoSubSistemaPermisos;
 import Fabricas.FabricaExpertos;
 import Fabricas.FabricaControladores;
 import Persistencia.Entidades.Operador;
-import Persistencia.Entidades.Usuario;
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
