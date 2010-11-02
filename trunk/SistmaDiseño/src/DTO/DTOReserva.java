@@ -5,6 +5,7 @@
 
 package DTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +47,13 @@ public class DTOReserva {
         this.listaEquipamiento = listaEquipamiento;
     }
 
+    public void addEquipamiento(DTOEquipamientoReservado nuevoEquipamiento){
+        if(listaEquipamiento == null){
+            listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
+        }
+        listaEquipamiento.add(nuevoEquipamiento);
+    }
+
     /**
      * @return the listaRepuesto
      */
@@ -58,6 +66,13 @@ public class DTOReserva {
      */
     public void setListaRepuesto(List<DTORepuestoReservado> listaRepuesto) {
         this.listaRepuesto = listaRepuesto;
+    }
+
+    public void addRepuesto(DTORepuestoReservado nuevoRepuesto){
+        if(listaRepuesto == null){
+            listaRepuesto = new ArrayList<DTORepuestoReservado>();
+        }
+        listaRepuesto.add(nuevoRepuesto);
     }
 
     /**
@@ -74,7 +89,24 @@ public class DTOReserva {
         this.numeroReserva = numeroReserva;
     }
 
+    public boolean seEncuentraEquipamiento(String nombre){
+        boolean esta = false;
+        for (DTOEquipamientoReservado dTOEquipamientoReservado : listaEquipamiento) {
+            if(dTOEquipamientoReservado.getNombreEquipamiento().equals(nombre))
+                esta = true;
+                break;
+        }
+        return esta;
+    }
 
-
+    public boolean seEncuentraRepuesto(String nombre){
+        boolean esta = false;
+        for (DTORepuestoReservado dTORepuestoReservado : listaRepuesto) {
+            if(dTORepuestoReservado.getNombre().equals(nombre))
+                esta = true;
+                break;
+        }
+        return esta;
+    }
 
 }
