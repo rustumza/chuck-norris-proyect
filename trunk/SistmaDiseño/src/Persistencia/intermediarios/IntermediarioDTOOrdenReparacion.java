@@ -11,7 +11,6 @@ import DTO.DTOReserva;
 import DTO.DTOSemaforo;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.ExpertosPersistencia.Criterio;
-import Utilidades.FormateadorFechas;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -162,9 +161,10 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                     nuevaOrden.setNroCaso(rs.getString("CodigoDenuncia"));
                     nuevaOrden.setNroOrden(rs.getString("CodigoOrdenReparacion"));
                     nuevaOrden.setTipo(rs.getString("Tipo"));
+                    listaOrdenes.add(nuevaOrden);
                 }
 
-                if (!listaOrdenes.isEmpty() && listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas() == null && rs.getString("CodigoReserva") != null) {
+                if (listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
                     crearNuevaReserva = true;
                 } else if (!listaOrdenes.isEmpty() && listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).getNumeroReserva() != rs.getInt("CodigoReserva")) {
                     crearNuevaReserva = true;
@@ -176,6 +176,7 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                     DTOReserva nuevaReserva = new DTOReserva();
                     nuevaReserva.setFechaReserva(rs.getDate("FechaReserva"));
                     nuevaReserva.setNumeroReserva(rs.getInt("CodigoReserva"));
+                    listaOrdenes.get(listaOrdenes.size() - 1).addReserva(nuevaReserva);
                 }
 
                 if (rs.getString("NombreEquipamiento") != null && !listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).seEncuentraEquipamiento(rs.getString("NombreEquipamiento"))) {
@@ -237,9 +238,9 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
             System.out.println(ex.getMessage());
         }
 
-
-
-
+        for (DTOOrden dTOOrden : listaOrdenes) {
+            nuevosObjetos.add(dTOOrden);
+        }
 
         return nuevosObjetos;
 
@@ -247,28 +248,19 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
 
     @Override
     public void guardarObjetosRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
-
     }
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
 
 
     }
 
     @Override
     public void setearDatosPadre(ObjetoPersistente objPer, List<Criterio> listacCriterios) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
-
     }
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
     }
 }

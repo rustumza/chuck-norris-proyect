@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.List;
  * @author diego
  */
 public class DTOReserva {
+
     private Date fechaReserva;
     private int numeroReserva;
     private List<DTOEquipamientoReservado> listaEquipamiento;
@@ -47,8 +47,8 @@ public class DTOReserva {
         this.listaEquipamiento = listaEquipamiento;
     }
 
-    public void addEquipamiento(DTOEquipamientoReservado nuevoEquipamiento){
-        if(listaEquipamiento == null){
+    public void addEquipamiento(DTOEquipamientoReservado nuevoEquipamiento) {
+        if (listaEquipamiento == null) {
             listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
         }
         listaEquipamiento.add(nuevoEquipamiento);
@@ -68,8 +68,8 @@ public class DTOReserva {
         this.listaRepuesto = listaRepuesto;
     }
 
-    public void addRepuesto(DTORepuestoReservado nuevoRepuesto){
-        if(listaRepuesto == null){
+    public void addRepuesto(DTORepuestoReservado nuevoRepuesto) {
+        if (listaRepuesto == null) {
             listaRepuesto = new ArrayList<DTORepuestoReservado>();
         }
         listaRepuesto.add(nuevoRepuesto);
@@ -89,24 +89,32 @@ public class DTOReserva {
         this.numeroReserva = numeroReserva;
     }
 
-    public boolean seEncuentraEquipamiento(String nombre){
+    public boolean seEncuentraEquipamiento(String nombre) {
         boolean esta = false;
-        for (DTOEquipamientoReservado dTOEquipamientoReservado : listaEquipamiento) {
-            if(dTOEquipamientoReservado.getNombreEquipamiento().equals(nombre))
-                esta = true;
-                break;
+        if (listaEquipamiento != null) {
+            for (DTOEquipamientoReservado dTOEquipamientoReservado : listaEquipamiento) {
+                if (dTOEquipamientoReservado.getNombreEquipamiento().equals(nombre)) {
+                    esta = true;
+                    break;
+                }
+                
+            }
         }
+
         return esta;
     }
 
-    public boolean seEncuentraRepuesto(String nombre){
+    public boolean seEncuentraRepuesto(String nombre) {
         boolean esta = false;
-        for (DTORepuestoReservado dTORepuestoReservado : listaRepuesto) {
-            if(dTORepuestoReservado.getNombre().equals(nombre))
-                esta = true;
-                break;
+        if (listaRepuesto != null) {
+            for (DTORepuestoReservado dTORepuestoReservado : listaRepuesto) {
+                if (dTORepuestoReservado.getNombre().equals(nombre)) {
+                    esta = true;
+                    break;
+                }
+                
+            }
         }
         return esta;
     }
-
 }

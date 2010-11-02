@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package InterfacesGraficas.ModelosTablas;
 
 import DTO.DTORepuestoReservado;
@@ -14,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author diego
  */
-public class ModeloTablaResevaRepuesto  extends AbstractTableModel {
+public class ModeloTablaResevaRepuesto extends AbstractTableModel {
 
     private List<DTORepuestoReservado> listaRepuesto;
     public static String[] columnName = {"Nombre Repuesto", "Cantidad Reservada"};
@@ -73,8 +72,9 @@ public class ModeloTablaResevaRepuesto  extends AbstractTableModel {
     }
 
     public void addRow(DTORepuestoReservado nuevoRepuesto) {
-        if(listaRepuesto==null)
+        if (listaRepuesto == null) {
             listaRepuesto = new ArrayList<DTORepuestoReservado>();
+        }
         listaRepuesto.add(nuevoRepuesto);
         fireTableDataChanged();
     }
@@ -92,8 +92,10 @@ public class ModeloTablaResevaRepuesto  extends AbstractTableModel {
     }
 
     public void clear() {
-        listaRepuesto.clear();
-        fireTableDataChanged();
+        if (listaRepuesto != null) {
+            listaRepuesto.clear();
+            fireTableDataChanged();
+        }
     }
 
     public void removeRow(int rowIndex) {
@@ -101,4 +103,3 @@ public class ModeloTablaResevaRepuesto  extends AbstractTableModel {
         fireTableDataChanged();
     }
 }
-

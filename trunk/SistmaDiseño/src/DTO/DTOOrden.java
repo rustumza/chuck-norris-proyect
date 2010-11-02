@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
+import Persistencia.Entidades.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author informatica
  */
-public class DTOOrden{
+public class DTOOrden extends ObjetoPersistente {
 
     private String nroOrden;
     private int duracionPrevista;
@@ -26,10 +26,9 @@ public class DTOOrden{
     private String estado;
     private String nroCaso;
     private List<DTOSemaforo> listaSemaforos;
-    private List<DTOFallaTecnica>listaFalla;
+    private List<DTOFallaTecnica> listaFalla;
     private DTOInformeReparacion informeReparacion;
-
-
+    private List<DTOTareaFichaMantenimiento> listaTareasMantenimiento;
     //datos adicionales usados para la generacion de reportes
     private DTOUbicacion ubicacion;
 
@@ -121,8 +120,9 @@ public class DTOOrden{
      * @return the listaReservas
      */
     public List<DTOReserva> getListaReservas() {
-        if(listaReservas==null)
+        if (listaReservas == null) {
             listaReservas = new ArrayList<DTOReserva>();
+        }
         return listaReservas;
     }
 
@@ -133,9 +133,10 @@ public class DTOOrden{
         this.listaReservas = listaReservas;
     }
 
-    public void addReserva(DTOReserva nuevaReserva){
-        if(listaReservas == null)
+    public void addReserva(DTOReserva nuevaReserva) {
+        if (listaReservas == null) {
             listaReservas = new ArrayList<DTOReserva>();
+        }
         listaReservas.add(nuevaReserva);
     }
 
@@ -195,8 +196,8 @@ public class DTOOrden{
         this.listaFalla = listaFalla;
     }
 
-    public void addFalla(DTOFallaTecnica falla){
-        if (listaFalla == null){
+    public void addFalla(DTOFallaTecnica falla) {
+        if (listaFalla == null) {
             listaFalla = new ArrayList<DTOFallaTecnica>();
         }
         listaFalla.add(falla);
@@ -220,6 +221,9 @@ public class DTOOrden{
      * @return the listaSemaforos
      */
     public List<DTOSemaforo> getListaSemaforos() {
+        if (listaSemaforos == null) {
+            listaSemaforos = new ArrayList<DTOSemaforo>();
+        }
         return listaSemaforos;
     }
 
@@ -230,8 +234,8 @@ public class DTOOrden{
         this.listaSemaforos = listaSemaforos;
     }
 
-    public void addSemaforo(DTOSemaforo nuevoSem){
-        if(listaSemaforos == null){
+    public void addSemaforo(DTOSemaforo nuevoSem) {
+        if (listaSemaforos == null) {
             listaSemaforos = new ArrayList<DTOSemaforo>();
         }
         listaSemaforos.add(nuevoSem);
@@ -251,29 +255,66 @@ public class DTOOrden{
         this.informeReparacion = informeReparacion;
     }
 
-    public boolean seEncuentraSemaforo(String numeroSerie){
+    public boolean seEncuentraSemaforo(String numeroSerie) {
         boolean esta = false;
 
-        for (DTOSemaforo dTOSemaforo : listaSemaforos) {
-            if(dTOSemaforo.getNumeroSerie().equals(numeroSerie)){
-                esta = true;
-                break;
-            }
-        }
-
-        return esta;
-    }
-
-    public boolean seEncuentraFalla(String codigoFalla){
-        boolean esta = false;
-
-        for (DTOFallaTecnica dTOFallaTecnica : listaFalla) {
-            if(dTOFallaTecnica.getCodigoFalla().equals(codigoFalla)){
-                esta = true;
-                break;
+        if (listaSemaforos != null) {
+            for (DTOSemaforo dTOSemaforo : listaSemaforos) {
+                if (dTOSemaforo.getNumeroSerie().equals(numeroSerie)) {
+                    esta = true;
+                    break;
+                }
             }
         }
         return esta;
     }
 
+    public boolean seEncuentraFalla(String codigoFalla) {
+        boolean esta = false;
+
+        if (listaFalla != null) {
+            for (DTOFallaTecnica dTOFallaTecnica : listaFalla) {
+                if (dTOFallaTecnica.getCodigoFalla().equals(codigoFalla)) {
+                    esta = true;
+                    break;
+                }
+            }
+        }
+        return esta;
+    }
+
+    /**
+     * @return the listaTareasMantenimiento
+     */
+    public List<DTOTareaFichaMantenimiento> getListaTareasMantenimiento() {
+        return listaTareasMantenimiento;
+    }
+
+    /**
+     * @param listaTareasMantenimiento the listaTareasMantenimiento to set
+     */
+    public void setListaTareasMantenimiento(List<DTOTareaFichaMantenimiento> listaTareasMantenimiento) {
+        this.listaTareasMantenimiento = listaTareasMantenimiento;
+    }
+
+    public void addTareaMantenimiento(DTOTareaFichaMantenimiento nuevaTareaMantenimiento) {
+        if (listaTareasMantenimiento == null) {
+            listaTareasMantenimiento = new ArrayList<DTOTareaFichaMantenimiento>();
+        }
+        listaTareasMantenimiento.add(nuevaTareaMantenimiento);
+    }
+
+    public boolean seEncuentraTareaMant(String codigo) {
+        boolean esta = false;
+
+        if (listaTareasMantenimiento != null) {
+            for (DTOTareaFichaMantenimiento dtotareaFicha : listaTareasMantenimiento) {
+                if (dtotareaFicha.getCodigoTarea().equals(codigo)) {
+                    esta = true;
+                    break;
+                }
+            }
+        }
+        return esta;
+    }
 }

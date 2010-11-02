@@ -122,7 +122,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
                 break;
             case ordenReparacion:
                 List<Criterio> listacCriterios = new ArrayList<Criterio>();
-                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", fecha.toString()));
+                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().getFormatMySQLyyyyMMdd().format(fecha)));
                 listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", " LIKE ", "Pendiente"));
                 for (SuperDruperInterfaz objeto : FachadaExterna.getInstancia().buscar("DTOOrden", listacCriterios)) {
                     listaDTO.add((DTOOrden) objeto);

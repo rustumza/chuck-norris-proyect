@@ -68,8 +68,10 @@ public class ControladorConsultarOrdenesPendientes implements Controlador {
     }
 
     public void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
-        ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
-        ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
+        ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).clear();
+        ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).clear();
+        ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).addAllRow(reservaSeleccionada.getListaEquipamiento());
+        ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).addAllRow(reservaSeleccionada.getListaRepuesto());
     }
 
     public void cerrar() {

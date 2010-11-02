@@ -8,7 +8,6 @@
  *
  * Created on 21/10/2010, 09:05:08
  */
-
 package InterfacesGraficas;
 
 /**
@@ -16,14 +15,15 @@ package InterfacesGraficas;
  * @author informatica
  */
 public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
+
     ControladorSubSistemaPermisos controladorSSP;
 
     /** Creates new form PantallaSubSistemaPermiso */
     public PantallaSubSistemaPermiso(ControladorSubSistemaPermisos controlSSP) {
-       initComponents();
+        initComponents();
         this.controladorSSP = controlSSP;
         this.setTitle("Sistema ChuckNorrys powered by Bicentenario");
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +61,12 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/logo-sys.png"))); // NOI18N
 
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -73,13 +79,13 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-                    .addComponent(nombreDelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+                    .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(nombreDelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(botonIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(botonSalir)
                 .addContainerGap())
         );
@@ -106,31 +112,31 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarActionPerformed
-       
-        controladorSSP.buscarUsuario(getNombreDelUsuario().getText(), String.valueOf(getPass().getPassword()));
-
-
+        pressBotonIngresar();
     }//GEN-LAST:event_botonIngresarActionPerformed
 
+    private void pressBotonIngresar() {
+        controladorSSP.buscarUsuario(getNombreDelUsuario().getText(), String.valueOf(getPass().getPassword()));
+    }
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-       this.dispose();
-       System.exit(0);
+        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        pressBotonIngresar();
+    }//GEN-LAST:event_passActionPerformed
     /**
-    * @param args the command line arguments
-    */
-   /** public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaSubSistemaPermiso().setVisible(true);
-            }
-        });
+     * @param args the command line arguments
+     */
+    /** public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+    new PantallaSubSistemaPermiso().setVisible(true);
     }
-*/
-
-
-
+    });
+    }
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonIngresar;
     private javax.swing.JButton botonSalir;
@@ -168,5 +174,4 @@ public class PantallaSubSistemaPermiso extends javax.swing.JFrame {
     public void setPass(javax.swing.JPasswordField pass) {
         this.pass = pass;
     }
-
 }

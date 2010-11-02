@@ -31,15 +31,15 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pass" alignment="0" pref="239" max="32767" attributes="0"/>
-                  <Component id="nombreDelUsuario" alignment="0" pref="239" max="32767" attributes="1"/>
+                  <Component id="pass" alignment="0" pref="279" max="32767" attributes="0"/>
+                  <Component id="nombreDelUsuario" alignment="0" pref="279" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="botonIngresar" min="-2" pref="171" max="-2" attributes="0"/>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace pref="44" max="32767" attributes="0"/>
               <Component id="botonSalir" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -109,6 +109,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pass">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
