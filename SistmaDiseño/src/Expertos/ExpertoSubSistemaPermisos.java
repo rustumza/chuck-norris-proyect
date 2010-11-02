@@ -33,7 +33,7 @@ public class ExpertoSubSistemaPermisos implements Experto {
         if (listaInterfaces.isEmpty()) {
             ExcepcionObjetoNoEncontrado excep = new ExcepcionObjetoNoEncontrado();
             excep.setMensaje("Usuario o Clave Incorrecta.");
-            throw excep;
+            throw  excep;
         } else {
             Usuario usuarioEncontrado = (Usuario) listaInterfaces.get(0);
 
