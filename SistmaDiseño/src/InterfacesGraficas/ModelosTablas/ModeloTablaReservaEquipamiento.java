@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package InterfacesGraficas.ModelosTablas;
 
 import DTO.DTOEquipamientoReservado;
@@ -74,8 +73,9 @@ public class ModeloTablaReservaEquipamiento extends AbstractTableModel {
     }
 
     public void addRow(DTOEquipamientoReservado nuevoEquipamiento) {
-        if(listaEquipamiento==null)
+        if (listaEquipamiento == null) {
             listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
+        }
         listaEquipamiento.add(nuevoEquipamiento);
         fireTableDataChanged();
     }
@@ -93,8 +93,11 @@ public class ModeloTablaReservaEquipamiento extends AbstractTableModel {
     }
 
     public void clear() {
-        listaEquipamiento.clear();
-        fireTableDataChanged();
+        if (listaEquipamiento != null) {
+            listaEquipamiento.clear();
+            fireTableDataChanged();
+        }
+
     }
 
     public void removeRow(int rowIndex) {

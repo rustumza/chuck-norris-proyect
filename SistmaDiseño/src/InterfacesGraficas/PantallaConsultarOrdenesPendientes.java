@@ -12,15 +12,12 @@ package InterfacesGraficas;
 
 import DTO.DTOOrden;
 import DTO.DTOReserva;
-import Excepciones.ExcepcionCampoInvalido;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -51,6 +48,12 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
                 ordenSeleccionada = (DTOOrden) ((ModeloTablaOrdenesTrabajo) tblOrdenesTrabajo.getModel()).getRow(fila);
+                if (tblEquipamientoReservado.getModel() != null) {
+                    ((ModeloTablaReservaEquipamiento) tblEquipamientoReservado.getModel()).clear();
+                }
+                if (tblRepuestosReservado.getModel() != null) {
+                    ((ModeloTablaResevaRepuesto) tblRepuestosReservado.getModel()).clear();
+                }
                 controlador.mostrarReservas(ordenSeleccionada.getListaReservas());
             }
         });
