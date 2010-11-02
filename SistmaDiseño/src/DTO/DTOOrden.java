@@ -133,6 +133,12 @@ public class DTOOrden {
         this.listaReservas = listaReservas;
     }
 
+    public void addReserva(DTOReserva nuevaReserva){
+        if(listaReservas == null)
+            listaReservas = new ArrayList<DTOReserva>();
+        listaReservas.add(nuevaReserva);
+    }
+
     /**
      * @return the nombreEquipo
      */
@@ -243,6 +249,31 @@ public class DTOOrden {
      */
     public void setInformeReparacion(DTOInformeReparacion informeReparacion) {
         this.informeReparacion = informeReparacion;
+    }
+
+    public boolean seEncuentraSemaforo(String numeroSerie){
+        boolean esta = false;
+
+        for (DTOSemaforo dTOSemaforo : listaSemaforos) {
+            if(dTOSemaforo.getNumeroSerie().equals(numeroSerie)){
+                esta = true;
+                break;
+            }
+        }
+
+        return esta;
+    }
+
+    public boolean seEncuentraFalla(String codigoFalla){
+        boolean esta = false;
+
+        for (DTOFallaTecnica dTOFallaTecnica : listaFalla) {
+            if(dTOFallaTecnica.getCodigoFalla().equals(codigoFalla)){
+                esta = true;
+                break;
+            }
+        }
+        return esta;
     }
 
 }
