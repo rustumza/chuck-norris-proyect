@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package InterfacesGraficas;
 
 import DTO.DTOOrden;
@@ -22,20 +21,21 @@ import javax.swing.JOptionPane;
  *
  * @author informatica
  */
-public class ControladorConsultarOrdenesPendientes implements Controlador{
+public class ControladorConsultarOrdenesPendientes implements Controlador {
+
     ExpertoConsultarOrdenesPendientes experto;
     private PantallaConsultarOrdenesPendientes pantalla;
     private ChuckNorrisControlador chuck;
 
-    public ControladorConsultarOrdenesPendientes(){
-    
+    public ControladorConsultarOrdenesPendientes() {
+
         pantalla = new PantallaConsultarOrdenesPendientes(this);
         experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
 
     }
 
-    public ControladorConsultarOrdenesPendientes(ChuckNorrisControlador chuckCont){
-        chuck=chuckCont;
+    public ControladorConsultarOrdenesPendientes(ChuckNorrisControlador chuckCont) {
+        chuck = chuckCont;
         pantalla = new PantallaConsultarOrdenesPendientes(this);
         experto = (ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes");
     }
@@ -45,32 +45,34 @@ public class ControladorConsultarOrdenesPendientes implements Controlador{
         getPantalla().setVisible(true);
     }
 
-    public void buscarOrdenes(Date fecha, int seleccion){
+    public void buscarOrdenes(Date fecha, int seleccion) {
 
         List<DTOOrden> listaDTOOrdens;
         try {
+
             listaDTOOrdens = experto.buscarOrdenesDTO(fecha, seleccion);
             ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
-        nuevoModelo.addAllRow(listaDTOOrdens);
-        ((ModeloTablaOrdenesTrabajo)getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+            nuevoModelo.addAllRow(listaDTOOrdens);
+            ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+
         } catch (ExcepcionCampoInvalido ex) {
-            JOptionPane.showMessageDialog( getPantalla(), ex.getMessage(),"ATENCION",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
             System.out.println(ex.getMessage());
             //Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public void mostrarReservas(List<DTOReserva> reservas) {
-        ((ModeloTablaReserva)getPantalla().getTblReservas().getModel()).setListaReserva(reservas);
+        ((ModeloTablaReserva) getPantalla().getTblReservas().getModel()).setListaReserva(reservas);
     }
 
     public void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
-        ((ModeloTablaReservaEquipamiento)getPantalla().getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
-        ((ModeloTablaResevaRepuesto)getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
+        ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).setListaEquipamiento(reservaSeleccionada.getListaEquipamiento());
+        ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
-    public void cerrar(){
+    public void cerrar() {
         getPantalla().setVisible(false);
         getPantalla().dispose();
         chuck.iniciar();
@@ -90,8 +92,4 @@ public class ControladorConsultarOrdenesPendientes implements Controlador{
     public void setChuck(ChuckNorrisControlador chuck) {
         this.chuck = chuck;
     }
-
-
-
-
 }

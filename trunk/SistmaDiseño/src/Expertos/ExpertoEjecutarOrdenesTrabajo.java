@@ -66,17 +66,16 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
         return armarListaDTOOrden(ordenesTrabajoPendientes);
     }
 
-    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) {
-        List<OrdenDeReparacion> ordenesEncontradas = new ArrayList<OrdenDeReparacion>();
+   /*
+    * Regresa lista de DTO de ordenes de reparacion
+    * param Date fecha
+    */
+    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) throws ExcepcionCampoInvalido {
+        List<DTOOrden> ordenesEncontradas = new ArrayList<DTOOrden>();
 
-        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenesReparacionPendiente(fecha);
+        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenesDTO(fecha,ExpertoConsultarOrdenesPendientes.ordenReparacion);
 
-        ordenesTrabajoPendientes.clear();
-        ordenesTrabajoPendientes.addAll(ordenesEncontradas);
-
-        return armarListaDTOOrden(ordenesTrabajoPendientes);
-
-
+        return ordenesEncontradas;
     }
 
     public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) throws ExcepcionCampoInvalido {

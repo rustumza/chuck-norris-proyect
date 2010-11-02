@@ -9,7 +9,6 @@ import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
 import Excepciones.ExcepcionCampoInvalido;
-import Persistencia.Entidades.ElementoTrabajo;
 import Persistencia.Entidades.Equipamiento;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.OrdenDeMantenimiento;
@@ -20,7 +19,6 @@ import Persistencia.Entidades.Reserva;
 import Persistencia.Entidades.ReservaElementoTrabajo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
-import Persistencia.Fabricas.FabricaCriterios;
 import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,8 +121,11 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
                 }
                 break;
             case ordenReparacion:
-                for (OrdenDeReparacion ordenRep : buscarOrdenesReparacionPendiente(fecha)) {
-                    listaOrdenes.add((OrdenDeReparacion) ordenRep);
+                List<Criterio> listacCriterios = new ArrayList<Criterio>();
+                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", fecha.toString()));
+                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", " LIKE ", "Pendiente"));
+                for (SuperDruperInterfaz objeto : FachadaExterna.getInstancia().buscar("DTOOrden", listacCriterios)) {
+                    listaDTO.add((DTOOrden) objeto);
                 }
                 break;
             default:
@@ -132,53 +133,53 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         }
 
 
-        for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
-            DTOOrden nuevoDTO = new DTOOrden();
+//        for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
+//            DTOOrden nuevoDTO = new DTOOrden();
+//
+//            nuevoDTO.setTipo(orden.gettipoordentrabajo());
+//            if (orden.gettipoordentrabajo().equalsIgnoreCase("REPARACION")) {
+//                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
+//            } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
+//                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
+//            }
+//            nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
+//            nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
+//            nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
+//            nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
+//            nuevoDTO.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
 
-            nuevoDTO.setTipo(orden.gettipoordentrabajo());
-            if (orden.gettipoordentrabajo().equalsIgnoreCase("REPARACION")) {
-                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
-            } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
-                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
-            }
-            nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
-            nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
-            nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
-            nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
-            nuevoDTO.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
-
-            for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
-                DTOReserva nuevaReserva = new DTOReserva();
-                nuevaReserva.setFechaReserva(reserva.getfecha());
-                nuevaReserva.setNumeroReserva(reserva.getcodigoreserva());
-
-                List<DTOEquipamientoReservado> listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
-                List<DTORepuestoReservado> listaRepuestos = new ArrayList<DTORepuestoReservado>();
-
-                for (ReservaElementoTrabajo reservaElementoTrabajo : reserva.getReservaElementoTrabajo()) {//por cada elemento reservado
-                    if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")) {
-                        DTOEquipamientoReservado nuevoEquipamiento = new DTOEquipamientoReservado();
-                        nuevoEquipamiento.setNombreEquipamiento(((Equipamiento) reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
-                        nuevoEquipamiento.setCantidad(reservaElementoTrabajo.getcantidadreservada());
-
-                        listaEquipamiento.add(nuevoEquipamiento);
-
-                    } else if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")) {
-                        DTORepuestoReservado nuevoRepuesto = new DTORepuestoReservado();
-                        nuevoRepuesto.setNombre(((Repuesto) reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
-                        nuevoRepuesto.setCantidad(reservaElementoTrabajo.getcantidadreservada());
-
-                        listaRepuestos.add(nuevoRepuesto);
-                    }
-                }
-                nuevaReserva.setListaEquipamiento(listaEquipamiento);
-                nuevaReserva.setListaRepuesto(listaRepuestos);
-
-                nuevoDTO.getListaReservas().add(nuevaReserva);
-            }
-
-            listaDTO.add(nuevoDTO);
-        }
+//            for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
+//                DTOReserva nuevaReserva = new DTOReserva();
+//                nuevaReserva.setFechaReserva(reserva.getfecha());
+//                nuevaReserva.setNumeroReserva(reserva.getcodigoreserva());
+//
+//                List<DTOEquipamientoReservado> listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
+//                List<DTORepuestoReservado> listaRepuestos = new ArrayList<DTORepuestoReservado>();
+//
+//                for (ReservaElementoTrabajo reservaElementoTrabajo : reserva.getReservaElementoTrabajo()) {//por cada elemento reservado
+//                    if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")) {
+//                        DTOEquipamientoReservado nuevoEquipamiento = new DTOEquipamientoReservado();
+//                        nuevoEquipamiento.setNombreEquipamiento(((Equipamiento) reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
+//                        nuevoEquipamiento.setCantidad(reservaElementoTrabajo.getcantidadreservada());
+//
+//                        listaEquipamiento.add(nuevoEquipamiento);
+//
+//                    } else if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")) {
+//                        DTORepuestoReservado nuevoRepuesto = new DTORepuestoReservado();
+//                        nuevoRepuesto.setNombre(((Repuesto) reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
+//                        nuevoRepuesto.setCantidad(reservaElementoTrabajo.getcantidadreservada());
+//
+//                        listaRepuestos.add(nuevoRepuesto);
+//                    }
+//                }
+//                nuevaReserva.setListaEquipamiento(listaEquipamiento);
+//                nuevaReserva.setListaRepuesto(listaRepuestos);
+//
+//                nuevoDTO.getListaReservas().add(nuevaReserva);
+//            }
+//
+//            listaDTO.add(nuevoDTO);
+//        }
 
         return listaDTO;
     }
