@@ -1,6 +1,7 @@
 package Persistencia.Fabricas;
 
 import Persistencia.intermediarios.IntermediarioDTOEstadoCaso;
+import Persistencia.intermediarios.IntermediarioDTOOrdenReparacion;
 import Persistencia.intermediarios.IntermediarioPersistencia;
 import Persistencia.intermediarios.IntermediarioPersistenciaCalle;
 import Persistencia.intermediarios.IntermediarioPersistenciaCaso;
@@ -342,6 +343,12 @@ public class FabricaIntermediarios {
         if(nombre.equalsIgnoreCase("TipoOperador")){
             intermediario = (IntermediarioPersistencia)(new IntermediarioPersistenciaTipoOperador());
         }
+        
+        if(nombre.equalsIgnoreCase("DTOOrden")){
+            intermediario = (IntermediarioPersistencia)(new IntermediarioDTOOrdenReparacion());
+        }
+
+
         return intermediario;
     }
 }

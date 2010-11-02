@@ -100,7 +100,7 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
         String condicion = "";
         condicion = " WHERE ordensemaforo.FechaInicioPlanificada = '"+criterios.get(0).getValor()+"'";
         if(criterios.size() == 2){
-            condicion = condicion + " AND "+criterios.get(1).getAtributo()+" = '"+criterios.get(1).getValor()+"'" ;
+            condicion = condicion + " AND "+criterios.get(1).getAtributo()+criterios.get(1).getOperador()+"'"+criterios.get(1).getValor()+"'" ;
         }
 
         select = select + condicion;

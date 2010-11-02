@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author informatica
  */
-public class DTOOrden {
+public class DTOOrden{
 
     private String nroOrden;
     private int duracionPrevista;
