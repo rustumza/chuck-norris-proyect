@@ -169,7 +169,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
                 .addComponent(radioBtnOrdenMant)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioBtnOrdenTodas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addContainerGap())
         );
@@ -249,7 +249,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 450, 120));
 
         jLabel3.setText("Reservas");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/system-shutdown-panel.png"))); // NOI18N
         jButton1.setText("Salir");
@@ -275,7 +275,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
 }//GEN-LAST:event_radioBtnOrdenTodasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        limpiarCampos();
         int seleccion;
         if (radioBtnOrdenMant.isSelected()) {
             seleccion = ordenMantenimiento;
@@ -352,5 +352,20 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
      */
     public javax.swing.JTable getTblRepuestosReservado() {
         return tblRepuestosReservado;
+    }
+
+    private void limpiarCampos() {
+        if(tblOrdenesTrabajo.getModel()!=null){
+            ((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).clear();
+        }
+        if(tblReservas.getModel() != null){
+            ((ModeloTablaReserva)tblReservas.getModel()).clear();
+        }
+        if(tblEquipamientoReservado.getModel() != null){
+            ((ModeloTablaReservaEquipamiento)tblEquipamientoReservado.getModel()).clear();
+        }
+        if(tblRepuestosReservado.getModel() != null){
+            ((ModeloTablaResevaRepuesto)tblRepuestosReservado.getModel()).clear();
+        }
     }
 }

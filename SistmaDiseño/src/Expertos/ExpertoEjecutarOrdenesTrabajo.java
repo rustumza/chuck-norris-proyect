@@ -17,6 +17,7 @@ import DTO.DTOReserva;
 import DTO.DTOSemaforo;
 import DTO.DTOUbicacion;
 import Excepciones.ExcepcionCampoInvalido;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Fabricas.FabricaAdaptadorSistemaReportes;
 import Fabricas.FabricaAdaptadoresSistemaStock;
 import Fabricas.FabricaExpertos;
@@ -42,6 +43,8 @@ import Persistencia.Fabricas.FabricaEntidades;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -72,8 +75,11 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
     */
     public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) throws ExcepcionCampoInvalido {
         List<DTOOrden> ordenesEncontradas = new ArrayList<DTOOrden>();
-
-        ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenesDTO(fecha,ExpertoConsultarOrdenesPendientes.ordenReparacion);
+        try {
+            ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) (FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes"))).buscarOrdenesDTO(fecha, ExpertoConsultarOrdenesPendientes.ordenReparacion);
+        } catch (ExcepcionObjetoNoEncontrado ex) {
+            Logger.getLogger(ExpertoEjecutarOrdenesTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return ordenesEncontradas;
     }

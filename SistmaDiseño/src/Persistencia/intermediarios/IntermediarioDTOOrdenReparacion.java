@@ -5,6 +5,7 @@
 package Persistencia.intermediarios;
 
 import DTO.DTOEquipamientoReservado;
+import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
@@ -230,6 +231,13 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                     crearDtoFalla = true;
                 } else{
                     crearDtoFalla = false;
+                }
+
+                if(crearDtoFalla){
+                    DTOFallaTecnica nuevaFalla = new DTOFallaTecnica();
+                    nuevaFalla.setCodigoFalla(rs.getString("CodigoFallaTecnica"));
+                    nuevaFalla.setDescripcion(rs.getString("CodigoFallaTecnica"));
+                    nuevaFalla.setNombreFalla(rs.getString("NombreTrabajo"));
                 }
 
             }

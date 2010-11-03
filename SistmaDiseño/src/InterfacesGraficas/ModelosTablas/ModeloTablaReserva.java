@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package InterfacesGraficas.ModelosTablas;
 
 import DTO.DTOReserva;
@@ -14,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author diego
  */
-public class ModeloTablaReserva  extends AbstractTableModel {
+public class ModeloTablaReserva extends AbstractTableModel {
 
     private List<DTOReserva> listaReserva;
     public static String[] columnName = {"Número Reserva", "Fecha Reserva"};
@@ -73,8 +72,9 @@ public class ModeloTablaReserva  extends AbstractTableModel {
     }
 
     public void addRow(DTOReserva nuevaReserva) {
-        if(listaReserva==null)
+        if (listaReserva == null) {
             listaReserva = new ArrayList<DTOReserva>();
+        }
         listaReserva.add(nuevaReserva);
         fireTableDataChanged();
     }
@@ -92,8 +92,10 @@ public class ModeloTablaReserva  extends AbstractTableModel {
     }
 
     public void clear() {
-        listaReserva.clear();
-        fireTableDataChanged();
+        if (listaReserva != null) {
+            listaReserva.clear();
+            fireTableDataChanged();
+        }
     }
 
     public void removeRow(int rowIndex) {

@@ -7,6 +7,7 @@ package InterfacesGraficas;
 import DTO.DTOOrden;
 import DTO.DTOReserva;
 import Excepciones.ExcepcionCampoInvalido;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoConsultarOrdenesPendientes;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
@@ -58,7 +59,9 @@ public class ControladorConsultarOrdenesPendientes implements Controlador {
         } catch (ExcepcionCampoInvalido ex) {
             JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
             System.out.println(ex.getMessage());
-            //Logger.getLogger(ControladorConsultarOrdenesPendientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExcepcionObjetoNoEncontrado ex) {
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
         }
 
     }
