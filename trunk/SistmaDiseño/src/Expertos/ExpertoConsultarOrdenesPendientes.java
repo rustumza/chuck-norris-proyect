@@ -4,19 +4,13 @@
  */
 package Expertos;
 
-import DTO.DTOEquipamientoReservado;
 import DTO.DTOOrden;
-import DTO.DTORepuestoReservado;
-import DTO.DTOReserva;
 import Excepciones.ExcepcionCampoInvalido;
-import Persistencia.Entidades.Equipamiento;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.Entidades.OrdenDeMantenimiento;
 import Persistencia.Entidades.OrdenDeReparacion;
 import Persistencia.Entidades.OrdenTrabajo;
-import Persistencia.Entidades.Repuesto;
-import Persistencia.Entidades.Reserva;
-import Persistencia.Entidades.ReservaElementoTrabajo;
 import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
 import Utilidades.FormateadorFechas;
@@ -75,7 +69,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         List<OrdenDeMantenimiento> ordenesEncontradas = new ArrayList<OrdenDeMantenimiento>();
 
         listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
-        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado","LIKE","PENDIENTE"));
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
 
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenDeMantenimiento", listaCriterios)) {
@@ -97,7 +91,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
 
         listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
-        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado","LIKE","PENDIENTE"));
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
 
 
         for (SuperDruperInterfaz orden : FachadaExterna.getInstancia().buscar("OrdenReparacion", listaCriterios)) {
@@ -107,80 +101,90 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         return ordenesEncontradas;
     }
 
-    public List<DTOOrden> buscarOrdenesDTO(Date fecha, int tipoOrden) throws ExcepcionCampoInvalido {
-        List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
-        List<OrdenTrabajo> listaOrdenes = new ArrayList<OrdenTrabajo>();
+    public List<DTOOrden> buscarOrdenesDTO(Date fecha, int tipoOrden) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
+
+        if (fecha == null) {
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Debe Ingresar una Fecha.");
+            throw ex;
+        }
+        List<Criterio> listacCriterios = new ArrayList<Criterio>();
+        listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().getFormatMySQLyyyyMMdd().format(fecha)));
+        listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", " LIKE ", "Pendiente"));
 
         switch (tipoOrden) {
             case ordenTrabajo:
-                listaOrdenes = buscarOrdenes(fecha);
-                break;
+                return buscarOrdenesMantYRepDTO(listacCriterios);
             case ordenMantenimiento:
-                for (OrdenDeMantenimiento ordenMant : buscarOrdenesMantPendiente(fecha)) {
-                    listaOrdenes.add((OrdenDeMantenimiento) ordenMant);
-                }
-                break;
+                return buscarOrdenesMantenimientoDTO(listacCriterios);
             case ordenReparacion:
-                List<Criterio> listacCriterios = new ArrayList<Criterio>();
-                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().getFormatMySQLyyyyMMdd().format(fecha)));
-                listacCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", " LIKE ", "Pendiente"));
-                for (SuperDruperInterfaz objeto : FachadaExterna.getInstancia().buscar("DTOOrden", listacCriterios)) {
-                    listaDTO.add((DTOOrden) objeto);
-                }
-                break;
+                return buscarOrdenesReparacionDTO(listacCriterios);
             default:
-                break;
+                return null;
+        }
+    }
+
+    /*
+     * Busca Dto Ordenes de mantenimiento
+     */
+    public List<DTOOrden> buscarOrdenesMantenimientoDTO(List<Criterio> criterios) throws ExcepcionObjetoNoEncontrado {
+        List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
+
+        for (SuperDruperInterfaz objeto : FachadaExterna.getInstancia().buscar("DTOOrdenMantenimiento", criterios)) {
+            listaDTO.add((DTOOrden) objeto);
+        }
+        if (listaDTO.isEmpty()) {
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No hay órdenes de Mantenimiento Pendientes para la fecha ingresada.");
+            throw ex;
         }
 
+        return listaDTO;
+    }
+    /*
+     * Busca Dto Ordenes de Reparacion
+     */
 
-//        for (OrdenTrabajo orden : listaOrdenes) {//Por cada orden de trabajo encontrada
-//            DTOOrden nuevoDTO = new DTOOrden();
-//
-//            nuevoDTO.setTipo(orden.gettipoordentrabajo());
-//            if (orden.gettipoordentrabajo().equalsIgnoreCase("REPARACION")) {
-//                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeReparacion) orden).getcodigoordenreparacion()));
-//            } else if (orden.gettipoordentrabajo().equalsIgnoreCase("MANTENIMIENTO")) {
-//                nuevoDTO.setNroOrden(String.valueOf(((OrdenDeMantenimiento) orden).getcodigoordenmantenimiento()));
-//            }
-//            nuevoDTO.setDuracionPrevista(orden.getduracionprevistatrabajo());
-//            nuevoDTO.setFechaFinTrabajo(orden.getfechafintrabajo());
-//            nuevoDTO.setFechaInicioPlanificada(orden.getfechainicioplanificada());
-//            nuevoDTO.setFechaInicioTrabajo(orden.getfechainiciotrabajo());
-//            nuevoDTO.setNombreEquipo(orden.getEquipoDeTrabajo().getnombreEquipo());
+    public List<DTOOrden> buscarOrdenesReparacionDTO(List<Criterio> criterios) throws ExcepcionObjetoNoEncontrado {
+        List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
 
-//            for (Reserva reserva : orden.getRervas()) {//por cada reserva de la orden de trabajo
-//                DTOReserva nuevaReserva = new DTOReserva();
-//                nuevaReserva.setFechaReserva(reserva.getfecha());
-//                nuevaReserva.setNumeroReserva(reserva.getcodigoreserva());
-//
-//                List<DTOEquipamientoReservado> listaEquipamiento = new ArrayList<DTOEquipamientoReservado>();
-//                List<DTORepuestoReservado> listaRepuestos = new ArrayList<DTORepuestoReservado>();
-//
-//                for (ReservaElementoTrabajo reservaElementoTrabajo : reserva.getReservaElementoTrabajo()) {//por cada elemento reservado
-//                    if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equalsIgnoreCase("EQUIPAMIENTO")) {
-//                        DTOEquipamientoReservado nuevoEquipamiento = new DTOEquipamientoReservado();
-//                        nuevoEquipamiento.setNombreEquipamiento(((Equipamiento) reservaElementoTrabajo.getElementoTrabajo()).getnombreEquipamiento());
-//                        nuevoEquipamiento.setCantidad(reservaElementoTrabajo.getcantidadreservada());
-//
-//                        listaEquipamiento.add(nuevoEquipamiento);
-//
-//                    } else if (reservaElementoTrabajo.getElementoTrabajo().gettipoelemento().equals("REPUESTO")) {
-//                        DTORepuestoReservado nuevoRepuesto = new DTORepuestoReservado();
-//                        nuevoRepuesto.setNombre(((Repuesto) reservaElementoTrabajo.getElementoTrabajo()).getnombreRepuesto());
-//                        nuevoRepuesto.setCantidad(reservaElementoTrabajo.getcantidadreservada());
-//
-//                        listaRepuestos.add(nuevoRepuesto);
-//                    }
-//                }
-//                nuevaReserva.setListaEquipamiento(listaEquipamiento);
-//                nuevaReserva.setListaRepuesto(listaRepuestos);
-//
-//                nuevoDTO.getListaReservas().add(nuevaReserva);
-//            }
-//
-//            listaDTO.add(nuevoDTO);
-//        }
+        for (SuperDruperInterfaz objeto : FachadaExterna.getInstancia().buscar("DTOOrdenReparacion", criterios)) {
+            listaDTO.add((DTOOrden) objeto);
+        }
+        if (listaDTO.isEmpty()) {
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No hay órdenes de Reparación Pendientes para la fecha ingresada.");
+            throw ex;
+        }
 
         return listaDTO;
+    }
+    /*
+     * Busca Dto Ordenes de mantenimiento y reparacion
+     */
+
+    public List<DTOOrden> buscarOrdenesMantYRepDTO(List<Criterio> criterios) throws ExcepcionObjetoNoEncontrado {
+
+        List<DTOOrden> listaDTO = new ArrayList<DTOOrden>();
+
+        try {
+            listaDTO.addAll(buscarOrdenesMantenimientoDTO(criterios));
+        } catch (ExcepcionObjetoNoEncontrado ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                listaDTO.addAll(buscarOrdenesReparacionDTO(criterios));
+
+            } catch (ExcepcionObjetoNoEncontrado ex) {
+                System.out.println(ex.getMessage());
+            } finally {
+                if (listaDTO.isEmpty()) {
+                    ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+                    ex.setMensaje("No hay Ordenes encontradas para la fecha ingresada.");
+                    throw ex;
+                }
+                return listaDTO;
+            }
+        }
     }
 }

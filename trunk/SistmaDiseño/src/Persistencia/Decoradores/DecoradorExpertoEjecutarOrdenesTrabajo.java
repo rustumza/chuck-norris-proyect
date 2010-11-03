@@ -7,9 +7,6 @@ package Persistencia.Decoradores;
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
-import Persistencia.Entidades.OrdenDeMantenimiento;
-import Persistencia.Entidades.OrdenDeReparacion;
-import Persistencia.Entidades.OrdenTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +33,7 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) {
+    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) throws ExcepcionCampoInvalido {
         iniciarTx();
         List<DTOOrden> aux = super.consultarOrdenesReparacionPendientes(fecha);
         return aux;
