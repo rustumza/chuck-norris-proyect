@@ -9,6 +9,7 @@ package Expertos;
 import DTO.DTOProblemasDelSemaforo;
 import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Fabricas.FabricaDeEstrategiaCalcularPrioridad;
@@ -28,6 +29,7 @@ import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.Entidades.Ubicacion;
 import Persistencia.Entidades.UbicacionSimple;
 import Persistencia.ExpertosPersistencia.FachadaExterna;
+import Utilidades.validar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +71,27 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
     }
 
 
-    public void guardarDenunciante(Denunciante denunciante){
+    public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido{
+
+        if(!validar.validarNumerosEnteros(denunciante.getcelular())){
+
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Ingrese un celular correcto");
+            throw ex;
+
+
+        }else if(!validar.validarNumerosEnteros(denunciante.gettelefonofijo())){
+
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Ingrese un telefono fijo correcto");
+            throw ex;
+
+        }else if(!validar.isEmail(denunciante.getemail())){
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Ingrese un E-mail correcto");
+            throw ex;
+
+        }
 
         FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
 

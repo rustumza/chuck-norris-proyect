@@ -7,6 +7,7 @@ package InterfacesGraficas;
 
 import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.Denunciante;
@@ -55,8 +56,11 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     }
 
     public void guardarDenunciante(Denunciante denunciante){
-
-        earpd.guardarDenunciante(denunciante);
+        try {
+            earpd.guardarDenunciante(denunciante);
+        } catch (ExcepcionCampoInvalido ex) {
+            JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
