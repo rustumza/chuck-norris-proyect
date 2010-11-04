@@ -25,8 +25,8 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
         String insert;
         PermisoAgente permiso = (PermisoAgente) obj;
 
-        insert = "INSERT INTO permiso (OIDPermiso, OIDPefil, NroPermiso, NombrePermiso)"
-                + "VALUES '" + permiso.getOid() + "','" + permiso.getOidPerfil() + "', '" + permiso.getNroPermiso() + "', '" + permiso.getNombrePermiso() + "'";
+        insert = "INSERT INTO permiso (OIDPermiso, NroPermiso, NombrePermiso)"
+                + "VALUES '" + permiso.getOid() + "', '" + permiso.getNroPermiso() + "', '" + permiso.getNombrePermiso() + "'";
 
     return insert;
     }
@@ -34,9 +34,9 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
     public String armarSelect(List<Criterio> criterios) {
 
         String select;
-        select = "SELECT * FROM permiso";
+        select = "SELECT * FROM permiso ";
         String condicion = "";
-
+        //String caonsulta = "SELECT permiso.NroPermiso AS nropermiso, permiso.NombrePermiso AS nombrepermiso FROM permiso JOIN permisoperfiles ON permiso.OIDPermiso = permisoperfiles.OIDPermiso WHERE permisoperfiles.OIDPerfil = '"+ obj.getOid() +"'";
         if (!criterios.isEmpty()) {
             condicion = condicion + " WHERE ";
 
@@ -44,9 +44,15 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
                 if (i > 0) {
                     condicion = condicion + " AND ";
                 }
-                condicion = condicion + "permiso." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
-            }
+                if(criterios.get(i).getAtributo().equalsIgnoreCase("Perfil")){
+                    criterios.get(i).setAtributo("OIDPerfil");
+                    select += "JOIN permisoperfiles ON permiso.OIDPermiso = permisoperfiles.OIDPermiso ";
+                    condicion += "permisoperfiles." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+                }else{
+                    condicion += "permiso." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
 
+                }
+            }
             select = select + condicion;
         }
 
@@ -70,7 +76,6 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
 
         update = "UPDATE permiso SET"
                 + "OIDPermiso ='" + permiso.getOid() + "', "
-                + "OIDPerfil = '" + permiso.getOidPerfil() + "', "
                 + "NroPermiso = " + permiso.getNroPermiso() + ", "
                 + "NombrePermiso ='" + permiso.getNombrePermiso() + "'";
 
@@ -88,8 +93,6 @@ public class IntermediarioPersistenciaPermiso extends IntermediarioRelacional{
                 PermisoAgente nuevoPermiso = (PermisoAgente) FabricaEntidades.getInstancia().crearEntidad("Permiso");
                 nuevoPermiso.setIsNuevo(false);
                 nuevoPermiso.setOid(rs.getString("OIDPermiso"));
-                nuevoPermiso.setOidPerfil(rs.getString("OIDPerfil"));
-                nuevoPermiso.setPerfilBuscado(true);
                 nuevoPermiso.setNroPermiso(Integer.valueOf(rs.getString("NroPermiso")));
                 nuevoPermiso.setNombrePermiso(rs.getString("NombrePermiso"));
 

@@ -13,7 +13,7 @@ public class PermisoImplementacion implements Permiso{
 
     private int NroPermiso;
     private String NombrePermiso;
-    private Perfil perfil;
+    
 
     public PermisoImplementacion(){
 
@@ -27,9 +27,7 @@ public class PermisoImplementacion implements Permiso{
         return NombrePermiso;
     }
 
-    public Perfil getPerfil(){
-        return perfil;
-    }
+    
 
     public void setNroPermiso(Integer nroPerm){
         this.NroPermiso = nroPerm;
@@ -39,8 +37,5 @@ public class PermisoImplementacion implements Permiso{
         this.NombrePermiso = nomPermiso;
     }
 
-    public void setPerfil(Perfil perf){
-        this.perfil = perf;
-    }
-
+    
 }

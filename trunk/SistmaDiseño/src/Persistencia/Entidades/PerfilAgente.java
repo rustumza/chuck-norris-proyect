@@ -14,7 +14,7 @@ import java.util.List;
 public class PerfilAgente extends ObjetoPersistente implements Perfil{
 
         private PerfilImplementacion implementacion;
-
+        
 
 	public String getNombrePerfil(){
 		return implementacion.getNombrePerfil();

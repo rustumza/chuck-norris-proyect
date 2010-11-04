@@ -7,7 +7,10 @@ package Persistencia.intermediarios;
 
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.Entidades.PerfilAgente;
+import Persistencia.Entidades.Permiso;
+import Persistencia.Entidades.SuperDruperInterfaz;
 import Persistencia.ExpertosPersistencia.Criterio;
+import Persistencia.ExpertosPersistencia.FachadaInterna;
 import Persistencia.Fabricas.FabricaEntidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,6 +109,16 @@ public class IntermediarioPersistenciaPerfil extends IntermediarioRelacional{
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
+
+       List<Criterio> listadecriterio = new ArrayList<Criterio>();
+       listadecriterio.add(FachadaInterna.getInstancia().crearCriterio("Perfil", "=", obj));
+       List<SuperDruperInterfaz> listaDeInterfaces = FachadaInterna.getInstancia().buscar("Permiso", listadecriterio);
+       List<Permiso> listaDePermisos = new ArrayList<Permiso>();
+        for (SuperDruperInterfaz superDruperInterfaz : listaDeInterfaces) {
+            listaDePermisos.add((Permiso)superDruperInterfaz);
+        }
+       ((PerfilAgente)obj).setPermisos((listaDePermisos));
+              
     }
 
     @Override

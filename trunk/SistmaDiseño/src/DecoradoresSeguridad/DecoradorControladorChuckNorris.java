@@ -10,7 +10,7 @@ import InterfacesGraficas.ControladorSubSistemaPermisos;
 import InterfacesGraficas.PantallaPrincipal;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Permiso;
-import Utilidades.validarPermisos;
+import Utilidades.validar;
 
 /**
  *
@@ -22,16 +22,16 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
     public void iniciar() {
 
         super.iniciar();
-        /*
-         if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 21))
+        
+         if(validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 12))
             getPantPrinc().getatenderReclamo().setEnabled(false);
-        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 22))
+        if(validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 13))
             getPantPrinc().getconsultarAvanceDeReclamo().setEnabled(false);
-        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 23))
+        if(validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 14))
             getPantPrinc().getconsultarOrdenesPendientes().setEnabled(false);
-        if(validarPermisos.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 24))
+        if(validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 15))
             getPantPrinc().getejecutarOrdenesDeTrabajos().setEnabled(false);
-        */
+        
     }
 
     @Override
