@@ -6,6 +6,8 @@ package Persistencia.Decoradores;
 
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
+import Excepciones.ExcepcionErrorConexion;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
 import java.util.Date;
@@ -18,7 +20,7 @@ import java.util.List;
 public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrdenesTrabajo {
 
     @Override
-    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) throws ExcepcionCampoInvalido {
+    public List<DTOOrden> consultarOrdenesTrabajoPendientes(Date fecha) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
 
         iniciarTx();
         List<DTOOrden> aux = super.consultarOrdenesTrabajoPendientes(fecha);
@@ -26,23 +28,23 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha){
+    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado{
         iniciarTx();
         List<DTOOrden>  aux = super.consultarOrdenesMantenimientoPendientes(fecha);
         return aux;
     }
 
     @Override
-    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) throws ExcepcionCampoInvalido {
+    public List<DTOOrden> consultarOrdenesReparacionPendientes(Date fecha) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
         iniciarTx();
         List<DTOOrden> aux = super.consultarOrdenesReparacionPendientes(fecha);
         return aux;
     }
 
     @Override
-    public void guardarOrdenTrabajo() {
+    public void guardarOrdenTrabajo(Date fecha) throws ExcepcionErrorConexion {
         iniciarTx();
-        super.guardarOrdenTrabajo();
+        super.guardarOrdenTrabajo(fecha);
         confirmarTx();
     }
 

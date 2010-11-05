@@ -5,6 +5,7 @@
 package AdaptadorSistemaReportes;
 
 import DTO.DTOOrden;
+import DTO.DTOReserva;
 import java.util.ArrayList;
 import java.util.List;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -22,6 +23,7 @@ public class OrdenesMantenimientoDataSource implements JRDataSource {
     private FallasTecnicasDataSource fallasDataSource;
     private EquipamientoDataSource equipamientoDataSource;
     private RepuestoDataSource repuestoDataSource;
+    private TareasMantenimientoDataSource tareasMantDataSource;
 
     public OrdenesMantenimientoDataSource() {
     }
@@ -73,11 +75,20 @@ public class OrdenesMantenimientoDataSource implements JRDataSource {
         } else if (jrf.getName().equals("modeloSemaforo")) {
             valor = listaOrdenes.get(indicadorOrdenActual).getListaSemaforos().get(0).getModelo();
         } else if (jrf.getName().equals("equipamientos")) {
-            equipamientoDataSource = new EquipamientoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaReservas().get(0).getListaEquipamiento());
+            equipamientoDataSource = new EquipamientoDataSource();
+            for (DTOReserva reserva : listaOrdenes.get(indicadorOrdenActual).getListaReservas()) {
+                equipamientoDataSource.addAllEquipamiento(reserva.getListaEquipamiento());
+            }
             valor = equipamientoDataSource;
         } else if (jrf.getName().equals("repuestos")) {
-            repuestoDataSource = new RepuestoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaReservas().get(0).getListaRepuesto());
+            repuestoDataSource = new RepuestoDataSource();
+            for (DTOReserva reserva : listaOrdenes.get(indicadorOrdenActual).getListaReservas()) {
+                repuestoDataSource.addAllRepuestos(reserva.getListaRepuesto());
+            }
             valor = repuestoDataSource;
+        } else if (jrf.getName().equals("TareaMantenimiento")) {
+            tareasMantDataSource = new TareasMantenimientoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaTareasMantenimiento());
+            valor = tareasMantDataSource;
         }
 
         return valor;

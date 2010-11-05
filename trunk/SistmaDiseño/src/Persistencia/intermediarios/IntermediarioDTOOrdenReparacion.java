@@ -10,6 +10,7 @@ import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
 import DTO.DTOSemaforo;
+import DTO.DTOUbicacion;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import java.sql.ResultSet;
@@ -45,10 +46,11 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                 + "estadoordentrabajo.NombreEstado, "
                 + "fallatecnica.CodigoFallaTecnica, fallatecnica.DescripcionFalla, "
                 + "trabajo.NombreTrabajo, "
-                + "ubicacion.OIDUbicacion, ubicacion.CodigoUbicacion, ubicacion.Prioridad, ubicacion.TipoUbicacion, "
+                + "ubicacion.OIDUbicacion as OIDUbicacion, ubicacion.CodigoUbicacion, ubicacion.Prioridad, ubicacion.TipoUbicacion, "
                 + "ubicacionsimple.Altura, "
-                + "interseccion.OIDUbicacion, interseccioncalle.OIDCalle as intercalle, "
-                + "calle1.OIDCalle as oidcale,calle2.OIDCalle, calle1.CodigoCalle "
+                + "interseccion.OIDUbicacion as OIDInterseccion, interseccioncalle.OIDCalle as intercalle, "
+                + "calleInterseccion.NombreCalle as calleInterseccion, "
+                + "calleUbicacionSimple.NombreCalle as calleUbSimple "
                 + "from ordendetrabajo as ordensemaforo "
                 + "join ordentrabajoestado "
                 + "on ordensemaforo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
@@ -76,14 +78,14 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                 + "on semaforo.OIDUbicacion = ubicacion.OIDUbicacion "
                 + "left join ubicacionsimple "
                 + "on ubicacion.OIDUbicacion = ubicacionsimple.OIDUbicacion "
+                + "left join calle as calleUbicacionSimple "
+                + "on ubicacionsimple.OIDCalle = calleUbicacionSimple.OIDCalle "
                 + "left join interseccion "
                 + "on ubicacion.OIDUbicacion = interseccion.OIDUbicacion "
-                + "left join calle as calle1 "
-                + "on ubicacionsimple.OIDCalle = calle1.OIDCalle "
                 + "LEFT JOIN interseccioncalle "
                 + "on interseccion.OIDUbicacion = interseccioncalle.OIDInterseccion "
-                + "left join calle as calle2 "
-                + "on interseccioncalle.OIDCalle = calle2.OIDCalle "
+                + "left join calle as calleInterseccion "
+                + "on interseccioncalle.OIDCalle = calleInterseccion.OIDCalle "
                 + "left join reserva "
                 + "on ordensemaforo.OIDOrdenDeTrabajo  = reserva.OIDOrdenDeTrabajo "
                 + "join reservaelementotrabajo "
@@ -98,10 +100,12 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                 + "on ordensemaforo.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo";
 
         String condicion = "";
-        condicion = " WHERE ordensemaforo.FechaInicioPlanificada = '"+criterios.get(0).getValor()+"'";
-        if(criterios.size() == 2){
-            condicion = condicion + " AND "+criterios.get(1).getAtributo()+criterios.get(1).getOperador()+"'"+criterios.get(1).getValor()+"'" ;
+        condicion = " WHERE ordensemaforo.FechaInicioPlanificada = '" + criterios.get(0).getValor() + "'";
+        if (criterios.size() == 2) {
+            condicion = condicion + " AND " + criterios.get(1).getAtributo() + criterios.get(1).getOperador() + "'" + criterios.get(1).getValor() + "'";
         }
+        condicion = condicion + " AND IndicadoresEstadoActual = TRUE";
+
 
         select = select + condicion;
 
@@ -137,6 +141,7 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
         boolean crearDtoRepuesto = false;
         boolean crearDtoSemaforo = false;
         boolean crearDtoFalla = false;
+        boolean agregarCalleUbicacion = false;
 
 
         try {
@@ -229,21 +234,57 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                     crearDtoFalla = true;
                 } else if (!listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraFalla(rs.getString("CodigoFallaTecnica"))) {
                     crearDtoFalla = true;
-                } else{
+                } else {
                     crearDtoFalla = false;
                 }
 
-                if(crearDtoFalla){
+                if (crearDtoFalla) {
                     DTOFallaTecnica nuevaFalla = new DTOFallaTecnica();
                     nuevaFalla.setCodigoFalla(rs.getString("CodigoFallaTecnica"));
                     nuevaFalla.setDescripcion(rs.getString("CodigoFallaTecnica"));
                     nuevaFalla.setNombreFalla(rs.getString("NombreTrabajo"));
+                    listaOrdenes.get(listaOrdenes.size() - 1).addFalla(nuevaFalla);
                 }
+
+                if (rs.getString("OIDInterseccion") != null) {
+                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                        DTOUbicacion nuevaUbicacion = new DTOUbicacion();
+                        listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
+                        agregarCalleUbicacion = true;
+                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                        agregarCalleUbicacion = true;
+                    } else {
+                        agregarCalleUbicacion = false;
+                    }
+
+                } else if (rs.getString("calleUbSimple") != null) {
+                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                        DTOUbicacion nuevaUbicacion = new DTOUbicacion();
+                        listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
+                        agregarCalleUbicacion = true;
+                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                        agregarCalleUbicacion = true;
+                    } else {
+                        agregarCalleUbicacion = false;
+                    }
+                }
+
+                if(agregarCalleUbicacion){
+                    if(rs.getString("OIDInterseccion") != null){
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().addCalle(rs.getString("calleInterseccion"));
+                    }else if(rs.getString("calleUbSimple") != null){
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setCalle1(rs.getString("calleUbSimple"));
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setAltura(rs.getString("Altura"));
+                    }
+                }
+
 
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        } catch(Exception ex){
+            ex.printStackTrace();
         }
 
         for (DTOOrden dTOOrden : listaOrdenes) {
@@ -260,8 +301,6 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
 
     @Override
     public void buscarObjRelacionados(ObjetoPersistente obj) {
-
-
     }
 
     @Override

@@ -57,10 +57,10 @@ public class ControladorConsultarOrdenesPendientes implements Controlador {
             ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
 
         } catch (ExcepcionCampoInvalido ex) {
-            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
-            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex.getMessage());
         }
 

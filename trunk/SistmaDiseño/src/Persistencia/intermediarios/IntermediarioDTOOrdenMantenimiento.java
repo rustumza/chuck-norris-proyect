@@ -5,12 +5,12 @@
 package Persistencia.intermediarios;
 
 import DTO.DTOEquipamientoReservado;
-import DTO.DTOFallaTecnica;
 import DTO.DTOOrden;
 import DTO.DTORepuestoReservado;
 import DTO.DTOReserva;
 import DTO.DTOSemaforo;
 import DTO.DTOTareaFichaMantenimiento;
+import DTO.DTOUbicacion;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import java.sql.ResultSet;
@@ -31,8 +31,7 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
 
     @Override
     public String armarSelect(List<Criterio> criterios) {
-        String select = "Select "
-                + "ordenmantenimiento.CodigoOrdenMantenimiento as nroOrden, "
+        String select = "Select ordenmantenimiento.CodigoOrdenMantenimiento as nroOrden, "
                 + "ordendetrabajo.OIDOrdenDeTrabajo, ordendetrabajo.DuracionPrevistaTrabajo, ordendetrabajo.FechaInicioTrabajo, ordendetrabajo.FechaFinTrabajo, ordendetrabajo.FechaInicioPlanificada,ordendetrabajo.Tipo, "
                 + "equipodetrabajo.NombreEquipo, "
                 + "estadoordentrabajo.NombreEstado, "
@@ -43,7 +42,12 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                 + "semaforo.NumeroSerie, "
                 + "modelo.NombreModelo, "
                 + "trabajo.NombreTrabajo, "
-                + "tarea.CodigoTarea, tarea.DescripcionTarea "
+                + "tarea.CodigoTarea, tarea.DescripcionTarea, "
+                + "ubicacion.OIDUbicacion as OIDUbicacion, ubicacion.CodigoUbicacion, ubicacion.Prioridad, ubicacion.TipoUbicacion, "
+                + "ubicacionsimple.Altura, "
+                + "interseccion.OIDUbicacion as OIDInterseccion, interseccioncalle.OIDCalle as intercalle, "
+                + "calleInterseccion.NombreCalle as calleInterseccion, "
+                + "calleUbSimple.NombreCalle as calleUbSimple "
                 + "from ordendetrabajo "
                 + "join ordentrabajoestado on ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
                 + "join estadoordentrabajo on ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
@@ -63,15 +67,16 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                 + "join ubicacion on semaforo.OIDUbicacion = ubicacion.OIDUbicacion "
                 + "left join ubicacionsimple on ubicacion.OIDUbicacion = ubicacionsimple.OIDUbicacion "
                 + "left join interseccion on ubicacion.OIDUbicacion = interseccion.OIDUbicacion "
-                + "left join calle as calle1 on ubicacionsimple.OIDCalle = calle1.OIDCalle "
+                + "left join calle as calleUbSimple on ubicacionsimple.OIDCalle = calleUbSimple.OIDCalle "
                 + "LEFT JOIN interseccioncalle on interseccion.OIDUbicacion = interseccioncalle.OIDInterseccion "
-                + "left join calle as calle2 on interseccioncalle.OIDCalle = calle2.OIDCalle";
+                + "left join calle as calleInterseccion on interseccioncalle.OIDCalle = calleInterseccion.OIDCalle";
 
         String condicion = "";
         condicion = " WHERE ordendetrabajo.FechaInicioPlanificada = '" + criterios.get(0).getValor() + "'";
         if (criterios.size() == 2) {
             condicion = condicion + " AND " + criterios.get(1).getAtributo() + criterios.get(1).getOperador() + "'" + criterios.get(1).getValor() + "'";
         }
+        condicion = condicion + " AND IndicadoresEstadoActual = TRUE";
 
         select = select + condicion;
 
@@ -105,6 +110,7 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
         boolean crearDtoRepuesto = false;
         boolean crearDtoSemaforo = false;
         boolean creardtoFichaMant = false;
+        boolean agregarCalleUbicacion = false;
 
 
         try {
@@ -190,15 +196,19 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     listaOrdenes.get(listaOrdenes.size() - 1).addSemaforo(nuevoSemaforo);
                 }
 
-                if (rs.getString("CodigoTarea") != null && listaOrdenes.get(listaOrdenes.size() - 1).getListaTareasMantenimiento() != null) {
-                    creardtoFichaMant = true;
-                } else if (rs.getString("CodigoTarea") != null && !listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraTareaMant(rs.getString("CodigoTarea"))) {
-                    crearNuevaReserva = true;
+                if (rs.getString("CodigoTarea") != null) {
+                    if (listaOrdenes.get(listaOrdenes.size() - 1).getListaTareasMantenimiento() == null) {
+                        creardtoFichaMant = true;
+                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraTareaMant(rs.getString("CodigoTarea"))) {
+                        creardtoFichaMant = true;
+                    } else {
+                        creardtoFichaMant = false;
+                    }
                 } else {
                     creardtoFichaMant = false;
                 }
 
-                if(creardtoFichaMant){
+                if (creardtoFichaMant) {
                     DTOTareaFichaMantenimiento nuevaTarea = new DTOTareaFichaMantenimiento();
                     nuevaTarea.setCodigoTarea(rs.getString("CodigoTarea"));
                     nuevaTarea.setDescripcion(rs.getString("DescripcionTarea"));
@@ -206,6 +216,37 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     listaOrdenes.get(listaOrdenes.size() - 1).addTareaMantenimiento(nuevaTarea);
                 }
 
+                if (rs.getString("OIDInterseccion") != null) {
+                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                        DTOUbicacion nuevaUbicacion = new DTOUbicacion();
+                        listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
+                        agregarCalleUbicacion = true;
+                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                        agregarCalleUbicacion = true;
+                    } else {
+                        agregarCalleUbicacion = false;
+                    }
+
+                } else if (rs.getString("calleUbSimple") != null) {
+                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                        DTOUbicacion nuevaUbicacion = new DTOUbicacion();
+                        listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
+                        agregarCalleUbicacion = true;
+                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                        agregarCalleUbicacion = true;
+                    } else {
+                        agregarCalleUbicacion = false;
+                    }
+                }
+
+                if (agregarCalleUbicacion) {
+                    if (rs.getString("OIDInterseccion") != null) {
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().addCalle(rs.getString("calleInterseccion"));
+                    } else if (rs.getString("calleUbSimple") != null) {
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setCalle1(rs.getString("calleUbSimple"));
+                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setAltura(rs.getString("Altura"));
+                    }
+                }
 
 
             }
