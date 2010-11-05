@@ -186,6 +186,9 @@ public class DTOOrden extends ObjetoPersistente {
      * @return the listaFalla
      */
     public List<DTOFallaTecnica> getListaFalla() {
+        if(listaFalla == null){
+            listaFalla = new ArrayList<DTOFallaTecnica>();
+        }
         return listaFalla;
     }
 

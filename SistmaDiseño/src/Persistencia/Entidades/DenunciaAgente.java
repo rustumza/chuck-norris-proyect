@@ -6,7 +6,6 @@ package Persistencia.Entidades;
 
 import Persistencia.ExpertosPersistencia.Criterio;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
-import Persistencia.Fabricas.FabricaCriterios;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class DenunciaAgente extends CasoAgente implements Denuncia {
 
     private String oidReclamo;
-    private List<String> oidDenunciaEstado;
+    //private List<String> oidDenunciaEstado;
     private List<String> listaOidFallaTecnica;
     //variables para saber si se han buscado los atributos en la BD
     private boolean reclamoBuscado;
@@ -64,7 +63,7 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     public List<DenunciaEstado> getDenunciaEstado() {
         if (isDenunciaEstadoBuscado() == false) {
             List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
-            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("oidDenuncia", "=", super.getOid()));
+            listaDeCriterio.add(FachadaInterna.getInstancia().crearCriterio("OIDDenuncia", "=", super.getOid()));
             List<SuperDruperInterfaz> listaDencunaEstados = FachadaInterna.getInstancia().buscar("DenunciaEstado", listaDeCriterio);
             for (SuperDruperInterfaz denunciaEstado : listaDencunaEstados) {
                 getImplementacion().addDenunciaEstado((DenunciaEstado) denunciaEstado);
@@ -76,10 +75,10 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     public void setDenunciaEstado(List<DenunciaEstado> denunciaEstado) {
         getImplementacion().setDenunciaEstado(denunciaEstado);
         denunciaEstadoBuscado=true;
-        if(oidDenunciaEstado ==null)
-            oidDenunciaEstado = new ArrayList<String>();
-        for(DenunciaEstado aux : denunciaEstado)
-            oidDenunciaEstado.add(((ObjetoPersistente)aux).getOid());
+//        if(oidDenunciaEstado ==null)
+//            oidDenunciaEstado = new ArrayList<String>();
+//        for(DenunciaEstado aux : denunciaEstado)
+//            oidDenunciaEstado.add(((ObjetoPersistente)aux).getOid());
     }
 
     public List<FallaTecnica> getFallasTecnica() {
@@ -132,16 +131,16 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     /**
      * @return the oidDenunciaEstado
      */
-    public List<String> getOidDenunciaEstado() {
-        return oidDenunciaEstado;
-    }
+//    public List<String> getOidDenunciaEstado() {
+//        return oidDenunciaEstado;
+//    }
 
     /**
      * @param oidDenunciaEstado the oidDenunciaEstado to set
      */
-    public void setOidDenunciaEstado(List<String> oidDenunciaEstado) {
-        this.oidDenunciaEstado = oidDenunciaEstado;
-    }
+//    public void setOidDenunciaEstado(List<String> oidDenunciaEstado) {
+//        this.oidDenunciaEstado = oidDenunciaEstado;
+//    }
 
     /**
      * @return the reclamoBuscado
@@ -194,7 +193,8 @@ public class DenunciaAgente extends CasoAgente implements Denuncia {
     }
 
     public void agregarDenunciaEstado(DenunciaEstado denEstado) {
-        oidDenunciaEstado.add(((DenunciaAgente)denEstado).getOid());
+//        oidDenunciaEstado.add(((DenunciaAgente)denEstado).getOid());
+        ((DenunciaEstadoAgente)denEstado).setOidDenuncia(getOid());
         getImplementacion().agregarDenunciaEstado(denEstado);
     }
 }

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
 /**
@@ -10,10 +9,11 @@ package DTO;
  * @author diego
  */
 public class DTOUbicacion {
+
     private String tipo;
-    private String calle1;
-    private String calle2;
-    private String altura;
+    private String calle1 = "";
+    private String calle2 = "";
+    private String altura = "";
 
     /**
      * @return the tipo
@@ -71,4 +71,21 @@ public class DTOUbicacion {
         this.altura = altura;
     }
 
+    public boolean seEncuentraCalle(String calle) {
+        boolean esta = false;
+        if (calle1.equals(calle)) {
+            esta = true;
+        } else if (calle2.equals(calle)) {
+            esta = true;
+        }
+        return esta;
+    }
+
+    public void addCalle(String calle) {
+        if (calle1.isEmpty()) {
+            calle1 = calle;
+        } else if (calle2.isEmpty()) {
+            calle2 = calle;
+        }
+    }
 }

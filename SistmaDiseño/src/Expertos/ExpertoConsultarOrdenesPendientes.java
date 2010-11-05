@@ -180,7 +180,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             } finally {
                 if (listaDTO.isEmpty()) {
                     ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
-                    ex.setMensaje("No hay Ordenes encontradas para la fecha ingresada.");
+                    ex.setMensaje("Órdenes no encontradas para la fecha ingresada.");
                     throw ex;
                 }
                 return listaDTO;

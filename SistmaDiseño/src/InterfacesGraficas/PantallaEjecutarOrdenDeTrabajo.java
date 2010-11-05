@@ -29,7 +29,6 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
     ControladorEjecutarOrdenesTrabajo controlador;
-
     DTOOrden ordenSeleccionada;
     DTOReserva reservaSeleccionada;
 
@@ -42,24 +41,33 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         initComponents();
         controlador = nuevoControlador;
 
+        btnConfirmar.setVisible(false);
+        btnImprimir.setVisible(false);
+
         ///////*Setea el comportamiento a la tabla Ordenes Pendientes:
         tblOrdenesTrabajo.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
-                ordenSeleccionada = (DTOOrden) ((ModeloTablaOrdenesTrabajo)tblOrdenesTrabajo.getModel()).getRow(fila);
+                ordenSeleccionada = (DTOOrden) ((ModeloTablaOrdenesTrabajo) tblOrdenesTrabajo.getModel()).getRow(fila);
+                if (tblEquipamientoReservado.getModel() != null) {
+                    ((ModeloTablaReservaEquipamiento) tblEquipamientoReservado.getModel()).clear();
+                }
+                if (tblRepuestosReservado.getModel() != null) {
+                    ((ModeloTablaResevaRepuesto) tblRepuestosReservado.getModel()).clear();
+                }
                 controlador.mostrarReservas(ordenSeleccionada.getListaReservas());
             }
         });
 
-         ///////*Setea el comportamiento a la tabla Reserva:
+        ///////*Setea el comportamiento a la tabla Reserva:
         tblReservas.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 int fila = tblOrdenesTrabajo.rowAtPoint(e.getPoint());
-                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva)tblReservas.getModel()).getRow(fila);
+                reservaSeleccionada = (DTOReserva) ((ModeloTablaReserva) tblReservas.getModel()).getRow(fila);
                 controlador.mostrarDetalleReserva(reservaSeleccionada);
             }
         });
@@ -128,7 +136,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,7 +256,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         jLabel3.setText("Reservas");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 331, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Shutdown-20.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/system-shutdown-panel.png"))); // NOI18N
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +265,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 500, 110, -1));
 
-        btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/agt_action_success-20.png"))); // NOI18N
+        btnConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/dialog-ok.png"))); // NOI18N
         btnConfirmar.setText("Confirmar Ordenes");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,7 +274,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         });
         getContentPane().add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 190, -1));
 
-        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/HP-Printer_20.png"))); // NOI18N
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/document-print.png"))); // NOI18N
         btnImprimir.setText("Imprimir Ordenes");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,20 +298,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
 }//GEN-LAST:event_radioBtnOrdenTodasActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
-        int seleccion;
-        if (radioBtnOrdenMant.isSelected()) {
-            seleccion = ordenMantenimiento;
-        } else if (radioBtnOrdenRep.isSelected()) {
-            seleccion = ordenReparacion;
-        } else {
-            seleccion = ordenTrabajo;
-        }
-        controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
+        buscarOrdenes();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        controlador.confirmarOrdenesPendientes();
+        controlador.confirmarOrdenesPendientes(dataChsFecha.getDate());
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -377,5 +376,44 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
      */
     public javax.swing.JTable getTblRepuestosReservado() {
         return tblRepuestosReservado;
+    }
+
+    private void limpiarCampos() {
+        if (tblOrdenesTrabajo.getModel() != null) {
+            ((ModeloTablaOrdenesTrabajo) tblOrdenesTrabajo.getModel()).clear();
+        }
+        if (tblReservas.getModel() != null) {
+            ((ModeloTablaReserva) tblReservas.getModel()).clear();
+        }
+        if (tblEquipamientoReservado.getModel() != null) {
+            ((ModeloTablaReservaEquipamiento) tblEquipamientoReservado.getModel()).clear();
+        }
+        if (tblRepuestosReservado.getModel() != null) {
+            ((ModeloTablaResevaRepuesto) tblRepuestosReservado.getModel()).clear();
+        }
+        btnConfirmar.setVisible(false);
+        btnImprimir.setVisible(false);
+    }
+
+    public void buscarOrdenes() {
+
+        limpiarCampos();
+        int seleccion;
+        if (radioBtnOrdenMant.isSelected()) {
+            seleccion = ordenMantenimiento;
+        } else if (radioBtnOrdenRep.isSelected()) {
+            seleccion = ordenReparacion;
+        } else {
+            seleccion = ordenTrabajo;
+        }
+        controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
+    }
+
+    public void mostrarBotonConfirmar(){
+        btnConfirmar.setVisible(true);
+    }
+
+    public void mostrarBotonImprimir(){
+        btnImprimir.setVisible(true);
     }
 }

@@ -5,6 +5,7 @@
 package AdaptadorSistemaReportes;
 
 import DTO.DTOOrden;
+import DTO.DTOReserva;
 import java.util.ArrayList;
 import java.util.List;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -78,10 +79,16 @@ public class OrdenesReparacionDataSource implements JRDataSource {
             semaforosDataSource = new SemaforoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaSemaforos());
             valor = semaforosDataSource;
         } else if (jrf.getName().equals("equipamientos")) {
-            equipamientoDataSource = new EquipamientoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaReservas().get(0).getListaEquipamiento());
+            equipamientoDataSource = new EquipamientoDataSource();
+            for (DTOReserva reserva : listaOrdenes.get(indicadorOrdenActual).getListaReservas()) {
+                equipamientoDataSource.addAllEquipamiento(reserva.getListaEquipamiento());
+            }
             valor = equipamientoDataSource;
         } else if (jrf.getName().equals("repuestos")) {
-            repuestoDataSource = new RepuestoDataSource(listaOrdenes.get(indicadorOrdenActual).getListaReservas().get(0).getListaRepuesto());
+            repuestoDataSource = new RepuestoDataSource();
+            for (DTOReserva reserva : listaOrdenes.get(indicadorOrdenActual).getListaReservas()) {
+                repuestoDataSource.addAllRepuestos(reserva.getListaRepuesto());
+            }
             valor = repuestoDataSource;
         } else if (jrf.getName().equals("numCaso")) {
             valor = listaOrdenes.get(indicadorOrdenActual).getNroCaso();

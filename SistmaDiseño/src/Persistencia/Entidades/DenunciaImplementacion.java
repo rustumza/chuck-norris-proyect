@@ -67,11 +67,11 @@ public class DenunciaImplementacion extends CasoImplementacion implements Denunc
         return listaDenunciaEstado;
     }
 
-    public void addDenunciaEstado(DenunciaEstado nuevoEstado){
+    public void addDenunciaEstado(DenunciaEstado nuevaDeunciaEstado){
         if(listaDenunciaEstado == null){
             listaDenunciaEstado = new ArrayList<DenunciaEstado>();
         }
-        listaDenunciaEstado.add(nuevoEstado);
+        listaDenunciaEstado.add(nuevaDeunciaEstado);
     }
 
     /**
@@ -100,6 +100,9 @@ public class DenunciaImplementacion extends CasoImplementacion implements Denunc
     }
 
     public void agregarDenunciaEstado(DenunciaEstado denEstado) {
+        if(listaDenunciaEstado == null){
+            listaDenunciaEstado = new ArrayList<DenunciaEstado>();
+        }
         listaDenunciaEstado.add(denEstado);
     }
 }

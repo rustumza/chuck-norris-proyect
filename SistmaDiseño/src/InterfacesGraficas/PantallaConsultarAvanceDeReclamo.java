@@ -243,8 +243,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 396, 170, -1));
+        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 170, -1));
 
+        btnDetalleOrden.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/document-properties.png"))); // NOI18N
         btnDetalleOrden.setText("Ver Detalle Orden");
         btnDetalleOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

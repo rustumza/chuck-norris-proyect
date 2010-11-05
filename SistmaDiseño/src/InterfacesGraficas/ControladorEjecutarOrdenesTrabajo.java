@@ -7,6 +7,8 @@ package InterfacesGraficas;
 import DTO.DTOOrden;
 import DTO.DTOReserva;
 import Excepciones.ExcepcionCampoInvalido;
+import Excepciones.ExcepcionErrorConexion;
+import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
@@ -15,20 +17,22 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author informatica
  */
-public class ControladorEjecutarOrdenesTrabajo implements Controlador{
+public class ControladorEjecutarOrdenesTrabajo implements Controlador {
 
     ExpertoEjecutarOrdenesTrabajo experto;
     private PantallaEjecutarOrdenDeTrabajo pantalla;
     private ChuckNorrisControlador chuck;
 
-    public ControladorEjecutarOrdenesTrabajo(){
-        
+    public ControladorEjecutarOrdenesTrabajo() {
+
         experto = (ExpertoEjecutarOrdenesTrabajo) FabricaExpertos.getInstance().getExperto("EjecutarOrdenesTrabajo");
         pantalla = new PantallaEjecutarOrdenDeTrabajo(this);
 
@@ -45,9 +49,6 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador{
         getPantalla().setVisible(true);
     }
 
-// public void confirmarOrden(OrdenTrabajo listaOrdenTrabajo){
-//        experto.guardarOrdenTrabajo((List<OrdenTrabajo>) listaOrdenTrabajo);
-//     }
     public void buscarOrdenesPendientes(Date fecha, int seleccion) {
 
         List<DTOOrden> listaDTOOrdens;
@@ -56,10 +57,13 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador{
             ModeloTablaOrdenesTrabajo nuevoModelo = new ModeloTablaOrdenesTrabajo();
             nuevoModelo.addAllRow(listaDTOOrdens);
             ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(listaDTOOrdens);
+            pantalla.mostrarBotonConfirmar();
         } catch (ExcepcionCampoInvalido ex) {
-            JOptionPane.showMessageDialog( getPantalla(), ex.getMessage(),"ATENCION",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex.getMessage());
-            //Logger.getLogger(ControladorEjecutarOrdenesTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExcepcionObjetoNoEncontrado ex) {
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex.getMessage());
         }
 
     }
@@ -73,8 +77,15 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador{
         ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
-    public void confirmarOrdenesPendientes() {
-        experto.guardarOrdenTrabajo();
+    public void confirmarOrdenesPendientes(Date fecha) {
+        try {
+            experto.guardarOrdenTrabajo(fecha);
+            pantalla.mostrarBotonImprimir();
+        } catch (ExcepcionErrorConexion ex) {
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
+        }
+        
     }
 
     public void imprimirOrdenesPendientes() {
