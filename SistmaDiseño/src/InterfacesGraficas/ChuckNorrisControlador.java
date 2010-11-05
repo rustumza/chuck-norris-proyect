@@ -5,6 +5,7 @@
  */
 package InterfacesGraficas;
 
+import Fabricas.FabricaControladores;
 import Persistencia.Entidades.Operador;
 
 
@@ -20,7 +21,6 @@ public class ChuckNorrisControlador implements Controlador{
     private ControladorConsultarAvanceDeReclamo contConsAvancRec;
     private ControladorConsultarOrdenesPendientes contConsOrdPend;
     private ControladorEjecutarOrdenesTrabajo contEjecOrdTrab;
-    private ControladorSubSistemaPermisos contSubSisPerm;
     private Operador operadorEncontrado;
 
    /** public static void main(String[] args) {
@@ -46,11 +46,7 @@ public class ChuckNorrisControlador implements Controlador{
 
     }
 
-
-    public ChuckNorrisControlador (ControladorSubSistemaPermisos contPerm){
-         contSubSisPerm = contPerm;
-         pantPrinc = new PantallaPrincipal(this);
-    }
+    
 
     public void iniciar() {
 
@@ -61,7 +57,7 @@ public class ChuckNorrisControlador implements Controlador{
 
     public void iniciarCUAtenderReclamoPorDesperfecto() {
         getPantPrinc().setVisible(false);
-        contAtendRecl = new ControladorAtenderReclamoPorDesperfecto(this);
+        contAtendRecl = (ControladorAtenderReclamoPorDesperfecto) FabricaControladores.getInstance().getControlador("AtenderReclamoPorDesperfecto");
         contAtendRecl.setChuck(this);
         contAtendRecl.iniciar();
 
@@ -70,7 +66,7 @@ public class ChuckNorrisControlador implements Controlador{
 
     public void iniciarCUConsultarAvanceDeReclamo() {
         getPantPrinc().setVisible(false);
-        contConsAvancRec = new ControladorConsultarAvanceDeReclamo(this);
+        contConsAvancRec = (ControladorConsultarAvanceDeReclamo)FabricaControladores.getInstance().getControlador("ConsultarAvanceDeReclamo");
         contConsAvancRec.setChuck(this);
         contConsAvancRec.iniciar();
 
@@ -78,7 +74,7 @@ public class ChuckNorrisControlador implements Controlador{
 
     public void iniciarCUConsultarOrdenesPendientes() {
         getPantPrinc().setVisible(false);
-        contConsOrdPend = new ControladorConsultarOrdenesPendientes(this);
+        contConsOrdPend = (ControladorConsultarOrdenesPendientes)FabricaControladores.getInstance().getControlador("ConsultarOrdenesPendientes");
         contConsOrdPend.setChuck(this);
         contConsOrdPend.iniciar();
 
@@ -88,7 +84,7 @@ public class ChuckNorrisControlador implements Controlador{
     public void iniciarCUEjecutarOrdenesPendientes() {
 
         getPantPrinc().setVisible(false);
-        contEjecOrdTrab = new ControladorEjecutarOrdenesTrabajo(this);
+        contEjecOrdTrab = (ControladorEjecutarOrdenesTrabajo)FabricaControladores.getInstance().getControlador("EjecutarOrdenesTrabajo");
         contEjecOrdTrab.setChuck(this);
         contEjecOrdTrab.iniciar();
 
@@ -118,16 +114,13 @@ public class ChuckNorrisControlador implements Controlador{
     public void cerrar(){
         getPantPrinc().setVisible(false);
         getPantPrinc().dispose();
-        contSubSisPerm.iniciar();
+        ((ControladorSubSistemaPermisos)FabricaControladores.getInstance().getControlador("SubSistemaDePermisos")).iniciar();
 
     }
 
     /**
      * @param contSubSisPerm the contSubSisPerm to set
      */
-    public void setContSubSisPerm(ControladorSubSistemaPermisos contSubSisPerm) {
-        this.contSubSisPerm = contSubSisPerm;
-    }
 
     /**
      * @return the usuarioEncontrado

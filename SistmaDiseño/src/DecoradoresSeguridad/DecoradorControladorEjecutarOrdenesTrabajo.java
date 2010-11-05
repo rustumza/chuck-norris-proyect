@@ -7,6 +7,7 @@ package DecoradoresSeguridad;
 
 import DTO.DTOReserva;
 import InterfacesGraficas.ControladorEjecutarOrdenesTrabajo;
+import Utilidades.validar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,20 @@ public class DecoradorControladorEjecutarOrdenesTrabajo extends ControladorEjecu
     @Override
     public void iniciar() {
         super.iniciar();
-    }
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 8)){
+            getPantalla().getRadioBtnOrdenMant().setEnabled(false);
+            getPantalla().getRadioBtnOrdenTodas().setEnabled(false);
+            
+        }
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 9)){
+            getPantalla().getRadioBtnOrdenRep().setEnabled(false);
+            getPantalla().getRadioBtnOrdenTodas().setEnabled(false);
+            
+        }
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 16))
+            getPantalla().getBtnConfirmar().setEnabled(false);
 
+    }
 
     @Override
     public void buscarOrdenesPendientes(Date fecha, int seleccion) {

@@ -284,7 +284,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
 
     private void pressBotonConsultar(){
         int seleccion=1;
-        if (radioBtnDenuncia.isSelected()) {
+        if (getRadioBtnDenuncia().isSelected()) {
             seleccion=1;
         }else{
             seleccion=2;
@@ -377,5 +377,47 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
      */
     public javax.swing.JLabel getLblCantReclamos() {
         return lblCantReclamos;
+    }
+
+    /**
+     * @return the radioBtnDenuncia
+     */
+    public javax.swing.JRadioButton getRadioBtnDenuncia() {
+        return radioBtnDenuncia;
+    }
+
+    /**
+     * @param radioBtnDenuncia the radioBtnDenuncia to set
+     */
+    public void setRadioBtnDenuncia(javax.swing.JRadioButton radioBtnDenuncia) {
+        this.radioBtnDenuncia = radioBtnDenuncia;
+    }
+
+    /**
+     * @return the radioBtnReclamo
+     */
+    public javax.swing.JRadioButton getRadioBtnReclamo() {
+        return radioBtnReclamo;
+    }
+
+    /**
+     * @param radioBtnReclamo the radioBtnReclamo to set
+     */
+    public void setRadioBtnReclamo(javax.swing.JRadioButton radioBtnReclamo) {
+        this.radioBtnReclamo = radioBtnReclamo;
+    }
+
+    /**
+     * @return the botonConsultar
+     */
+    public javax.swing.JButton getBotonConsultar() {
+        return botonConsultar;
+    }
+
+    /**
+     * @param botonConsultar the botonConsultar to set
+     */
+    public void setBotonConsultar(javax.swing.JButton botonConsultar) {
+        this.botonConsultar = botonConsultar;
     }
 }

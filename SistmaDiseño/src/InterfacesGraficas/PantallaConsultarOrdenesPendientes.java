@@ -40,7 +40,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
     public PantallaConsultarOrdenesPendientes(ControladorConsultarOrdenesPendientes nuevoControlador) {
         initComponents();
         controlador = nuevoControlador;
-
+        
         ///////*Setea el comportamiento a la tabla Ordenes Pendientes:
         tblOrdenesTrabajo.addMouseListener(new MouseAdapter() {
 
@@ -123,7 +123,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         radioBtnOrdenMant.setText("Orden de Mantenimiento");
 
         grupoTipoOrden.add(radioBtnOrdenTodas);
-        radioBtnOrdenTodas.setSelected(true);
+        radioBtnOrdenTodas.setSelected(false);
         radioBtnOrdenTodas.setLabel("Todas");
         radioBtnOrdenTodas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +149,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblFecha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dataChsFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                        .addComponent(dataChsFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
                     .addComponent(radioBtnOrdenRep)
                     .addComponent(radioBtnOrdenMant)
                     .addComponent(radioBtnOrdenTodas)
@@ -169,7 +169,7 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
                 .addComponent(radioBtnOrdenMant)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioBtnOrdenTodas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addContainerGap())
         );
@@ -277,9 +277,9 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         limpiarCampos();
         int seleccion;
-        if (radioBtnOrdenMant.isSelected()) {
+        if (getRadioBtnOrdenMant().isSelected()) {
             seleccion = ordenMantenimiento;
-        } else if (radioBtnOrdenRep.isSelected()) {
+        } else if (getRadioBtnOrdenRep().isSelected()) {
             seleccion = ordenReparacion;
         } else {
             seleccion = ordenTrabajo;
@@ -367,5 +367,47 @@ public class PantallaConsultarOrdenesPendientes extends javax.swing.JFrame {
         if(tblRepuestosReservado.getModel() != null){
             ((ModeloTablaResevaRepuesto)tblRepuestosReservado.getModel()).clear();
         }
+    }
+
+    /**
+     * @return the radioBtnOrdenMant
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenMant() {
+        return radioBtnOrdenMant;
+    }
+
+    /**
+     * @param radioBtnOrdenMant the radioBtnOrdenMant to set
+     */
+    public void setRadioBtnOrdenMant(javax.swing.JRadioButton radioBtnOrdenMant) {
+        this.radioBtnOrdenMant = radioBtnOrdenMant;
+    }
+
+    /**
+     * @return the radioBtnOrdenRep
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenRep() {
+        return radioBtnOrdenRep;
+    }
+
+    /**
+     * @param radioBtnOrdenRep the radioBtnOrdenRep to set
+     */
+    public void setRadioBtnOrdenRep(javax.swing.JRadioButton radioBtnOrdenRep) {
+        this.radioBtnOrdenRep = radioBtnOrdenRep;
+    }
+
+    /**
+     * @return the radioBtnOrdenTodas
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenTodas() {
+        return radioBtnOrdenTodas;
+    }
+
+    /**
+     * @param radioBtnOrdenTodas the radioBtnOrdenTodas to set
+     */
+    public void setRadioBtnOrdenTodas(javax.swing.JRadioButton radioBtnOrdenTodas) {
+        this.radioBtnOrdenTodas = radioBtnOrdenTodas;
     }
 }

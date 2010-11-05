@@ -123,9 +123,9 @@ public class IntermediarioPersistenciaUsuario extends IntermediarioRelacional {
         listaCriterios.add(FachadaInterna.getInstancia().crearCriterio("OIDPerfil", "=", usuario.getOidPerfil()));
         Perfil perfil = (Perfil) FachadaInterna.getInstancia().buscar("Perfil", listaCriterios).get(0);
 
-        for(SuperDruperInterfaz objetoEncontrado : FachadaInterna.getInstancia().buscar("Permiso", listaCriterios)){
+        /*for(SuperDruperInterfaz objetoEncontrado : FachadaInterna.getInstancia().buscar("Permiso", listaCriterios)){
            perfil.addPermiso((Permiso)objetoEncontrado);
-        }
+        }*/
         usuario.setPerfil(perfil);
     }
 

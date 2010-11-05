@@ -15,6 +15,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
+import Persistencia.Entidades.Operador;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -111,4 +112,13 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador {
     public void setChuck(ChuckNorrisControlador chuck) {
         this.chuck = chuck;
     }
+
+    /**
+     * @return the operadorEncontrado
+     */
+    public Operador getOperadorEncontrado() {
+        return chuck.getOperadorEncontrado();
+    }
+
+
 }

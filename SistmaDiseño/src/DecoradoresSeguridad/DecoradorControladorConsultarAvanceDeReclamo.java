@@ -7,6 +7,7 @@ package DecoradoresSeguridad;
 
 
 import InterfacesGraficas.ControladorConsultarAvanceDeReclamo;
+import Utilidades.validar;
 
 /**
 *
@@ -21,6 +22,14 @@ public class DecoradorControladorConsultarAvanceDeReclamo extends ControladorCon
     @Override
     public void iniciar() {
         super.iniciar();
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 4))
+            getPantalla().getRadioBtnDenuncia().setEnabled(false);
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 5))
+            getPantalla().getRadioBtnReclamo().setEnabled(false);
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 6))
+            getPantalla().getBtnDetalleOrden().setEnabled(false);
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 7))
+            getPantalla().getBotonConsultar().setEnabled(false);
     }
 
     @Override

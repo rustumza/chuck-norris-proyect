@@ -42,7 +42,9 @@ public class ExpertoSubSistemaPermisos implements Experto {
 
             listaInterfaces = FachadaExterna.getInstancia().buscar("Operador", listaCriterios);
 
-            return (Operador) listaInterfaces.get(0);
+            Operador p =(Operador) listaInterfaces.get(0);
+            p.setUsuario(usuarioEncontrado);
+            return p;
         }
 
     }
