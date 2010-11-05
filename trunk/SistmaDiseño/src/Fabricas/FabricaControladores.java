@@ -11,6 +11,7 @@ import DecoradoresSeguridad.DecoradorControladorConsultarAvanceDeReclamo;
 import DecoradoresSeguridad.DecoradorControladorConsultarOrdenesPendientes;
 import DecoradoresSeguridad.DecoradorControladorEjecutarOrdenesTrabajo;
 import InterfacesGraficas.Controlador;
+import InterfacesGraficas.ControladorSubSistemaPermisos;
 
 /**
  *
@@ -44,9 +45,11 @@ private static FabricaControladores instance = null;
             retorno = (Controlador) new DecoradorControladorConsultarOrdenesPendientes();
         } else if (tipo.equals("EjecutarOrdenesTrabajo")) {
             retorno = (Controlador) new DecoradorControladorEjecutarOrdenesTrabajo();
-        } else if (tipo.equals("ChuckNorris"))
+        } else if (tipo.equals("ChuckNorris")){
             retorno = (Controlador) new DecoradorControladorChuckNorris();
-
+        } else if(tipo.equals("SubSistemaDePermisos")){
+            retorno = (Controlador) new ControladorSubSistemaPermisos();
+        }
         return retorno;
     }
 

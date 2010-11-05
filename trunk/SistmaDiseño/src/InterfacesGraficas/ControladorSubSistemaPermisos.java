@@ -37,7 +37,6 @@ public class ControladorSubSistemaPermisos implements Controlador{
         }
 
         ControladorSubSistemaPermisos contPerm = new ControladorSubSistemaPermisos();        
-        contPerm.setPantPermisos(new PantallaSubSistemaPermiso(contPerm));
         contPerm.iniciar();
 
 
@@ -52,6 +51,7 @@ public class ControladorSubSistemaPermisos implements Controlador{
 
     
     public void iniciar(){
+        setPantPermisos(new PantallaSubSistemaPermiso(this));
         pantallaPSSP.setLocationRelativeTo(null);
         pantallaPSSP.setVisible(true);
         pantallaPSSP.getPass().setText("");
@@ -76,10 +76,9 @@ public class ControladorSubSistemaPermisos implements Controlador{
             operadorEncontrado = essp.buscarOperador(nombreUsuario, clave);
 
 
-            getPantPermisos().setVisible(false);
             chuk = (ChuckNorrisControlador) FabricaControladores.getInstance().getControlador("ChuckNorris");
-            chuk.setContSubSisPerm(this);
             chuk.setOperadorEncontrado(operadorEncontrado);
+            cerrarPantalla();
             chuk.iniciar();
         }catch(ExcepcionObjetoNoEncontrado e){
             JOptionPane.showMessageDialog(pantallaPSSP, e.getMessage(),"ATENCIÓN",JOptionPane.INFORMATION_MESSAGE);
@@ -87,6 +86,11 @@ public class ControladorSubSistemaPermisos implements Controlador{
 
     }
 
+        private void cerrarPantalla(){
+            getPantPermisos().setVisible(false);
+            getPantPermisos().dispose();
+
+        }
 
 
 }

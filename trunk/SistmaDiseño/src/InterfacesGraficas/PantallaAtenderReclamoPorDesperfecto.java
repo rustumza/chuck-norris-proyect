@@ -884,4 +884,46 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     public void ponerTodoEnBlancoPublico(){
         ponerTodoEnBlanco();
     }
+
+    /**
+     * @return the guardarInfoDenunciante
+     */
+    public javax.swing.JButton getGuardarInfoDenunciante() {
+        return guardarInfoDenunciante;
+    }
+
+    /**
+     * @param guardarInfoDenunciante the guardarInfoDenunciante to set
+     */
+    public void setGuardarInfoDenunciante(javax.swing.JButton guardarInfoDenunciante) {
+        this.guardarInfoDenunciante = guardarInfoDenunciante;
+    }
+
+    /**
+     * @return the asentarCaso
+     */
+    public javax.swing.JButton getAsentarCaso() {
+        return asentarCaso;
+    }
+
+    /**
+     * @param asentarCaso the asentarCaso to set
+     */
+    public void setAsentarCaso(javax.swing.JButton asentarCaso) {
+        this.asentarCaso = asentarCaso;
+    }
+
+    /**
+     * @return the quitarProblema
+     */
+    public javax.swing.JButton getQuitarProblema() {
+        return quitarProblema;
+    }
+
+    /**
+     * @param quitarProblema the quitarProblema to set
+     */
+    public void setQuitarProblema(javax.swing.JButton quitarProblema) {
+        this.quitarProblema = quitarProblema;
+    }
 }

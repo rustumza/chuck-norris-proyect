@@ -14,6 +14,7 @@ import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaConsultarAvanceReclamo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaFallas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
+import Persistencia.Entidades.Operador;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -34,6 +35,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
     private ChuckNorrisControlador chuck;
+    
 
     public ControladorConsultarAvanceDeReclamo() {
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
@@ -157,4 +159,13 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
     public void cerrarPantallaDetalle(){
         pantallaDetalleOrden = null;
     }
+
+    /**
+     * @return the operadorEncontrado
+     */
+    public Operador getOperadorEncontrado() {
+        return chuck.getOperadorEncontrado();
+    }
+
+    
 }

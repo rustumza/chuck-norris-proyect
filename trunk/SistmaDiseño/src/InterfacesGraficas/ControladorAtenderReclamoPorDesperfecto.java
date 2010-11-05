@@ -16,6 +16,7 @@ import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
+import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Usuario;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     ExpertoAntenderReclamoPorDesperfecto earpd;
     private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
     private ChuckNorrisControlador chuck;
+    
 
     public ControladorAtenderReclamoPorDesperfecto(){
         earpd = (ExpertoAntenderReclamoPorDesperfecto)FabricaExpertos.getInstance().getExperto("AtenderReclamoPorDesperfecto");
@@ -116,7 +118,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
         try{
-            infoParaCrearDenuncia.setOperador(chuck.getOperadorEncontrado());
+            infoParaCrearDenuncia.setOperador(getOperadorEncontrado());
             DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
             if(dto.isIsDenuncia())
                 pantallaARPD.getDenunciaReclamo().setText("Denuncia");
@@ -155,6 +157,16 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     public void setChuck(ChuckNorrisControlador chuck) {
         this.chuck = chuck;
     }
+
+    /**
+     * @return the operadorEncontrado
+     */
+    public Operador getOperadorEncontrado() {
+        return chuck.getOperadorEncontrado();
+    }
+
+    
+
 
     /*
     public static void main(String[] Args){

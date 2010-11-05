@@ -128,7 +128,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         radioBtnOrdenMant.setText("Orden de Mantenimiento");
 
         grupoTipoOrden.add(radioBtnOrdenTodas);
-        radioBtnOrdenTodas.setSelected(true);
+        radioBtnOrdenTodas.setSelected(false);
         radioBtnOrdenTodas.setLabel("Todas");
         radioBtnOrdenTodas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,6 +377,64 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     public javax.swing.JTable getTblRepuestosReservado() {
         return tblRepuestosReservado;
     }
+
+    /**
+     * @return the radioBtnOrdenMant
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenMant() {
+        return radioBtnOrdenMant;
+    }
+
+    /**
+     * @param radioBtnOrdenMant the radioBtnOrdenMant to set
+     */
+    public void setRadioBtnOrdenMant(javax.swing.JRadioButton radioBtnOrdenMant) {
+        this.radioBtnOrdenMant = radioBtnOrdenMant;
+    }
+
+    /**
+     * @return the radioBtnOrdenRep
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenRep() {
+        return radioBtnOrdenRep;
+    }
+
+    /**
+     * @param radioBtnOrdenRep the radioBtnOrdenRep to set
+     */
+    public void setRadioBtnOrdenRep(javax.swing.JRadioButton radioBtnOrdenRep) {
+        this.radioBtnOrdenRep = radioBtnOrdenRep;
+    }
+
+    /**
+     * @return the radioBtnOrdenTodas
+     */
+    public javax.swing.JRadioButton getRadioBtnOrdenTodas() {
+        return radioBtnOrdenTodas;
+    }
+
+    /**
+     * @param radioBtnOrdenTodas the radioBtnOrdenTodas to set
+     */
+    public void setRadioBtnOrdenTodas(javax.swing.JRadioButton radioBtnOrdenTodas) {
+        this.radioBtnOrdenTodas = radioBtnOrdenTodas;
+    }
+
+    /**
+     * @return the btnConfirmar
+     */
+    public javax.swing.JButton getBtnConfirmar() {
+        return btnConfirmar;
+    }
+
+    /**
+     * @param btnConfirmar the btnConfirmar to set
+     */
+    public void setBtnConfirmar(javax.swing.JButton btnConfirmar) {
+        this.btnConfirmar = btnConfirmar;
+    }
+
+
 
     private void limpiarCampos() {
         if (tblOrdenesTrabajo.getModel() != null) {

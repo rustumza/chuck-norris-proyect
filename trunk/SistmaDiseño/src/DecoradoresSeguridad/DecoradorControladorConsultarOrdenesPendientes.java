@@ -7,6 +7,7 @@ package DecoradoresSeguridad;
 
 import DTO.DTOReserva;
 import InterfacesGraficas.ControladorConsultarOrdenesPendientes;
+import Utilidades.validar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,20 @@ import java.util.List;
  * @author rustu
  */
 public class DecoradorControladorConsultarOrdenesPendientes extends ControladorConsultarOrdenesPendientes{
+
+    @Override
+    public void iniciar(){
+        super.iniciar();
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 10)){
+            getPantalla().getRadioBtnOrdenMant().setEnabled(false);
+            getPantalla().getRadioBtnOrdenTodas().setEnabled(false);
+
+        }
+        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 11)){
+            getPantalla().getRadioBtnOrdenRep().setEnabled(false);
+            getPantalla().getRadioBtnOrdenTodas().setEnabled(false);
+        }
+    }
 
     @Override
     public void buscarOrdenes(Date fecha, int seleccion){

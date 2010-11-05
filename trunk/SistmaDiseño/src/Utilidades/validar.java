@@ -18,6 +18,8 @@ public class validar {
 
     public static boolean validarPermisos(List<Permiso> permisos, int nroPermiso){
 
+        if(permisos.isEmpty())
+            return false;
         for (Permiso permiso : permisos) {
             if(permiso.getNroPermiso()==nroPermiso)
                 return true;
