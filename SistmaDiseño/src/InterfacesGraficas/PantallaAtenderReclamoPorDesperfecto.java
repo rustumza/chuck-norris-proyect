@@ -19,19 +19,12 @@ import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
-import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Semaforo;
-import Persistencia.Entidades.SuperDruperInterfaz;
-import Persistencia.ExpertosPersistencia.Criterio;
-import Persistencia.ExpertosPersistencia.FachadaExterna;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -283,7 +276,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jLabel1.setText("DNI");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        buscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
+        buscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
         buscarDNI.setText("Buscar");
         buscarDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,7 +304,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 180, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 390, 10));
 
-        guardarInfoDenunciante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/add_user-20.png"))); // NOI18N
+        guardarInfoDenunciante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/contact-new.png"))); // NOI18N
         guardarInfoDenunciante.setText("Guardar");
         guardarInfoDenunciante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,7 +330,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 150, -1));
         jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 150, -1));
 
-        buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Search-20.png"))); // NOI18N
+        buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
         buscarInteseccion.setText("Buscar");
         buscarInteseccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,7 +406,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jLabel12.setText("Problemas");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
 
-        agregarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/right-20.png"))); // NOI18N
+        agregarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/go-next.png"))); // NOI18N
         agregarProblema.setText("Agregar");
         agregarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -422,7 +415,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         });
         jPanel3.add(agregarProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 120, -1));
 
-        quitarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/left-20.png"))); // NOI18N
+        quitarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/go-previous.png"))); // NOI18N
         quitarProblema.setText("Quitar");
         quitarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -455,7 +448,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 86, 651, 407));
 
-        asentarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/save-20.png"))); // NOI18N
+        asentarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/document-save.png"))); // NOI18N
         asentarCaso.setText("Asentar Caso");
         asentarCaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,7 +457,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         });
         getContentPane().add(asentarCaso, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 530, 160, -1));
 
-        cancelarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/Shutdown-20.png"))); // NOI18N
+        cancelarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/system-shutdown-panel.png"))); // NOI18N
         cancelarCaso.setText("Cancelar");
         cancelarCaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
