@@ -42,7 +42,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         controlador = nuevoControlador;
 
         btnConfirmar.setVisible(false);
-        btnImprimir.setVisible(false);
+        //btnImprimir.setVisible(false);
 
         ///////*Setea el comportamiento a la tabla Ordenes Pendientes:
         tblOrdenesTrabajo.addMouseListener(new MouseAdapter() {
@@ -450,7 +450,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
             ((ModeloTablaResevaRepuesto) tblRepuestosReservado.getModel()).clear();
         }
         btnConfirmar.setVisible(false);
-        btnImprimir.setVisible(false);
+        //btnImprimir.setVisible(false);
     }
 
     public void buscarOrdenes() {
