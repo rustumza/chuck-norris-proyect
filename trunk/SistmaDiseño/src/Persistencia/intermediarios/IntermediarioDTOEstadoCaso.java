@@ -41,7 +41,8 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "estadodenuncia.NombreEstado as nombreEstadoDenuncia, "
                 + "trabajo.NombreTrabajo as nombreFallaDenuncia, "
                 + "fallatecnica.DescripcionFalla as descripcionFallaDenuncia, fallatecnica.CodigoFallaTecnica as codigoFallaDenuncia, "
-                + "reclamo.CodigoReclamo "
+                + "reclamo.CodigoReclamo, "
+                + "caso.OIDOperador as operador "
                 + "from caso "
                 + "join denuncia on caso.OIDCaso = denuncia.OIDCaso "
                 + "join denunciaestado on denuncia.OIDCaso = denunciaestado.OIDDenuncia "
@@ -72,8 +73,22 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "where ordentrabajoestado.IndicadoresEstadoActual = TRUE "
                 + ")as ordenReparacionCompleta on denunciaCompleta.oidDenunciaEncontrada = ordenReparacionCompleta.OIDDenuncia";
 
-        String condicion = " WHERE denunciaCompleta." + criterios.get(0).getAtributo() + " = '" + criterios.get(0).getValor() + "'";
-        condicion = condicion + " ORDER BY denunciaCompleta.CodigoDenuncia, denunciaCompleta.nombreEstadoDenuncia, denunciaCompleta.nombreFallaDenuncia,ordenReparacionCompleta.CodigoOrdenReparacion";
+        String condicion = " WHERE ";
+
+        for(int i = 0 ; i < criterios.size(); i++){
+            if(i>0){
+                condicion += " AND ";
+            }
+            if(criterios.get(i).getAtributo().equalsIgnoreCase("Operador")){
+                condicion += " denunciaCompleta.operador " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
+            }
+            else{
+                condicion += " denunciaCompleta." + criterios.get(i).getAtributo()+ " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "' ";
+            }
+        }
+
+         
+        condicion += " ORDER BY denunciaCompleta.CodigoDenuncia, denunciaCompleta.nombreEstadoDenuncia, denunciaCompleta.nombreFallaDenuncia,ordenReparacionCompleta.CodigoOrdenReparacion";
         select = select + condicion;
 
         return select;
