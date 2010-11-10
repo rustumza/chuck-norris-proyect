@@ -100,6 +100,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         aceptarDenunciaGuardad = new javax.swing.JButton();
         denunciaReclamo = new javax.swing.JLabel();
         codigoDenunciaReclamo = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dni = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -205,7 +206,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        denunciaGuardada.setTitle("¡¡EN HORA BUENA!!");
+        denunciaGuardada.setTitle("¡¡ENHORABUENA!!");
         denunciaGuardada.setAlwaysOnTop(true);
 
         jLabel15.setText("Se generó un/una:");
@@ -223,31 +224,38 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         codigoDenunciaReclamo.setText(" ");
 
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/enhorabuena.JPG"))); // NOI18N
+
         javax.swing.GroupLayout denunciaGuardadaLayout = new javax.swing.GroupLayout(denunciaGuardada.getContentPane());
         denunciaGuardada.getContentPane().setLayout(denunciaGuardadaLayout);
         denunciaGuardadaLayout.setHorizontalGroup(
             denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(codigoDenunciaReclamo))
-                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(denunciaReclamo)))
-                .addContainerGap(126, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
-                .addComponent(aceptarDenunciaGuardad)
-                .addContainerGap())
+                    .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                            .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                                    .addComponent(jLabel15)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(denunciaReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+                                .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                                    .addComponent(jLabel16)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(codigoDenunciaReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
+                            .addComponent(aceptarDenunciaGuardad)
+                            .addContainerGap()))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addContainerGap())))
         );
         denunciaGuardadaLayout.setVerticalGroup(
             denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(denunciaReclamo))
@@ -255,9 +263,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(codigoDenunciaReclamo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
                 .addComponent(aceptarDenunciaGuardad)
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -736,6 +746,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
