@@ -33,7 +33,7 @@ public class validar {
 
         try {
 
-            Integer.parseInt(numero);
+            Long.valueOf(numero);
 
             return true;
 

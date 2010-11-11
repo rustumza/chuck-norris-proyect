@@ -73,26 +73,36 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
     public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido{
 
-        if(!validar.validarNumerosEnteros(denunciante.getcelular())){
+        if(!denunciante.getcelular().equals("")){
+            if(!validar.validarNumerosEnteros(denunciante.getcelular())){
 
-            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-            ex.setMensaje("Ingrese un celular correcto");
-            throw ex;
-
-
-        }else if(!validar.validarNumerosEnteros(denunciante.gettelefonofijo())){
-
-            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-            ex.setMensaje("Ingrese un telefono fijo correcto");
-            throw ex;
-
-        }else if(!validar.isEmail(denunciante.getemail())){
-            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-            ex.setMensaje("Ingrese un E-mail correcto");
-            throw ex;
+                ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                ex.setMensaje("Ingrese un celular correcto");
+                throw ex;
+            }
 
         }
+        if(!denunciante.gettelefonofijo().equals("")){
+            if(!validar.validarNumerosEnteros(denunciante.gettelefonofijo())){
 
+                ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                ex.setMensaje("Ingrese un telefono fijo correcto");
+                throw ex;
+                }
+        }
+        if(!denunciante.getemail().equals("")){
+            if(!validar.isEmail(denunciante.getemail())){
+                ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                ex.setMensaje("Ingrese un E-mail correcto");
+                throw ex;
+                }
+        }
+
+        if(denunciante.gettelefonofijo().equals("") & denunciante.getcelular().equals("") & denunciante.getemail().equals("")){
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Ingrese alguna forma de contacto con el denunciante");
+            throw ex;
+        }
         FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
 
     }
@@ -150,9 +160,10 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         //comparar intersecciones
         for (Interseccion interseccion1 : listaInterseccionCalle1) {
             for (Interseccion interseccion2 : listaInterseccionCalle2) {
-                if(interseccion1.getcodigoubicacion() == interseccion2.getcodigoubicacion());
+                if(interseccion1.getcodigoubicacion() == interseccion2.getcodigoubicacion()){
                     interseccionAUsar = interseccion1;
                     break;
+                }
             }
             if(interseccionAUsar!= null)
                 break;
