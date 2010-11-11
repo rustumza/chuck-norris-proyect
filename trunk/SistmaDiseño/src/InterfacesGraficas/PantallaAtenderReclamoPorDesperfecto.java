@@ -276,6 +276,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Denunciante"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        dni.setNextFocusableComponent(buscarDNI);
         dni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dniActionPerformed(evt);
@@ -288,6 +289,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         buscarDNI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
         buscarDNI.setText("Buscar");
+        buscarDNI.setNextFocusableComponent(domicilio);
         buscarDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarDNIActionPerformed(evt);
@@ -303,25 +305,34 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         jLabel4.setText("Domicilio");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 80, 14));
+
+        domicilio.setNextFocusableComponent(celular);
         jPanel1.add(domicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 180, -1));
 
         jLabel5.setText("Teléfono");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+
+        telefono.setNextFocusableComponent(email);
         jPanel1.add(telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 180, -1));
 
         jLabel6.setText("E-mail:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+
+        email.setNextFocusableComponent(guardarInfoDenunciante);
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 180, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 390, 10));
 
         guardarInfoDenunciante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/contact-new.png"))); // NOI18N
         guardarInfoDenunciante.setText("Guardar");
+        guardarInfoDenunciante.setNextFocusableComponent(interseccionRadioButton);
         guardarInfoDenunciante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarInfoDenuncianteActionPerformed(evt);
             }
         });
         jPanel1.add(guardarInfoDenunciante, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 130, -1));
+
+        celular.setNextFocusableComponent(telefono);
         jPanel1.add(celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 160, -1));
 
         jLabel3.setText("Celular");
@@ -337,11 +348,16 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         jLabel9.setText("calle 2");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 42, -1));
+
+        calle2.setNextFocusableComponent(validarCalles);
         jPanel2.add(calle2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 150, -1));
+
+        calle1.setNextFocusableComponent(calle2);
         jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 150, -1));
 
         buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
         buscarInteseccion.setText("Buscar");
+        buscarInteseccion.setNextFocusableComponent(tablaDeSemafor);
         buscarInteseccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarInteseccionActionPerformed(evt);
@@ -355,6 +371,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         grupoInterseccionCalle.add(interseccionRadioButton);
         interseccionRadioButton.setText("Intersección");
+        interseccionRadioButton.setNextFocusableComponent(calleSimpleRadioButton);
         interseccionRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 interseccionRadioButtonActionPerformed(evt);
@@ -364,6 +381,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         grupoInterseccionCalle.add(calleSimpleRadioButton);
         calleSimpleRadioButton.setText("Calle Simple");
+        calleSimpleRadioButton.setNextFocusableComponent(calle1);
         calleSimpleRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calleSimpleRadioButtonActionPerformed(evt);
@@ -372,6 +390,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jPanel2.add(calleSimpleRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
         validarCalles.setText("Buscar coincidencia");
+        validarCalles.setNextFocusableComponent(buscarInteseccion);
         validarCalles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 validarCallesActionPerformed(evt);
@@ -409,6 +428,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaDeSemafor.setNextFocusableComponent(agregarProblema);
         jScrollPane1.setViewportView(tablaDeSemafor);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 33, 600, 174));
@@ -418,6 +438,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         agregarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/go-next.png"))); // NOI18N
         agregarProblema.setText("Agregar");
+        agregarProblema.setNextFocusableComponent(quitarProblema);
         agregarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarProblemaActionPerformed(evt);
@@ -427,6 +448,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         quitarProblema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/go-previous.png"))); // NOI18N
         quitarProblema.setText("Quitar");
+        quitarProblema.setNextFocusableComponent(asentarCaso);
         quitarProblema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quitarProblemaActionPerformed(evt);
@@ -460,6 +482,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         asentarCaso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/document-save.png"))); // NOI18N
         asentarCaso.setText("Asentar Caso");
+        asentarCaso.setNextFocusableComponent(cancelarCaso);
         asentarCaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 asentarCasoActionPerformed(evt);

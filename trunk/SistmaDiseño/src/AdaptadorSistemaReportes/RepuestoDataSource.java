@@ -20,6 +20,7 @@ public class RepuestoDataSource implements JRDataSource {
 
     private int indicadorOrdenActual = -1;
     private List<DTORepuestoReservado> listaRepuestos;
+    private int cantFilas = 0;
 
     public RepuestoDataSource() {
     }
@@ -27,6 +28,7 @@ public class RepuestoDataSource implements JRDataSource {
     public RepuestoDataSource(List<DTORepuestoReservado> nuevaListaRepuestos) {
         listaRepuestos = new ArrayList<DTORepuestoReservado>();
         listaRepuestos.addAll(nuevaListaRepuestos);
+        cantFilas = nuevaListaRepuestos.size();
     }
 
     public void addRepuesto(DTORepuestoReservado nuevoRepuesto) {
@@ -34,6 +36,7 @@ public class RepuestoDataSource implements JRDataSource {
             listaRepuestos = new ArrayList<DTORepuestoReservado>();
         }
         listaRepuestos.add(nuevoRepuesto);
+        cantFilas++;
     }
 
     public void addAllRepuestos(List<DTORepuestoReservado> nuevaLista) {
@@ -41,6 +44,7 @@ public class RepuestoDataSource implements JRDataSource {
             listaRepuestos = new ArrayList<DTORepuestoReservado>();
         }
         listaRepuestos.addAll(nuevaLista);
+        cantFilas = cantFilas + nuevaLista.size();
     }
 
     public boolean next() throws JRException {
@@ -59,6 +63,10 @@ public class RepuestoDataSource implements JRDataSource {
             valor = String.valueOf(listaRepuestos.get(indicadorOrdenActual).getCantidad());
         } else if (jrf.getName().equals("nombreRepuesto")) {
             valor = listaRepuestos.get(indicadorOrdenActual).getNombre();
+        }else if (jrf.getName().equals("nroLinea")) {
+            if(indicadorOrdenActual < cantFilas){
+                valor = indicadorOrdenActual+1;
+            }
         }
         return valor;
     }

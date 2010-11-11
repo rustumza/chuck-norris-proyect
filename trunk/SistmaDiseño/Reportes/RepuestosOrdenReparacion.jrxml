@@ -3,21 +3,23 @@
 	<property name="ireport.zoom" value="2.143588810000003"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="LINEA" class="java.lang.String"/>
 	<field name="cantidad" class="java.lang.String"/>
 	<field name="nombreRepuesto" class="java.lang.String"/>
+	<field name="nroLinea" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
 		<band height="50" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="25" width="54" height="25"/>
+				<reportElement x="24" y="25" width="44" height="25"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="55" y="25" width="136" height="25"/>
+				<reportElement x="68" y="25" width="110" height="25"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="55" y="25" width="136" height="25"/>
+				<reportElement x="68" y="25" width="110" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -34,49 +36,82 @@
 				<text><![CDATA[Repuestos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="25" width="54" height="25"/>
+				<reportElement x="24" y="25" width="44" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cantidad]]></text>
+				<text><![CDATA[Cant.]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="191" y="25" width="79" height="25"/>
+				<reportElement x="178" y="25" width="46" height="25"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="191" y="25" width="80" height="25"/>
+				<reportElement x="178" y="25" width="46" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cant.Utilizada]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="224" y="25" width="46" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="224" y="25" width="46" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant. Perdida]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="25" width="23" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="25" width="23" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nº]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="25" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="54" height="25"/>
+				<reportElement x="24" y="0" width="44" height="25"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="55" y="0" width="136" height="25"/>
+				<reportElement x="68" y="0" width="110" height="25"/>
 			</rectangle>
 			<textField>
-				<reportElement x="1" y="0" width="54" height="25"/>
+				<reportElement x="24" y="0" width="44" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="55" y="0" width="136" height="25"/>
+				<reportElement x="68" y="0" width="110" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreRepuesto}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="191" y="0" width="79" height="25"/>
+				<reportElement x="178" y="0" width="46" height="25"/>
 			</rectangle>
+			<rectangle>
+				<reportElement x="224" y="0" width="46" height="25"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="23" height="25"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="24" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nroLinea}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

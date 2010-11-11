@@ -1,9 +1,7 @@
- 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Expertos;
 
 import DTO.DTOProblemasDelSemaforo;
@@ -38,106 +36,103 @@ import java.util.List;
  *
  * @author LEIVA
  */
-public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
+public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
 
-    public Denunciante buscarDenunciante(String dni) throws ExcepcionObjetoNoEncontrado{
+    public Denunciante buscarDenunciante(String dni) throws ExcepcionObjetoNoEncontrado {
         Criterio criterio = FachadaExterna.getInstancia().crearCriterio("NroDocumento", "=", dni);
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(criterio);
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("PersonaPadron", listaDeCriterios);
-        if(listaDeInterfaces.isEmpty()){
-             ExcepcionObjetoNoEncontrado e = new ExcepcionObjetoNoEncontrado();
-             e.setMensaje("Denunciante no encontrado");
-             throw e;
-        }
-        else{
+        if (listaDeInterfaces.isEmpty()) {
+            ExcepcionObjetoNoEncontrado e = new ExcepcionObjetoNoEncontrado();
+            e.setMensaje("Denunciante no encontrado");
+            throw e;
+        } else {
             PersonaPadron perspad = (PersonaPadron) listaDeInterfaces.get(0);
             criterio = FachadaExterna.getInstancia().crearCriterio("PersonaPadron", "=", perspad);
             List<Criterio> listaDeCriterios2 = new ArrayList<Criterio>();
             listaDeCriterios2.add(criterio);
             listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denunciante", listaDeCriterios2);
-            if(!listaDeInterfaces.isEmpty()){
-                return (Denunciante)listaDeInterfaces.get(0);
-            }
-
-            else{
-                Denunciante denun = (Denunciante)FachadaExterna.getInstancia().crearEntidad("Denunciante");
+            if (!listaDeInterfaces.isEmpty()) {
+                return (Denunciante) listaDeInterfaces.get(0);
+            } else {
+                Denunciante denun = (Denunciante) FachadaExterna.getInstancia().crearEntidad("Denunciante");
                 denun.setPersonaPadron(perspad);
                 FachadaExterna.getInstancia().guardar("Denunciante", denun);
                 return denun;
             }
         }
-      
+
     }
 
+    public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido {
 
-    public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido{
+        if (!validar.validarNumerosEnteros(denunciante.getcelular())) {
 
-        if(!denunciante.getcelular().equals("")){
-            if(!validar.validarNumerosEnteros(denunciante.getcelular())){
+            if (!denunciante.getcelular().equals("")) {
+                if (!validar.validarNumerosEnteros(denunciante.getcelular())) {
 
-                ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-                ex.setMensaje("Ingrese un celular correcto");
-                throw ex;
+                    ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                    ex.setMensaje("Ingrese un celular correcto");
+                    throw ex;
+                }
+
+            }
+            if (!denunciante.gettelefonofijo().equals("")) {
+                if (!validar.validarNumerosEnteros(denunciante.gettelefonofijo())) {
+
+                    ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                    ex.setMensaje("Ingrese un telefono fijo correcto");
+                    throw ex;
+                }
+            }
+            if (!denunciante.getemail().equals("")) {
+                if (!validar.isEmail(denunciante.getemail())) {
+                    ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+                    ex.setMensaje("Ingrese un E-mail correcto");
+                    throw ex;
+                }
             }
 
-        }
-        if(!denunciante.gettelefonofijo().equals("")){
-            if(!validar.validarNumerosEnteros(denunciante.gettelefonofijo())){
-
+            if (denunciante.gettelefonofijo().equals("") & denunciante.getcelular().equals("") & denunciante.getemail().equals("")) {
                 ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-                ex.setMensaje("Ingrese un telefono fijo correcto");
+                ex.setMensaje("Ingrese alguna forma de contacto con el denunciante");
                 throw ex;
-                }
-        }
-        if(!denunciante.getemail().equals("")){
-            if(!validar.isEmail(denunciante.getemail())){
-                ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-                ex.setMensaje("Ingrese un E-mail correcto");
-                throw ex;
-                }
-        }
+            }
+            FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
 
-        if(denunciante.gettelefonofijo().equals("") & denunciante.getcelular().equals("") & denunciante.getemail().equals("")){
-            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
-            ex.setMensaje("Ingrese alguna forma de contacto con el denunciante");
-            throw ex;
         }
-        FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
-
     }
 
-
-
-    public List<Calle> buscarCalle(String calle){
+    public List<Calle> buscarCalle(String calle) {
 
         Criterio criterio = FachadaExterna.getInstancia().crearCriterio("NombreCalle", "LIKE", calle);
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(criterio);
         List<SuperDruperInterfaz> listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("Calle", listaDeCriterios);
         List<Calle> listaCalles = new ArrayList<Calle>();
-        for(SuperDruperInterfaz aux : listaSuperDruperInterfaz){
+        for (SuperDruperInterfaz aux : listaSuperDruperInterfaz) {
             listaCalles.add((Calle) aux);
         }
         return listaCalles;
     }
 
-    public List<Integer> buscarAltura(Calle calle){
+    public List<Integer> buscarAltura(Calle calle) {
 
         Criterio criterio = FachadaExterna.getInstancia().crearCriterio("calle", "=", calle);
         List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
         listaDeCriterio.add(criterio);
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("UbicacionSimple", listaDeCriterio);
         List<Integer> listaDeAlturas = new ArrayList<Integer>();
-        for(int i = 0; i < listaDeInterfaces.size(); i++){
-            listaDeAlturas.add(((UbicacionSimple)listaDeInterfaces.get(i)).getaltura());
+        for (int i = 0; i < listaDeInterfaces.size(); i++) {
+            listaDeAlturas.add(((UbicacionSimple) listaDeInterfaces.get(i)).getaltura());
         }
 
 
         return listaDeAlturas;
     }
 
-    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2) throws ExcepcionObjetoNoEncontrado{
+    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2) throws ExcepcionObjetoNoEncontrado {
 
 
         //Busco todas las intersecciones de la calle 1
@@ -160,32 +155,34 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         //comparar intersecciones
         for (Interseccion interseccion1 : listaInterseccionCalle1) {
             for (Interseccion interseccion2 : listaInterseccionCalle2) {
-                if(interseccion1.getcodigoubicacion() == interseccion2.getcodigoubicacion()){
+                if (interseccion1.getcodigoubicacion() == interseccion2.getcodigoubicacion()) {
                     interseccionAUsar = interseccion1;
                     break;
                 }
             }
-            if(interseccionAUsar!= null)
+            if (interseccionAUsar != null) {
                 break;
+            }
         }
 
-        if(interseccionAUsar==null){
+        if (interseccionAUsar == null) {
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
             ex.setMensaje("No se encontraron semáforos para las calles seleccionadas");
             throw ex;
         }
-        
+
         Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("Interseccion", "=", interseccionAUsar);
         List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
         listaDeCriterio.add(criterioBuscarSemaforo);
         List<SuperDruperInterfaz> listaDeInterfaz = FachadaExterna.getInstancia().buscar("Semaforo", listaDeCriterio);
         List<Semaforo> listaSemaforos = new ArrayList<Semaforo>();
-        for(SuperDruperInterfaz aux : listaDeInterfaz)
+        for (SuperDruperInterfaz aux : listaDeInterfaz) {
             listaSemaforos.add((Semaforo) aux);
+        }
         return listaSemaforos;
     }
 
-    public List<Semaforo> buscarSemaforo(Calle calle1, int altura){
+    public List<Semaforo> buscarSemaforo(Calle calle1, int altura) {
 
         //Busco todas las intersecciones de la calle 1
         List<Criterio> criterioBuscarInterseccion = new ArrayList<Criterio>();
@@ -193,53 +190,51 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         criterioBuscarInterseccion.add(FachadaExterna.getInstancia().crearCriterio("altura", "=", String.valueOf(altura)));
         List<SuperDruperInterfaz> listaSuperDruperInterfaz = FachadaExterna.getInstancia().buscar("UbicacionSimple", criterioBuscarInterseccion);
         Ubicacion ubicacionSimpleAUsar = (Ubicacion) listaSuperDruperInterfaz.get(0);
-        
+
         Criterio criterioBuscarSemaforo = FachadaExterna.getInstancia().crearCriterio("UbicacionSimple", "=", ubicacionSimpleAUsar);
         List<Criterio> listaDeCriterio = new ArrayList<Criterio>();
         listaDeCriterio.add(criterioBuscarSemaforo);
         List<SuperDruperInterfaz> listaDeInterfaz = FachadaExterna.getInstancia().buscar("Semaforo", listaDeCriterio);
         List<Semaforo> listaSemaforos = new ArrayList<Semaforo>();
-        for(SuperDruperInterfaz aux : listaDeInterfaz)
+        for (SuperDruperInterfaz aux : listaDeInterfaz) {
             listaSemaforos.add((Semaforo) aux);
+        }
 
 
         return listaSemaforos;
     }
 
-
-
-
     public List<Problema> buscarProblemas() {
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Problema", null);
         List<Problema> listaDeProblema = new ArrayList<Problema>();
-        for(SuperDruperInterfaz aux : listaDeInterfaces){
+        for (SuperDruperInterfaz aux : listaDeInterfaces) {
             listaDeProblema.add((Problema) aux);
         }
         return listaDeProblema;
     }
 
-    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente, ExcepcionObjetoNoEncontrado{
+    public DTOinfoDeDenunciaGuardada guardarDenuncia(DTOinfoParaCrearDenuncia dtoInfoParaCrearDenuncia) throws ExcepcionDenunciaExistente, ExcepcionObjetoNoEncontrado {
 
 
-        if(dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().isEmpty()){
+        if (dtoInfoParaCrearDenuncia.getProblemasDelSemaforo().isEmpty()) {
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
             ex.setMensaje("No hay semáforos denunciados");
             throw ex;
         }
 
-        if(dtoInfoParaCrearDenuncia.getDenunciante()==null){
+        if (dtoInfoParaCrearDenuncia.getDenunciante() == null) {
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
             ex.setMensaje("Falta ingresar denunciante");
             throw ex;
         }
 
-        if(dtoInfoParaCrearDenuncia.getOperador()==null){
+        if (dtoInfoParaCrearDenuncia.getOperador() == null) {
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
             ex.setMensaje("Falta ingresar operador");
             throw ex;
         }
 
-        if(dtoInfoParaCrearDenuncia.getDenunciante().getcelular().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().gettelefonofijo().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().getemail().equalsIgnoreCase("")){
+        if (dtoInfoParaCrearDenuncia.getDenunciante().getcelular().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().gettelefonofijo().equalsIgnoreCase("") && dtoInfoParaCrearDenuncia.getDenunciante().getemail().equalsIgnoreCase("")) {
 
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
             ex.setMensaje("No se ha ingresado alguna forma de contacto con el denunciante");
@@ -251,7 +246,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         List<Criterio> listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(crit);
         List<SuperDruperInterfaz> listaDeInterfaces = FachadaExterna.getInstancia().buscar("Ubicacion", listaDeCriterios);
-        Ubicacion ubicacion = (Ubicacion)listaDeInterfaces.get(0);
+        Ubicacion ubicacion = (Ubicacion) listaDeInterfaces.get(0);
         crit = FachadaExterna.getInstancia().crearCriterio("Ubicacion", "=", ubicacion);
         listaDeCriterios = new ArrayList<Criterio>();
         listaDeCriterios.add(crit);
@@ -272,11 +267,10 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             }
             for (Denuncia denuncia : listaDeDenuncia) {
                 for (DenunciaEstado denEst : denuncia.getDenunciaEstado()) {
-                    if(denEst.isindicadorestadoactual() & denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Pendiente")){
+                    if (denEst.isindicadorestadoactual() & denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Pendiente")) {
                         denunciaAUsar = denuncia;
                         break;
-                    }
-                    else if(denEst.isindicadorestadoactual() & (!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Notificada")||!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Anulada"))){
+                    } else if (denEst.isindicadorestadoactual() & (!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada") || !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Notificada") || !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Anulada"))) {
                         //denuncia existente y en estado igual a cerrada o notificada
                         ExcepcionDenunciaExistente e = new ExcepcionDenunciaExistente();
                         e.setNumeroDeDenuncia(denuncia.getcodigoDenuncia());
@@ -285,30 +279,31 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
 
                     }
                 }
-                if (denunciaAUsar != null)
+                if (denunciaAUsar != null) {
                     break;
+                }
             }
 
         }
         DTOinfoDeDenunciaGuardada dtoinfo = new DTOinfoDeDenunciaGuardada();
-        if(denunciaAUsar!=null){
-        //hacer reclamo
-            Reclamo reclamo = (Reclamo)FachadaExterna.getInstancia().crearEntidad("Reclamo");
+        if (denunciaAUsar != null) {
+            //hacer reclamo
+            Reclamo reclamo = (Reclamo) FachadaExterna.getInstancia().crearEntidad("Reclamo");
             reclamo.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
             reclamo.setOperador(dtoInfoParaCrearDenuncia.getOperador());
 
             List<Criterio> listCrit = new ArrayList<Criterio>();
-            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Reclamo"));
+            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=", "Reclamo"));
             List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
-            Numerador numerador = (Numerador)listDeInterf.get(0);
-            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+            Numerador numerador = (Numerador) listDeInterf.get(0);
+            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado() + 1);
             FachadaExterna.getInstancia().guardar("Numerador", numerador);
             reclamo.setcodigoreclamo(numerador.getultimonumeroregistrado());
             reclamo.setfechacaso(new Date());
             reclamo.settipocaso("RECLAMO");
             reclamo.setProblema(new ArrayList<Problema>());
             for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
-                if(dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()){
+                if (dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()) {
                     ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
                     ex.setMensaje("No hay problemas para el semaforo: " + dTOProblemasDelSemaforo.getSemaforo().getnumeroSerie());
                     throw ex;
@@ -316,17 +311,18 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
                 reclamo.getProblema().addAll(dTOProblemasDelSemaforo.getListaDeProblemas());
                 reclamo.getSemaforo().add(dTOProblemasDelSemaforo.getSemaforo());
             }
-            if(denunciaAUsar.getReclamo().isEmpty())
+            if (denunciaAUsar.getReclamo().isEmpty()) {
                 denunciaAUsar.setReclamo(new ArrayList<Reclamo>());
+            }
 
             denunciaAUsar.getReclamo().add(reclamo);
-            
+
             denunciaAUsar.setprioridad(FabricaDeEstrategiaCalcularPrioridad.getInstace().crearEstrategiaDeCalculoDePrioridadDenuncia().calcularPrioridad(denunciaAUsar, ubicacion));
 
             dtoinfo.setIsDenuncia(false);
             dtoinfo.setCodigo(reclamo.getcodigoreclamo());
-            
-        }else{
+
+        } else {
             //hacer una denuncia nueva
             denunciaAUsar = (Denuncia) FachadaExterna.getInstancia().crearEntidad("Denuncia");
             denunciaAUsar.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
@@ -334,17 +330,17 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             denunciaAUsar.settipocaso("DENUNCIA");
             denunciaAUsar.setfechacaso(new Date());
             List<Criterio> listCrit = new ArrayList<Criterio>();
-            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Denuncia"));
+            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=", "Denuncia"));
             List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
-            Numerador numerador = (Numerador)listDeInterf.get(0);
-            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+            Numerador numerador = (Numerador) listDeInterf.get(0);
+            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado() + 1);
             FachadaExterna.getInstancia().guardar("Numerador", numerador);
             denunciaAUsar.setcodigoDenuncia(numerador.getultimonumeroregistrado());
             denunciaAUsar.setReclamo(new ArrayList<Reclamo>());
             denunciaAUsar.setProblema(new ArrayList<Problema>());
             denunciaAUsar.setSemaforo(new ArrayList<Semaforo>());
             for (DTOProblemasDelSemaforo dTOProblemasDelSemaforo : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()) {
-                if(dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()){
+                if (dTOProblemasDelSemaforo.getListaDeProblemas().isEmpty()) {
                     ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
                     ex.setMensaje("No hay problemas para el semaforo: " + dTOProblemasDelSemaforo.getSemaforo().getnumeroSerie());
                     throw ex;
@@ -359,12 +355,12 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
             listCrit = new ArrayList<Criterio>();
             listCrit.add(crit);
             listaDeInterfaces = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCrit);
-            DenunciaEstado denEst = (DenunciaEstado)FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
-            denEst.setEstadoDenuncia((EstadoDenuncia)listaDeInterfaces.get(0));
+            DenunciaEstado denEst = (DenunciaEstado) FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
+            denEst.setEstadoDenuncia((EstadoDenuncia) listaDeInterfaces.get(0));
             denEst.setfechacambioestado(new Date());
             denEst.setindicadorestadoactual(true);
             denunciaAUsar.getDenunciaEstado().add(denEst);
-            
+
             dtoinfo.setIsDenuncia(true);
             dtoinfo.setCodigo(denunciaAUsar.getcodigoDenuncia());
 
@@ -382,93 +378,91 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto{
         List<SuperDruperInterfaz> listaDeInterfaces;
         boolean seNecesitaCrearDenunciaNueva=false;
         for(DTOProblemasDelSemaforo aux : dtoInfoParaCrearDenuncia.getProblemasDelSemaforo()){
-            listaDeCriterios = new ArrayList<Criterio>();
-            listaDeDenuncias = new ArrayList<Denuncia>();
-            listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", aux.getSemaforo()));
-            listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denuncia", listaDeCriterios);
-            for(SuperDruperInterfaz aux1 : listaDeInterfaces)
-                listaDeDenuncias.add((Denuncia) aux1);
+        listaDeCriterios = new ArrayList<Criterio>();
+        listaDeDenuncias = new ArrayList<Denuncia>();
+        listaDeCriterios.add(FachadaExterna.getInstancia().crearCriterio("Semaforo", "=", aux.getSemaforo()));
+        listaDeInterfaces = FachadaExterna.getInstancia().buscar("Denuncia", listaDeCriterios);
+        for(SuperDruperInterfaz aux1 : listaDeInterfaces)
+        listaDeDenuncias.add((Denuncia) aux1);
 
-            Denuncia denunciaAUtilizar=null;
-            int bandera=0;
-            for(Denuncia denuncia : listaDeDenuncias){
-                for(DenunciaEstado denunciaEstado : denuncia.getDenunciaEstado()){
-                    if(denunciaEstado.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Pendiente de atención") & denunciaEstado.isindicadorestadoactual()){
-                        denunciaAUtilizar=denuncia;
-                        bandera=1;//avisa que se tiene que hacer un reclamo con la denuncia guradada en denuncia
-                        //GENERAR UN RECLAMO
-                    }
-                    else if(!denunciaEstado.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Final") & denunciaEstado.isindicadorestadoactual()){
-                        bandera=1;//tiene que avisar que no se puede generar un reclamo pero que la denuncia ya exite
-                            //AVISAR QUE NO SE PUEDE HACER UNA DENUNCIA
-                    }
-                     //sino tiene que generar una denuncia
-                }
-                    
-                if(bandera == 1)
-                    break;
-            }
+        Denuncia denunciaAUtilizar=null;
+        int bandera=0;
+        for(Denuncia denuncia : listaDeDenuncias){
+        for(DenunciaEstado denunciaEstado : denuncia.getDenunciaEstado()){
+        if(denunciaEstado.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Pendiente de atención") & denunciaEstado.isindicadorestadoactual()){
+        denunciaAUtilizar=denuncia;
+        bandera=1;//avisa que se tiene que hacer un reclamo con la denuncia guradada en denuncia
+        //GENERAR UN RECLAMO
+        }
+        else if(!denunciaEstado.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Final") & denunciaEstado.isindicadorestadoactual()){
+        bandera=1;//tiene que avisar que no se puede generar un reclamo pero que la denuncia ya exite
+        //AVISAR QUE NO SE PUEDE HACER UNA DENUNCIA
+        }
+        //sino tiene que generar una denuncia
+        }
 
-            if(bandera==1 & denunciaAUtilizar==null ){
-            //avisar que tiene que esperar, que ya existe la denuncia
+        if(bandera == 1)
+        break;
+        }
 
-            }else if(bandera==1 & denunciaAUtilizar!=null){
-            //GEnerar un reclamo
+        if(bandera==1 & denunciaAUtilizar==null ){
+        //avisar que tiene que esperar, que ya existe la denuncia
 
-            }
-            else if (bandera == 0){
-                //generar denuncia
-                listaDTOProblemasDelSemaforosParaHacerleDenuncia.add(aux);
-                seNecesitaCrearDenunciaNueva=true;
+        }else if(bandera==1 & denunciaAUtilizar!=null){
+        //GEnerar un reclamo
 
-            }
+        }
+        else if (bandera == 0){
+        //generar denuncia
+        listaDTOProblemasDelSemaforosParaHacerleDenuncia.add(aux);
+        seNecesitaCrearDenunciaNueva=true;
+
+        }
         }
 
         if(seNecesitaCrearDenunciaNueva){
-            List<Semaforo> listSem = new ArrayList<Semaforo>();
-            List<Problema> listProb = new ArrayList<Problema>();
-            for(DTOProblemasDelSemaforo aux : listaDTOProblemasDelSemaforosParaHacerleDenuncia){
-                listSem.add(aux.getSemaforo());
-                for(Problema problem : aux.getListaDeProblemas())
-                    listProb.add(problem);
-            }
-            Denuncia den = (Denuncia)FachadaExterna.getInstancia().crearEntidad("Denuncia");
-            den.setSemaforo(listSem);
-            den.setProblema(listProb);
-            den.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
-            den.setOperador(dtoInfoParaCrearDenuncia.getOperador());
-            den.setfechacaso(new Date());
-            den.settipocaso(1);
-            List<Criterio> listCrit = new ArrayList<Criterio>();
-            listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Denuncia"));
-            List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
-            Numerador numerador = (Numerador)listDeInterf.get(0);
-            numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
-            FachadaExterna.getInstancia().guardar("Numerador", numerador);
-            den.settipocaso(1);
-            den.setcodigoDenuncia(numerador.getultimonumeroregistrado());
-            den.setReclamo(new ArrayList<Reclamo>());
-            den.setprioridad(calcularPrioridad(den.getReclamo(), den.getSemaforo().get(0)));
-            den.setDenunciaEstado(new ArrayList<DenunciaEstado>());
-            DenunciaEstado denEstado = (DenunciaEstado) FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
-            denEstado.setfechacambioestado(new Date());
-            denEstado.setindicadorestadoactual(true);
-            List<Criterio> listCriterioEstDen = new ArrayList<Criterio>();
-            listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "Pendiente"));
-            List<SuperDruperInterfaz> listaEstDen = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCriterioEstDen);
-            denEstado.setEstadoDenuncia((EstadoDenuncia)listaEstDen.get(0));
-            List<DenunciaEstado> listaDenEstado = new ArrayList<DenunciaEstado>();
-            listaDenEstado.add(denEstado);
-            den.setDenunciaEstado(listaDenEstado);
+        List<Semaforo> listSem = new ArrayList<Semaforo>();
+        List<Problema> listProb = new ArrayList<Problema>();
+        for(DTOProblemasDelSemaforo aux : listaDTOProblemasDelSemaforosParaHacerleDenuncia){
+        listSem.add(aux.getSemaforo());
+        for(Problema problem : aux.getListaDeProblemas())
+        listProb.add(problem);
+        }
+        Denuncia den = (Denuncia)FachadaExterna.getInstancia().crearEntidad("Denuncia");
+        den.setSemaforo(listSem);
+        den.setProblema(listProb);
+        den.setDenunciante(dtoInfoParaCrearDenuncia.getDenunciante());
+        den.setOperador(dtoInfoParaCrearDenuncia.getOperador());
+        den.setfechacaso(new Date());
+        den.settipocaso(1);
+        List<Criterio> listCrit = new ArrayList<Criterio>();
+        listCrit.add(FachadaExterna.getInstancia().crearCriterio("TipoDocumentacion", "=" , "Denuncia"));
+        List<SuperDruperInterfaz> listDeInterf = FachadaExterna.getInstancia().buscar("Numerador", listCrit);
+        Numerador numerador = (Numerador)listDeInterf.get(0);
+        numerador.setultimonumeroregistrado(numerador.getultimonumeroregistrado()+1);
+        FachadaExterna.getInstancia().guardar("Numerador", numerador);
+        den.settipocaso(1);
+        den.setcodigoDenuncia(numerador.getultimonumeroregistrado());
+        den.setReclamo(new ArrayList<Reclamo>());
+        den.setprioridad(calcularPrioridad(den.getReclamo(), den.getSemaforo().get(0)));
+        den.setDenunciaEstado(new ArrayList<DenunciaEstado>());
+        DenunciaEstado denEstado = (DenunciaEstado) FachadaExterna.getInstancia().crearEntidad("DenunciaEstado");
+        denEstado.setfechacambioestado(new Date());
+        denEstado.setindicadorestadoactual(true);
+        List<Criterio> listCriterioEstDen = new ArrayList<Criterio>();
+        listCriterioEstDen.add(FachadaExterna.getInstancia().crearCriterio("nombreEstado", "=", "Pendiente"));
+        List<SuperDruperInterfaz> listaEstDen = FachadaExterna.getInstancia().buscar("EstadoDenuncia", listCriterioEstDen);
+        denEstado.setEstadoDenuncia((EstadoDenuncia)listaEstDen.get(0));
+        List<DenunciaEstado> listaDenEstado = new ArrayList<DenunciaEstado>();
+        listaDenEstado.add(denEstado);
+        den.setDenunciaEstado(listaDenEstado);
 
-            FachadaExterna.getInstancia().guardar("Denuncia", den);
+        FachadaExterna.getInstancia().guardar("Denuncia", den);
 
 
         }
-*/
+         */
 
 
     }
-
-
 }

@@ -244,6 +244,11 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="dni">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="buscarDNI"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dniActionPerformed"/>
           </Events>
@@ -269,6 +274,9 @@
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/edit-find.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Buscar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="domicilio"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarDNIActionPerformed"/>
@@ -310,6 +318,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="domicilio">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="celular"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="160" width="180" height="-1"/>
@@ -327,6 +340,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="telefono">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="email"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="220" width="180" height="-1"/>
@@ -344,6 +362,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="email">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="guardarInfoDenunciante"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="20" y="280" width="180" height="-1"/>
@@ -363,6 +386,9 @@
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/contact-new.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="interseccionRadioButton"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guardarInfoDenuncianteActionPerformed"/>
@@ -374,6 +400,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="celular">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="telefono"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="270" y="160" width="160" height="-1"/>
@@ -431,6 +462,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="calle2">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="validarCalles"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="60" y="90" width="150" height="-1"/>
@@ -438,6 +474,11 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="calle1">
+          <Properties>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="calle2"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="60" y="60" width="150" height="-1"/>
@@ -450,6 +491,9 @@
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/edit-find.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Buscar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="tablaDeSemafor"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarInteseccionActionPerformed"/>
@@ -483,6 +527,9 @@
               <ComponentRef name="grupoInterseccionCalle"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Intersecci&#xf3;n"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="calleSimpleRadioButton"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="interseccionRadioButtonActionPerformed"/>
@@ -499,6 +546,9 @@
               <ComponentRef name="grupoInterseccionCalle"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Calle Simple"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="calle1"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calleSimpleRadioButtonActionPerformed"/>
@@ -512,6 +562,9 @@
         <Component class="javax.swing.JButton" name="validarCalles">
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar coincidencia"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="buscarInteseccion"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validarCallesActionPerformed"/>
@@ -618,6 +671,9 @@
                     <Column editable="true" title="Title 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="agregarProblema"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -638,6 +694,9 @@
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/go-next.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="quitarProblema"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarProblemaActionPerformed"/>
@@ -654,6 +713,9 @@
               <Image iconType="3" name="/Utilidades/Imagenes/iconos/go-previous.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Quitar"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="asentarCaso"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quitarProblemaActionPerformed"/>
@@ -743,6 +805,9 @@
           <Image iconType="3" name="/Utilidades/Imagenes/iconos/document-save.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Asentar Caso"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="cancelarCaso"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="asentarCasoActionPerformed"/>
