@@ -16,6 +16,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -141,6 +142,12 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        dataChsFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dataChsFechaKeyPressed(evt);
             }
         });
 
@@ -312,6 +319,12 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         controlador.imprimirOrdenesPendientes();
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void dataChsFechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dataChsFechaKeyPressed
+        if(evt.equals(KeyEvent.VK_ENTER)){
+            buscarOrdenes();
+        }
+    }//GEN-LAST:event_dataChsFechaKeyPressed
     /**
      * @param args the command line arguments
      */

@@ -14,10 +14,10 @@
 				<reportElement x="1" y="25" width="73" height="25"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="74" y="25" width="392" height="25"/>
+				<reportElement x="74" y="25" width="276" height="25"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="74" y="25" width="392" height="25"/>
+				<reportElement x="74" y="25" width="276" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -41,14 +41,24 @@
 				<text><![CDATA[Codigo]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="466" y="25" width="79" height="25"/>
+				<reportElement x="491" y="25" width="54" height="25"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="466" y="25" width="79" height="25"/>
+				<reportElement x="491" y="25" width="54" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Realizada]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="350" y="25" width="141" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="350" y="25" width="141" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Repuestos Utilizados]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -58,10 +68,10 @@
 				<reportElement x="1" y="0" width="73" height="25"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="74" y="0" width="392" height="25"/>
+				<reportElement x="74" y="0" width="276" height="25"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="466" y="0" width="79" height="25"/>
+				<reportElement x="491" y="0" width="54" height="25"/>
 			</rectangle>
 			<textField>
 				<reportElement x="1" y="0" width="73" height="25"/>
@@ -69,10 +79,13 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="74" y="0" width="392" height="25"/>
+				<reportElement x="74" y="0" width="276" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{descripcionTarea}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="350" y="0" width="141" height="25"/>
+			</rectangle>
 		</band>
 	</detail>
 </jasperReport>

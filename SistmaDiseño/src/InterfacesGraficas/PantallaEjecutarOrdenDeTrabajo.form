@@ -78,7 +78,7 @@
                   <Component id="radioBtnOrdenTodas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -134,6 +134,9 @@
           </Events>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dataChsFecha">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dataChsFechaKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
