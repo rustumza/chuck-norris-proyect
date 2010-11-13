@@ -21,10 +21,14 @@ import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Semaforo;
+import Persistencia.Entidades.bs;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -76,6 +80,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
 
     }
+    private File archivoAudio;//archivo de Audio a reproducir
+
+    bs reproductor = new bs();
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -664,7 +672,13 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             //HASTA ACA
              
             dTOinfoParaCrearDenuncia.getProblemasDelSemaforo().addAll(hashMapProblemasDelSemaforo.values());
-            controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+            try {
+                controladorARPD.guardarDenuncia(dTOinfoParaCrearDenuncia);
+            
+            } catch (Exception ex) {
+                Logger.getLogger(PantallaAtenderReclamoPorDesperfecto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         
 
         }
@@ -952,5 +966,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
      */
     public void setQuitarProblema(javax.swing.JButton quitarProblema) {
         this.quitarProblema = quitarProblema;
+    }
+
+    public void reproducir() throws Exception{
+        reproductor.AbrirFichero("/home/edu/Descargas/denuncia.mp3");
+        reproductor.Play();
+
     }
 }
