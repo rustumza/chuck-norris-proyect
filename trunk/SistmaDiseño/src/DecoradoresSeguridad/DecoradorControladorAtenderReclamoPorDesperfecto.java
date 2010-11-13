@@ -67,7 +67,7 @@ public class DecoradorControladorAtenderReclamoPorDesperfecto extends Controlado
     }
 
     @Override
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia) throws Exception{
         super.guardarDenuncia(infoParaCrearDenuncia);
     }
 

@@ -18,22 +18,37 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
-import Persistencia.Entidades.Usuario;
+import Persistencia.Entidades.bs;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javazoom.jlgui.basicplayer.*;
+import java.io.File;
+import javax.sound.sampled.*;
+
+
+
+
+
+/* Importamos Las clases del Package Media */
+
+
+/* Tambien necesitamos importar AudioFormat del package javax.media.format para poder agregar los codecs */
+
 
 /**
  *
  * @author LEIVA
  */
-public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
+public class ControladorAtenderReclamoPorDesperfecto implements Controlador,BasicPlayerListener {
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
     private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
     private ChuckNorrisControlador chuck;
+    private File archivoAudio;//archivo de Audio a reproducir
+
+    bs reproductor = new bs();
     
 
     public ControladorAtenderReclamoPorDesperfecto(){
@@ -116,7 +131,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
         return earpd.buscarProblemas();
     }
 
-    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia){
+    public void guardarDenuncia(DTOinfoParaCrearDenuncia infoParaCrearDenuncia) throws Exception{
         try{
             infoParaCrearDenuncia.setOperador(getOperadorEncontrado());
             DTOinfoDeDenunciaGuardada dto = earpd.guardarDenuncia(infoParaCrearDenuncia);
@@ -125,7 +140,12 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
             pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));          
+            pantallaARPD.reproducir();
             pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
+          
+            // reproductor.AbrirFichero("/home/edu/Descargas/welcome.wav");
+           // reproductor.Play();
+
             pantallaARPD.ponerTodoEnBlancoPublico();
 
 
@@ -158,11 +178,29 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
         this.chuck = chuck;
     }
 
+    
+
     /**
      * @return the operadorEncontrado
      */
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
+    }
+
+    public void opened(Object o, Map map) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void progress(int i, long l, byte[] bytes, Map map) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void stateUpdated(BasicPlayerEvent bpe) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setController(BasicController bc) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     
@@ -178,6 +216,20 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
 
 
-    }
+     *
+     *
+     *
+     * package mp3player;
+
+/**
+
+*
+
+* @author Esteban Fuentealba
+
 */
+
+
+
 }
+
