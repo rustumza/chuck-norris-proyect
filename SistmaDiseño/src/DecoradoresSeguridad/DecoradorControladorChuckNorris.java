@@ -21,20 +21,20 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador {
         super.iniciar();
 
         if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 12)) {
-            getPantPrinc().getatenderReclamo().setEnabled(false);
+            getPantPrinc().getatenderReclamo().setVisible(false);
             getPantPrinc().getCrearusuario().setVisible(false);
         }
 
         if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 13)) {
-            getPantPrinc().getconsultarAvanceDeReclamo().setEnabled(false);
+            getPantPrinc().getconsultarAvanceDeReclamo().setVisible(false);
             getPantPrinc().getCrearusuario().setVisible(false);
         }
         if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 14)) {
-            getPantPrinc().getconsultarOrdenesPendientes().setEnabled(false);
+            getPantPrinc().getconsultarOrdenesPendientes().setVisible(false);
             getPantPrinc().getCrearusuario().setVisible(false);
         }
         if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 15)) {
-            getPantPrinc().getejecutarOrdenesDeTrabajos().setEnabled(false);
+            getPantPrinc().getejecutarOrdenesDeTrabajos().setVisible(false);
             getPantPrinc().getCrearusuario().setVisible(false);
         }
 

@@ -23,11 +23,11 @@ public class DecoradorControladorConsultarAvanceDeReclamo extends ControladorCon
     public void iniciar() {
         super.iniciar();
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 4))
-            getPantalla().getRadioBtnDenuncia().setEnabled(false);
+            getPantalla().getRadioBtnDenuncia().setVisible(false);
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 5))
-            getPantalla().getRadioBtnReclamo().setEnabled(false);
+            getPantalla().getRadioBtnReclamo().setVisible(false);
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 6))
-            getPantalla().getBtnDetalleOrden().setEnabled(false);
+            getPantalla().getBtnDetalleOrden().setVisible(false);
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 7))
             getPantalla().getBotonConsultar().setEnabled(false);
     }
