@@ -42,6 +42,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         botonConsultarAvanceReclamo = new javax.swing.JButton();
         botonAtenderReclamo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        crearusuario = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,18 +88,26 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        crearusuario.setText("Crear Usuario");
+
         javax.swing.GroupLayout panelBotoneraLayout = new javax.swing.GroupLayout(panelBotonera);
         panelBotonera.setLayout(panelBotoneraLayout);
         panelBotoneraLayout.setHorizontalGroup(
             panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBotoneraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonConsultarAvanceReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addComponent(botonAtenderReclamo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addComponent(botonConsultarOrdenesPendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addComponent(botonEjecutarOrdenesTrabajo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelBotoneraLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonConsultarAvanceReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                            .addComponent(botonAtenderReclamo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                            .addComponent(botonConsultarOrdenesPendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                            .addComponent(botonEjecutarOrdenesTrabajo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
+                    .addGroup(panelBotoneraLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(crearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelBotoneraLayout.setVerticalGroup(
@@ -112,7 +121,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonEjecutarOrdenesTrabajo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(panelBotoneraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(crearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -133,7 +144,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(logo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBotonera, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBotonera, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -198,9 +210,24 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonConsultarAvanceReclamo;
     private javax.swing.JButton botonConsultarOrdenesPendientes;
     private javax.swing.JButton botonEjecutarOrdenesTrabajo;
+    private javax.swing.JButton crearusuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel panelBotonera;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the crearusuario
+     */
+    public javax.swing.JButton getCrearusuario() {
+        return crearusuario;
+    }
+
+    /**
+     * @param crearusuario the crearusuario to set
+     */
+    public void setCrearusuario(javax.swing.JButton crearusuario) {
+        this.crearusuario = crearusuario;
+    }
 
 }
