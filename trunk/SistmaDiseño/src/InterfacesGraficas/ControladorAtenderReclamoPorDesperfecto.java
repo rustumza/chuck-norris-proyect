@@ -18,14 +18,11 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
-import Persistencia.Entidades.bs;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javazoom.jlgui.basicplayer.*;
-import java.io.File;
-import javax.sound.sampled.*;
 
 
 
@@ -46,9 +43,6 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador,Basi
     ExpertoAntenderReclamoPorDesperfecto earpd;
     private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
     private ChuckNorrisControlador chuck;
-    private File archivoAudio;//archivo de Audio a reproducir
-
-    bs reproductor = new bs();
     
 
     public ControladorAtenderReclamoPorDesperfecto(){
@@ -139,14 +133,10 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador,Basi
                 pantallaARPD.getDenunciaReclamo().setText("Denuncia");
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
-            pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));          
-            pantallaARPD.reproducir();
-            pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
-          
-            // reproductor.AbrirFichero("/home/edu/Descargas/welcome.wav");
-           // reproductor.Play();
-
-            pantallaARPD.ponerTodoEnBlancoPublico();
+                pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
+                pantallaARPD.reproducir();
+                pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
+                pantallaARPD.ponerTodoEnBlancoPublico();
 
 
             

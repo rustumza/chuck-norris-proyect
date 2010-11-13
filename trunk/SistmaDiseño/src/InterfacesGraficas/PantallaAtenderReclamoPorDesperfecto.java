@@ -44,6 +44,9 @@ import javax.swing.JOptionPane;
  * @author diego
  */
 public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
+
+    private File archivoAudio;//archivo de Audio a reproducir
+    bs reproductor = new bs();
     ControladorAtenderReclamoPorDesperfecto controladorARPD;
     int filaSeleccionada = -1;
     DTOinfoParaCrearDenuncia dTOinfoParaCrearDenuncia;
@@ -80,10 +83,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
 
     }
-    private File archivoAudio;//archivo de Audio a reproducir
-
-    bs reproductor = new bs();
-
+    
 
     /** This method is called from within the constructor to
      * initialize the form.

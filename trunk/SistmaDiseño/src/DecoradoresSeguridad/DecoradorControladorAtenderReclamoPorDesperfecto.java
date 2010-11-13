@@ -29,7 +29,7 @@ public class DecoradorControladorAtenderReclamoPorDesperfecto extends Controlado
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 2))
             getPantallaARPD().getQuitarProblema().setEnabled(false);
         if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 3))
-            getPantallaARPD().getAsentarCaso().setEnabled(false);
+            getPantallaARPD().getAsentarCaso().setVisible(false);
 
     }
 
