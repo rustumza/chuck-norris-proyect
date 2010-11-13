@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DecoradoresSeguridad;
 
 import InterfacesGraficas.ChuckNorrisControlador;
@@ -14,22 +13,31 @@ import Utilidades.validar;
  *
  * @author rustu
  */
-public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
+public class DecoradorControladorChuckNorris extends ChuckNorrisControlador {
 
     @Override
     public void iniciar() {
 
         super.iniciar();
-        
-        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 12))
+
+        if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 12)) {
             getPantPrinc().getatenderReclamo().setEnabled(false);
-        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 13))
+            getPantPrinc().getCrearusuario().setVisible(false);
+        }
+
+        if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 13)) {
             getPantPrinc().getconsultarAvanceDeReclamo().setEnabled(false);
-        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 14))
+            getPantPrinc().getCrearusuario().setVisible(false);
+        }
+        if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 14)) {
             getPantPrinc().getconsultarOrdenesPendientes().setEnabled(false);
-        if(!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 15))
+            getPantPrinc().getCrearusuario().setVisible(false);
+        }
+        if (!validar.validarPermisos(getOperadorEncontrado().getUsuario().getPerfil().getPermisos(), 15)) {
             getPantPrinc().getejecutarOrdenesDeTrabajos().setEnabled(false);
-        
+            getPantPrinc().getCrearusuario().setVisible(false);
+        }
+
     }
 
     @Override
@@ -64,34 +72,25 @@ public class DecoradorControladorChuckNorris extends ChuckNorrisControlador{
         return super.getPantPrinc();
     }
 
-
-
-
     @Override
     public void setPantPrinc(PantallaPrincipal pantPrinc) {
         super.setPantPrinc(pantPrinc);
     }
 
     @Override
-    public void cerrar(){
+    public void cerrar() {
 
         super.cerrar();
 
     }
-
-
-
 
     @Override
     public Operador getOperadorEncontrado() {
         return super.getOperadorEncontrado();
     }
 
-
     @Override
     public void setOperadorEncontrado(Operador operadorEncontrado) {
         super.setOperadorEncontrado(operadorEncontrado);
     }
-
-
 }
