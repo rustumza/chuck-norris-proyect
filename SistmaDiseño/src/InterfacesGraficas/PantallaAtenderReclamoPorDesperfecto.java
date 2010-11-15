@@ -967,10 +967,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     public void setQuitarProblema(javax.swing.JButton quitarProblema) {
         this.quitarProblema = quitarProblema;
     }
-
+    /*
     public void reproducir() throws Exception{
-        reproductor.AbrirFichero("/home/edu/Descargas/denuncia.mp3");
+        reproductor.AbrirFichero("/mnt/datos/facu/3 año/diseño 2010/SistemaParte2/trunk/SistmaDiseño/src/Utilidades/denuncia.mp3");
         reproductor.Play();
 
     }
-}
+*/
+     }
