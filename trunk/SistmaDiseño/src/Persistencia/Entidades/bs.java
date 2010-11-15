@@ -5,16 +5,16 @@
 
 package Persistencia.Entidades;
 
-import java.io.File;
+/*import java.io.File;
 import javazoom.jlgui.basicplayer.BasicPlayer;
-
+*/
 /**
  *
  * @author edu
  */
 public class bs {
 
-    private BasicPlayer player;
+   /* private BasicPlayer player;
 
     public bs(){
         player = new BasicPlayer();
@@ -39,5 +39,5 @@ public void Continuar() throws Exception {
 public void Stop() throws Exception {
   player.stop();
 
-}
+}*/
 }
