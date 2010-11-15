@@ -7,6 +7,7 @@ package Persistencia.Decoradores;
 
 import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
+import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
@@ -32,6 +33,12 @@ public class DecoradorExpertoAntenderReclamoPorDesperfecto extends ExpertoAntend
         confirmarTx();
         return aux;
     }
+
+    @Override
+    public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido {
+        super.guardarDenunciante(denunciante);
+    }
+
 
     private void inicarTX(){
 
