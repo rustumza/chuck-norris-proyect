@@ -38,7 +38,7 @@ import javazoom.jlgui.basicplayer.*;
  *
  * @author LEIVA
  */
-public class ControladorAtenderReclamoPorDesperfecto implements Controlador,BasicPlayerListener {
+public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     ExpertoAntenderReclamoPorDesperfecto earpd;
     private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
@@ -134,7 +134,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador,Basi
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
                 pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
-                pantallaARPD.reproducir();
+                //pantallaARPD.reproducir();
                 pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
                 pantallaARPD.ponerTodoEnBlancoPublico();
 
@@ -177,6 +177,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador,Basi
         return chuck.getOperadorEncontrado();
     }
 
+    /*
     public void opened(Object o, Map map) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -194,6 +195,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador,Basi
     }
 
     
+*/
 
 
     /*
