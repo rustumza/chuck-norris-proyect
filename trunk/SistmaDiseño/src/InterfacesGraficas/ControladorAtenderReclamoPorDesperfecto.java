@@ -19,10 +19,10 @@ import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javazoom.jlgui.basicplayer.*;
 
 
 
@@ -104,6 +104,8 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
             getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
             getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+        } catch (ExcepcionCampoInvalido ex) {
+            JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
         } catch (ExcepcionObjetoNoEncontrado ex) {
             JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
         }

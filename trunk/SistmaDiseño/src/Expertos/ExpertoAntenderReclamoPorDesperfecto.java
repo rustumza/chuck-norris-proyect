@@ -67,7 +67,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
 
     public void guardarDenunciante(Denunciante denunciante) throws ExcepcionCampoInvalido {
 
-        if (!validar.validarNumerosEnteros(denunciante.getcelular())) {
+        
 
             if (!denunciante.getcelular().equals("")) {
                 if (!validar.validarNumerosEnteros(denunciante.getcelular())) {
@@ -78,6 +78,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
                 }
 
             }
+        
             if (!denunciante.gettelefonofijo().equals("")) {
                 if (!validar.validarNumerosEnteros(denunciante.gettelefonofijo())) {
 
@@ -101,7 +102,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
             }
             FachadaExterna.getInstancia().guardar("Denunciante", denunciante);
 
-        }
+        
     }
 
     public List<Calle> buscarCalle(String calle) {
@@ -132,8 +133,15 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
         return listaDeAlturas;
     }
 
-    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2) throws ExcepcionObjetoNoEncontrado {
+    public List<Semaforo> buscarSemaforo(Calle calle1, Calle calle2) throws ExcepcionObjetoNoEncontrado, ExcepcionCampoInvalido {
 
+        if(calle1.getcodigoCalle()==calle2.getcodigoCalle()){
+        
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("interseccion inixistente");
+            throw ex;
+        
+        }
 
         //Busco todas las intersecciones de la calle 1
         List<Criterio> criterioBuscarInterseccion = new ArrayList<Criterio>();
