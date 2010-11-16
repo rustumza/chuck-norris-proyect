@@ -58,6 +58,37 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
     }
 
+    public List<OrdenTrabajo> buscarOrdenes(Date fecha, int seleccion) throws ExcepcionCampoInvalido {
+        if (fecha == null) {
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Fecha incorrecta.");
+            throw ex;
+        } else if (esFechaIncorrecta(fecha)) {
+            //Tirar excepcion por fecha incorrecta
+            return null;
+        }
+        List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+
+        if (seleccion == ordenReparacion || seleccion == ordenTrabajo) {
+            for (OrdenDeReparacion orden : buscarOrdenesReparacionPendiente(fecha)) {
+                ordenesEncontradas.add(orden);
+            }
+        }
+
+
+        if (seleccion == ordenMantenimiento || seleccion == ordenTrabajo) {
+            for (OrdenDeMantenimiento orden : buscarOrdenesMantPendiente(fecha)) {
+                ordenesEncontradas.add(orden);
+            }
+        }
+
+
+
+
+        return ordenesEncontradas;
+
+    }
+
     public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) {
 
         if (esFechaIncorrecta(fecha)) {

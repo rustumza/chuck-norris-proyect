@@ -16,6 +16,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
+import Utilidades.RenderTabla;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,6 +33,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     ControladorEjecutarOrdenesTrabajo controlador;
     DTOOrden ordenSeleccionada;
     DTOReserva reservaSeleccionada;
+    RenderTabla render = new RenderTabla();
 
     /** Creates new form PantallaConsultarOrdenesPendientes */
     public PantallaEjecutarOrdenDeTrabajo() {
@@ -41,6 +43,9 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     public PantallaEjecutarOrdenDeTrabajo(ControladorEjecutarOrdenesTrabajo nuevoControlador) {
         initComponents();
         controlador = nuevoControlador;
+
+        //setea el render de la tabla ordenes de trabajo
+        tblOrdenesTrabajo.setDefaultRenderer(Object.class, render);
 
         btnConfirmar.setVisible(false);
         //btnImprimir.setVisible(false);
@@ -183,7 +188,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
                 .addComponent(radioBtnOrdenTodas)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 86, -1, 220));
@@ -309,7 +314,15 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        controlador.confirmarOrdenesPendientes(dataChsFecha.getDate());
+        int seleccion;
+        if (radioBtnOrdenMant.isSelected()) {
+            seleccion = ordenMantenimiento;
+        } else if (radioBtnOrdenRep.isSelected()) {
+            seleccion = ordenReparacion;
+        } else {
+            seleccion = ordenTrabajo;
+        }
+        controlador.confirmarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -321,7 +334,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void dataChsFechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dataChsFechaKeyPressed
-        if(evt.equals(KeyEvent.VK_ENTER)){
+        if (evt.equals(KeyEvent.VK_ENTER)) {
             buscarOrdenes();
         }
     }//GEN-LAST:event_dataChsFechaKeyPressed
@@ -447,8 +460,6 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         this.btnConfirmar = btnConfirmar;
     }
 
-
-
     private void limpiarCampos() {
         if (tblOrdenesTrabajo.getModel() != null) {
             ((ModeloTablaOrdenesTrabajo) tblOrdenesTrabajo.getModel()).clear();
@@ -480,11 +491,11 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
         controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
     }
 
-    public void mostrarBotonConfirmar(){
+    public void mostrarBotonConfirmar() {
         btnConfirmar.setVisible(true);
     }
 
-    public void mostrarBotonImprimir(){
+    public void mostrarBotonImprimir() {
         btnImprimir.setVisible(true);
     }
 }

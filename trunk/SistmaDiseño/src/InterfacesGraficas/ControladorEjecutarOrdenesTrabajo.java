@@ -78,9 +78,12 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador {
         ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).setListaRepuestos(reservaSeleccionada.getListaRepuesto());
     }
 
-    public void confirmarOrdenesPendientes(Date fecha) {
+    public void confirmarOrdenesPendientes(Date fecha, int seleccion) {
+        List<DTOOrden> ordenesModificadas;
         try {
-            experto.guardarOrdenTrabajo(fecha);
+            ordenesModificadas = experto.guardarOrdenTrabajo(fecha, seleccion);
+            ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(ordenesModificadas);
+            JOptionPane.showMessageDialog(pantalla, "Ordenes de Trabajo Confirmadas","INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             pantalla.mostrarBotonImprimir();
         } catch (ExcepcionErrorConexion ex) {
             JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
