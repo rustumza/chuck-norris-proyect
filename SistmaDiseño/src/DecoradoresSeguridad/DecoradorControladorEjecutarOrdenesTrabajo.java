@@ -53,8 +53,8 @@ public class DecoradorControladorEjecutarOrdenesTrabajo extends ControladorEjecu
     }
 
     @Override
-    public void confirmarOrdenesPendientes(Date fecha) {
-        super.confirmarOrdenesPendientes(fecha);
+    public void confirmarOrdenesPendientes(Date fecha, int seleccion) {
+        super.confirmarOrdenesPendientes(fecha, seleccion);
     }
 
     @Override

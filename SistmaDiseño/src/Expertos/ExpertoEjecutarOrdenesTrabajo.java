@@ -27,6 +27,8 @@ import Utilidades.FormateadorFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -79,90 +81,80 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-    public void guardarOrdenTrabajo(Date fecha) throws ExcepcionErrorConexion {
+    public List<DTOOrden> guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion {
 
         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
+        try {
+            ordenesEncontradas = ((ExpertoConsultarOrdenesPendientes) FabricaExpertos.getInstance().getExperto("ConsultarOrdenesPendientes")).buscarOrdenes(fecha, seleccion);
+            List<Criterio> listaCriterios = new ArrayList<Criterio>();
 
-        List<Criterio> listaCriterios = new ArrayList<Criterio>();
-        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("FechaInicioPlanificada", "=", FormateadorFechas.getInstancia().formatearAMySql(fecha)));
-        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("estado", "LIKE", "PENDIENTE"));
+            listaCriterios.clear();
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN EJECUCION"));
 
-        //busca ordenes de reparacion
-        List<SuperDruperInterfaz> objetosEncontrados = FachadaExterna.getInstancia().buscar("OrdenReparacion", listaCriterios);
+            EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
 
-        if (!objetosEncontrados.isEmpty()) {
-            for (SuperDruperInterfaz objeto : objetosEncontrados) {
-                ordenesEncontradas.add((OrdenTrabajo) objeto);
-            }
-        }
+            for (OrdenTrabajo orden : ordenesEncontradas) {//Por cada orden de trabajo
 
-        //busca ordenes de mantenimiento
-        objetosEncontrados = FachadaExterna.getInstancia().buscar("OrdenDeMantenimiento", listaCriterios);
-
-        if (!objetosEncontrados.isEmpty()) {
-            for (SuperDruperInterfaz objeto : objetosEncontrados) {
-                ordenesEncontradas.add((OrdenTrabajo) objeto);
-            }
-        }
-
-        listaCriterios.clear();
-        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN EJECUCION"));
-
-        EstadoOrdenTrabajo estado = (EstadoOrdenTrabajo) FachadaExterna.getInstancia().buscar("EstadoOrdenTrabajo", listaCriterios).get(0);
-
-        for (OrdenTrabajo orden : ordenesEncontradas) {//Por cada orden de trabajo
-
-            for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
-                if (ordenTrabEst.isindicadorestadoactual()) {
-                    ordenTrabEst.setindicadorestadoactual(false);
-                }
-            }
-
-            orden.setfechainiciotrabajo(new Date());
-            OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
-            ordentrabajoestado.setEstadoOrdenTrabajo(estado);
-            ordentrabajoestado.setfechacambioestado(new Date());
-            ordentrabajoestado.setindicadorestadoactual(true);
-
-            orden.addEstado(ordentrabajoestado);
-
-
-            if (orden.gettipoordentrabajo().equals("REPARACION")) {
-
-                for (DenunciaEstado denunciaEstado : ((OrdenDeReparacion) orden).getDenuncia().getDenunciaEstado()) {
-                    if (denunciaEstado.isindicadorestadoactual()) {
-                        denunciaEstado.setindicadorestadoactual(false);
+                for (OrdenTrabajoEstado ordenTrabEst : orden.getListaEstadosOrdenTrabajo()) {
+                    if (ordenTrabEst.isindicadorestadoactual()) {
+                        ordenTrabEst.setindicadorestadoactual(false);
                     }
                 }
 
-                DenunciaEstado nuevoDenunciaEstado = (DenunciaEstado) FabricaEntidades.getInstancia().crearEntidad("DenunciaEstado");
-                listaCriterios.clear();
-                listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN REPARACION"));
-                EstadoDenuncia nuevoEstado = (EstadoDenuncia) FachadaExterna.getInstancia().buscar("EstadoDenuncia", listaCriterios).get(0);
-                nuevoDenunciaEstado.setEstadoDenuncia(nuevoEstado);
-                nuevoDenunciaEstado.setfechacambioestado(new Date());
-                nuevoDenunciaEstado.setindicadorestadoactual(true);
+                orden.setfechainiciotrabajo(new Date());
+                OrdenTrabajoEstado ordentrabajoestado = (OrdenTrabajoEstado) FabricaEntidades.getInstancia().crearEntidad("OrdenTrabajoEstado");
+                ordentrabajoestado.setEstadoOrdenTrabajo(estado);
+                ordentrabajoestado.setfechacambioestado(new Date());
+                ordentrabajoestado.setindicadorestadoactual(true);
 
-                ((OrdenDeReparacion) orden).getDenuncia().agregarDenunciaEstado(nuevoDenunciaEstado);
+                orden.addEstado(ordentrabajoestado);
 
 
-                FachadaExterna.getInstancia().guardar("OrdenReparacion", orden);
+                if (orden.gettipoordentrabajo().equals("REPARACION")) {
+
+                    for (DenunciaEstado denunciaEstado : ((OrdenDeReparacion) orden).getDenuncia().getDenunciaEstado()) {
+                        if (denunciaEstado.isindicadorestadoactual()) {
+                            denunciaEstado.setindicadorestadoactual(false);
+                        }
+                    }
+
+                    DenunciaEstado nuevoDenunciaEstado = (DenunciaEstado) FabricaEntidades.getInstancia().crearEntidad("DenunciaEstado");
+                    listaCriterios.clear();
+                    listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("NombreEstado", "LIKE", "EN REPARACION"));
+                    EstadoDenuncia nuevoEstado = (EstadoDenuncia) FachadaExterna.getInstancia().buscar("EstadoDenuncia", listaCriterios).get(0);
+                    nuevoDenunciaEstado.setEstadoDenuncia(nuevoEstado);
+                    nuevoDenunciaEstado.setfechacambioestado(new Date());
+                    nuevoDenunciaEstado.setindicadorestadoactual(true);
+
+                    ((OrdenDeReparacion) orden).getDenuncia().agregarDenunciaEstado(nuevoDenunciaEstado);
 
 
-            } else if (orden.gettipoordentrabajo().equals("MANTENIMIENTO")) {
-                FachadaExterna.getInstancia().guardar("OrdenDeMantenimiento", orden);
+                    FachadaExterna.getInstancia().guardar("OrdenReparacion", orden);
+
+
+                } else if (orden.gettipoordentrabajo().equals("MANTENIMIENTO")) {
+                    FachadaExterna.getInstancia().guardar("OrdenDeMantenimiento", orden);
+                }
+
             }
 
+            try {
+                ConfirmarReservas(ordenesEncontradas);
+            } catch (Exception ex) {
+                ExcepcionErrorConexion excpErrCon = new ExcepcionErrorConexion();
+                excpErrCon.setMensaje("Error de conexion con WebService. \nNo han sido confirmadas las reservas.\nOrdenes no confirmadas.");
+                System.out.println(ex.getMessage());
+                throw excpErrCon;
+            }
+
+            for (DTOOrden dTOOrden : listaDtoEncontrados) {
+                dTOOrden.setEstado("En Ejecución");
+            }
+        } catch (ExcepcionCampoInvalido ex) {
+            Logger.getLogger(ExpertoEjecutarOrdenesTrabajo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try {
-            ConfirmarReservas(ordenesEncontradas);
-        } catch (Exception ex) {
-            ExcepcionErrorConexion excpErrCon = new ExcepcionErrorConexion();
-            excpErrCon.setMensaje("Error de conexion con WebService. \nNo han sido confirmadas las reservas.\nOrdenes no confirmadas.");
-            System.out.println(ex.getMessage());
-            throw excpErrCon;
-        }
+        return listaDtoEncontrados;
 
     }
 

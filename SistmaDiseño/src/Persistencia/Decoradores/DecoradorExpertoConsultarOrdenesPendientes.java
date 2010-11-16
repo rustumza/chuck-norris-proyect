@@ -27,6 +27,17 @@ public class DecoradorExpertoConsultarOrdenesPendientes extends ExpertoConsultar
     return aux;
 
     }
+    
+    @Override
+     public List<OrdenTrabajo> buscarOrdenes(Date fecha, int seleccion) throws ExcepcionCampoInvalido {
+    iniciarTx();
+    List<OrdenTrabajo> aux = super.buscarOrdenes(fecha, seleccion);
+    confirmarTx();
+    return aux;
+
+    }
+
+
 
     private void iniciarTx(){
 

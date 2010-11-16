@@ -42,10 +42,11 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public void guardarOrdenTrabajo(Date fecha) throws ExcepcionErrorConexion {
+    public List<DTOOrden> guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion {
         iniciarTx();
-        super.guardarOrdenTrabajo(fecha);
+        List<DTOOrden> aux = super.guardarOrdenTrabajo(fecha, seleccion);
         confirmarTx();
+        return aux;
     }
 
     private void iniciarTx() {
