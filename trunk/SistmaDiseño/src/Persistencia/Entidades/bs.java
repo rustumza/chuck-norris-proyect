@@ -5,6 +5,9 @@
 
 package Persistencia.Entidades;
 
+import java.io.File;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+
 /*import java.io.File;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 */
@@ -14,7 +17,7 @@ import javazoom.jlgui.basicplayer.BasicPlayer;
  */
 public class bs {
 
-   /* private BasicPlayer player;
+    /*private BasicPlayer player;
 
     public bs(){
         player = new BasicPlayer();
