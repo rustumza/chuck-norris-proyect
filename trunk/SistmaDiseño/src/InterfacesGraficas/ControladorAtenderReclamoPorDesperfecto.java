@@ -69,7 +69,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     public void guardarDenunciante(Denunciante denunciante){
         try {
             earpd.guardarDenunciante(denunciante);
-            JOptionPane.showMessageDialog(pantallaARPD, "Has salvado el deunciante", "BIEN!!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(pantallaARPD, "Datos guardados exitosamente", "BIEN!!!!", JOptionPane.INFORMATION_MESSAGE);
         } catch (ExcepcionCampoInvalido ex) {
             JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
