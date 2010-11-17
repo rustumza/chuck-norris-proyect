@@ -279,7 +279,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
                         denunciaAUsar = denuncia;
                         break;
                     } else if (denEst.isindicadorestadoactual() & (!denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Cerrada") || !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Notificada") || !denEst.getEstadoDenuncia().getnombreestado().equalsIgnoreCase("Anulada"))) {
-                        //denuncia existente y en estado igual a cerrada o notificada
+                        //denuncia existente y en estado distinto a cerrada o notificada
                         ExcepcionDenunciaExistente e = new ExcepcionDenunciaExistente();
                         e.setNumeroDeDenuncia(denuncia.getcodigoDenuncia());
                         e.setCantidadDeReclamos(denuncia.getReclamo().size());
