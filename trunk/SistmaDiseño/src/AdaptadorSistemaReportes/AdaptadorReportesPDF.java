@@ -17,7 +17,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author diego
  */
-public class AdaptadorReportes {
+public class AdaptadorReportesPDF implements InterfaceAdaptadorReportes{
 
     private String directorioReporteOrdenRep = WorkingDirectory.getPath().split("build")[0] + "/Reportes/OrdenDeReparacionConSubReportes.jasper";
     private String directorioReporteOrdenMant = WorkingDirectory.getPath().split("build")[0] + "/Reportes/OrdenDeMantenimientoConSubReportes.jasper";

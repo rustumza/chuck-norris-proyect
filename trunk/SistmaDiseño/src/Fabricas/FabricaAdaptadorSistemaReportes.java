@@ -5,7 +5,8 @@
 
 package Fabricas;
 
-import AdaptadorSistemaReportes.AdaptadorReportes;
+import AdaptadorSistemaReportes.AdaptadorReportesPDF;
+import AdaptadorSistemaReportes.InterfaceAdaptadorReportes;
 
 /**
  *
@@ -22,7 +23,7 @@ public class FabricaAdaptadorSistemaReportes {
         return instancia;
     }
 
-    public AdaptadorReportes crearAdaptadorReportes(){
-        return new AdaptadorReportes();
+    public InterfaceAdaptadorReportes crearAdaptadorReportes(){
+        return new AdaptadorReportesPDF();
     }
 }
