@@ -17,7 +17,7 @@ import javazoom.jlgui.basicplayer.BasicPlayer;
  */
 public class bs {
 
-    /*private BasicPlayer player;
+   /* private BasicPlayer player;
 
     public bs(){
         player = new BasicPlayer();
