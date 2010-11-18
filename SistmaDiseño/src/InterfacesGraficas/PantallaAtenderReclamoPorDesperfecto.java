@@ -21,10 +21,8 @@ import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Denunciante;
 import Persistencia.Entidades.Problema;
 import Persistencia.Entidades.Semaforo;
-import Persistencia.Entidades.bs;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -45,8 +43,8 @@ import javax.swing.JOptionPane;
  */
 public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
-    private File archivoAudio;//archivo de Audio a reproducir
-    bs reproductor = new bs();
+   // private File archivoAudio;//archivo de Audio a reproducir
+    //bs reproductor = new bs();
     ControladorAtenderReclamoPorDesperfecto controladorARPD;
     int filaSeleccionada = -1;
     DTOinfoParaCrearDenuncia dTOinfoParaCrearDenuncia;
@@ -967,11 +965,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     public void setQuitarProblema(javax.swing.JButton quitarProblema) {
         this.quitarProblema = quitarProblema;
     }
-    /*
-    public void reproducir() throws Exception{
-        reproductor.AbrirFichero("/mnt/datos/facu/3 año/diseño 2010/SistemaParte2/trunk/SistmaDiseño/src/Utilidades/denuncia.mp3");
+  
+    /*public void reproducir() throws Exception{
+        reproductor.AbrirFichero("/home/diego/Descargas/denuncia.mp3");
         reproductor.Play();
 
-    }
-*/
+    }*/
+
      }

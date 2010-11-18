@@ -19,8 +19,6 @@ import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -137,7 +135,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
                 pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
-                //pantallaARPD.reproducir();
+               // pantallaARPD.reproducir();
                 pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
                 pantallaARPD.ponerTodoEnBlancoPublico();
 
