@@ -13,6 +13,8 @@ package InterfacesGraficas;
 
 import DTO.DTOOrden;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
+import Utilidades.RenderTablaEjecutarOrdenes;
+import Utilidades.RenderTablaEstadosCaso;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,6 +34,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
        controlador = control;
        initComponents();
        btnDetalleOrden.setVisible(false);
+
+       //setea el comportamiento de la tabla estados denuncia
+       tblestadoCaso.setDefaultRenderer(Object.class, new RenderTablaEstadosCaso());
 
 
        ///////*Setea el comportamiento a la tabla Ordenes Reparacion:
@@ -67,7 +72,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaConsultarAvanceReclamo = new javax.swing.JTable();
+        tblestadoCaso = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblOrdenReparacion = new javax.swing.JTable();
@@ -165,7 +170,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
 
         jLabel2.setText("Estado");
 
-        tablaConsultarAvanceReclamo.setModel(new javax.swing.table.DefaultTableModel(
+        tblestadoCaso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -176,7 +181,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tablaConsultarAvanceReclamo);
+        jScrollPane1.setViewportView(tblestadoCaso);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -323,9 +328,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private javax.swing.JLabel lblCantReclamos;
     private javax.swing.JRadioButton radioBtnDenuncia;
     private javax.swing.JRadioButton radioBtnReclamo;
-    private javax.swing.JTable tablaConsultarAvanceReclamo;
     private javax.swing.JTable tblFallas;
     private javax.swing.JTable tblOrdenReparacion;
+    private javax.swing.JTable tblestadoCaso;
     private javax.swing.JTextField txtNumeroCaso;
     // End of variables declaration//GEN-END:variables
 
@@ -333,14 +338,14 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
      * @return the tablaConsultarAvanceReclamo
      */
     public javax.swing.JTable getTablaConsultarAvanceReclamo() {
-        return tablaConsultarAvanceReclamo;
+        return tblestadoCaso;
     }
 
     /**
      * @param tablaConsultarAvanceReclamo the tablaConsultarAvanceReclamo to set
      */
     public void setTablaConsultarAvanceReclamo(javax.swing.JTable tablaConsultarAvanceReclamo) {
-        this.tablaConsultarAvanceReclamo = tablaConsultarAvanceReclamo;
+        this.tblestadoCaso = tablaConsultarAvanceReclamo;
     }
 
     /**

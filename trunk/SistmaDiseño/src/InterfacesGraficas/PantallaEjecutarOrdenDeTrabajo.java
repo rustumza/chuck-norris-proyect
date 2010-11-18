@@ -16,7 +16,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReserva;
 import InterfacesGraficas.ModelosTablas.ModeloTablaReservaEquipamiento;
 import InterfacesGraficas.ModelosTablas.ModeloTablaResevaRepuesto;
-import Utilidades.RenderTabla;
+import Utilidades.RenderTablaEjecutarOrdenes;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,7 +33,7 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     ControladorEjecutarOrdenesTrabajo controlador;
     DTOOrden ordenSeleccionada;
     DTOReserva reservaSeleccionada;
-    RenderTabla render = new RenderTabla();
+    RenderTablaEjecutarOrdenes render = new RenderTablaEjecutarOrdenes();
 
     /** Creates new form PantallaConsultarOrdenesPendientes */
     public PantallaEjecutarOrdenDeTrabajo() {

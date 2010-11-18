@@ -15,7 +15,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author diego
  */
-public class RenderTabla implements TableCellRenderer{
+public class RenderTablaEjecutarOrdenes implements TableCellRenderer{
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JLabel etiqueta = new JLabel();
@@ -40,6 +40,9 @@ public class RenderTabla implements TableCellRenderer{
         }else if(value.toString().equalsIgnoreCase("En Ejecución")){
             etiqueta.setForeground(Color.WHITE);
             etiqueta.setBackground(new Color(33,103,255));
+        }else if(value.toString().equalsIgnoreCase("Activo")){
+            etiqueta.setForeground(Color.WHITE);
+            etiqueta.setBackground(new Color(43,152,1));
         }
 
 
