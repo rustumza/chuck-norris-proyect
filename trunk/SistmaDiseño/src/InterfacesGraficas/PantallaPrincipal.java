@@ -23,6 +23,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     /** Creates new form PantallaPrincipal */
     public PantallaPrincipal(ChuckNorrisControlador chuck) {
         initComponents();
+        crearusuario.setVisible(false);
         this.chuck = chuck;
         
     }

@@ -175,7 +175,7 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
 
         if (interseccionAUsar == null) {
             ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
-            ex.setMensaje("No se encontraron semáforos para las calles seleccionadas");
+            ex.setMensaje("No se encontraron semáforos para la calles seleccionadas");
             throw ex;
         }
 
