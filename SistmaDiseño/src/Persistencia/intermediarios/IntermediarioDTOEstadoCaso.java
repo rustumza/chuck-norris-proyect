@@ -4,7 +4,7 @@
  */
 package Persistencia.intermediarios;
 
-import DTO.DTODenuncia;
+import DTO.DTOCaso;
 import DTO.DTODetalleInformeReparacion;
 import DTO.DTOEstadoDenuncia;
 import DTO.DTOFallaTecnica;
@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.print.DocFlavor.STRING;
 
 /**
  *
@@ -111,7 +110,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
     @Override
     public List<ObjetoPersistente> convertirRegistrosAObjetos(ResultSet rs) {
 
-        DTODenuncia dtoDenuncia = null;
+        DTOCaso dtoDenuncia = null;
 
         boolean pedirDatosPrincipales = true;
         boolean crearNuevoEstadoDenuncia = false;
@@ -130,7 +129,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
 
 
                 if (pedirDatosPrincipales) {
-                    dtoDenuncia = new DTODenuncia();
+                    dtoDenuncia = new DTOCaso();
                     dtoDenuncia.setFechaCaso(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(rs.getDate("FechaCaso")));
                     dtoDenuncia.setNroCaso(rs.getString("CodigoDenuncia"));
                     pedirDatosPrincipales = false;

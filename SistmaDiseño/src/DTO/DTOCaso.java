@@ -15,11 +15,13 @@ import java.util.List;
  * DTO para contener datos de la denuncia, sus estados, fallas y orden de reparacion
  * su uso es para construir tablas
  */
-public class DTODenuncia extends ObjetoPersistente{
+public class DTOCaso extends ObjetoPersistente{
 
     private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
     private List<DTOOrden> ordenesReparacion = new ArrayList<DTOOrden>();
     private List<DTOFallaTecnica> listaFallas = new ArrayList<DTOFallaTecnica>();
+    private List<DTOSemaforo> semaforosDenunciados = new ArrayList<DTOSemaforo>();
+    private DTOUbicacion ubicacion;
     private String nombreOperador;
     private String fechaCaso;
     private String nroCaso;
@@ -151,5 +153,23 @@ public class DTODenuncia extends ObjetoPersistente{
 
         return resultado;
     }
+
+    public DTOUbicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(DTOUbicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public List<DTOSemaforo> getSemaforosDenunciados() {
+        return semaforosDenunciados;
+    }
+
+    public void addSemaforo(DTOSemaforo nuevoSemaforo){
+        semaforosDenunciados.add(nuevoSemaforo);
+    }
+
+    
 
 }
