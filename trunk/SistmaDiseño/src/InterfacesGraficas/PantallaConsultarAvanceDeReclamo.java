@@ -82,7 +82,8 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         tblFallas = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         btnDetalleOrden = new javax.swing.JButton();
-        lblCantReclamos = new javax.swing.JLabel();
+        lblUbicación = new javax.swing.JLabel();
+        lblCantReclamos1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -218,13 +219,13 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblOrdenReparacion);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 44, 677, 110));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 677, 110));
 
         jLabel3.setText("Orden Reparación");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
         jLabel4.setText("Fallas Denuncia");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 166, -1, -1));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         tblFallas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,7 +240,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblFallas);
 
-        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 186, 677, 109));
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 670, 109));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/system-shutdown-panel.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -257,11 +258,15 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
                 btnDetalleOrdenActionPerformed(evt);
             }
         });
-        jPanel4.add(btnDetalleOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 172, -1));
+        jPanel4.add(btnDetalleOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 172, -1));
 
-        lblCantReclamos.setForeground(new java.awt.Color(24, 122, 185));
-        lblCantReclamos.setText("Cantidad de Reclamos Caso:");
-        jPanel4.add(lblCantReclamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        lblUbicación.setForeground(new java.awt.Color(24, 122, 185));
+        lblUbicación.setText("Ubicacion: ");
+        jPanel4.add(lblUbicación, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        lblCantReclamos1.setForeground(new java.awt.Color(24, 122, 185));
+        lblCantReclamos1.setText("Cantidad de Reclamos Caso:");
+        jPanel4.add(lblCantReclamos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 86, 700, 440));
 
@@ -325,7 +330,8 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpanelCaso;
-    private javax.swing.JLabel lblCantReclamos;
+    private javax.swing.JLabel lblCantReclamos1;
+    private javax.swing.JLabel lblUbicación;
     private javax.swing.JRadioButton radioBtnDenuncia;
     private javax.swing.JRadioButton radioBtnReclamo;
     private javax.swing.JTable tblFallas;
@@ -381,7 +387,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
      * @return the lblCantReclamos
      */
     public javax.swing.JLabel getLblCantReclamos() {
-        return lblCantReclamos;
+        return lblUbicación;
     }
 
     /**

@@ -4,7 +4,7 @@
  */
 package Expertos;
 
-import DTO.DTODenuncia;
+import DTO.DTOCaso;
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionObjetoNoEncontrado;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
-    public DTODenuncia ConsultarEstadoCaso(String numcaso, int seleccion, Operador operador) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
+    public DTOCaso ConsultarEstadoCaso(String numcaso, int seleccion, Operador operador) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
 
 
 
@@ -57,7 +57,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
     }
 
-    public DTODenuncia buscarDTODenuncia(String numcaso,  Operador operador) throws ExcepcionObjetoNoEncontrado{
+    public DTOCaso buscarDTODenuncia(String numcaso,  Operador operador) throws ExcepcionObjetoNoEncontrado{
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
             if(!validar.validarPermisos(operador.getUsuario().getPerfil().getPermisos(), 17))
                 listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Operador", "=", operador));
@@ -68,7 +68,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
                 ex.setMensaje("No se han encontrado Casos con el numero: " + numcaso);
                 throw ex;
             }
-              DTODenuncia dtoEncontrado = (DTODenuncia) listaEncontrada.get(0);
+              DTOCaso dtoEncontrado = (DTOCaso) listaEncontrada.get(0);
              return dtoEncontrado;
     }
 

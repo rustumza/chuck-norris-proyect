@@ -13,6 +13,8 @@ public class DTOSemaforo {
 
     private String numeroSerie;
     private String modelo;
+    private String esquina;
+    private String orientacion;
 
     /**
      * @return the modelo
@@ -41,5 +43,23 @@ public class DTOSemaforo {
     public void setNumeroSerie(String numeroSerie) {
         this.numeroSerie = numeroSerie;
     }
+
+    public String getEsquina() {
+        return esquina;
+    }
+
+    public void setEsquina(String esquina) {
+        this.esquina = esquina;
+    }
+
+    public String getOrientacion() {
+        return orientacion;
+    }
+
+    public void setOrientacion(String orientacion) {
+        this.orientacion = orientacion;
+    }
+
+    
 
 }

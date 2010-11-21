@@ -4,7 +4,7 @@
  */
 package InterfacesGraficas;
 
-import DTO.DTODenuncia;
+import DTO.DTOCaso;
 import DTO.DTOInformeReparacion;
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
@@ -77,7 +77,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         modeloOrdenes.clear();
         modeloFallas.clear();
         try {
-            DTODenuncia dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion, chuck.getOperadorEncontrado());
+            DTOCaso dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion, chuck.getOperadorEncontrado());
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
             modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
             pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
