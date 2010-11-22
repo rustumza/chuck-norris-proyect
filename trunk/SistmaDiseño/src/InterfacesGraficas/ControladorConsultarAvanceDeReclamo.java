@@ -14,8 +14,8 @@ import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloTablaConsultarAvanceReclamo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaFallas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
+import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforosDenunciadosDTO;
 import Persistencia.Entidades.Operador;
-import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,8 +34,8 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
     ModeloTablaConsultarAvanceReclamo modeloEstados;
     ModeloTablaOrdenesTrabajo modeloOrdenes;
     ModeloTablaFallas modeloFallas;
+    ModeloTablaSemaforosDenunciadosDTO modeloSemaforos;
     private ChuckNorrisControlador chuck;
-    
 
     public ControladorConsultarAvanceDeReclamo() {
         experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
@@ -43,9 +43,11 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         modeloEstados = new ModeloTablaConsultarAvanceReclamo();
         modeloOrdenes = new ModeloTablaOrdenesTrabajo();
         modeloFallas = new ModeloTablaFallas();
+        modeloSemaforos = new ModeloTablaSemaforosDenunciadosDTO();
         pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
         pantalla.getTblOrdenReparacion().setModel(modeloOrdenes);
         pantalla.getTblFallas().setModel(modeloFallas);
+        pantalla.getTblSemaforos().setModel(modeloSemaforos);
 
     }
 
@@ -82,7 +84,16 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
             modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
             pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
             modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
-           pantalla.getLblCantReclamos().setText(pantalla.getLblCantReclamos().getText()+" "+dtoDenuncia.getCantidadReclamos()+".");
+            pantalla.getLblCantReclamos().setText(pantalla.getLblCantReclamos().getText() + " " + dtoDenuncia.getCantidadReclamos() + ".");
+
+            String ubicacion;
+            if (dtoDenuncia.getUbicacion().getTipo().equalsIgnoreCase("INTERSECCION")) {
+                ubicacion = dtoDenuncia.getUbicacion().getCalle1() + " y " + dtoDenuncia.getUbicacion().getCalle2();
+            } else {
+                ubicacion = dtoDenuncia.getUbicacion().getCalle1() + " " + dtoDenuncia.getUbicacion().getAltura();
+            }
+            pantalla.getLblUbicacion().setText(pantalla.getLblUbicacion().getText()+" "+ubicacion);
+            modeloSemaforos.addAllRow(dtoDenuncia.getSemaforosDenunciados());
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
@@ -142,9 +153,9 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
             habilitar = experto.habilitarBotonDetalleOrden(dtoOrdenRep);
         }
         if (habilitar) {
-            pantalla.getBtnDetalleOrden().setVisible(true);
+            pantalla.getBtnDetalleOrden().setEnabled(true);
         } else {
-            pantalla.getBtnDetalleOrden().setVisible(false);
+            pantalla.getBtnDetalleOrden().setEnabled(false);
         }
     }
 
@@ -156,7 +167,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         habilitarBotonDetalleOrden(null);
     }
 
-    public void cerrarPantallaDetalle(){
+    public void cerrarPantallaDetalle() {
         pantallaDetalleOrden = null;
     }
 
@@ -166,6 +177,4 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
     }
-
-    
 }

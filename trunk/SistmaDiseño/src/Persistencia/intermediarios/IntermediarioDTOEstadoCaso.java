@@ -10,6 +10,8 @@ import DTO.DTOEstadoDenuncia;
 import DTO.DTOFallaTecnica;
 import DTO.DTOInformeReparacion;
 import DTO.DTOOrden;
+import DTO.DTOSemaforo;
+import DTO.DTOUbicacion;
 import Persistencia.Entidades.ObjetoPersistente;
 import Persistencia.ExpertosPersistencia.Criterio;
 import Utilidades.ConvertidorBooleanos;
@@ -33,44 +35,65 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
     @Override
     public String armarSelect(List<Criterio> criterios) {
 
-        String select = "SELECT * from ("
-                + "select caso.OIDCaso as oidDenunciaEncontrada, caso.FechaCaso,"
+        String select = "SELECT * FROM ( "
+                + "SELECT caso.OIDCaso AS oidDenunciaEncontrada, caso.FechaCaso, "
                 + "denuncia.CodigoDenuncia, "
-                + "denunciaestado.FechaCambioEstado as fechaCambioEstadoDenuncia, denunciaestado.IndicadoresEstadoActual as indicadorEstadoDenuncia, "
-                + "estadodenuncia.NombreEstado as nombreEstadoDenuncia, "
-                + "trabajo.NombreTrabajo as nombreFallaDenuncia, "
-                + "fallatecnica.DescripcionFalla as descripcionFallaDenuncia, fallatecnica.CodigoFallaTecnica as codigoFallaDenuncia, "
+                + "denunciaestado.FechaCambioEstado AS fechaCambioEstadoDenuncia, denunciaestado.IndicadoresEstadoActual AS indicadorEstadoDenuncia, "
+                + "estadodenuncia.NombreEstado AS nombreEstadoDenuncia, "
+                + "trabajo.NombreTrabajo AS nombreFallaDenuncia, "
+                + "fallatecnica.DescripcionFalla AS descripcionFallaDenuncia, fallatecnica.CodigoFallaTecnica AS codigoFallaDenuncia, "
                 + "reclamo.CodigoReclamo, "
-                + "caso.OIDOperador as operador "
-                + "from caso "
-                + "join denuncia on caso.OIDCaso = denuncia.OIDCaso "
-                + "join denunciaestado on denuncia.OIDCaso = denunciaestado.OIDDenuncia "
-                + "join estadodenuncia on denunciaestado.OIDEstadoDenuncia = estadodenuncia.OIDEstadoDenuncia "
-                + "left join fallatecnicadenuncia on denuncia.OIDCaso = fallatecnicadenuncia.OIDDenuncia "
-                + "join fallatecnica on fallatecnicadenuncia.OIDFallaTecnica = fallatecnica.OIDTrabajo "
-                + "join trabajo on fallatecnica.OIDTrabajo = trabajo.OIDTrabajo "
-                + "left join reclamo on denuncia.OIDCaso = reclamo.OIDDenuncia"
-                + ") as denunciaCompleta "
-                + "join ("
-                + "Select ordendetrabajo.FechaInicioTrabajo, ordendetrabajo.FechaFinTrabajo, ordendetrabajo.FechaInicioPlanificada, ordendetrabajo.DuracionPrevistaTrabajo, "
+                + "caso.OIDOperador AS operador, "
+                + "semaforo.NumeroSerie, "
+                + "modelo.NombreModelo, "
+                + "tiposemaforo.DescripcionTipoSemaforo AS tipoSem, "
+                + "esquina.Descripcion AS esquinaSem, "
+                + "orientacion.Descripcion AS orientacionSem, "
+                + "ubicacion.TipoUbicacion, "
+                + "calleSimple.NombreCalle AS calleSimple, "
+                + "ubicacionsimple.Altura, "
+                + "calleInterseccion.NombreCalle AS calleInterseccion "
+                + "FROM caso "
+                + "LEFT JOIN casosemaforo ON caso.OIDCaso = casosemaforo.OIDCaso "
+                + "LEFT JOIN semaforo on casosemaforo.OIDSemaforo = semaforo.OIDSemaforo "
+                + "LEFT JOIN modelo ON semaforo.OIDModelo = modelo.OIDModelo "
+                + "LEFT JOIN tiposemaforo ON semaforo.OIDTipoSemaforo = tiposemaforo.OIDTipoSemaforo "
+                + "LEFT JOIN esquina ON semaforo.OIDEsquina = esquina.OIDEsquina "
+                + "LEFT JOIN orientacion ON semaforo.OIDOrientacion = orientacion.OIDOrientacion "
+                + "LEFT JOIN ubicacion ON semaforo.OIDUbicacion = ubicacion.OIDUbicacion "
+                + "LEFT JOIN ubicacionsimple ON ubicacion.OIDUbicacion = ubicacionsimple.OIDUbicacion "
+                + "LEFT JOIN calle AS calleSimple on ubicacionsimple.OIDCalle = calleSimple.OIDCalle "
+                + "LEFT JOIN interseccion on ubicacion.OIDUbicacion = interseccion.OIDUbicacion "
+                + "LEFT JOIN interseccioncalle ON interseccion.OIDUbicacion = interseccioncalle.OIDInterseccion "
+                + "LEFT JOIN calle AS calleInterseccion ON interseccioncalle.OIDCalle = calleInterseccion.OIDCalle "
+                + "LEFT JOIN denuncia ON caso.OIDCaso = denuncia.OIDCaso "
+                + "LEFT JOIN denunciaestado ON denuncia.OIDCaso = denunciaestado.OIDDenuncia "
+                + "LEFT JOIN estadodenuncia ON denunciaestado.OIDEstadoDenuncia = estadodenuncia.OIDEstadoDenuncia "
+                + "LEFT JOIN fallatecnicadenuncia ON denuncia.OIDCaso = fallatecnicadenuncia.OIDDenuncia "
+                + "LEFT JOIN fallatecnica ON fallatecnicadenuncia.OIDFallaTecnica = fallatecnica.OIDTrabajo "
+                + "LEFT JOIN trabajo ON fallatecnica.OIDTrabajo = trabajo.OIDTrabajo "
+                + "LEFT JOIN reclamo ON denuncia.OIDCaso = reclamo.OIDDenuncia"
+                + ") AS denunciaCompleta "
+                + "LEFT JOIN ( "
+                + "SELECT ordendetrabajo.FechaInicioTrabajo, ordendetrabajo.FechaFinTrabajo, ordendetrabajo.FechaInicioPlanificada, ordendetrabajo.DuracionPrevistaTrabajo, "
                 + "equipodetrabajo.NombreEquipo, "
-                + "estadoordentrabajo.NombreEstado as nombreEstadoOrden, "
+                + "estadoordentrabajo.NombreEstado AS nombreEstadoOrden, "
                 + "ordenreparacion.OIDDenuncia, ordenreparacion.CodigoOrdenReparacion,"
                 + "informereparacion.FechaInforme, informereparacion.HoraInforme, informereparacion.DuracionReparacion, "
                 + "detalleinformereparacion.Comentario, "
-                + "fallatecnica.DescripcionFalla as descripcionFallaInforme, "
-                + "estadofallatecnica.NombreEstado as nombreEstadoFallaInforme "
-                + "from ordendetrabajo "
-                + "join equipodetrabajo on ordendetrabajo.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo "
-                + "join ordentrabajoestado on ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
-                + "join estadoordentrabajo on ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
-                + "join ordenreparacion on ordendetrabajo.OIDOrdenDeTrabajo = ordenreparacion.OIDOrdenDeTrabajo "
-                + "left join informereparacion on ordenreparacion.OIDOrdenDeTrabajo = informereparacion.OIDOrdenDeTrabajo "
-                + "join detalleinformereparacion on informereparacion.OIDInformeReparacion = detalleinformereparacion.OIDInformeReparacion "
-                + "join estadofallatecnica on detalleinformereparacion.OIDEstadoFallaTecnica = estadofallatecnica.OIDEstadoFallaTecnica "
-                + "join fallatecnica on detalleinformereparacion.OIDFallaTecnica = fallatecnica.OIDTrabajo "
-                + "where ordentrabajoestado.IndicadoresEstadoActual = TRUE "
-                + ")as ordenReparacionCompleta on denunciaCompleta.oidDenunciaEncontrada = ordenReparacionCompleta.OIDDenuncia";
+                + "fallatecnica.DescripcionFalla AS descripcionFallaInforme, "
+                + "estadofallatecnica.NombreEstado AS nombreEstadoFallaInforme "
+                + "FROM ordendetrabajo "
+                + "LEFT JOIN equipodetrabajo ON ordendetrabajo.OIDEquipoDeTrabajo = equipodetrabajo.OIDEquipoDeTrabajo "
+                + "LEFT JOIN ordentrabajoestado ON ordendetrabajo.OIDOrdenDeTrabajo = ordentrabajoestado.OIDOrdenDeTrabajo "
+                + "LEFT JOIN estadoordentrabajo ON ordentrabajoestado.OIDEstadoOrdenTrabajo = estadoordentrabajo.OIDEstadoOrdenTrabajo "
+                + "LEFT JOIN ordenreparacion ON ordendetrabajo.OIDOrdenDeTrabajo = ordenreparacion.OIDOrdenDeTrabajo "
+                + "LEFT JOIN informereparacion ON ordenreparacion.OIDOrdenDeTrabajo = informereparacion.OIDOrdenDeTrabajo "
+                + "LEFT JOIN detalleinformereparacion ON informereparacion.OIDInformeReparacion = detalleinformereparacion.OIDInformeReparacion "
+                + "LEFT JOIN estadofallatecnica ON detalleinformereparacion.OIDEstadoFallaTecnica = estadofallatecnica.OIDEstadoFallaTecnica "
+                + "LEFT JOIN fallatecnica ON detalleinformereparacion.OIDFallaTecnica = fallatecnica.OIDTrabajo "
+                + "WHERE ordentrabajoestado.IndicadoresEstadoActual = TRUE"
+                + ")as ordenReparacionCompleta ON denunciaCompleta.oidDenunciaEncontrada = ordenReparacionCompleta.OIDDenuncia";
 
         String condicion = " WHERE ";
 
@@ -119,6 +142,8 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
         boolean crearNuevoDetalleInforme = false;
         boolean crearNuevaFallaDenuncia = false;
         boolean sumarReclamo = true;
+        boolean agregarCalleInterseccion = false;
+        boolean crearNuevoSemaforo = false;
 
         List<String> auxiliaresReclamo = new ArrayList<String>();
 
@@ -132,8 +157,50 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                     dtoDenuncia = new DTOCaso();
                     dtoDenuncia.setFechaCaso(FormateadorFechas.getInstancia().getFormat_dd_MM_yyyy().format(rs.getDate("FechaCaso")));
                     dtoDenuncia.setNroCaso(rs.getString("CodigoDenuncia"));
+                    DTOUbicacion ubicacion = new DTOUbicacion();
+                    dtoDenuncia.setUbicacion(ubicacion);
                     pedirDatosPrincipales = false;
                 }
+
+                //Agregar Ubicacion
+                
+                    if(rs.getString("calleSimple") != null){
+                        dtoDenuncia.getUbicacion().setCalle1(rs.getString("calleSimple"));
+                        dtoDenuncia.getUbicacion().setAltura(rs.getString("Altura"));
+                        dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
+                        agregarCalleInterseccion = false;
+                    }else if (rs.getString("calleInterseccion")!= null){
+                        if(!dtoDenuncia.getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))){
+                            agregarCalleInterseccion = true;
+                        }else{
+                            agregarCalleInterseccion = false;
+                        }
+                    }
+                if(agregarCalleInterseccion){
+                    if(dtoDenuncia.getUbicacion().getTipo().isEmpty()){
+                        dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
+                    }
+                    dtoDenuncia.getUbicacion().addCalle(rs.getString("calleInterseccion"));
+                }
+
+                //If para saber si agregar nuevo semaforo
+                if(!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))){
+                    crearNuevoSemaforo = true;
+                }else{
+                    crearNuevoSemaforo = false;
+                }
+
+                if(crearNuevoSemaforo){
+                    DTOSemaforo nuevoSemaforo = new DTOSemaforo();
+                    nuevoSemaforo.setEsquina(rs.getString("esquinaSem"));
+                    nuevoSemaforo.setModelo(rs.getString("NombreModelo"));
+                    nuevoSemaforo.setNumeroSerie(rs.getString("NumeroSerie"));
+                    nuevoSemaforo.setOrientacion(rs.getString("orientacionSem"));
+                    nuevoSemaforo.setTipo(rs.getString("tipoSem"));
+                    dtoDenuncia.addSemaforo(nuevoSemaforo);
+                }
+
+
 
                 //If para saber si crear nuevo Estado de denuncia
                 if (dtoDenuncia.getListaEstados().isEmpty() && rs.getString("nombreEstadoDenuncia") != null) {

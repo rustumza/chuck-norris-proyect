@@ -8,6 +8,7 @@ package DTO;
 import Persistencia.Entidades.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 
 /**
  *
@@ -20,7 +21,7 @@ public class DTOCaso extends ObjetoPersistente{
     private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
     private List<DTOOrden> ordenesReparacion = new ArrayList<DTOOrden>();
     private List<DTOFallaTecnica> listaFallas = new ArrayList<DTOFallaTecnica>();
-    private List<DTOSemaforo> semaforosDenunciados = new ArrayList<DTOSemaforo>();
+    private List<DTOSemaforo> semaforosDenunciados;
     private DTOUbicacion ubicacion;
     private String nombreOperador;
     private String fechaCaso;
@@ -167,7 +168,23 @@ public class DTOCaso extends ObjetoPersistente{
     }
 
     public void addSemaforo(DTOSemaforo nuevoSemaforo){
+        if(semaforosDenunciados == null){
+            semaforosDenunciados = new ArrayList<DTOSemaforo>();
+        }
         semaforosDenunciados.add(nuevoSemaforo);
+    }
+
+    public boolean estaSemaforo(String numeroSerie){
+        boolean resultado = false;
+        if(semaforosDenunciados != null){
+            for (DTOSemaforo dTOSemaforo : semaforosDenunciados) {
+                if(dTOSemaforo.getNumeroSerie().equals(numeroSerie)){
+                   resultado = true;
+                   break;
+                }
+            }
+        }
+        return resultado;
     }
 
     

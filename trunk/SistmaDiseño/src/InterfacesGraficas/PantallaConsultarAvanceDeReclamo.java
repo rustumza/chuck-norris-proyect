@@ -13,11 +13,11 @@ package InterfacesGraficas;
 
 import DTO.DTOOrden;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
-import Utilidades.RenderTablaEjecutarOrdenes;
 import Utilidades.RenderTablaEstadosCaso;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
 /**
  *
@@ -33,7 +33,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     public PantallaConsultarAvanceDeReclamo(ControladorConsultarAvanceDeReclamo control) {
        controlador = control;
        initComponents();
-       btnDetalleOrden.setVisible(false);
+       btnDetalleOrden.setEnabled(false);
 
        //setea el comportamiento de la tabla estados denuncia
        tblestadoCaso.setDefaultRenderer(Object.class, new RenderTablaEstadosCaso());
@@ -73,6 +73,8 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblestadoCaso = new javax.swing.JTable();
+        lblCantReclamos = new javax.swing.JLabel();
+        lblUbicacion = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblOrdenReparacion = new javax.swing.JTable();
@@ -82,8 +84,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         tblFallas = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         btnDetalleOrden = new javax.swing.JButton();
-        lblUbicación = new javax.swing.JLabel();
-        lblCantReclamos1 = new javax.swing.JLabel();
+        jscrollpane5 = new javax.swing.JScrollPane();
+        tblSemaforos = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,7 +172,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
 
         getContentPane().add(jpanelCaso, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 86, -1, -1));
 
-        jLabel2.setText("Estado");
+        jLabel2.setText("Estados Caso");
 
         tblestadoCaso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,6 +187,12 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblestadoCaso);
 
+        lblCantReclamos.setForeground(new java.awt.Color(24, 122, 185));
+        lblCantReclamos.setText("Cantidad de Reclamos Caso:");
+
+        lblUbicacion.setForeground(new java.awt.Color(24, 122, 185));
+        lblUbicacion.setText("Ubicacion: ");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -191,21 +200,34 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addContainerGap(323, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(lblUbicacion)
+                            .addContainerGap(337, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(lblCantReclamos)
+                            .addContainerGap(240, Short.MAX_VALUE)))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(lblUbicacion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCantReclamos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 298, -1, -1));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 298, 410, 190));
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -219,13 +241,13 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblOrdenReparacion);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 677, 110));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 677, 90));
 
         jLabel3.setText("Orden Reparación");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
 
-        jLabel4.setText("Fallas Denuncia");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jLabel4.setText("Fallas Asignadas a la Denuncia");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
 
         tblFallas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -240,7 +262,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblFallas);
 
-        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 670, 109));
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 670, 109));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/system-shutdown-panel.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -260,13 +282,23 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         });
         jPanel4.add(btnDetalleOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 172, -1));
 
-        lblUbicación.setForeground(new java.awt.Color(24, 122, 185));
-        lblUbicación.setText("Ubicacion: ");
-        jPanel4.add(lblUbicación, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        tblSemaforos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jscrollpane5.setViewportView(tblSemaforos);
 
-        lblCantReclamos1.setForeground(new java.awt.Color(24, 122, 185));
-        lblCantReclamos1.setText("Cantidad de Reclamos Caso:");
-        jPanel4.add(lblCantReclamos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        jPanel4.add(jscrollpane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 670, 80));
+
+        jLabel5.setText("Semáforos Denunciados");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 86, 700, 440));
 
@@ -322,6 +354,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -330,12 +363,14 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jpanelCaso;
-    private javax.swing.JLabel lblCantReclamos1;
-    private javax.swing.JLabel lblUbicación;
+    private javax.swing.JScrollPane jscrollpane5;
+    private javax.swing.JLabel lblCantReclamos;
+    private javax.swing.JLabel lblUbicacion;
     private javax.swing.JRadioButton radioBtnDenuncia;
     private javax.swing.JRadioButton radioBtnReclamo;
     private javax.swing.JTable tblFallas;
     private javax.swing.JTable tblOrdenReparacion;
+    private javax.swing.JTable tblSemaforos;
     private javax.swing.JTable tblestadoCaso;
     private javax.swing.JTextField txtNumeroCaso;
     // End of variables declaration//GEN-END:variables
@@ -387,7 +422,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
      * @return the lblCantReclamos
      */
     public javax.swing.JLabel getLblCantReclamos() {
-        return lblUbicación;
+        return lblCantReclamos;
     }
 
     /**
@@ -431,4 +466,13 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     public void setBotonConsultar(javax.swing.JButton botonConsultar) {
         this.botonConsultar = botonConsultar;
     }
+
+    public JTable getTblSemaforos() {
+        return tblSemaforos;
+    }
+
+    public JLabel getLblUbicacion() {
+        return lblUbicacion;
+    }
+
 }

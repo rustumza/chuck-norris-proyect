@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
 /**
@@ -15,6 +14,7 @@ public class DTOSemaforo {
     private String modelo;
     private String esquina;
     private String orientacion;
+    private String tipo;
 
     /**
      * @return the modelo
@@ -60,6 +60,11 @@ public class DTOSemaforo {
         this.orientacion = orientacion;
     }
 
-    
+    public String getTipo() {
+        return tipo;
+    }
 
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }
