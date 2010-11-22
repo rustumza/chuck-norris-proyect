@@ -10,7 +10,7 @@ package DTO;
  */
 public class DTOUbicacion {
 
-    private String tipo;
+    private String tipo = "";
     private String calle1 = "";
     private String calle2 = "";
     private String altura = "";
