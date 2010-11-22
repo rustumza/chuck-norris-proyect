@@ -76,10 +76,19 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
      * Inicia el caso de uso con la busqueda de la denuncia ingresada
      */
     public void iniciar(String numCaso) {
-        getPantalla().setTitle("Consultar Avance de Reclamo");
-        getPantalla().setLocationRelativeTo(null);
-        getPantalla().setVisible(true);
-        getPantalla().setRetorno(OTRO);
+        pantalla.setTitle("Consultar Avance de Reclamo");
+        pantalla.setLocationRelativeTo(null);
+        pantalla.setVisible(true);
+        pantalla.setRetorno(OTRO);
+        pantalla.getTxtNumeroCaso().setText(numCaso);
+        pantalla.getTxtNumeroCaso().setEnabled(false);
+        pantalla.getRadioBtnDenuncia().setEnabled(false);
+        pantalla.getRadioBtnReclamo().setEnabled(false);
+        pantalla.getBotonConsultar().setEnabled(false);
+        pantalla.getBtnSalir().setText("Regresar");
+        pantalla.getBtnSalir().setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/dialog-apply.png")));
+
+
         ConsultarEstadoCaso(numCaso, ExpertoConsultarAvanceDeReclamo.DENUNCIA);
     }
 
@@ -180,6 +189,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         modeloEstados.clear();
         modeloOrdenes.clear();
         modeloFallas.clear();
+        modeloSemaforos.clear();
         pantalla.getLblCantReclamos().setText("Cantidad de Reclamos Caso:");
         pantalla.getLblNroCaso().setText("Caso Nº: ");
         pantalla.getLblUbicacion().setText("Ubicación:");
