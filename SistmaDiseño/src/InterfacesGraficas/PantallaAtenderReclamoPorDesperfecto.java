@@ -569,7 +569,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 denunciante = controladorARPD.buscarDenunciante(dni.getText());
                 apellido.setText(denunciante.getPersonaPadron().getapellido());
                 nombre.setText(denunciante.getPersonaPadron().getnombre());
-                if (!denunciante.getdomicilio().equals("")) {
+                if (denunciante.getdomicilio() != null && !denunciante.getdomicilio().equals("")) {
                     domicilio.setText(denunciante.getdomicilio());
                 } else {
                     domicilio.setText(denunciante.getPersonaPadron().getdomicilio());
