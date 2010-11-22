@@ -15,6 +15,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import Utilidades.RenderTablaEstadosCaso;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
@@ -573,6 +574,12 @@ setRetorno(int retorno) {
         this.retorno = retorno;
 
 }
+
+    public JButton getBtnSalir() {
+        return btnSalir;
+    }
+
+
 
 
 
