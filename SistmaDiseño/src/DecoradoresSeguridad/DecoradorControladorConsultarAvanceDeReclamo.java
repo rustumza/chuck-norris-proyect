@@ -43,8 +43,8 @@ public class DecoradorControladorConsultarAvanceDeReclamo extends ControladorCon
     }
 
     @Override
-    public void cerrar(){
-        super.cerrar();
+    public void cerrar(int opcionRetorno){
+        super.cerrar(opcionRetorno);
     }
 
     }

@@ -27,6 +27,8 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
     //Mensajes de error
     public static final int COD_CASO_VACIO = 1;
     public static final int BUSQUEDA_VACIA = 2;
+    public static final int CHUCK = 1;
+    public static final int OTRO = 2;
     //
     ExpertoConsultarAvanceDeReclamo experto;
     private PantallaConsultarAvanceDeReclamo pantalla;
@@ -67,6 +69,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         getPantalla().setTitle("Consultar Avance de Reclamo");
         getPantalla().setLocationRelativeTo(null);
         getPantalla().setVisible(true);
+        getPantalla().setRetorno(CHUCK);
     }
 
     /*
@@ -76,6 +79,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         getPantalla().setTitle("Consultar Avance de Reclamo");
         getPantalla().setLocationRelativeTo(null);
         getPantalla().setVisible(true);
+        getPantalla().setRetorno(OTRO);
         ConsultarEstadoCaso(numCaso, ExpertoConsultarAvanceDeReclamo.DENUNCIA);
     }
 
@@ -92,7 +96,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
             if (dtoDenuncia.getOrdenesRep() != null) {
                 modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
             }
-            if(dtoDenuncia.getListaFallas()!=null){
+            if (dtoDenuncia.getListaFallas() != null) {
                 modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
             }
             pantalla.getLblCantReclamos().setText(pantalla.getLblCantReclamos().getText() + " " + dtoDenuncia.getCantidadReclamos() + ".");
@@ -137,10 +141,12 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         pantallaDetalleOrden.setInformeReparacion(informe);
     }
 
-    public void cerrar() {
+    public void cerrar(int opcionSalida) {
         getPantalla().setVisible(false);
         getPantalla().dispose();
-        chuck.iniciar();
+        if (opcionSalida == CHUCK) {
+            chuck.iniciar();
+        }
     }
 
     /**
