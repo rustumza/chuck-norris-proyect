@@ -587,6 +587,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private void validarCallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validarCallesActionPerformed
 
         comboCalle1.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle1.getText())));
+        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+        problemasDeCadaSemaforo.setModel(new DefaultComboBoxModel());
+        consultarAvanceDeReclamo.setEnabled(true);
         if(interseccionRadioButton.isSelected())
             comboCalle2.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle2.getText())));
         else
@@ -723,6 +726,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         calle1.setText("");
         comboCalle2.setEnabled(true);
         comboCalle1.setModel(new DefaultComboBoxModel());
+        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+        problemasDeCadaSemaforo.setModel(new DefaultComboBoxModel());
+        consultarAvanceDeReclamo.setEnabled(false);
         
     }//GEN-LAST:event_interseccionRadioButtonActionPerformed
 
@@ -734,6 +740,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         calle1.setText("");
         comboCalle2.setModel(new DefaultComboBoxModel());
         comboCalle1.setModel(new DefaultComboBoxModel());
+        hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
+        problemasDeCadaSemaforo.setModel(new DefaultComboBoxModel());
+        consultarAvanceDeReclamo.setEnabled(false);
     }//GEN-LAST:event_calleSimpleRadioButtonActionPerformed
 
     private void aceptarDenunciaGuardadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarDenunciaGuardadActionPerformed
