@@ -88,6 +88,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     public Calle[] buscarCalle(String calle){
 
         List<Calle> listaDeCalle = earpd.buscarCalle(calle);
+        numeroDeDenuncia = 0;
         return listaDeCalle.toArray(new Calle[listaDeCalle.size()]);
 
     }
