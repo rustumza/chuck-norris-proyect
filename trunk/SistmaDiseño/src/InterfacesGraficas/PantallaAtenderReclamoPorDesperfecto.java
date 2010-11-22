@@ -278,6 +278,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Denunciante"));
@@ -589,7 +590,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         comboCalle1.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle1.getText())));
         hashMapProblemasDelSemaforo = new HashMap<String, DTOProblemasDelSemaforo>();
         problemasDeCadaSemaforo.setModel(new DefaultComboBoxModel());
-        consultarAvanceDeReclamo.setEnabled(true);
+        consultarAvanceDeReclamo.setEnabled(false);
         if(interseccionRadioButton.isSelected())
             comboCalle2.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle2.getText())));
         else
