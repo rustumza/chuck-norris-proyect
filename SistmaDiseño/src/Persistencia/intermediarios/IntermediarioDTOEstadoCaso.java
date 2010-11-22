@@ -141,7 +141,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
         boolean crearNuevoInformeReparacion = false;
         boolean crearNuevoDetalleInforme = false;
         boolean crearNuevaFallaDenuncia = false;
-        boolean sumarReclamo = true;
+        boolean sumarReclamo = false;
         boolean agregarCalleInterseccion = false;
         boolean crearNuevoSemaforo = false;
 
@@ -294,8 +294,10 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                     dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion().addDetalle(nuevoDetalleInforme);
                 }
 
+                //if para contar los reclamos
                 if (auxiliaresReclamo.isEmpty() && rs.getString("CodigoReclamo") != null) {
-                } else {
+                    sumarReclamo = true;
+                } else if(rs.getString("CodigoReclamo") != null){
                     int cantMaxRecl = auxiliaresReclamo.size();
                     for (int i = 0; i < cantMaxRecl; i++) {
                         if (auxiliaresReclamo.get(i).equals(rs.getString("CodigoReclamo"))) {
