@@ -128,7 +128,6 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         calle2 = new javax.swing.JTextField();
         calle1 = new javax.swing.JTextField();
-        buscarInteseccion = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         interseccionRadioButton = new javax.swing.JRadioButton();
@@ -137,6 +136,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         comboCalle1 = new javax.swing.JComboBox();
         comboCalle2 = new javax.swing.JComboBox();
         altura = new javax.swing.JComboBox();
+        consultarAvanceDeReclamo = new javax.swing.JButton();
+        buscarInteseccion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDeSemafor = new javax.swing.JTable();
@@ -360,17 +361,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         calle1.setNextFocusableComponent(calle2);
         jPanel2.add(calle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 150, -1));
-
-        buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
-        buscarInteseccion.setText("Buscar");
-        buscarInteseccion.setNextFocusableComponent(tablaDeSemafor);
-        buscarInteseccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarInteseccionActionPerformed(evt);
-            }
-        });
-        jPanel2.add(buscarInteseccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 110, -1));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 420, 10));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 240, 10));
 
         jLabel10.setText("Altura");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
@@ -402,7 +393,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                 validarCallesActionPerformed(evt);
             }
         });
-        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+        jPanel2.add(validarCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
 
         comboCalle1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboCalle1.addActionListener(new java.awt.event.ActionListener() {
@@ -417,6 +408,24 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         altura.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(altura, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 80, -1));
+
+        consultarAvanceDeReclamo.setText("Consultar Avance de Reclamo");
+        consultarAvanceDeReclamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarAvanceDeReclamoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(consultarAvanceDeReclamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 210, 30));
+
+        buscarInteseccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/edit-find.png"))); // NOI18N
+        buscarInteseccion.setText("Buscar");
+        buscarInteseccion.setNextFocusableComponent(tablaDeSemafor);
+        buscarInteseccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarInteseccionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(buscarInteseccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 110, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 452, 192));
 
@@ -735,6 +744,10 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         denunciaExistente.setVisible(false);
     }//GEN-LAST:event_aceptarDenunciaExistenteActionPerformed
 
+    private void consultarAvanceDeReclamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarAvanceDeReclamoActionPerformed
+        controladorARPD.consultarAvanceDeReclamo();
+    }//GEN-LAST:event_consultarAvanceDeReclamoActionPerformed
+
     /**
     * @param args the command line arguments
     
@@ -764,6 +777,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JLabel codigoDenunciaReclamo;
     private javax.swing.JComboBox comboCalle1;
     private javax.swing.JComboBox comboCalle2;
+    private javax.swing.JButton consultarAvanceDeReclamo;
     private javax.swing.JDialog denunciaExistente;
     private javax.swing.JDialog denunciaGuardada;
     private javax.swing.JLabel denunciaReclamo;
@@ -917,6 +931,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         denunciaExistente.setLocationRelativeTo(null);
         denunciaExistente.pack();
         denunciaExistente.setModal(true);
+        getConsultarAvanceDeReclamo().setEnabled(false);
 
     }
 
@@ -965,11 +980,21 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     public void setQuitarProblema(javax.swing.JButton quitarProblema) {
         this.quitarProblema = quitarProblema;
     }
-  
-    /*public void reproducir() throws Exception{
-        reproductor.AbrirFichero("/home/diego/Descargas/denuncia.mp3");
-        reproductor.Play();
 
-    }*/
+    /**
+     * @return the consultarAvanceDeReclamo
+     */
+    public javax.swing.JButton getConsultarAvanceDeReclamo() {
+        return consultarAvanceDeReclamo;
+    }
+
+    /**
+     * @param consultarAvanceDeReclamo the consultarAvanceDeReclamo to set
+     */
+    public void setConsultarAvanceDeReclamo(javax.swing.JButton consultarAvanceDeReclamo) {
+        this.consultarAvanceDeReclamo = consultarAvanceDeReclamo;
+    }
+  
+
 
      }
