@@ -69,30 +69,41 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         getPantalla().setVisible(true);
     }
 
+    /*
+     * Inicia el caso de uso con la busqueda de la denuncia ingresada
+     */
+    public void iniciar(String numCaso) {
+        getPantalla().setTitle("Consultar Avance de Reclamo");
+        getPantalla().setLocationRelativeTo(null);
+        getPantalla().setVisible(true);
+        ConsultarEstadoCaso(numCaso, ExpertoConsultarAvanceDeReclamo.DENUNCIA);
+    }
+
     public void ConsultarEstadoCaso(String numcaso, int seleccion) {
 
         limpiarPantalla();
 
-        experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
+        //experto = (ExpertoConsultarAvanceDeReclamo) FabricaExpertos.getInstance().getExperto("ConsultarAvanceDeReclamo");
 
-        modeloEstados.clear();
-        modeloOrdenes.clear();
-        modeloFallas.clear();
         try {
             DTOCaso dtoDenuncia = experto.ConsultarEstadoCaso(numcaso, seleccion, chuck.getOperadorEncontrado());
             modeloEstados.addAllRow(dtoDenuncia.getListaEstados());
-            modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
-            pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
-            modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
+            //pantalla.getTablaConsultarAvanceReclamo().setModel(modeloEstados);
+            if (dtoDenuncia.getOrdenesRep() != null) {
+                modeloOrdenes.addAllRow(dtoDenuncia.getOrdenesRep());
+            }
+            if(dtoDenuncia.getListaFallas()!=null){
+                modeloFallas.addAllRow(dtoDenuncia.getListaFallas());
+            }
             pantalla.getLblCantReclamos().setText(pantalla.getLblCantReclamos().getText() + " " + dtoDenuncia.getCantidadReclamos() + ".");
-
+            pantalla.getLblNroCaso().setText(pantalla.getLblNroCaso().getText() + numcaso);
             String ubicacion;
             if (dtoDenuncia.getUbicacion().getTipo().equalsIgnoreCase("INTERSECCION")) {
                 ubicacion = dtoDenuncia.getUbicacion().getCalle1() + " y " + dtoDenuncia.getUbicacion().getCalle2();
             } else {
                 ubicacion = dtoDenuncia.getUbicacion().getCalle1() + " " + dtoDenuncia.getUbicacion().getAltura();
             }
-            pantalla.getLblUbicacion().setText(pantalla.getLblUbicacion().getText()+" "+ubicacion);
+            pantalla.getLblUbicacion().setText(pantalla.getLblUbicacion().getText() + " " + ubicacion);
             modeloSemaforos.addAllRow(dtoDenuncia.getSemaforosDenunciados());
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
@@ -164,6 +175,8 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         modeloOrdenes.clear();
         modeloFallas.clear();
         pantalla.getLblCantReclamos().setText("Cantidad de Reclamos Caso:");
+        pantalla.getLblNroCaso().setText("Caso Nº: ");
+        pantalla.getLblUbicacion().setText("Ubicación:");
         habilitarBotonDetalleOrden(null);
     }
 
