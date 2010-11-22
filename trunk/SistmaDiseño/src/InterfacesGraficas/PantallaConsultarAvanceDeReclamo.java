@@ -34,7 +34,6 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
        controlador = control;
        initComponents();
        btnDetalleOrden.setEnabled(false);
-
        //setea el comportamiento de la tabla estados denuncia
        tblestadoCaso.setDefaultRenderer(Object.class, new RenderTablaEstadosCaso());
 
@@ -75,6 +74,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         tblestadoCaso = new javax.swing.JTable();
         lblCantReclamos = new javax.swing.JLabel();
         lblUbicacion = new javax.swing.JLabel();
+        lblNroCaso = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblOrdenReparacion = new javax.swing.JTable();
@@ -193,6 +193,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         lblUbicacion.setForeground(new java.awt.Color(24, 122, 185));
         lblUbicacion.setText("Ubicacion: ");
 
+        lblNroCaso.setForeground(new java.awt.Color(24, 122, 185));
+        lblNroCaso.setText("Caso Nº: ");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -200,34 +203,30 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addContainerGap(323, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(lblUbicacion)
-                            .addContainerGap(337, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(lblCantReclamos)
-                            .addContainerGap(240, Short.MAX_VALUE)))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNroCaso)
+                    .addComponent(lblCantReclamos)
+                    .addComponent(lblUbicacion)
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNroCaso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUbicacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
                 .addComponent(lblCantReclamos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 298, 410, 190));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 410, 230));
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -365,6 +364,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private javax.swing.JPanel jpanelCaso;
     private javax.swing.JScrollPane jscrollpane5;
     private javax.swing.JLabel lblCantReclamos;
+    private javax.swing.JLabel lblNroCaso;
     private javax.swing.JLabel lblUbicacion;
     private javax.swing.JRadioButton radioBtnDenuncia;
     private javax.swing.JRadioButton radioBtnReclamo;
@@ -474,5 +474,11 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     public JLabel getLblUbicacion() {
         return lblUbicacion;
     }
+
+    public JLabel getLblNroCaso() {
+        return lblNroCaso;
+    }
+
+
 
 }

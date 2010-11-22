@@ -97,19 +97,18 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
 
         String condicion = " WHERE ";
 
-        for(int i = 0 ; i < criterios.size(); i++){
-            if(i>0){
+        for (int i = 0; i < criterios.size(); i++) {
+            if (i > 0) {
                 condicion += " AND ";
             }
-            if(criterios.get(i).getAtributo().equalsIgnoreCase("Operador")){
+            if (criterios.get(i).getAtributo().equalsIgnoreCase("Operador")) {
                 condicion += " denunciaCompleta.operador " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "'";
-            }
-            else{
-                condicion += " denunciaCompleta." + criterios.get(i).getAtributo()+ " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "' ";
+            } else {
+                condicion += " denunciaCompleta." + criterios.get(i).getAtributo() + " " + criterios.get(i).getOperador() + " '" + criterios.get(i).getValor() + "' ";
             }
         }
 
-         
+
         condicion += " ORDER BY denunciaCompleta.CodigoDenuncia, denunciaCompleta.nombreEstadoDenuncia, denunciaCompleta.nombreFallaDenuncia,ordenReparacionCompleta.CodigoOrdenReparacion";
         select = select + condicion;
 
@@ -163,34 +162,34 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 }
 
                 //Agregar Ubicacion
-                
-                    if(rs.getString("calleSimple") != null){
-                        dtoDenuncia.getUbicacion().setCalle1(rs.getString("calleSimple"));
-                        dtoDenuncia.getUbicacion().setAltura(rs.getString("Altura"));
-                        dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
+
+                if (rs.getString("calleSimple") != null) {
+                    dtoDenuncia.getUbicacion().setCalle1(rs.getString("calleSimple"));
+                    dtoDenuncia.getUbicacion().setAltura(rs.getString("Altura"));
+                    dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
+                    agregarCalleInterseccion = false;
+                } else if (rs.getString("calleInterseccion") != null) {
+                    if (!dtoDenuncia.getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                        agregarCalleInterseccion = true;
+                    } else {
                         agregarCalleInterseccion = false;
-                    }else if (rs.getString("calleInterseccion")!= null){
-                        if(!dtoDenuncia.getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))){
-                            agregarCalleInterseccion = true;
-                        }else{
-                            agregarCalleInterseccion = false;
-                        }
                     }
-                if(agregarCalleInterseccion){
-                    if(dtoDenuncia.getUbicacion().getTipo().isEmpty()){
+                }
+                if (agregarCalleInterseccion) {
+                    if (dtoDenuncia.getUbicacion().getTipo().isEmpty()) {
                         dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
                     }
                     dtoDenuncia.getUbicacion().addCalle(rs.getString("calleInterseccion"));
                 }
 
                 //If para saber si agregar nuevo semaforo
-                if(!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))){
+                if (!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))) {
                     crearNuevoSemaforo = true;
-                }else{
+                } else {
                     crearNuevoSemaforo = false;
                 }
 
-                if(crearNuevoSemaforo){
+                if (crearNuevoSemaforo) {
                     DTOSemaforo nuevoSemaforo = new DTOSemaforo();
                     nuevoSemaforo.setEsquina(rs.getString("esquinaSem"));
                     nuevoSemaforo.setModelo(rs.getString("NombreModelo"));
@@ -239,7 +238,9 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
 
 
                 //If para saber si crear nueva Orden de Reparacion
-                if (dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("CodigoOrdenReparacion") != null) {
+                if (rs.getString("CodigoOrdenReparacion") == null) {
+                    crearNuevaOrdenReparacion = false;
+                } else if (dtoDenuncia.getOrdenesRep() ==  null) {
                     crearNuevaOrdenReparacion = true;
                 } else if (!dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion")) && rs.getString("CodigoOrdenReparacion") != null) {
                     crearNuevaOrdenReparacion = true;
@@ -260,7 +261,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 }
 
                 //If para saber si crear nuevo informe de Reparacion
-                if (!dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("DuracionReparacion") != null && dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))) {
+                if ((dtoDenuncia.getOrdenesRep() != null) && rs.getString("DuracionReparacion") != null && dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getNroOrden().equals(rs.getString("CodigoOrdenReparacion"))) {
                     if (dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion() == null) {
                         crearNuevoInformeReparacion = true;
                     } else {
@@ -279,7 +280,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 }
 
                 //If para saber si crear nuevo detalleDeInforme
-                if (!dtoDenuncia.getOrdenesRep().isEmpty() && rs.getString("nombreEstadoFallaInforme") != null && !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion().seEncuentraDetalle(rs.getString("descripcionFallaInforme"))) {
+                if (dtoDenuncia.getOrdenesRep() != null && rs.getString("nombreEstadoFallaInforme") != null && !dtoDenuncia.getOrdenesRep().get(dtoDenuncia.getOrdenesRep().size() - 1).getInformeReparacion().seEncuentraDetalle(rs.getString("descripcionFallaInforme"))) {
                     crearNuevoDetalleInforme = true;
                 } else {
                     crearNuevoDetalleInforme = false;
@@ -297,7 +298,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 //if para contar los reclamos
                 if (auxiliaresReclamo.isEmpty() && rs.getString("CodigoReclamo") != null) {
                     sumarReclamo = true;
-                } else if(rs.getString("CodigoReclamo") != null){
+                } else if (rs.getString("CodigoReclamo") != null) {
                     int cantMaxRecl = auxiliaresReclamo.size();
                     for (int i = 0; i < cantMaxRecl; i++) {
                         if (auxiliaresReclamo.get(i).equals(rs.getString("CodigoReclamo"))) {
@@ -305,7 +306,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                         }
                     }
                 }
-                if(sumarReclamo){
+                if (sumarReclamo) {
                     auxiliaresReclamo.add(rs.getString("CodigoReclamo"));
                 }
 

@@ -8,7 +8,6 @@ package DTO;
 import Persistencia.Entidades.ObjetoPersistente;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 
 /**
  *
@@ -19,7 +18,7 @@ import org.eclipse.jdt.internal.compiler.ast.ForeachStatement;
 public class DTOCaso extends ObjetoPersistente{
 
     private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
-    private List<DTOOrden> ordenesReparacion = new ArrayList<DTOOrden>();
+    private List<DTOOrden> ordenesReparacion;
     private List<DTOFallaTecnica> listaFallas = new ArrayList<DTOFallaTecnica>();
     private List<DTOSemaforo> semaforosDenunciados;
     private DTOUbicacion ubicacion;

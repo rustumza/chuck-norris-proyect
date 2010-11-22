@@ -24,6 +24,9 @@ import java.util.List;
  */
 public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
+    public static final int DENUNCIA = 1;
+    public static final int RECLAMO = 2;
+
     public DTOCaso ConsultarEstadoCaso(String numcaso, int seleccion, Operador operador) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
 
 
@@ -35,7 +38,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
         }
 
-        if (seleccion == 1) {
+        if (seleccion == DENUNCIA) {
             return buscarDTODenuncia(numcaso,operador);
         }else{
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
