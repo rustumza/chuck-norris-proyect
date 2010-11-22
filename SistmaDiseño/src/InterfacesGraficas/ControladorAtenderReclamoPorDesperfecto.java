@@ -5,6 +5,7 @@
 
 package InterfacesGraficas;
 
+import DTO.DTOTodosLosSemaforosNumeroDeDenuncia;
 import DTO.DTOinfoDeDenunciaGuardada;
 import DTO.DTOinfoParaCrearDenuncia;
 import Excepciones.ExcepcionCampoInvalido;
@@ -12,6 +13,7 @@ import Excepciones.ExcepcionDenunciaExistente;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Persistencia.Entidades.Denunciante;
 import Expertos.ExpertoAntenderReclamoPorDesperfecto;
+import Fabricas.FabricaControladores;
 import Fabricas.FabricaExpertos;
 import InterfacesGraficas.ModelosTablas.ModeloJListListaProblemas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
@@ -41,6 +43,7 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     ExpertoAntenderReclamoPorDesperfecto earpd;
     private PantallaAtenderReclamoPorDesperfecto pantallaARPD;
     private ChuckNorrisControlador chuck;
+    private int numeroDeDenuncia;
     
 
     public ControladorAtenderReclamoPorDesperfecto(){
@@ -100,9 +103,13 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
     public void buscarSemaforo(Calle calle1, Calle calle2){
         try {
             ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
-            modTabSem.addAllRow(earpd.buscarSemaforo(calle1, calle2));
+            DTOTodosLosSemaforosNumeroDeDenuncia dto = earpd.buscarSemaforo(calle1, calle2);
+            modTabSem.addAllRow(dto.getListaDeSemaforo());
             getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
             getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+            numeroDeDenuncia = dto.getNumeroDeDenuncia();
+            if(numeroDeDenuncia != 0)
+                getPantallaARPD().getConsultarAvanceDeReclamo().setEnabled(true);
         } catch (ExcepcionCampoInvalido ex) {
             JOptionPane.showMessageDialog(pantallaARPD, ex.getMessage(), "ERROR", JOptionPane.INFORMATION_MESSAGE);
         } catch (ExcepcionObjetoNoEncontrado ex) {
@@ -112,9 +119,14 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
 
     public void buscarSemaforo(Calle calle1, int altura){
         ModeloTablaSemaforos modTabSem = new ModeloTablaSemaforos();
-        modTabSem.addAllRow(earpd.buscarSemaforo(calle1, altura));
+        DTOTodosLosSemaforosNumeroDeDenuncia dto = earpd.buscarSemaforo(calle1, altura);
+        modTabSem.addAllRow(dto.getListaDeSemaforo());
         getPantallaARPD().getTablaDeSemafor().setModel(modTabSem);
         getPantallaARPD().getTodosLosProblemas().setModel(new ModeloJListListaProblemas(buscarProblemaList()));
+        numeroDeDenuncia = dto.getNumeroDeDenuncia();
+        if(numeroDeDenuncia != 0)
+            getPantallaARPD().getConsultarAvanceDeReclamo().setEnabled(true);
+
     }
 
     public Problema[] buscarProblema(){
@@ -135,7 +147,6 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
                 pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
-               // pantallaARPD.reproducir();
                 pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
                 pantallaARPD.ponerTodoEnBlancoPublico();
 
@@ -176,6 +187,14 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
      */
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
+    }
+
+    void consultarAvanceDeReclamo() {
+        if(numeroDeDenuncia != 0){
+            ControladorConsultarAvanceDeReclamo contConsAvancRec = (ControladorConsultarAvanceDeReclamo)FabricaControladores.getInstance().getControlador("ConsultarAvanceDeReclamo");
+            contConsAvancRec.setChuck(chuck);
+            contConsAvancRec.iniciar(String.valueOf(numeroDeDenuncia));
+        }
     }
 
     /*
