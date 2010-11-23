@@ -183,7 +183,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 }
 
                 //If para saber si agregar nuevo semaforo
-                if (!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))) {
+                if ((rs.getString("NumeroSerie")!=null)&&!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))) {
                     crearNuevoSemaforo = true;
                 } else {
                     crearNuevoSemaforo = false;

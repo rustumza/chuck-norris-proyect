@@ -96,7 +96,7 @@ public class ModeloTablaSemaforosDenunciadosDTO extends AbstractTableModel {
         if (listaDeSemaforos == null) {
             listaDeSemaforos = new ArrayList<DTOSemaforo>();
         }
-        this.listaDeSemaforos.addAll(nuevaLista);
+        listaDeSemaforos.addAll(nuevaLista);
         fireTableDataChanged();
     }
 
