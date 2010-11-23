@@ -117,7 +117,9 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
                 ubicacion = dtoDenuncia.getUbicacion().getCalle1() + " " + dtoDenuncia.getUbicacion().getAltura();
             }
             pantalla.getLblUbicacion().setText(pantalla.getLblUbicacion().getText() + " " + ubicacion);
-            modeloSemaforos.addAllRow(dtoDenuncia.getSemaforosDenunciados());
+            if (dtoDenuncia.getSemaforosDenunciados() != null) {
+                modeloSemaforos.addAllRow(dtoDenuncia.getSemaforosDenunciados());
+            }
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
