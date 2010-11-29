@@ -42,7 +42,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "estadodenuncia.NombreEstado AS nombreEstadoDenuncia, "
                 + "trabajo.NombreTrabajo AS nombreFallaDenuncia, "
                 + "fallatecnica.DescripcionFalla AS descripcionFallaDenuncia, fallatecnica.CodigoFallaTecnica AS codigoFallaDenuncia, "
-                + "reclamo.CodigoReclamo, "
+                + "reclamoDenuncia.CodigoReclamo, "
                 + "caso.OIDOperador AS operador, "
                 + "semaforo.NumeroSerie, "
                 + "modelo.NombreModelo, "
@@ -53,7 +53,13 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "calleSimple.NombreCalle AS calleSimple, "
                 + "ubicacionsimple.Altura, "
                 + "calleInterseccion.NombreCalle AS calleInterseccion, "
-                + "problema.DescripcionProblema "
+                + "problema.DescripcionProblema, "
+                + "reclamoDenuncia.NumeroSerieSemaforoReclamo, "
+                + "reclamoDenuncia.NombreModeloReclamo, "
+                + "reclamoDenuncia.DescripcionTipoSemReclamo, "
+                + "reclamoDenuncia.esquinaSemReclamo, "
+                + "reclamoDenuncia.orientacionSemReclamo, "
+                + "reclamoDenuncia.ProblemaReclamo "
                 + "FROM caso "
                 + "LEFT JOIN casosemaforo ON caso.OIDCaso = casosemaforo.OIDCaso "
                 + "LEFT JOIN problemacaso ON caso.OIDCaso = problemacaso.OIDCaso "
@@ -75,13 +81,31 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "LEFT JOIN fallatecnicadenuncia ON denuncia.OIDCaso = fallatecnicadenuncia.OIDDenuncia "
                 + "LEFT JOIN fallatecnica ON fallatecnicadenuncia.OIDFallaTecnica = fallatecnica.OIDTrabajo "
                 + "LEFT JOIN trabajo ON fallatecnica.OIDTrabajo = trabajo.OIDTrabajo "
-                + "LEFT JOIN reclamo ON denuncia.OIDCaso = reclamo.OIDDenuncia"
+                + "LEFT JOIN ( "
+                + "select reclamo.OIDDenuncia as OIDDenReclamo, reclamo.CodigoReclamo, "
+                + "semaforoReclamo.NumeroSerie as NumeroSerieSemaforoReclamo, "
+                + "modeloReclamo.NombreModelo as NombreModeloReclamo, "
+                + "tipoSemReclamo.DescripcionTipoSemaforo as DescripcionTipoSemReclamo, "
+                + "esquinaSemReclamo.Descripcion as esquinaSemReclamo, "
+                + "orientacionSemReclamo.Descripcion as orientacionSemReclamo, "
+                + "problemaSemaforo.DescripcionProblema as ProblemaReclamo "
+                + "from reclamo "
+                + "LEFT JOIN caso as casoReclamo on reclamo.OIDCaso = casoReclamo.OIDCaso "
+                + "LEFT JOIN problemacaso as problemasReclamo on casoReclamo.OIDCaso = problemasReclamo.OIDCaso "
+                + "LEFT JOIN problema as problemaSemaforo on problemasReclamo.OIDProblema = problemaSemaforo.OIDProblema "
+                + "LEFT JOIN casosemaforo as casoSemaforoReclamo on casoReclamo.OIDCaso = casoSemaforoReclamo.OIDCaso "
+                + "LEFT JOIN semaforo as semaforoReclamo on casoSemaforoReclamo.OIDSemaforo = semaforoReclamo.OIDSemaforo "
+                + "LEFT JOIN modelo as modeloReclamo ON semaforoReclamo.OIDModelo = modeloReclamo.OIDModelo "
+                + "LEFT JOIN tiposemaforo as tipoSemReclamo ON semaforoReclamo.OIDTipoSemaforo = tipoSemReclamo.OIDTipoSemaforo "
+                + "LEFT JOIN esquina as esquinaSemReclamo ON semaforoReclamo.OIDEsquina = esquinaSemReclamo.OIDEsquina "
+                + "LEFT JOIN orientacion as orientacionSemReclamo ON semaforoReclamo.OIDOrientacion = orientacionSemReclamo.OIDOrientacion "
+                + ")as reclamoDenuncia ON denuncia.OIDCaso = reclamoDenuncia.OIDDenReclamo "
                 + ") AS denunciaCompleta "
                 + "LEFT JOIN ( "
                 + "SELECT ordendetrabajo.FechaInicioTrabajo, ordendetrabajo.FechaFinTrabajo, ordendetrabajo.FechaInicioPlanificada, ordendetrabajo.DuracionPrevistaTrabajo, "
                 + "equipodetrabajo.NombreEquipo, "
                 + "estadoordentrabajo.NombreEstado AS nombreEstadoOrden, "
-                + "ordenreparacion.OIDDenuncia, ordenreparacion.CodigoOrdenReparacion,"
+                + "ordenreparacion.OIDDenuncia, ordenreparacion.CodigoOrdenReparacion, "
                 + "informereparacion.FechaInforme, informereparacion.HoraInforme, informereparacion.DuracionReparacion, "
                 + "detalleinformereparacion.Comentario, "
                 + "fallatecnica.DescripcionFalla AS descripcionFallaInforme, "
@@ -95,7 +119,7 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "LEFT JOIN detalleinformereparacion ON informereparacion.OIDInformeReparacion = detalleinformereparacion.OIDInformeReparacion "
                 + "LEFT JOIN estadofallatecnica ON detalleinformereparacion.OIDEstadoFallaTecnica = estadofallatecnica.OIDEstadoFallaTecnica "
                 + "LEFT JOIN fallatecnica ON detalleinformereparacion.OIDFallaTecnica = fallatecnica.OIDTrabajo "
-                + "WHERE ordentrabajoestado.IndicadoresEstadoActual = TRUE"
+                + "WHERE ordentrabajoestado.IndicadoresEstadoActual = TRUE "
                 + ")as ordenReparacionCompleta ON denunciaCompleta.oidDenunciaEncontrada = ordenReparacionCompleta.OIDDenuncia";
 
         String condicion = " WHERE ";
@@ -190,6 +214,11 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                     dtoDenuncia.addProblema(rs.getString("DescripcionProblema"));
                 }
 
+                //If para saber si agregar problemas
+                if(rs.getString("ProblemaReclamo") != null && !dtoDenuncia.estaProblema(rs.getString("ProblemaReclamo"))){
+                    dtoDenuncia.addProblema(rs.getString("ProblemaReclamo"));
+                }
+
                 //If para saber si agregar nuevo semaforo
                 if ((rs.getString("NumeroSerie")!=null)&&!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerie"))) {
                     crearNuevoSemaforo = true;
@@ -204,6 +233,23 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                     nuevoSemaforo.setNumeroSerie(rs.getString("NumeroSerie"));
                     nuevoSemaforo.setOrientacion(rs.getString("orientacionSem"));
                     nuevoSemaforo.setTipo(rs.getString("tipoSem"));
+                    dtoDenuncia.addSemaforo(nuevoSemaforo);
+                }
+
+                //If para saber si agregar nuevo semaforo reclamado
+                if ((rs.getString("NumeroSerieSemaforoReclamo")!=null)&&!dtoDenuncia.estaSemaforo(rs.getString("NumeroSerieSemaforoReclamo"))) {
+                    crearNuevoSemaforo = true;
+                } else {
+                    crearNuevoSemaforo = false;
+                }
+
+                if (crearNuevoSemaforo) {
+                    DTOSemaforo nuevoSemaforo = new DTOSemaforo();
+                    nuevoSemaforo.setEsquina(rs.getString("esquinaSemReclamo"));
+                    nuevoSemaforo.setModelo(rs.getString("NombreModeloReclamo"));
+                    nuevoSemaforo.setNumeroSerie(rs.getString("NumeroSerieSemaforoReclamo"));
+                    nuevoSemaforo.setOrientacion(rs.getString("orientacionSemReclamo"));
+                    nuevoSemaforo.setTipo(rs.getString("DescripcionTipoSemReclamo"));
                     dtoDenuncia.addSemaforo(nuevoSemaforo);
                 }
 
