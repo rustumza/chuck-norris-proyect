@@ -52,9 +52,12 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                 + "ubicacion.TipoUbicacion, "
                 + "calleSimple.NombreCalle AS calleSimple, "
                 + "ubicacionsimple.Altura, "
-                + "calleInterseccion.NombreCalle AS calleInterseccion "
+                + "calleInterseccion.NombreCalle AS calleInterseccion, "
+                + "problema.DescripcionProblema "
                 + "FROM caso "
                 + "LEFT JOIN casosemaforo ON caso.OIDCaso = casosemaforo.OIDCaso "
+                + "LEFT JOIN problemacaso ON caso.OIDCaso = problemacaso.OIDCaso "
+                + "LEFT JOIN problema ON problemacaso.OIDProblema = problema.OIDProblema "
                 + "LEFT JOIN semaforo on casosemaforo.OIDSemaforo = semaforo.OIDSemaforo "
                 + "LEFT JOIN modelo ON semaforo.OIDModelo = modelo.OIDModelo "
                 + "LEFT JOIN tiposemaforo ON semaforo.OIDTipoSemaforo = tiposemaforo.OIDTipoSemaforo "
@@ -180,6 +183,11 @@ public class IntermediarioDTOEstadoCaso extends IntermediarioRelacional {
                         dtoDenuncia.getUbicacion().setTipo(rs.getString("TipoUbicacion"));
                     }
                     dtoDenuncia.getUbicacion().addCalle(rs.getString("calleInterseccion"));
+                }
+
+                //If para saber si agregar problemas
+                if(rs.getString("DescripcionProblema") != null && !dtoDenuncia.estaProblema(rs.getString("DescripcionProblema"))){
+                    dtoDenuncia.addProblema(rs.getString("DescripcionProblema"));
                 }
 
                 //If para saber si agregar nuevo semaforo
