@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package DTO;
 
 import Persistencia.Entidades.ObjetoPersistente;
@@ -15,7 +14,7 @@ import java.util.List;
  * DTO para contener datos de la denuncia, sus estados, fallas y orden de reparacion
  * su uso es para construir tablas
  */
-public class DTOCaso extends ObjetoPersistente{
+public class DTOCaso extends ObjetoPersistente {
 
     private List<DTOEstadoDenuncia> listaEstados = new ArrayList<DTOEstadoDenuncia>();
     private List<DTOOrden> ordenesReparacion;
@@ -26,6 +25,7 @@ public class DTOCaso extends ObjetoPersistente{
     private String fechaCaso;
     private String nroCaso;
     private int cantidadReclamos = 0;
+    private List<String> problemasDenunciados;
 
     /**
      * @return the listaFallas
@@ -38,12 +38,13 @@ public class DTOCaso extends ObjetoPersistente{
      * @param nuevalistaFallas the listaFallas to set
      */
     public void setListaFallas(List<DTOFallaTecnica> nuevalistaFallas) {
-        if(listaFallas == null )
+        if (listaFallas == null) {
             listaFallas = new ArrayList<DTOFallaTecnica>();
+        }
         listaFallas.addAll(nuevalistaFallas);
     }
 
-    public void addFalla(DTOFallaTecnica nuevaFalla){
+    public void addFalla(DTOFallaTecnica nuevaFalla) {
         listaFallas.add(nuevaFalla);
     }
 
@@ -58,8 +59,9 @@ public class DTOCaso extends ObjetoPersistente{
      * @param listaEstados the listaEstados to set
      */
     public void setListaEstados(List<DTOEstadoDenuncia> nuevalistaEstados) {
-        if(listaEstados == null)
+        if (listaEstados == null) {
             listaEstados = new ArrayList<DTOEstadoDenuncia>();
+        }
         listaEstados.addAll(nuevalistaEstados);
     }
 
@@ -77,8 +79,8 @@ public class DTOCaso extends ObjetoPersistente{
         this.ordenesReparacion = ordenRep;
     }
 
-    public void addOrden(DTOOrden nuevaOrden){
-        if(ordenesReparacion == null){
+    public void addOrden(DTOOrden nuevaOrden) {
+        if (ordenesReparacion == null) {
             ordenesReparacion = new ArrayList<DTOOrden>();
         }
         ordenesReparacion.add(nuevaOrden);
@@ -126,7 +128,7 @@ public class DTOCaso extends ObjetoPersistente{
         this.nroCaso = nroCaso;
     }
 
-    public void addEstado(DTOEstadoDenuncia nuevoEstado){
+    public void addEstado(DTOEstadoDenuncia nuevoEstado) {
         listaEstados.add(nuevoEstado);
     }
 
@@ -144,11 +146,12 @@ public class DTOCaso extends ObjetoPersistente{
         this.cantidadReclamos = cantidadReclamos;
     }
 
-    public boolean seEncuentraFalla(String codigoFalla){
+    public boolean seEncuentraFalla(String codigoFalla) {
         boolean resultado = false;
         for (DTOFallaTecnica dtoFalla : listaFallas) {
-            if(dtoFalla.getCodigoFalla().equals(codigoFalla))
+            if (dtoFalla.getCodigoFalla().equals(codigoFalla)) {
                 resultado = true;
+            }
         }
 
         return resultado;
@@ -166,26 +169,47 @@ public class DTOCaso extends ObjetoPersistente{
         return semaforosDenunciados;
     }
 
-    public void addSemaforo(DTOSemaforo nuevoSemaforo){
-        if(semaforosDenunciados == null){
+    public void addSemaforo(DTOSemaforo nuevoSemaforo) {
+        if (semaforosDenunciados == null) {
             semaforosDenunciados = new ArrayList<DTOSemaforo>();
         }
         semaforosDenunciados.add(nuevoSemaforo);
     }
 
-    public boolean estaSemaforo(String numeroSerie){
+    public boolean estaSemaforo(String numeroSerie) {
         boolean resultado = false;
-        if(semaforosDenunciados != null){
+        if (semaforosDenunciados != null) {
             for (DTOSemaforo dTOSemaforo : semaforosDenunciados) {
-                if(dTOSemaforo.getNumeroSerie().equals(numeroSerie)){
-                   resultado = true;
-                   break;
+                if (dTOSemaforo.getNumeroSerie().equals(numeroSerie)) {
+                    resultado = true;
+                    break;
                 }
             }
         }
         return resultado;
     }
 
-    
+    public List<String> getProblemasDenunciados() {
+        return problemasDenunciados;
+    }
 
+    public void addProblema(String nuevoProblema) {
+        if (problemasDenunciados == null) {
+            problemasDenunciados = new ArrayList<String>();
+        }
+        problemasDenunciados.add(nuevoProblema);
+    }
+
+    public boolean estaProblema(String problema) {
+        boolean resultado = false;
+        if (problemasDenunciados != null) {
+            for (String prob : problemasDenunciados) {
+                if (prob.equals(problema)) {
+                    resultado = true;
+                    break;
+                }
+            }
+        }
+        return resultado;
+    }
 }

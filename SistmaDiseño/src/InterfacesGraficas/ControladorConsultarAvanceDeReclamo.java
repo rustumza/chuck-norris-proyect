@@ -16,6 +16,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaFallas;
 import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforosDenunciadosDTO;
 import Persistencia.Entidades.Operador;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -120,6 +121,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
             if (dtoDenuncia.getSemaforosDenunciados() != null) {
                 modeloSemaforos.addAllRow(dtoDenuncia.getSemaforosDenunciados());
             }
+            pantalla.getBtnMostrarProblemas().setEnabled(true);
         } catch (ExcepcionCampoInvalido ex) {
             mostrarMensaje(COD_CASO_VACIO, ex.getMessage());
         } catch (ExcepcionObjetoNoEncontrado ex) {
@@ -195,6 +197,7 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
         pantalla.getLblCantReclamos().setText("Cantidad de Reclamos Caso:");
         pantalla.getLblNroCaso().setText("Caso Nº: ");
         pantalla.getLblUbicacion().setText("Ubicación:");
+        pantalla.getBtnMostrarProblemas().setEnabled(false);
         habilitarBotonDetalleOrden(null);
     }
 
@@ -207,5 +210,9 @@ public class ControladorConsultarAvanceDeReclamo implements Controlador {
      */
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
+    }
+
+    public List<String> getProblemasDenunciados() {
+        return experto.getProblemasDenunciados();
     }
 }

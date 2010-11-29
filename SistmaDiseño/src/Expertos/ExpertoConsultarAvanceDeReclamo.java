@@ -26,6 +26,7 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
 
     public static final int DENUNCIA = 1;
     public static final int RECLAMO = 2;
+    DTOCaso casoEncontrado;
 
     public DTOCaso ConsultarEstadoCaso(String numcaso, int seleccion, Operador operador) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
 
@@ -39,8 +40,8 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
         }
 
         if (seleccion == DENUNCIA) {
-            return buscarDTODenuncia(numcaso,operador);
-        }else{
+            casoEncontrado = buscarDTODenuncia(numcaso, operador);
+        } else {
             List<Criterio> listaCriterios = new ArrayList<Criterio>();
             listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("CodigoReclamo", "=", numcaso));
             List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("Reclamo", listaCriterios);
@@ -53,26 +54,27 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
             listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Reclamo", "=", (ObjetoPersistente) listaEncontrada.get(0)));
             List<SuperDruperInterfaz> denunciasBuscadas = FachadaExterna.getInstancia().buscar("Denuncia", listaCriterios);
 
-            return buscarDTODenuncia(String.valueOf(((Denuncia)denunciasBuscadas.get(0)).getcodigoDenuncia()),operador);
+            casoEncontrado = buscarDTODenuncia(String.valueOf(((Denuncia) denunciasBuscadas.get(0)).getcodigoDenuncia()), operador);
         }
 
-
+        return casoEncontrado;
 
     }
 
-    public DTOCaso buscarDTODenuncia(String numcaso,  Operador operador) throws ExcepcionObjetoNoEncontrado{
-            List<Criterio> listaCriterios = new ArrayList<Criterio>();
-            if(!validar.validarPermisos(operador.getUsuario().getPerfil().getPermisos(), 17))
-                listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Operador", "=", operador));
-            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
-            List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("DTOEstadoCaso", listaCriterios);
-            if (listaEncontrada.isEmpty()) {
-                ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
-                ex.setMensaje("No se han encontrado Casos con el numero: " + numcaso);
-                throw ex;
-            }
-              DTOCaso dtoEncontrado = (DTOCaso) listaEncontrada.get(0);
-             return dtoEncontrado;
+    public DTOCaso buscarDTODenuncia(String numcaso, Operador operador) throws ExcepcionObjetoNoEncontrado {
+        List<Criterio> listaCriterios = new ArrayList<Criterio>();
+        if (!validar.validarPermisos(operador.getUsuario().getPerfil().getPermisos(), 17)) {
+            listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("Operador", "=", operador));
+        }
+        listaCriterios.add(FachadaExterna.getInstancia().crearCriterio("CodigoDenuncia", "=", numcaso));
+        List<SuperDruperInterfaz> listaEncontrada = FachadaExterna.getInstancia().buscar("DTOEstadoCaso", listaCriterios);
+        if (listaEncontrada.isEmpty()) {
+            ExcepcionObjetoNoEncontrado ex = new ExcepcionObjetoNoEncontrado();
+            ex.setMensaje("No se han encontrado Casos con el numero: " + numcaso);
+            throw ex;
+        }
+        DTOCaso dtoEncontrado = (DTOCaso) listaEncontrada.get(0);
+        return dtoEncontrado;
     }
 
     public boolean habilitarBotonDetalleOrden(DTOOrden dtoOrdenRep) {
@@ -81,5 +83,14 @@ public class ExpertoConsultarAvanceDeReclamo implements Experto {
         } else {
             return false;
         }
+    }
+
+    public List<String> getProblemasDenunciados() {
+        if (casoEncontrado != null) {
+            return casoEncontrado.getProblemasDenunciados();
+        }else{
+            return null;
+        }
+
     }
 }

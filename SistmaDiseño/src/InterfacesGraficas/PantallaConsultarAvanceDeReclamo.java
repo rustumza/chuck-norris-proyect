@@ -15,8 +15,10 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaOrdenesTrabajo;
 import Utilidades.RenderTablaEstadosCaso;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -40,6 +42,9 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         btnDetalleOrden.setEnabled(false);
         //setea el comportamiento de la tabla estados denuncia
         tblestadoCaso.setDefaultRenderer(Object.class, new RenderTablaEstadosCaso());
+
+        //deshabilita boton ver problemas caso
+        btnMostrarProblemas.setEnabled(false);
 
 
         ///////*Setea el comportamiento a la tabla Ordenes Reparacion:
@@ -92,6 +97,7 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         jscrollpane5 = new javax.swing.JScrollPane();
         tblSemaforos = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        btnMostrarProblemas = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -304,6 +310,15 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
         jLabel5.setText("Semáforos Denunciados");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
+        btnMostrarProblemas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/iconos/gnome-do-symbolic.png"))); // NOI18N
+        btnMostrarProblemas.setText("Ver Problemas Denunciados");
+        btnMostrarProblemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarProblemasActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnMostrarProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, 220, -1));
+
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 86, 700, 440));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -326,37 +341,41 @@ public class PantallaConsultarAvanceDeReclamo extends javax.swing.JFrame {
     private void txtNumeroCasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroCasoActionPerformed
         pressBotonConsultar();
     }//GEN-LAST:event_txtNumeroCasoActionPerformed
-private void pressBotonConsultar(){
-        int seleccion=1;
+
+    private void btnMostrarProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarProblemasActionPerformed
+        mostrarProblemas(controlador.getProblemasDenunciados());
+    }//GEN-LAST:event_btnMostrarProblemasActionPerformed
+    private void pressBotonConsultar() {
+        int seleccion = 1;
 
 
-if (getRadioBtnDenuncia().isSelected()) {
-            seleccion=1;
+        if (getRadioBtnDenuncia().isSelected()) {
+            seleccion = 1;
 
 
-}else{
-            seleccion=2;
+        } else {
+            seleccion = 2;
 
 
-}
-        controlador.ConsultarEstadoCaso(getTxtNumeroCaso().getText(),seleccion);
+        }
+        controlador.ConsultarEstadoCaso(getTxtNumeroCaso().getText(), seleccion);
 
 
-}
+    }
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     /*public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaConsultarAvanceDeReclamo().setVisible(true);
-            }
-        });
+    java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+    new PantallaConsultarAvanceDeReclamo().setVisible(true);
+    }
+    });
     }*/
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConsultar;
     private javax.swing.JButton btnDetalleOrden;
+    private javax.swing.JButton btnMostrarProblemas;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel cabecera;
     private javax.swing.ButtonGroup groupTipoCaso;
@@ -389,198 +408,169 @@ if (getRadioBtnDenuncia().isSelected()) {
     /**
      * @return the tablaConsultarAvanceReclamo
      */
-    public javax.
-
-swing.JTable getTablaConsultarAvanceReclamo() {
+    public javax.swing.JTable getTablaConsultarAvanceReclamo() {
         return tblestadoCaso;
 
 
-}
+    }
 
     /**
      * @param tablaConsultarAvanceReclamo the tablaConsultarAvanceReclamo to set
      */
-    public void
-
-setTablaConsultarAvanceReclamo(javax.swing.JTable tablaConsultarAvanceReclamo) {
+    public void setTablaConsultarAvanceReclamo(javax.swing.JTable tablaConsultarAvanceReclamo) {
         this.tblestadoCaso = tablaConsultarAvanceReclamo;
 
 
-}
+    }
 
     /**
      * @return the tblOrdenReparacion
      */
-    public javax.
-
-swing.JTable getTblOrdenReparacion() {
+    public javax.swing.JTable getTblOrdenReparacion() {
         return tblOrdenReparacion;
 
 
-}
-
+    }
 
     /**
      * @return the tblFallas
      */
-    public javax.
-
-swing.JTable getTblFallas() {
+    public javax.swing.JTable getTblFallas() {
         return tblFallas;
 
 
-}
+    }
 
     /**
      * @return the btnDetalleOrden
      */
-    public javax.
-
-swing.JButton getBtnDetalleOrden() {
+    public javax.swing.JButton getBtnDetalleOrden() {
         return btnDetalleOrden;
 
 
-}
+    }
 
     /**
      * @return the txtNumeroCaso
      */
-    public javax.
-
-swing.JTextField getTxtNumeroCaso() {
+    public javax.swing.JTextField getTxtNumeroCaso() {
         return txtNumeroCaso;
 
 
-}
+    }
 
     /**
      * @return the lblCantReclamos
      */
-    public javax.
-
-swing.JLabel getLblCantReclamos() {
+    public javax.swing.JLabel getLblCantReclamos() {
         return lblCantReclamos;
 
 
-}
+    }
 
     /**
      * @return the radioBtnDenuncia
      */
-    public javax.
-
-swing.JRadioButton getRadioBtnDenuncia() {
+    public javax.swing.JRadioButton getRadioBtnDenuncia() {
         return radioBtnDenuncia;
 
 
-}
+    }
 
     /**
      * @param radioBtnDenuncia the radioBtnDenuncia to set
      */
-    public void
-
-setRadioBtnDenuncia(javax.swing.JRadioButton radioBtnDenuncia) {
+    public void setRadioBtnDenuncia(javax.swing.JRadioButton radioBtnDenuncia) {
         this.radioBtnDenuncia = radioBtnDenuncia;
 
 
-}
+    }
 
     /**
      * @return the radioBtnReclamo
      */
-    public javax.
-
-swing.JRadioButton getRadioBtnReclamo() {
+    public javax.swing.JRadioButton getRadioBtnReclamo() {
         return radioBtnReclamo;
 
 
-}
+    }
 
     /**
      * @param radioBtnReclamo the radioBtnReclamo to set
      */
-    public void
-
-setRadioBtnReclamo(javax.swing.JRadioButton radioBtnReclamo) {
+    public void setRadioBtnReclamo(javax.swing.JRadioButton radioBtnReclamo) {
         this.radioBtnReclamo = radioBtnReclamo;
 
 
-}
+    }
 
     /**
      * @return the botonConsultar
      */
-    public javax.
-
-swing.JButton getBotonConsultar() {
+    public javax.swing.JButton getBotonConsultar() {
         return botonConsultar;
 
 
-}
+    }
 
     /**
      * @param botonConsultar the botonConsultar to set
      */
-    public void
-
-setBotonConsultar(javax.swing.JButton botonConsultar) {
+    public void setBotonConsultar(javax.swing.JButton botonConsultar) {
         this.botonConsultar = botonConsultar;
 
 
-}
+    }
 
-    public JTable
-
-getTblSemaforos() {
+    public JTable getTblSemaforos() {
         return tblSemaforos;
 
 
-}
+    }
 
-    public JLabel
-
-getLblUbicacion() {
+    public JLabel getLblUbicacion() {
         return lblUbicacion;
 
 
-}
+    }
 
-    public JLabel
-
-getLblNroCaso() {
+    public JLabel getLblNroCaso() {
         return lblNroCaso;
 
 
-}
+    }
 
     /**
      * @return the retorno
      */
-    public int
-
-getRetorno() {
+    public int getRetorno() {
         return retorno;
 
-
-}
+    }
 
     /**
      * @param retorno the retorno to set
      */
-    public void
-
-setRetorno(int retorno) {
+    public void setRetorno(int retorno) {
         this.retorno = retorno;
 
-}
+    }
 
     public JButton getBtnSalir() {
         return btnSalir;
     }
 
+    public void mostrarProblemas(List<String> problemas) {
+        String listaProblemas = "";
+        for (String prob : problemas) {
+            listaProblemas = listaProblemas + prob + "\n";
+        }
+        JOptionPane.showMessageDialog(rootPane, listaProblemas, "Problemas Denunciados", JOptionPane.INFORMATION_MESSAGE);
+    }
 
+    public JButton getBtnMostrarProblemas() {
+        return btnMostrarProblemas;
+    }
 
-
-
+    
 }
