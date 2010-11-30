@@ -402,7 +402,11 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
 
             dtoinfo.setIsDenuncia(false);
             dtoinfo.setCodigo(reclamo.getcodigoreclamo());
-
+            if(denunciaAUsar.getReclamo()==null || denunciaAUsar.getReclamo().isEmpty())
+                dtoinfo.setCantidadDeReclamos(0);
+            else
+                dtoinfo.setCantidadDeReclamos(denunciaAUsar.getReclamo().size());
+            
         } else {
             //hacer una denuncia nueva
             denunciaAUsar = (Denuncia) FachadaExterna.getInstancia().crearEntidad("Denuncia");
@@ -444,7 +448,11 @@ public class ExpertoAntenderReclamoPorDesperfecto implements Experto {
 
             dtoinfo.setIsDenuncia(true);
             dtoinfo.setCodigo(denunciaAUsar.getcodigoDenuncia());
-
+            if(denunciaAUsar.getReclamo()==null || denunciaAUsar.getReclamo().isEmpty())
+                dtoinfo.setCantidadDeReclamos(0);
+            else
+                dtoinfo.setCantidadDeReclamos(denunciaAUsar.getReclamo().size());
+            
         }
         FachadaExterna.getInstancia().guardar("Denuncia", denunciaAUsar);
 
