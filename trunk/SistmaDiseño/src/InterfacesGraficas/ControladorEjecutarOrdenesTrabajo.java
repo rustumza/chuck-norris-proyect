@@ -83,6 +83,7 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador {
             ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(ordenesModificadas);
             JOptionPane.showMessageDialog(pantalla, "Ordenes de Trabajo Confirmadas","INFORMACION", JOptionPane.INFORMATION_MESSAGE);
             pantalla.mostrarBotonImprimir();
+            pantalla.setEstadoBtnConfirmar(PantallaEjecutarOrdenDeTrabajo.INACTIVO);
         } catch (ExcepcionErrorConexion ex) {
             JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
             System.out.println(ex.getMessage());

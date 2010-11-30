@@ -28,9 +28,12 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
     public static final int ordenMantenimiento = 2;
     public static final int ordenReparacion = 3;
 
-    public boolean esFechaIncorrecta(Date fecha) {
-
-        return (new Date().compareTo(fecha) < 0);
+    public boolean esFechaCorrecta(Date fecha) {
+        if(new Date().compareTo(fecha) > 0){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     public List<OrdenTrabajo> buscarOrdenes(Date fecha) throws ExcepcionCampoInvalido {
@@ -38,7 +41,7 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
             ex.setMensaje("Fecha incorrecta.");
             throw ex;
-        } else if (esFechaIncorrecta(fecha)) {
+        } else if (esFechaCorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
             return null;
         }
@@ -63,9 +66,11 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
             ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
             ex.setMensaje("Fecha incorrecta.");
             throw ex;
-        } else if (esFechaIncorrecta(fecha)) {
+        } else if (!esFechaCorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
-            return null;
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Fecha incorrecta.");
+            throw ex;
         }
         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
 
@@ -89,11 +94,13 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
 
     }
 
-    public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) {
+    public List<OrdenDeMantenimiento> buscarOrdenesMantPendiente(Date fecha) throws ExcepcionCampoInvalido {
 
-        if (esFechaIncorrecta(fecha)) {
+        if (!esFechaCorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
-            return null;
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Fecha incorrecta.");
+            throw ex;
         }
 
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
@@ -110,11 +117,13 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
         return ordenesEncontradas;
     }
 
-    public List<OrdenDeReparacion> buscarOrdenesReparacionPendiente(Date fecha) {
+    public List<OrdenDeReparacion> buscarOrdenesReparacionPendiente(Date fecha) throws ExcepcionCampoInvalido {
 
-        if (esFechaIncorrecta(fecha)) {
+        if (!esFechaCorrecta(fecha)) {
             //Tirar excepcion por fecha incorrecta
-            return null;
+            ExcepcionCampoInvalido ex = new ExcepcionCampoInvalido();
+            ex.setMensaje("Fecha incorrecta.");
+            throw ex;
         }
 
         List<Criterio> listaCriterios = new ArrayList<Criterio>();
