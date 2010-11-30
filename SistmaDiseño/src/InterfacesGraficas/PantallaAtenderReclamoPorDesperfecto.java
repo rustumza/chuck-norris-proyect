@@ -106,7 +106,8 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         aceptarDenunciaGuardad = new javax.swing.JButton();
         denunciaReclamo = new javax.swing.JLabel();
         codigoDenunciaReclamo = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        cantidadDeReclamos = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         dni = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -156,7 +157,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         denunciaExistente.setTitle("Atención");
 
-        jLabel7.setText("DENUNCIA EXISTENTE");
+        jLabel7.setText("YA SE HA CREADO UNA ORDEN DE REPARACIÓN");
 
         aceptarDenunciaExistente.setText("Aceptar");
         aceptarDenunciaExistente.addActionListener(new java.awt.event.ActionListener() {
@@ -189,9 +190,9 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addGap(6, 6, 6)
                         .addComponent(cantidadDeReclamosDenunciaExistente)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaExistenteLayout.createSequentialGroup()
-                .addContainerGap(172, Short.MAX_VALUE)
+                .addContainerGap(259, Short.MAX_VALUE)
                 .addComponent(aceptarDenunciaExistente)
                 .addContainerGap())
         );
@@ -231,7 +232,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
 
         codigoDenunciaReclamo.setText(" ");
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/Imagenes/enhorabuena.JPG"))); // NOI18N
+        jLabel18.setText("Cantidad de reclamos:");
 
         javax.swing.GroupLayout denunciaGuardadaLayout = new javax.swing.GroupLayout(denunciaGuardada.getContentPane());
         denunciaGuardada.getContentPane().setLayout(denunciaGuardadaLayout);
@@ -240,24 +241,20 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
             .addGroup(denunciaGuardadaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                            .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                                    .addComponent(jLabel15)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(denunciaReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                                .addGroup(denunciaGuardadaLayout.createSequentialGroup()
-                                    .addComponent(jLabel16)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(codigoDenunciaReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
-                            .addComponent(aceptarDenunciaGuardad)
-                            .addContainerGap()))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, denunciaGuardadaLayout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addContainerGap())))
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(codigoDenunciaReclamo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(denunciaReclamo, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+                    .addComponent(aceptarDenunciaGuardad, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cantidadDeReclamos, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         denunciaGuardadaLayout.setVerticalGroup(
             denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,14 +264,17 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(denunciaReclamo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(codigoDenunciaReclamo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jLabel17)
-                .addGap(18, 18, 18)
+                .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(denunciaGuardadaLayout.createSequentialGroup()
+                        .addGroup(denunciaGuardadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(codigoDenunciaReclamo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel18))
+                    .addComponent(cantidadDeReclamos, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(aceptarDenunciaGuardad)
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -782,6 +782,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JTextField calle2;
     private javax.swing.JRadioButton calleSimpleRadioButton;
     private javax.swing.JButton cancelarCaso;
+    private javax.swing.JLabel cantidadDeReclamos;
     private javax.swing.JLabel cantidadDeReclamosDenunciaExistente;
     private javax.swing.JTextField celular;
     private javax.swing.JLabel codigoDenunciaReclamo;
@@ -805,7 +806,7 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -893,8 +894,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         return numeroDeDenunciaDenunciaExistente;
     }
 
-    public JLabel getCantidadDeReclamos(){
+    public JLabel getCantidadDeReclamosCodigoDenunciaReclamo(){
         return cantidadDeReclamosDenunciaExistente;
+    }
+
+    public JLabel getCantidadDeReclamos(){
+        return cantidadDeReclamos;
     }
 
     public JLabel getDenunciaReclamo(){
@@ -1004,7 +1009,12 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
     public void setConsultarAvanceDeReclamo(javax.swing.JButton consultarAvanceDeReclamo) {
         this.consultarAvanceDeReclamo = consultarAvanceDeReclamo;
     }
-  
 
+    /**
+     * @param cantidadDeReclamos the cantidadDeReclamos to set
+     */
+    public void setCantidadDeReclamos(javax.swing.JLabel cantidadDeReclamos) {
+        this.cantidadDeReclamos = cantidadDeReclamos;
+    }
 
      }

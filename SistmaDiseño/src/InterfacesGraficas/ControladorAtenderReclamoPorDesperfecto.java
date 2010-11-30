@@ -20,6 +20,7 @@ import InterfacesGraficas.ModelosTablas.ModeloTablaSemaforos;
 import Persistencia.Entidades.Calle;
 import Persistencia.Entidades.Operador;
 import Persistencia.Entidades.Problema;
+import Persistencia.Entidades.Ubicacion;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -148,14 +149,16 @@ public class ControladorAtenderReclamoPorDesperfecto implements Controlador{
             else
                 pantallaARPD.getDenunciaReclamo().setText("Reclamo");
                 pantallaARPD.getcodigoDenunciaReclamo().setText(String.valueOf(dto.getCodigo()));
+                pantallaARPD.getCantidadDeReclamos().setText(String.valueOf(dto.getCantidadDeReclamos()));
                 pantallaARPD.getPantallaDenunciaGuardad().setVisible(true);
                 pantallaARPD.ponerTodoEnBlancoPublico();
-
+                
+                
 
             
         }catch(ExcepcionDenunciaExistente e){
-            pantallaARPD.getNumeroDeDenuncia().setText(String.valueOf(e.getCantidadDeReclamos()));
-            pantallaARPD.getCantidadDeReclamos().setText(String.valueOf(e.getCantidadDeReclamos()));
+            pantallaARPD.getNumeroDeDenuncia().setText(String.valueOf(e.getNumeroDeDenuncia()));
+            pantallaARPD.getCantidadDeReclamosCodigoDenunciaReclamo().setText(String.valueOf(e.getCantidadDeReclamos()));
             pantallaARPD.getPantallaDenunciaExistente().setVisible(true);
             pantallaARPD.ponerTodoEnBlancoPublico();
 
