@@ -9,6 +9,7 @@ import DTO.DTOOrden;
 
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionErrorConexion;
+import Excepciones.ExcepcionSistemaStock;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Fabricas.FabricaAdaptadorSistemaReportes;
 import Fabricas.FabricaAdaptadoresSistemaStock;
@@ -79,7 +80,7 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
     }
 
-    public List<DTOOrden> guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion {
+    public void guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion, ExcepcionSistemaStock {
 
         List<OrdenTrabajo> ordenesEncontradas = new ArrayList<OrdenTrabajo>();
         try {
@@ -138,28 +139,40 @@ public class ExpertoEjecutarOrdenesTrabajo implements Experto {
 
             try {
                 ConfirmarReservas(ordenesEncontradas);
-            } catch (Exception ex) {
+            } catch (ExcepcionErrorConexion ex) {
                 ExcepcionErrorConexion excpErrCon = new ExcepcionErrorConexion();
-                excpErrCon.setMensaje("Error de conexion con WebService. \nNo han sido confirmadas las reservas.\nOrdenes no confirmadas.");
-                System.out.println(ex.getMessage());
+                excpErrCon.setMensaje("Error de conexion con WebService. \nNo han sido confirmadas las reservas.");
+                System.out.println(excpErrCon.getMessage());
                 throw excpErrCon;
-            }
-
-            for (DTOOrden dTOOrden : listaDtoEncontrados) {
-                dTOOrden.setEstado("En Ejecución");
-            }
+            } 
         } catch (ExcepcionCampoInvalido ex) {
             Logger.getLogger(ExpertoEjecutarOrdenesTrabajo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return listaDtoEncontrados;
-
+        } 
     }
 
-    private void ConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) {
+    /*
+     * Confirma las reservas con el webservice y retorna un arreglo que contiene las reservas que no han podido confirmarse
+     * si el arreglo es null, se han confirmado todas las reservas.
+     */
+    private void ConfirmarReservas(List<OrdenTrabajo> ordenesEncontradas) throws ExcepcionErrorConexion, ExcepcionSistemaStock {
         //LLAMAR WEB SERVICE
+        String reservasFallidas = "Las siguientes reservas no han podido ser confirmadas: \n";
+        boolean lanzarExcepcionReservasFallidas = false;
         for (OrdenTrabajo orden : ordenesEncontradas) {
-            FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(orden);
+            try {
+                FabricaAdaptadoresSistemaStock.getInstance().crearAdaptador().confirmarStock(orden);
+            } catch (ExcepcionSistemaStock ex) {
+                reservasFallidas = reservasFallidas + ex.getMessage().split(":")[1]+"\n";
+                lanzarExcepcionReservasFallidas = true;
+                continue;
+            } catch (ExcepcionErrorConexion ex) {
+                throw ex;
+            }
+        }
+        if(lanzarExcepcionReservasFallidas){
+            ExcepcionSistemaStock ex = new ExcepcionSistemaStock();
+            ex.setMensaje(reservasFallidas);
+            throw ex;
         }
     }
 

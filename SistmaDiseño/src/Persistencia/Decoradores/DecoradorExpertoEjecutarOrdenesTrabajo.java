@@ -7,6 +7,7 @@ package Persistencia.Decoradores;
 import DTO.DTOOrden;
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionErrorConexion;
+import Excepciones.ExcepcionSistemaStock;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Persistencia.ExpertosPersistencia.FachadaInterna;
@@ -42,11 +43,10 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public List<DTOOrden> guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion {
+    public void guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion, ExcepcionSistemaStock {
         iniciarTx();
-        List<DTOOrden> aux = super.guardarOrdenTrabajo(fecha, seleccion);
+        super.guardarOrdenTrabajo(fecha, seleccion);
         confirmarTx();
-        return aux;
     }
 
     private void iniciarTx() {
