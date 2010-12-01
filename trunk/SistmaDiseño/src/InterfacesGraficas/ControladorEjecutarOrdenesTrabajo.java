@@ -8,6 +8,7 @@ import DTO.DTOOrden;
 import DTO.DTOReserva;
 import Excepciones.ExcepcionCampoInvalido;
 import Excepciones.ExcepcionErrorConexion;
+import Excepciones.ExcepcionSistemaStock;
 import Excepciones.ExcepcionObjetoNoEncontrado;
 import Expertos.ExpertoEjecutarOrdenesTrabajo;
 import Fabricas.FabricaExpertos;
@@ -77,18 +78,27 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador {
     }
 
     public void confirmarOrdenesPendientes(Date fecha, int seleccion) {
-        List<DTOOrden> ordenesModificadas;
+        boolean ordenesEjecutadas = true;
         try {
-            ordenesModificadas = experto.guardarOrdenTrabajo(fecha, seleccion);
-            ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).setListaOrdenes(ordenesModificadas);
-            JOptionPane.showMessageDialog(pantalla, "Ordenes de Trabajo Confirmadas","INFORMACION", JOptionPane.INFORMATION_MESSAGE);
-            pantalla.mostrarBotonImprimir();
-            pantalla.setEstadoBtnConfirmar(PantallaEjecutarOrdenDeTrabajo.INACTIVO);
+            experto.guardarOrdenTrabajo(fecha, seleccion);
         } catch (ExcepcionErrorConexion ex) {
             JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
             System.out.println(ex.getMessage());
+        } catch(ExcepcionSistemaStock ex){
+            JOptionPane.showMessageDialog(getPantalla(), ex.getMessage(), "ATENCION", JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
+        } finally {
+            if (ordenesEjecutadas) {
+                for (DTOOrden dTOOrden : ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).getOrdenesTrabajo()) {
+                    dTOOrden.setEstado("En Ejecución");
+                }
+                ((ModeloTablaOrdenesTrabajo) getPantalla().getTblOrdenesTrabajo().getModel()).fireTableDataChanged();
+                JOptionPane.showMessageDialog(pantalla, "Ordenes de Trabajo en Ejecución", "INFORMACION", JOptionPane.INFORMATION_MESSAGE);
+                pantalla.mostrarBotonImprimir();
+                pantalla.setEstadoBtnConfirmar(PantallaEjecutarOrdenDeTrabajo.INACTIVO);
+            }
         }
-        
+
     }
 
     public void imprimirOrdenesPendientes() {
@@ -121,6 +131,4 @@ public class ControladorEjecutarOrdenesTrabajo implements Controlador {
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
     }
-
-
 }

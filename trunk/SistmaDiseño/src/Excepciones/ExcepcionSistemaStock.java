@@ -1,14 +1,15 @@
-/*
+    /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Excepciones;
 
 /**
  *
  * @author diego
  */
-public class ExcepcionErrorConexion extends Exception {
+public class ExcepcionSistemaStock extends Exception{
 
     private String mensaje;
 
@@ -23,4 +24,5 @@ public class ExcepcionErrorConexion extends Exception {
     public String getMessage() {
         return mensaje;
     }
+
 }
