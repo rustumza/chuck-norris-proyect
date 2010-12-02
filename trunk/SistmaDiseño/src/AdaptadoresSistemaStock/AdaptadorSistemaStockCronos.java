@@ -48,7 +48,18 @@ public class AdaptadorSistemaStockCronos implements AdaptadorSistemaStock {
                 throw errCon;
             }
             System.out.println(respuesta.isFail());
-            System.out.println(respuesta.getMensajeerror());
+            if(!respuesta.isFail()){
+                System.out.println("******** CRONOS WEB SERVICE ******** "
+                        + "\n* Reserva confirmada Exitosamente. *"
+                        + "\n************************************");
+            }else{
+                System.out.println("******** CRONOS WEB SERVICE ******** "
+                        + "\n* No se pudo realizar la Reserva.  *"
+                        + "\n* Contactese con su administrador  *"
+                        + "\n* de sistema                       *"
+                        + "\n************************************");
+            }
+            //System.out.println(respuesta.getMensajeerror());
 
             if (respuesta.isFail()) {
                 ExcepcionSistemaStock ex = new ExcepcionSistemaStock();
