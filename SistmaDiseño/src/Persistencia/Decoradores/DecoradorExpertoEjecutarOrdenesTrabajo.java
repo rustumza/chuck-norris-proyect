@@ -29,9 +29,9 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     }
 
     @Override
-    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado{
+    public List<DTOOrden> consultarOrdenesMantenimientoPendientes(Date fecha) throws ExcepcionCampoInvalido, ExcepcionObjetoNoEncontrado {
         iniciarTx();
-        List<DTOOrden>  aux = super.consultarOrdenesMantenimientoPendientes(fecha);
+        List<DTOOrden> aux = super.consultarOrdenesMantenimientoPendientes(fecha);
         return aux;
     }
 
@@ -45,8 +45,15 @@ public class DecoradorExpertoEjecutarOrdenesTrabajo extends ExpertoEjecutarOrden
     @Override
     public void guardarOrdenTrabajo(Date fecha, int seleccion) throws ExcepcionErrorConexion, ExcepcionSistemaStock {
         iniciarTx();
-        super.guardarOrdenTrabajo(fecha, seleccion);
-        confirmarTx();
+        try {
+            super.guardarOrdenTrabajo(fecha, seleccion);
+        } catch (ExcepcionErrorConexion ex) {
+            throw ex;
+        }catch (ExcepcionSistemaStock ex) {
+            throw ex;
+        } finally {
+            confirmarTx();
+        }
     }
 
     private void iniciarTx() {
