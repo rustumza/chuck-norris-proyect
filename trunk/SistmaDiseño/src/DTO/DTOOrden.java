@@ -320,4 +320,17 @@ public class DTOOrden extends ObjetoPersistente {
         }
         return esta;
     }
+
+    public boolean seEncuentraReserva(String nroReserva){
+        boolean esta = false;
+        if(listaReservas != null){
+            for (DTOReserva dTOReserva : listaReservas) {
+                if(String.valueOf(dTOReserva.getNumeroReserva()).equals(nroReserva)){
+                    esta = true;
+                    break;
+                }
+            }
+        }
+        return esta;
+    }
 }

@@ -155,7 +155,7 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
 
                 if (listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
                     crearNuevaReserva = true;
-                } else if (!listaOrdenes.isEmpty() && listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).getNumeroReserva() != rs.getInt("CodigoReserva")) {
+                } else if (!listaOrdenes.isEmpty() && !listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraReserva(rs.getString("CodigoReserva"))) {
                     crearNuevaReserva = true;
                 } else {
                     crearNuevaReserva = false;
