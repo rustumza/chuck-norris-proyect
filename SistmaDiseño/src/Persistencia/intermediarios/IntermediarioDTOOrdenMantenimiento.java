@@ -138,9 +138,9 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     listaOrdenes.add(nuevaOrden);
                 }
 
-                if (listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
+                if (buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
                     crearNuevaReserva = true;
-                } else if (!listaOrdenes.isEmpty() && !listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraReserva(rs.getString("CodigoReserva"))) {
+                } else if (!listaOrdenes.isEmpty() && !buscarOrden(listaOrdenes, rs.getString("nroOrden")).seEncuentraReserva(rs.getString("CodigoReserva"))) {
                     crearNuevaReserva = true;
                 } else {
                     crearNuevaReserva = false;
@@ -153,7 +153,7 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     listaOrdenes.get(listaOrdenes.size() - 1).addReserva(nuevaReserva);
                 }
 
-                if (rs.getString("NombreEquipamiento") != null && !listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).seEncuentraEquipamiento(rs.getString("NombreEquipamiento"))) {
+                if (rs.getString("NombreEquipamiento") != null && !buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaReservas().get(buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaReservas().size() - 1).seEncuentraEquipamiento(rs.getString("NombreEquipamiento"))) {
                     crearDtoEquipamiento = true;
                 } else {
                     crearDtoEquipamiento = false;
@@ -166,7 +166,7 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).addEquipamiento(nuevoDTOEquipamiento);
                 }
 
-                if (rs.getString("NombreRepuesto") != null && !listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().get(listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().size() - 1).seEncuentraRepuesto(rs.getString("NombreRepuesto"))) {
+                if (rs.getString("NombreRepuesto") != null && !buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaReservas().get(buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaReservas().size() - 1).seEncuentraRepuesto(rs.getString("NombreRepuesto"))) {
                     crearDtoRepuesto = true;
                 } else {
                     crearDtoRepuesto = false;
@@ -181,9 +181,9 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
 
                 if (rs.getString("NumeroSerie") == null) {
                     crearDtoSemaforo = false;
-                } else if (listaOrdenes.get(listaOrdenes.size() - 1).getListaSemaforos().isEmpty()) {
+                } else if (buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaSemaforos().isEmpty()) {
                     crearDtoSemaforo = true;
-                } else if (!listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraSemaforo(rs.getString("NumeroSerie"))) {
+                } else if (!buscarOrden(listaOrdenes, rs.getString("nroOrden")).seEncuentraSemaforo(rs.getString("NumeroSerie"))) {
                     crearDtoSemaforo = true;
                 } else {
                     crearDtoSemaforo = false;
@@ -193,13 +193,13 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     DTOSemaforo nuevoSemaforo = new DTOSemaforo();
                     nuevoSemaforo.setModelo(rs.getString("NombreModelo"));
                     nuevoSemaforo.setNumeroSerie(rs.getString("NumeroSerie"));
-                    listaOrdenes.get(listaOrdenes.size() - 1).addSemaforo(nuevoSemaforo);
+                    buscarOrden(listaOrdenes, rs.getString("nroOrden")).addSemaforo(nuevoSemaforo);
                 }
 
                 if (rs.getString("CodigoTarea") != null) {
-                    if (listaOrdenes.get(listaOrdenes.size() - 1).getListaTareasMantenimiento() == null) {
+                    if (buscarOrden(listaOrdenes, rs.getString("nroOrden")).getListaTareasMantenimiento() == null) {
                         creardtoFichaMant = true;
-                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraTareaMant(rs.getString("CodigoTarea"))) {
+                    } else if (!buscarOrden(listaOrdenes, rs.getString("nroOrden")).seEncuentraTareaMant(rs.getString("CodigoTarea"))) {
                         creardtoFichaMant = true;
                     } else {
                         creardtoFichaMant = false;
@@ -213,26 +213,26 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
                     nuevaTarea.setCodigoTarea(rs.getString("CodigoTarea"));
                     nuevaTarea.setDescripcion(rs.getString("DescripcionTarea"));
                     nuevaTarea.setNombreTarea(rs.getString("NombreTrabajo"));
-                    listaOrdenes.get(listaOrdenes.size() - 1).addTareaMantenimiento(nuevaTarea);
+                    buscarOrden(listaOrdenes, rs.getString("nroOrden")).addTareaMantenimiento(nuevaTarea);
                 }
 
                 if (rs.getString("OIDInterseccion") != null) {
-                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                    if (buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion() == null) {
                         DTOUbicacion nuevaUbicacion = new DTOUbicacion();
                         listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
                         agregarCalleUbicacion = true;
-                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                    } else if (!buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
                         agregarCalleUbicacion = true;
                     } else {
                         agregarCalleUbicacion = false;
                     }
 
                 } else if (rs.getString("calleUbSimple") != null) {
-                    if (listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion() == null) {
+                    if (buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion() == null) {
                         DTOUbicacion nuevaUbicacion = new DTOUbicacion();
-                        listaOrdenes.get(listaOrdenes.size() - 1).setUbicacion(nuevaUbicacion);
+                        buscarOrden(listaOrdenes, rs.getString("nroOrden")).setUbicacion(nuevaUbicacion);
                         agregarCalleUbicacion = true;
-                    } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
+                    } else if (!buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion().seEncuentraCalle(rs.getString("calleInterseccion"))) {
                         agregarCalleUbicacion = true;
                     } else {
                         agregarCalleUbicacion = false;
@@ -241,10 +241,10 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
 
                 if (agregarCalleUbicacion) {
                     if (rs.getString("OIDInterseccion") != null) {
-                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().addCalle(rs.getString("calleInterseccion"));
+                        buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion().addCalle(rs.getString("calleInterseccion"));
                     } else if (rs.getString("calleUbSimple") != null) {
-                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setCalle1(rs.getString("calleUbSimple"));
-                        listaOrdenes.get(listaOrdenes.size() - 1).getUbicacion().setAltura(rs.getString("Altura"));
+                        buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion().setCalle1(rs.getString("calleUbSimple"));
+                        buscarOrden(listaOrdenes, rs.getString("nroOrden")).getUbicacion().setAltura(rs.getString("Altura"));
                     }
                 }
 
@@ -290,5 +290,16 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
         }
 
         return seEncuentraOrden;
+    }
+
+    public DTOOrden buscarOrden(List<DTOOrden> ordenes, String nroOrden){
+        DTOOrden ordenEncontrada = null;
+        for (DTOOrden dTOOrden : ordenes) {
+            if(dTOOrden.getNroOrden().equals(nroOrden)){
+                ordenEncontrada = dTOOrden;
+                break;
+            }
+        }
+        return ordenEncontrada;
     }
 }
