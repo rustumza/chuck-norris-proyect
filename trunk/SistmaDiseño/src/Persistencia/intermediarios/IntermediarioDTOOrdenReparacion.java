@@ -153,9 +153,9 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
                     listaOrdenes.add(nuevaOrden);
                 }
 
-                if (listaOrdenes.get(listaOrdenes.size() - 1).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
+                if (buscarOrden(listaOrdenes, rs.getString("CodigoOrdenReparacion")).getListaReservas().isEmpty() && rs.getString("CodigoReserva") != null) {
                     crearNuevaReserva = true;
-                } else if (!listaOrdenes.isEmpty() && !listaOrdenes.get(listaOrdenes.size() - 1).seEncuentraReserva(rs.getString("CodigoReserva"))) {
+                } else if (!listaOrdenes.isEmpty() && !buscarOrden(listaOrdenes, rs.getString("CodigoOrdenReparacion")).seEncuentraReserva(rs.getString("CodigoReserva"))) {
                     crearNuevaReserva = true;
                 } else {
                     crearNuevaReserva = false;
@@ -305,5 +305,16 @@ public class IntermediarioDTOOrdenReparacion extends IntermediarioRelacional {
         }
 
         return seEncuentraOrden;
+    }
+
+    public DTOOrden buscarOrden(List<DTOOrden> ordenes, String nroOrden){
+        DTOOrden ordenEncontrada = null;
+        for (DTOOrden dTOOrden : ordenes) {
+            if(dTOOrden.getNroOrden().equals(nroOrden)){
+                ordenEncontrada = dTOOrden;
+                break;
+            }
+        }
+        return ordenEncontrada;
     }
 }
