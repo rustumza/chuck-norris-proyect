@@ -74,8 +74,12 @@ public class ControladorConsultarOrdenesPendientes implements Controlador {
     public void mostrarDetalleReserva(DTOReserva reservaSeleccionada) {
         ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).clear();
         ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).clear();
-        ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).addAllRow(reservaSeleccionada.getListaEquipamiento());
-        ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).addAllRow(reservaSeleccionada.getListaRepuesto());
+        if (reservaSeleccionada.getListaEquipamiento() != null) {
+            ((ModeloTablaReservaEquipamiento) getPantalla().getTblEquipamientoReservado().getModel()).addAllRow(reservaSeleccionada.getListaEquipamiento());
+        }
+        if (reservaSeleccionada.getListaRepuesto() != null) {
+            ((ModeloTablaResevaRepuesto) getPantalla().getTblRepuestosReservado().getModel()).addAllRow(reservaSeleccionada.getListaRepuesto());
+        }
     }
 
     public void cerrar() {
@@ -105,5 +109,4 @@ public class ControladorConsultarOrdenesPendientes implements Controlador {
     public Operador getOperadorEncontrado() {
         return chuck.getOperadorEncontrado();
     }
-
 }
