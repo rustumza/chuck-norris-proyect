@@ -119,7 +119,7 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
 
                 if (listaOrdenes.isEmpty() && rs.getString("OIDOrdenDeTrabajo") != null) {
                     crearNuevaOrden = true;
-                } else if (!listaOrdenes.get(listaOrdenes.size() - 1).getNroOrden().equals(rs.getString("nroOrden")) && rs.getString("nroOrden") != null) {
+                } else if (!estaOrdenTrabajo(listaOrdenes, rs.getString("nroOrden")) && rs.getString("nroOrden") != null) {
                     crearNuevaOrden = true;
                 } else {
                     crearNuevaOrden = false;
@@ -277,5 +277,18 @@ public class IntermediarioDTOOrdenMantenimiento extends IntermediarioRelacional 
 
     @Override
     public void guardarDatosPadre(ObjetoPersistente obj) {
+    }
+
+    public boolean estaOrdenTrabajo(List<DTOOrden>ordenes, String nroOrden){
+        boolean seEncuentraOrden = false;
+
+        for (DTOOrden dTOOrden : ordenes) {
+            if(dTOOrden.getNroOrden().equals(nroOrden)){
+                seEncuentraOrden = true;
+                break;
+            }
+        }
+
+        return seEncuentraOrden;
     }
 }
