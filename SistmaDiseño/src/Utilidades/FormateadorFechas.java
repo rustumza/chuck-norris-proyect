@@ -72,4 +72,34 @@ public class FormateadorFechas {
         return  fechaFormateada;
 
     }
+
+    /**
+     * Compara 2 fechas ingresadas
+     * @return Regresa -1 si fecha1 es  mayor a fecha2. Regresa 1 si fecha2 es mayor a fecha1. Regresa 0 si son iguales
+     * 
+     * 
+     */
+    public int compararFechas(Date fecha1, Date fecha2){
+        int resultado = 0;
+        if(fecha1.getYear() < fecha2.getYear()){
+            resultado = 1;
+        }else if(fecha1.getYear() > fecha2.getYear()){
+            resultado = -1;
+        }else if(fecha1.getYear() == fecha2.getYear()){
+            if(fecha1.getMonth() < fecha2.getMonth()){
+                resultado = 1;
+            }else if(fecha1.getMonth() > fecha2.getMonth()){
+                resultado = -1;
+            }else if(fecha1.getMonth() == fecha2.getMonth()){
+                if(fecha1.getDay() < fecha2.getDay()){
+                    resultado = 1;
+                }else if(fecha1.getDay() > fecha2.getDay()){
+                    resultado = -1;
+                }else if(fecha1.getDay() == fecha2.getDay()){
+                    resultado = 0;
+                }
+            }
+        }
+        return resultado;
+    }
 }

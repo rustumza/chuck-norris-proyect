@@ -29,10 +29,10 @@ public class ExpertoConsultarOrdenesPendientes implements Experto {
     public static final int ordenReparacion = 3;
 
     public boolean esFechaCorrecta(Date fecha) {
-        if(new Date().compareTo(fecha) > 0){
-            return false;
-        }else {
+        if(FormateadorFechas.getInstancia().compararFechas(new Date(), fecha) >= 0){
             return true;
+        }else {
+            return false;
         }
     }
 
