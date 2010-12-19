@@ -59,7 +59,8 @@ public class AdaptadorSistemaStockCronos implements AdaptadorSistemaStock {
                         + "\n* de sistema                       *"
                         + "\n************************************");
             }
-            //System.out.println(respuesta.getMensajeerror());
+
+            System.out.println(respuesta.getMensajeerror());
 
             if (respuesta.isFail()) {
                 ExcepcionSistemaStock ex = new ExcepcionSistemaStock();
