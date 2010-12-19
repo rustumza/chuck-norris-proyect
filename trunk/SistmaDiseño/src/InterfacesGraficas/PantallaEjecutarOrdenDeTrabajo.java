@@ -20,6 +20,7 @@ import Utilidades.RenderTablaEjecutarOrdenes;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -481,13 +482,16 @@ public class PantallaEjecutarOrdenDeTrabajo extends javax.swing.JFrame {
     public void buscarOrdenes() {
 
         limpiarCampos();
-        int seleccion;
+        int seleccion=0;
         if (radioBtnOrdenMant.isSelected()) {
             seleccion = ordenMantenimiento;
         } else if (radioBtnOrdenRep.isSelected()) {
             seleccion = ordenReparacion;
-        } else {
+        } else if (radioBtnOrdenTodas.isSelected()){
             seleccion = ordenTrabajo;
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una opción de búsqueda.", "ATENCIÓN", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
         controlador.buscarOrdenesPendientes(dataChsFecha.getDate(), seleccion);
     }
