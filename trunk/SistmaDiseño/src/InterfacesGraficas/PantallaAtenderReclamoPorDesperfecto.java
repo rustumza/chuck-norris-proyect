@@ -593,9 +593,11 @@ public class PantallaAtenderReclamoPorDesperfecto extends javax.swing.JFrame {
         consultarAvanceDeReclamo.setEnabled(false);
         if(interseccionRadioButton.isSelected())
             comboCalle2.setModel(new DefaultComboBoxModel(controladorARPD.buscarCalle(calle2.getText())));
-        else
-            controladorARPD.buscarAlturas((Calle)comboCalle1.getSelectedItem());
-
+        else{
+            if(comboCalle1.getSelectedItem() != null){
+                controladorARPD.buscarAlturas((Calle)comboCalle1.getSelectedItem());
+            }
+        }
     }//GEN-LAST:event_validarCallesActionPerformed
 
 
